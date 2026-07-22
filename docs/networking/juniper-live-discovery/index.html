@@ -3971,15 +3971,15 @@
 <p><strong>What this is.</strong> A snapshot of what is <em>actually on the wire</em> right now, extracted
 <strong>read-only and without credentials</strong> from the PBX laptop. No device configuration was
 changed and nothing was logged into. Companion to the planning docs
-(<a href="Juniper-Integration-Plan.md">Juniper-Integration-Plan.md</a>, <a href="Juniper.md">Juniper.md</a>,
-<a href="Juniper-Feature-Catalogue.md">Juniper-Feature-Catalogue.md</a>) — those say what we <em>could</em>
+(<a href="../juniper-integration-plan/">Juniper-Integration-Plan.md</a>, <a href="../juniper/">Juniper.md</a>,
+<a href="../juniper-feature-catalogue/">Juniper-Feature-Catalogue.md</a>) — those say what we <em>could</em>
 build; this says what is <em>present today</em>.</p>
 </blockquote>
 <p><strong>Captured:</strong> 2026-07-18 · <strong>From:</strong> laptop <code>192.168.1.6</code> (Realtek GbE <code>Ethernet</code>, MAC <code>04:7C:16:A8:06:FA</code>) · <strong>Method:</strong> ICMP/ARP sweep, TCP port probing, SSH/TLS banner grab, SNMP/NTP/mDNS queries — all unauthenticated. <strong>Scope:</strong> the one subnet the laptop's wired link is on, <code>192.168.1.0/24</code>.</p>
 <hr />
 <h2 id="1-executive-summary">1. Executive summary<a class="headerlink" href="#1-executive-summary" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The Juniper kit is <strong>online and healthy</strong> on a <strong>single flat <code>192.168.1.0/24</code></strong> — this is the <strong>"flat pilot"</strong> stage (<a href="Juniper.md">Juniper.md</a>), <strong>not</strong> the VLAN/Virtual-Chassis architecture from the plan. So we are effectively at <strong>Phase 0</strong>.</li>
+<li>The Juniper kit is <strong>online and healthy</strong> on a <strong>single flat <code>192.168.1.0/24</code></strong> — this is the <strong>"flat pilot"</strong> stage (<a href="../juniper/">Juniper.md</a>), <strong>not</strong> the VLAN/Virtual-Chassis architecture from the plan. So we are effectively at <strong>Phase 0</strong>.</li>
 <li><strong>Confirmed devices:</strong> 1× <strong>Juniper SRX</strong> (gateway/firewall/DHCP/NTP), 2× <strong>Juniper EX2300-C</strong> switches, 1× <strong>HP ProDesk 600 G4</strong> desktop (admin PC), and 1 <strong>unidentified endpoint</strong>. Plus this PBX laptop.</li>
 <li><strong>The 2× Mist AP32s are NOT on this segment yet</strong> (no ARP presence) — they appear undeployed/unpowered here.</li>
 <li><strong>Management is wide open to us (read-only-capable):</strong> <strong>NETCONF (830) + SSH (22)</strong> on all three Junos boxes, <strong>J-Web (443)</strong> on the SRX. This is exactly what the plan's app-integration ideas (caller-location, network-health panel, evac-mode) need — the transport is ready today.</li>
@@ -4084,7 +4084,7 @@ diagram shows L3 adjacency (all on one subnet), not the physical cabling. See §
 <h3 id="41-srx-19216811-the-edge-and-the-most-feature-rich-box-for-us">4.1 SRX — <code>192.168.1.1</code> (the edge, and the most feature-rich box for us)<a class="headerlink" href="#41-srx-19216811-the-edge-and-the-most-feature-rich-box-for-us" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Roles proven live:</strong> default gateway; <strong>DHCP server</strong> (handed this laptop <code>.6</code>, 24 h lease, obtained 2026-07-18 12:52 → expires 2026-07-19 12:52); <strong>NTP server</strong> (answered a client query on 123/udp).</li>
-<li>⚠️ NTP reply came back <strong>stratum 0</strong> = <em>not synced to an upstream clock</em>. Air-gapped means no internet time source; if the SRX is meant to be the campus clock (<a href="Juniper-Integration-Plan.md#4-key-design-decisions-decide-these-first">plan D4</a>) it likely needs a local-clock (<code>server 127.127.1.0</code>) or GPS reference so it serves a <em>defined</em> stratum. Worth verifying.</li>
+<li>⚠️ NTP reply came back <strong>stratum 0</strong> = <em>not synced to an upstream clock</em>. Air-gapped means no internet time source; if the SRX is meant to be the campus clock (<a href="../juniper-integration-plan/#4-key-design-decisions-decide-these-first">plan D4</a>) it likely needs a local-clock (<code>server 127.127.1.0</code>) or GPS reference so it serves a <em>defined</em> stratum. Worth verifying.</li>
 <li><strong>Management:</strong> SSH (<code>OpenSSH_7.5</code> → older Junos, normal for SRX300/320), <strong>J-Web</strong> on 443 (TLS 1.2 / AES256), <strong>NETCONF</strong> on 830.</li>
 <li><strong>Serial (from J-Web cert):</strong> <code>CV3225AX0113</code>.</li>
 </ul>
@@ -4137,7 +4137,7 @@ diagram shows L3 adjacency (all on one subnet), not the physical cabling. See §
 <td><strong>DHCP</strong></td>
 <td>SRX <code>.1</code></td>
 <td>Serving (24 h leases)</td>
-<td>Where phone/laptop reservations live (<a href="Juniper.md">Juniper.md §2</a>).</td>
+<td>Where phone/laptop reservations live (<a href="../juniper/">Juniper.md §2</a>).</td>
 </tr>
 <tr>
 <td><strong>NTP (123)</strong></td>
@@ -4168,9 +4168,9 @@ diagram shows L3 adjacency (all on one subnet), not the physical cabling. See §
 <hr />
 <h2 id="6-what-this-means-readout-against-the-plan">6. What this means (readout against the plan)<a class="headerlink" href="#6-what-this-means-readout-against-the-plan" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>We are at Phase 0 (flat pilot).</strong> No VLANs, no Virtual Chassis, no LLDP-MED/CoS/PoE policy <em>provable from here</em>. The whole <a href="Juniper-Integration-Plan.md#tier-0--foundational-correctness-voice-just-works">Tier 0 fabric</a> (VC, voice VLAN, zero-touch phones, RTP priority, PoE budgeting) is still to build.</li>
-<li><strong>The differentiators are unblocked at the transport layer.</strong> NETCONF being live on all three boxes means <a href="Juniper-Integration-Plan.md#tier-3--app--juniper-integration-the-differentiators">T3.1/T3.2/T3.3</a> are buildable now — the only missing pieces are a <strong>read-only Junos user</strong> and the <strong>collector scripts</strong> (<code>deploy/juniper/collectors/</code>).</li>
-<li><strong>The APs are the gap.</strong> With the 2× AP32 absent, the Wi-Fi 111 path isn't live on this segment. Commissioning them (<a href="Juniper-Integration-Plan.md#7-air-gapped-mist-commissioning-workflow">plan §7</a>) is prerequisite to the wireless tiers.</li>
+<li><strong>We are at Phase 0 (flat pilot).</strong> No VLANs, no Virtual Chassis, no LLDP-MED/CoS/PoE policy <em>provable from here</em>. The whole <a href="../juniper-integration-plan/#tier-0--foundational-correctness-voice-just-works">Tier 0 fabric</a> (VC, voice VLAN, zero-touch phones, RTP priority, PoE budgeting) is still to build.</li>
+<li><strong>The differentiators are unblocked at the transport layer.</strong> NETCONF being live on all three boxes means <a href="../juniper-integration-plan/#tier-3--app--juniper-integration-the-differentiators">T3.1/T3.2/T3.3</a> are buildable now — the only missing pieces are a <strong>read-only Junos user</strong> and the <strong>collector scripts</strong> (<code>deploy/juniper/collectors/</code>).</li>
+<li><strong>The APs are the gap.</strong> With the 2× AP32 absent, the Wi-Fi 111 path isn't live on this segment. Commissioning them (<a href="../juniper-integration-plan/#7-air-gapped-mist-commissioning-workflow">plan §7</a>) is prerequisite to the wireless tiers.</li>
 </ul>
 <hr />
 <h2 id="7-how-to-extract-more-read-only-the-next-data-we-cant-get-without-loginelevation">7. How to extract <em>more</em> (read-only) — the next data we can't get without login/elevation<a class="headerlink" href="#7-how-to-extract-more-read-only-the-next-data-we-cant-get-without-loginelevation" title="Permanent link">&para;</a></h2>
@@ -4198,7 +4198,7 @@ diagram shows L3 adjacency (all on one subnet), not the physical cabling. See §
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>show dhcp server binding | show ntp status | show ntp associations
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>show configuration system syslog             # where logs go
 </code></pre></div></p>
-<p><strong>C. NETCONF collector (read-only, scriptable — the plan's <code>net_health.py</code> seed).</strong> PyEZ/<code>ncclient</code> against 830 with a read-only user pulls <code>get_poe_interface_information</code>, <code>get_lldp_neighbors_information</code>, <code>get_interface_information</code>, <code>get_chassis_inventory</code>, <code>get_virtual_chassis_information</code> as structured data — the basis for the Console <strong>/network</strong> panel (<a href="Juniper-Integration-Plan.md#t31--network-health-on-the-console--tv-board-via-netconf-">plan T3.1</a>).</p>
+<p><strong>C. NETCONF collector (read-only, scriptable — the plan's <code>net_health.py</code> seed).</strong> PyEZ/<code>ncclient</code> against 830 with a read-only user pulls <code>get_poe_interface_information</code>, <code>get_lldp_neighbors_information</code>, <code>get_interface_information</code>, <code>get_chassis_inventory</code>, <code>get_virtual_chassis_information</code> as structured data — the basis for the Console <strong>/network</strong> panel (<a href="../juniper-integration-plan/#t31--network-health-on-the-console--tv-board-via-netconf-">plan T3.1</a>).</p>
 <blockquote>
 <p>None of A/B/C changes anything on the devices. If/when you want the deep pull, provide a
 <strong>read-only</strong> login (or run B yourself and paste the output) and this doc gets a §4 addendum
@@ -4220,7 +4220,7 @@ with the real hardware/PoE/neighbor data.</p>
 <li><strong>Identify <code>192.168.1.5</code></strong> (AP32? phone? PC?) — needs switch MAC table / LLDP.</li>
 <li><strong>Where are the 2× AP32s?</strong> Not on this segment — undeployed, unpowered, or on another port/VLAN.</li>
 <li><strong>Are <code>.3</code>/<code>.4</code> a Virtual Chassis or two independent switches?</strong> — <code>show virtual-chassis</code>.</li>
-<li><strong>Physical cabling / port map</strong> — which device is on which <code>ge-0/0/x</code> (feeds <a href="Juniper-Integration-Plan.md#t32--offline-caller-location-by-switch-port-">T3.2 caller-location</a>).</li>
+<li><strong>Physical cabling / port map</strong> — which device is on which <code>ge-0/0/x</code> (feeds <a href="../juniper-integration-plan/#t32--offline-caller-location-by-switch-port-">T3.2 caller-location</a>).</li>
 <li><strong>SRX config specifics</strong> — SIP ALG state, zones, DHCP reservations, NTP source.</li>
 </ul>
 <hr />
@@ -4249,7 +4249,7 @@ techniques in §7 (elevation) or a read-only Junos login. Pairs with the plannin
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

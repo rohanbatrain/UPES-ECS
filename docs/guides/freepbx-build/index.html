@@ -4046,7 +4046,7 @@
 
 <h1 id="upes-ecs-freepbx-build-guide-phase-0-phase-1">UPES-ECS FreePBX Build Guide (Phase 0 + Phase 1)<a class="headerlink" href="#upes-ecs-freepbx-build-guide-phase-0-phase-1" title="Permanent link">&para;</a></h1>
 <p>Hands-on steps to stand up the emergency core in <strong>FreePBX</strong>. Follow in order.
-Assumes the <a href="01-Numbering-Plan.md">Numbering Plan</a> and <a href="04-SIP-Account-Role-Matrix.md">Role Matrix</a>.</p>
+Assumes the <a href="../../reference/numbering-plan/">Numbering Plan</a> and <a href="../../reference/sip-account-role-matrix/">Role Matrix</a>.</p>
 <blockquote>
 <p>Everything here is LAN-only. Do <strong>not</strong> open SIP/RTP to the public internet.</p>
 </blockquote>
@@ -4081,8 +4081,8 @@ Assumes the <a href="01-Numbering-Plan.md">Numbering Plan</a> and <a href="04-SI
 <h2 id="phase-1-emergency-core">Phase 1 — Emergency core<a class="headerlink" href="#phase-1-emergency-core" title="Permanent link">&para;</a></h2>
 <h3 id="11-contexts-classes">1.1 Contexts / classes<a class="headerlink" href="#11-contexts-classes" title="Permanent link">&para;</a></h3>
 <p>FreePBX groups permissions via <strong>Class of Service</strong> (COS) or custom contexts. For UPES-ECS:
-- Simplest: use the <strong>Class of Service</strong> module to build classes matching the <a href="04-SIP-Account-Role-Matrix.md">Role Matrix</a> (student, staff, ert, ert_lead, control_room, fixed_device, admin).
-- Advanced/custom logic (drill mode, SAP-ID rules) goes in <strong><code>extensions_custom.conf</code></strong> — see <a href="09-Dialplan-Design.md">09-Dialplan-Design.md</a>.</p>
+- Simplest: use the <strong>Class of Service</strong> module to build classes matching the <a href="../../reference/sip-account-role-matrix/">Role Matrix</a> (student, staff, ert, ert_lead, control_room, fixed_device, admin).
+- Advanced/custom logic (drill mode, SAP-ID rules) goes in <strong><code>extensions_custom.conf</code></strong> — see <a href="../dialplan-design/">09-Dialplan-Design.md</a>.</p>
 <h3 id="12-sap-id-extensions-bulk">1.2 SAP-ID extensions (bulk)<a class="headerlink" href="#12-sap-id-extensions-bulk" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Admin → Bulk Handler → Extensions → Import</strong>: CSV with columns
@@ -4114,7 +4114,7 @@ Assumes the <a href="01-Numbering-Plan.md">Numbering Plan</a> and <a href="04-SI
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>             └─ no answer → Emergency Voicemail box
 </code></pre></div>
 - Backup group = <strong>Applications → Ring Groups</strong>, strategy <code>ringall</code>, 20s.
-- Voicemail: a dedicated <strong>Emergency Voicemail</strong> box, max message 60s, prompt per <a href="01-Numbering-Plan.md">Numbering Plan</a>.</p>
+- Voicemail: a dedicated <strong>Emergency Voicemail</strong> box, max message 60s, prompt per <a href="../../reference/numbering-plan/">Numbering Plan</a>.</p>
 <h3 id="16-the-111-route">1.6 The 111 route<a class="headerlink" href="#16-the-111-route" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use a <strong>Custom Destination</strong> or <strong>Misc Application</strong> mapping <strong>111</strong>:</li>
@@ -4149,7 +4149,7 @@ Assumes the <a href="01-Numbering-Plan.md">Numbering Plan</a> and <a href="04-SI
 <li><strong>Every change:</strong> click the red <strong>Apply Config</strong> banner, then verify with a test call.</li>
 <li>Use <strong>Admin → Config Edit</strong> for <code>extensions_custom.conf</code> (custom dialplan survives reloads).</li>
 <li><strong>CDR Reports</strong> and <strong>Asterisk Info → Queues</strong> give you live queue/agent status for the daily readiness check.</li>
-<li><strong>Backup &amp; Restore module</strong> handles config backups (see <a href="11-Backup-Restore-Procedure.md">11-Backup-Restore-Procedure.md</a>); still keep a git copy of custom configs.</li>
+<li><strong>Backup &amp; Restore module</strong> handles config backups (see <a href="../backup-restore/">11-Backup-Restore-Procedure.md</a>); still keep a git copy of custom configs.</li>
 <li>Lock the <strong>FreePBX Admin GUI</strong> to the management subnet only — never student Wi-Fi.</li>
 </ul>
 
@@ -4174,7 +4174,7 @@ Assumes the <a href="01-Numbering-Plan.md">Numbering Plan</a> and <a href="04-SI
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

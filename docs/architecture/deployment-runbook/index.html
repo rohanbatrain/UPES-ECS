@@ -3978,7 +3978,7 @@ rings and answers, the call is recorded and linked to an incident ID, and an una
 <hr />
 <h2 id="validate-on-a-spare-node-first-optional-but-proven">Validate on a spare node FIRST (optional but proven)<a class="headerlink" href="#validate-on-a-spare-node-first-optional-but-proven" title="Permanent link">&para;</a></h2>
 <p>The whole flow has already been <strong>run and validated</strong> off-server — do the same before
-touching the production box (<a href="../deploy/README.md">deploy/README.md</a>).</p>
+touching the production box (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md">deploy/README.md</a>).</p>
 <ul>
 <li>[ ] <strong>Docker (config/dialplan validation)</strong> — real Asterisk 18 on the current node:
   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>deploy
@@ -4002,7 +4002,7 @@ touching the production box (<a href="../deploy/README.md">deploy/README.md</a>)
 or on the real Linux server/van with host networking.</p>
 </blockquote>
 <hr />
-<h2 id="phase-0-server-network-sop-08-0-sop-15">Phase 0 — Server &amp; network  (<a href="../SOP/08-FreePBX-Build-Guide.md">SOP 08 §0</a>, <a href="../SOP/15-Local-Infrastructure-Diagram.md">SOP 15</a>)<a class="headerlink" href="#phase-0-server-network-sop-08-0-sop-15" title="Permanent link">&para;</a></h2>
+<h2 id="phase-0-server-network-sop-08-0-sop-15">Phase 0 — Server &amp; network  (<a href="../../guides/freepbx-build/">SOP 08 §0</a>, <a href="../../reference/local-infrastructure-diagram/">SOP 15</a>)<a class="headerlink" href="#phase-0-server-network-sop-08-0-sop-15" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Provision the server: Ubuntu Server LTS / Debian stable, hostname <strong><code>upes-ecs-pbx-01</code></strong>.</li>
 <li>[ ] Assign a <strong>static IP</strong> (record IP / subnet / gateway — <strong>TBD</strong>, collect from UPES IT).</li>
@@ -4014,7 +4014,7 @@ or on the real Linux server/van with host networking.</p>
 </ul>
 <p><strong>Exit:</strong> server reachable on its static IP; a Wi-Fi client can ping the PBX.</p>
 <hr />
-<h2 id="phase-1-install-freepbx-sop-08-0103">Phase 1 — Install FreePBX  (<a href="../SOP/08-FreePBX-Build-Guide.md">SOP 08 §0.1–0.3</a>)<a class="headerlink" href="#phase-1-install-freepbx-sop-08-0103" title="Permanent link">&para;</a></h2>
+<h2 id="phase-1-install-freepbx-sop-08-0103">Phase 1 — Install FreePBX  (<a href="../../guides/freepbx-build/">SOP 08 §0.1–0.3</a>)<a class="headerlink" href="#phase-1-install-freepbx-sop-08-0103" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Install FreePBX (official distro, or <code>freepbx</code> on Asterisk 18+/20+).</li>
 <li>[ ] Apply all updates in <strong>Admin → Module Admin</strong>.</li>
@@ -4025,7 +4025,7 @@ or on the real Linux server/van with host networking.</p>
 <p><strong>Test:</strong> create two temp extensions, register two Androids (Linphone) on Wi-Fi, call each
 other, and dial <strong>198</strong> (echo). ✅ when both work.</p>
 <hr />
-<h2 id="phase-2-bootstrap-with-setupsh-setupsh">Phase 2 — Bootstrap with setup.sh  (<a href="../setup.sh">setup.sh</a>)<a class="headerlink" href="#phase-2-bootstrap-with-setupsh-setupsh" title="Permanent link">&para;</a></h2>
+<h2 id="phase-2-bootstrap-with-setupsh-setupsh">Phase 2 — Bootstrap with setup.sh  (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/setup.sh">setup.sh</a>)<a class="headerlink" href="#phase-2-bootstrap-with-setupsh-setupsh" title="Permanent link">&para;</a></h2>
 <p>From the repo root on the server, as root:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>./setup.sh
 </code></pre></div>
@@ -4036,10 +4036,10 @@ and the recordings dir; installs the helper scripts; sets <code>asterisk:asteris
 <ul>
 <li>[ ] <code>setup.sh</code> completes without errors.</li>
 <li>[ ] Helper scripts present + executable in <code>/opt/upes-ecs/</code>.</li>
-<li>[ ] <code>func_shell</code> reported present (needed for <code>${SHELL()}</code> incident IDs) — else enable it or replace the <code>incident_id.sh</code> call (<a href="../config/README.md">config/README.md</a>).</li>
+<li>[ ] <code>func_shell</code> reported present (needed for <code>${SHELL()}</code> incident IDs) — else enable it or replace the <code>incident_id.sh</code> call (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md">config/README.md</a>).</li>
 </ul>
 <hr />
-<h2 id="phase-3-config-scripts-configreadmemd-sop-09">Phase 3 — Config + scripts  (<a href="../config/README.md">config/README.md</a>, <a href="../SOP/09-Dialplan-Design.md">SOP 09</a>)<a class="headerlink" href="#phase-3-config-scripts-configreadmemd-sop-09" title="Permanent link">&para;</a></h2>
+<h2 id="phase-3-config-scripts-configreadmemd-sop-09">Phase 3 — Config + scripts  (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md">config/README.md</a>, <a href="../../guides/dialplan-design/">SOP 09</a>)<a class="headerlink" href="#phase-3-config-scripts-configreadmemd-sop-09" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Review/merge <code>config/extensions_custom.conf</code> into <code>/etc/asterisk/</code> (setup.sh does <strong>not</strong> auto-overwrite an existing file — diff and merge):
   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>diff<span class="w"> </span>/etc/asterisk/extensions_custom.conf<span class="w"> </span>config/extensions_custom.conf
@@ -4049,7 +4049,7 @@ and the recordings dir; installs the helper scripts; sets <code>asterisk:asteris
 <li>[ ] Contexts present: <code>ctx_emergency_111</code>, <code>ctx_ai_helpline</code> (offline panic-coach / 102), <code>ctx_111_fastpath</code> (press-1 first-aid), <code>ctx_emergency_vm</code>, <code>ctx_drill_199</code>, and role contexts <code>ctx_student/staff/ert/ert_lead/responder/control_room/fixed_device/admin</code>.</li>
 </ul>
 <hr />
-<h2 id="phase-4-record-the-prompts-sop-28">Phase 4 — Record the prompts  (<a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28</a>)<a class="headerlink" href="#phase-4-record-the-prompts-sop-28" title="Permanent link">&para;</a></h2>
+<h2 id="phase-4-record-the-prompts-sop-28">Phase 4 — Record the prompts  (<a href="../../reference/voice-prompt-scripts/">SOP 28</a>)<a class="headerlink" href="#phase-4-record-the-prompts-sop-28" title="Permanent link">&para;</a></h2>
 <p>Drop recorded WAVs into <code>/var/lib/asterisk/sounds/en/upes-ecs/</code>:</p>
 <ul>
 <li>[ ] <code>emergency-preanswer</code> — "You have reached UPES Emergency Response. Your emergency call may be recorded. Please stay on the line."</li>
@@ -4058,7 +4058,7 @@ and the recordings dir; installs the helper scripts; sets <code>asterisk:asteris
 <li>[ ] <code>queue-paused</code> / <code>queue-resumed</code> / <code>not-authorized</code> (short confirmations).</li>
 </ul>
 <hr />
-<h2 id="phase-5-provision-accounts-from-csvs-provisioningreadmemd-sop-14">Phase 5 — Provision accounts from CSVs  (<a href="../provisioning/README.md">provisioning/README.md</a>, <a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14</a>)<a class="headerlink" href="#phase-5-provision-accounts-from-csvs-provisioningreadmemd-sop-14" title="Permanent link">&para;</a></h2>
+<h2 id="phase-5-provision-accounts-from-csvs-provisioningreadmemd-sop-14">Phase 5 — Provision accounts from CSVs  (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/README.md">provisioning/README.md</a>, <a href="../../guides/device-provisioning/">SOP 14</a>)<a class="headerlink" href="#phase-5-provision-accounts-from-csvs-provisioningreadmemd-sop-14" title="Permanent link">&para;</a></h2>
 <p>Committed CSVs carry <code>__SET_ON_IMPORT__</code> in the secret column — <strong>never</strong> real secrets in
 git. Fill secrets into a <strong>throwaway</strong> file, import, then <strong>delete</strong> it.</p>
 <ul>
@@ -4074,19 +4074,19 @@ git. Fill secrets into a <strong>throwaway</strong> file, import, then <strong>d
 <li>[ ] <strong>Confirm each person's account context</strong> (9-digit → <code>ctx_student</code>, 8-digit → <code>ctx_staff</code>) — do <strong>not</strong> put a person's SAP ID into a responder context; positions are staffed by shift.</li>
 </ul>
 <p>Confirmed people (real roster only): <code>40000001</code> Staff Member One, <code>40000002</code> Staff Member Two,
-<code>40000003</code> Staff Member Three, <code>500120597</code> Rohan Batra (<a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>).</p>
+<code>40000003</code> Staff Member Three, <code>500120597</code> Rohan Batra (<a href="../../operations/ert-roles-and-shifts/">SOP 30</a>).</p>
 <hr />
-<h2 id="phase-6-queue-responder-answer-points-sop-08-1416">Phase 6 — Queue + responder answer points  (<a href="../SOP/08-FreePBX-Build-Guide.md">SOP 08 §1.4–1.6</a>)<a class="headerlink" href="#phase-6-queue-responder-answer-points-sop-08-1416" title="Permanent link">&para;</a></h2>
+<h2 id="phase-6-queue-responder-answer-points-sop-08-1416">Phase 6 — Queue + responder answer points  (<a href="../../guides/freepbx-build/">SOP 08 §1.4–1.6</a>)<a class="headerlink" href="#phase-6-queue-responder-answer-points-sop-08-1416" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] <strong>Create <code>ert_emergency_queue</code></strong> — ring strategy <code>ringall</code>, agent timeout 20s, skip-busy Yes, <strong>no MoH</strong> (emergency hold announcement instead); allow a queued caller to <strong>press 1</strong> → offline first-aid (<code>ctx_111_fastpath</code>); fail-over → coach-in-parallel flow (below).</li>
 <li>[ ] <strong>Unanswered-call flow (coach-in-parallel, replaces the old serial ring-out):</strong> when no answer point is free, the caller goes <strong>straight to the offline panic-coach</strong> (102, <code>ctx_ai_helpline</code>) with <strong>no dead-air</strong>, <strong>while</strong> call-files alert <strong>ERT Lead 4101 + backup</strong> (Security 4300 + Medical 4200 + Warden/Admin) in the <strong>background</strong> ("press 1 to join the queue"). In the coach, <strong>9 = retry a responder</strong>, <strong>8 = leave a message</strong> → <strong>Emergency Voicemail</strong> (60s) → <strong>Missed Emergency Incident</strong> (Critical, Pending Review).</li>
-<li>[ ] <strong>Provision the dedicated Androids</strong> per position: Linphone as <code>4101</code> (ERT Lead), <code>4110</code>/<code>4111</code>/<code>4112</code> (Operators), reserve <code>4113</code>; on charger, <strong>battery-optimization OFF</strong>, screen-lock off, labelled per position (<a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24</a>).</li>
+<li>[ ] <strong>Provision the dedicated Androids</strong> per position: Linphone as <code>4101</code> (ERT Lead), <code>4110</code>/<code>4111</code>/<code>4112</code> (Operators), reserve <code>4113</code>; on charger, <strong>battery-optimization OFF</strong>, screen-lock off, labelled per position (<a href="../../reference/mobile-app-reliability/">SOP 24</a>).</li>
 <li>[ ] Add the ERT operator positions + reserve <code>4113</code> as <strong>queue agents</strong>.</li>
 <li>[ ] Route <strong>111</strong> (Custom Destination → <code>ctx_emergency_111</code>): MixMonitor starts → pre-answer prompt → <code>ert_emergency_queue</code>. Ensure 111 is reachable from <strong>every</strong> context.</li>
 <li>[ ] Clone to <strong>199</strong> (<code>ctx_drill_199</code>): drill prompt, test target only, tag <code>DRILL-ONLY</code> — <strong>no</strong> real escalation/dispatch.</li>
 </ul>
 <hr />
-<h2 id="phase-7-test-199-then-111-sop-17-sop-32">Phase 7 — Test 199 then 111  (<a href="../SOP/17-Pilot-Test-Plan.md">SOP 17</a>, <a href="../SOP/32-Test-Evidence-Sheet.md">SOP 32</a>)<a class="headerlink" href="#phase-7-test-199-then-111-sop-17-sop-32" title="Permanent link">&para;</a></h2>
+<h2 id="phase-7-test-199-then-111-sop-17-sop-32">Phase 7 — Test 199 then 111  (<a href="../../operations/pilot-test-plan/">SOP 17</a>, <a href="../../operations/test-evidence-sheet/">SOP 32</a>)<a class="headerlink" href="#phase-7-test-199-then-111-sop-17-sop-32" title="Permanent link">&para;</a></h2>
 <p>Always test the <strong>drill line first</strong>.</p>
 <ul>
 <li>[ ] <strong>199</strong> → drill prompt → no real dispatch → <code>DRILL-ONLY</code> appears in CDR/recording.</li>
@@ -4096,7 +4096,7 @@ git. Fill secrets into a <strong>throwaway</strong> file, import, then <strong>d
 <li>[ ] A student is <strong>denied</strong> paging/conference (Access Denied Event logged).</li>
 </ul>
 <hr />
-<h2 id="phase-8-health-check-backup-sop-10-sop-11">Phase 8 — Health check + backup  (<a href="../SOP/10-Health-Monitoring-Checklist.md">SOP 10</a>, <a href="../SOP/11-Backup-Restore-Procedure.md">SOP 11</a>)<a class="headerlink" href="#phase-8-health-check-backup-sop-10-sop-11" title="Permanent link">&para;</a></h2>
+<h2 id="phase-8-health-check-backup-sop-10-sop-11">Phase 8 — Health check + backup  (<a href="../../operations/health-monitoring/">SOP 10</a>, <a href="../../guides/backup-restore/">SOP 11</a>)<a class="headerlink" href="#phase-8-health-check-backup-sop-10-sop-11" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Run the health check:
   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>/opt/upes-ecs/upes-ecs-healthcheck.sh
@@ -4107,7 +4107,7 @@ git. Fill secrets into a <strong>throwaway</strong> file, import, then <strong>d
 <li>[ ] <strong>Test a restore once</strong> (backup you haven't restored is a hope, not a backup).</li>
 </ul>
 <hr />
-<h2 id="go-live-gate-these-must-pass-sop-17-sop-32-sop-18">Go-live gate — these MUST pass  (<a href="../SOP/17-Pilot-Test-Plan.md">SOP 17</a> / <a href="../SOP/32-Test-Evidence-Sheet.md">SOP 32</a> / <a href="../SOP/18-Go-Live-Checklist.md">SOP 18</a>)<a class="headerlink" href="#go-live-gate-these-must-pass-sop-17-sop-32-sop-18" title="Permanent link">&para;</a></h2>
+<h2 id="go-live-gate-these-must-pass-sop-17-sop-32-sop-18">Go-live gate — these MUST pass  (<a href="../../operations/pilot-test-plan/">SOP 17</a> / <a href="../../operations/test-evidence-sheet/">SOP 32</a> / <a href="../../getting-started/go-live-checklist/">SOP 18</a>)<a class="headerlink" href="#go-live-gate-these-must-pass-sop-17-sop-32-sop-18" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Registered softphone <strong>dials 111 → an ERT Android rings → answered</strong>.</li>
 <li>[ ] The call produces a <strong>recording</strong> linked to an incident ID.</li>
@@ -4125,13 +4125,13 @@ git. Fill secrets into a <strong>throwaway</strong> file, import, then <strong>d
 <ul>
 <li><strong>Layer on later:</strong> responder Androids (<code>4200</code>/<code>4300</code>), paging (700–705), conference
   (9000–9004), the AI 101 path, and the van drill — via the
-  <a href="../SOP/07-Master-Implementation-Plan.md">Master Plan</a>.</li>
+  <a href="../../operations/master-implementation-plan/">Master Plan</a>.</li>
 <li><strong>Mode B (van):</strong> the same config runs on the van PBX for disaster ops <strong>and</strong> as
-  campus-PBX failover — pre-stage it synced with campus (<a href="../SOP/23-Mobile-Van-Deployment.md">SOP 23</a>).</li>
+  campus-PBX failover — pre-stage it synced with campus (<a href="../../guides/mobile-van-deployment/">SOP 23</a>).</li>
 <li><strong>Ongoing:</strong> health check on cron, retention cleanup daily 03:30, the <strong><code>upes-api</code></strong>
   service on <strong><code>:8090</code></strong> (LAN-only incident/health API), and backups 30 daily + 12
-  weekly. Full itemized kit: <a href="05-Bill-of-Materials.md">05-Bill-of-Materials.md</a>; every
-  number + data location: <a href="06-Numbering-and-Data-Map.md">06-Numbering-and-Data-Map.md</a>.</li>
+  weekly. Full itemized kit: <a href="../bill-of-materials/">05-Bill-of-Materials.md</a>; every
+  number + data location: <a href="../numbering-and-data-map/">06-Numbering-and-Data-Map.md</a>.</li>
 </ul>
 <blockquote>
 <p><strong>TBD before scale-out:</strong> server IP/subnet, Wi-Fi SSID + client-isolation status,
@@ -4160,7 +4160,7 @@ final retention policy.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

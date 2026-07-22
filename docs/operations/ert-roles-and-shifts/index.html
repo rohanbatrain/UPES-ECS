@@ -3987,8 +3987,8 @@ and coordinate, but do not answer 111. Same shift model; different job.</p>
 </tr>
 </tbody>
 </table>
-<p>All sit in the ERT desk range <strong>4100–4199</strong> (<a href="01-Numbering-Plan.md">Numbering Plan</a>).
-Provision them from <a href="../provisioning/responder-positions.csv">../provisioning/responder-positions.csv</a>.</p>
+<p>All sit in the ERT desk range <strong>4100–4199</strong> (<a href="../../reference/numbering-plan/">Numbering Plan</a>).
+Provision them from <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv">../provisioning/responder-positions.csv</a>.</p>
 <p><strong>Minimum to go live:</strong> 2 operator positions available (recommended 3+), plus the Lead position.</p>
 <hr />
 <h2 id="2a-other-responder-positions-same-model">2a. Other responder positions (same model)<a class="headerlink" href="#2a-other-responder-positions-same-model" title="Permanent link">&para;</a></h2>
@@ -4117,12 +4117,12 @@ for future elevated department-lead grants (own-zone paging, room moderation). I
 <strong>not</strong> answer the 111 queue, page all-campus, or control the ERT queue — those stay ERT-only.</p>
 </blockquote>
 <p>Add more per department within its hundred-block (e.g. <code>4203</code>, <code>4204</code> for extra medical
-seats). Provision from <a href="../provisioning/responder-positions.csv">../provisioning/responder-positions.csv</a>.</p>
+seats). Provision from <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv">../provisioning/responder-positions.csv</a>.</p>
 <blockquote>
 <p><strong>Fixed devices vs positions:</strong> a <em>position</em> is occupied by a rotating trained person
 (Medical, Security desks). A <em>fixed device</em> is location-bound and not staffed (IP
 speaker, unattended gate phone) — those stay in <code>ctx_fixed_device</code>
-(<a href="../provisioning/fixed-devices.csv">fixed-devices.csv</a>).</p>
+(<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv">fixed-devices.csv</a>).</p>
 </blockquote>
 <hr />
 <h2 id="3-people-vs-positions">3. People vs positions<a class="headerlink" href="#3-people-vs-positions" title="Permanent link">&para;</a></h2>
@@ -4201,7 +4201,7 @@ account property.</strong></p>
 </table>
 <ul>
 <li>Only <strong>trained</strong> officers may be rostered to a position.</li>
-<li>Coverage rule: at least the minimum available positions per shift (<a href="10-Health-Monitoring-Checklist.md">Health Monitoring</a>).</li>
+<li>Coverage rule: at least the minimum available positions per shift (<a href="../health-monitoring/">Health Monitoring</a>).</li>
 <li>Off-shift trained officers are a <strong>reserve</strong> — they can occupy a spare position immediately in a surge, no new registration needed.</li>
 </ul>
 <hr />
@@ -4234,10 +4234,10 @@ the whole time; only the human swaps.</p>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>= the individual officer who handled the incident
 </code></pre></div>
 <p>Officers are also expected to state their name on answer ("UPES Emergency Response,
-this is [name]…") per the <a href="02-ERT-SOP.md">ERT SOP</a>, so the recording captures it too.</p>
+this is [name]…") per the <a href="../ert-sop/">ERT SOP</a>, so the recording captures it too.</p>
 <hr />
 <h2 id="7-surge-staffing-ties-to-declared-incidents">7. Surge staffing (ties to declared incidents)<a class="headerlink" href="#7-surge-staffing-ties-to-declared-incidents" title="Permanent link">&para;</a></h2>
-<p>In a <a href="02-ERT-SOP.md">declared incident</a>, reserve trained officers <strong>occupy spare
+<p>In a <a href="../ert-sop/">declared incident</a>, reserve trained officers <strong>occupy spare
 positions immediately</strong> — because the accounts already exist and are trained-for, there
 is zero setup delay. If more seats are needed than positions exist, add positions from
 the 4100–4199 range ahead of time (pre-provisioned spares kept paused, unpaused on demand).</p>
@@ -4246,7 +4246,7 @@ kept paused, so a surge is <code>*46</code> (unpause) + sit down, not "create an
 <hr />
 <h2 id="8-van-field-positions">8. Van / field positions<a class="headerlink" href="#8-van-field-positions" title="Permanent link">&para;</a></h2>
 <p>The disaster-response van carries its <strong>own position devices</strong> (same extensions, synced
-config) — see <a href="23-Mobile-Van-Deployment.md">Mobile Van Deployment</a>. A trained officer
+config) — see <a href="../../guides/mobile-van-deployment/">Mobile Van Deployment</a>. A trained officer
 staffs the van position on deployment exactly like a room position.</p>
 <hr />
 <h2 id="9-what-changed-from-the-original-questionnaire">9. What changed from the original questionnaire<a class="headerlink" href="#9-what-changed-from-the-original-questionnaire" title="Permanent link">&para;</a></h2>
@@ -4284,7 +4284,7 @@ the queue never has to be re-edited when people change.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

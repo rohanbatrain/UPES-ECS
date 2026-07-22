@@ -3672,13 +3672,13 @@ open-source <strong>AVA — AI Voice Agent for Asterisk</strong>
 MIT) with a <strong>fully-local LLM</strong> (Ollama / llama.cpp, on-prem) as the triage brain — <strong>no
 cloud, no API keys, no internet for inference</strong>.</p>
 <blockquote>
-<p><strong>Golden rule (from <a href="../SOP/19-AI-101-Design.md">SOP 19</a>):</strong> if the AI is ever unsure
+<p><strong>Golden rule (from <a href="design/">SOP 19</a>):</strong> if the AI is ever unsure
 → escalate to <strong>111</strong>. <strong>111 stays human-first and must keep working even if every AI
 component is offline.</strong> 101 never replaces 111; it collects details, gives ERT a
 pre-brief, and hands urgent/unclear calls straight to 111.</p>
 </blockquote>
 <p>This folder is a <strong>design + integration plan</strong>, not shipped code. It shows how AVA is
-wired onto the existing Asterisk stack (proven in <a href="../deploy/qemu/README.md"><code>../deploy/qemu/</code></a>)
+wired onto the existing Asterisk stack (proven in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md"><code>../deploy/qemu/</code></a>)
 without weakening the human-first 111 line.</p>
 <hr />
 <h2 id="what-is-here">What is here<a class="headerlink" href="#what-is-here" title="Permanent link">&para;</a></h2>
@@ -3695,7 +3695,7 @@ without weakening the human-first 111 line.</p>
 <td>This overview + how 101 maps to SOP 19.</td>
 </tr>
 <tr>
-<td><a href="Integration-Plan.md"><code>Integration-Plan.md</code></a></td>
+<td><a href="integration-plan/"><code>Integration-Plan.md</code></a></td>
 <td>Core doc: AVA architecture, Asterisk hooks, the local STT→LLM→TTS pipeline, dialplan wiring, incident logging, and the safety/fallback matrix.</td>
 </tr>
 <tr>
@@ -3703,7 +3703,7 @@ without weakening the human-first 111 line.</p>
 <td>How to run AVA alongside the QEMU Asterisk VM: install, config, local model hosting, ARI creds, health checks, phased rollout.</td>
 </tr>
 <tr>
-<td><a href="TODO.md"><code>TODO.md</code></a></td>
+<td><a href="todo/"><code>TODO.md</code></a></td>
 <td>Ordered build checklist to get a working 101 prototype.</td>
 </tr>
 </tbody>
@@ -3721,7 +3721,7 @@ uses. If AVA, the local model host, or the STT/TTS pipeline fails, the call is t
 <strong>111</strong> and handled by humans exactly as it is today.</p>
 <blockquote>
 <p><strong>Already shipped — the offline floor beneath 101.</strong> Extension <strong>102</strong> / <code>ctx_ai_helpline</code>
-(config <a href="../config/extensions_aihelpline.conf"><code>../config/extensions_aihelpline.conf</code></a>) is a
+(config <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_aihelpline.conf"><code>../config/extensions_aihelpline.conf</code></a>) is a
 <strong>fully-offline, deterministic panic-coach</strong> that is <em>already built and running</em>: when no
 responder answers 111 (queue timeout + escalation unanswered) the caller is coached through
 CPR, bleeding, choking, fire, lockdown, recovery position and being-trapped, with retry-a-
@@ -3743,31 +3743,31 @@ coach) → voicemail.</strong> Bringing up 101 does not touch 102; 102 remains t
 <tbody>
 <tr>
 <td>§1 Two paths; 101 never replaces 111</td>
-<td>101 dialplan does <code>Stasis()</code> → triage → <code>Dial</code>/<code>transfer</code> into the <strong>existing</strong> <code>ctx_emergency_111</code> / <code>ert_emergency_queue</code>. See <a href="Integration-Plan.md#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>.</td>
+<td>101 dialplan does <code>Stasis()</code> → triage → <code>Dial</code>/<code>transfer</code> into the <strong>existing</strong> <code>ctx_emergency_111</code> / <code>ert_emergency_queue</code>. See <a href="integration-plan/#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>.</td>
 </tr>
 <tr>
 <td>§2 Call flow (answer → collect → pre-brief → escalate)</td>
-<td>AVA local-LLM agent prompt + tool-calling; <a href="Integration-Plan.md#3-the-local-stt--llm--tts-pipeline">Integration-Plan §3</a>.</td>
+<td>AVA local-LLM agent prompt + tool-calling; <a href="integration-plan/#3-the-local-stt--llm--tts-pipeline">Integration-Plan §3</a>.</td>
 </tr>
 <tr>
 <td>§3 Escalate-to-111 triggers</td>
-<td>Encoded in the local-LLM system prompt <strong>and</strong> enforced by a hard dialplan fallback (defence in depth). <a href="Integration-Plan.md#6-safetyfallback-matrix">Integration-Plan §6</a>.</td>
+<td>Encoded in the local-LLM system prompt <strong>and</strong> enforced by a hard dialplan fallback (defence in depth). <a href="integration-plan/#6-safetyfallback-matrix">Integration-Plan §6</a>.</td>
 </tr>
 <tr>
 <td>§4 Pre-brief (aid only, ERT decides)</td>
-<td>The local LLM produces the structured summary; written to the <code>ai_*</code> incident fields. <a href="Integration-Plan.md#5-incident-logging-ai_-fields">Integration-Plan §5</a>.</td>
+<td>The local LLM produces the structured summary; written to the <code>ai_*</code> incident fields. <a href="integration-plan/#5-incident-logging-ai_-fields">Integration-Plan §5</a>.</td>
 </tr>
 <tr>
 <td>§5 Hard limits (AI may / may NOT)</td>
-<td>Prompt constraints + <strong>no</strong> AVA tools wired that could close/reject/page. <a href="Integration-Plan.md#6-safetyfallback-matrix">Integration-Plan §6</a>.</td>
+<td>Prompt constraints + <strong>no</strong> AVA tools wired that could close/reject/page. <a href="integration-plan/#6-safetyfallback-matrix">Integration-Plan §6</a>.</td>
 </tr>
 <tr>
 <td>§6 Failure handling</td>
-<td>Dialplan <code>Stasis()</code> failure branch → 111; transfer-fail → missed-incident record. <a href="Integration-Plan.md#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>.</td>
+<td>Dialplan <code>Stasis()</code> failure branch → 111; transfer-fail → missed-incident record. <a href="integration-plan/#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>.</td>
 </tr>
 <tr>
 <td>§8 Deployment &amp; privacy (keep audio local)</td>
-<td><strong>Fully local stack → audio never leaves campus.</strong> STT (faster-whisper/Vosk), LLM (Ollama/llama.cpp) and TTS (Piper) all run on-prem; zero cloud egress, no keys. This <em>strengthens</em> the privacy posture. <a href="Integration-Plan.md#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>.</td>
+<td><strong>Fully local stack → audio never leaves campus.</strong> STT (faster-whisper/Vosk), LLM (Ollama/llama.cpp) and TTS (Piper) all run on-prem; zero cloud egress, no keys. This <em>strengthens</em> the privacy posture. <a href="integration-plan/#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>.</td>
 </tr>
 <tr>
 <td>§9 Health checks</td>
@@ -3778,8 +3778,8 @@ coach) → voicemail.</strong> Bringing up 101 does not touch 102; 102 remains t
 <td><a href="deployment/#6-phased-rollout">deployment.md §6</a>.</td>
 </tr>
 <tr>
-<td><a href="../SOP/12-Incident-Logging-Schema.md">SOP 12</a> §5 <code>ai_*</code> fields</td>
-<td><a href="Integration-Plan.md#5-incident-logging-ai_-fields">Integration-Plan §5</a>.</td>
+<td><a href="../operations/incident-logging-schema/">SOP 12</a> §5 <code>ai_*</code> fields</td>
+<td><a href="integration-plan/#5-incident-logging-ai_-fields">Integration-Plan §5</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -3800,7 +3800,7 @@ coach) → voicemail.</strong> Bringing up 101 does not touch 102; 102 remains t
   availability inside the QEMU VM, and — critically — <strong>a host with enough CPU/GPU to run
   Whisper+LLM+Piper in real time</strong> (the current TCG VM cannot; see
   <a href="deployment/#1-topology">deployment.md §1</a>). These are called out inline and in
-  <a href="TODO.md"><code>TODO.md</code></a>.</li>
+  <a href="todo/"><code>TODO.md</code></a>.</li>
 </ul>
 <blockquote>
 <p>The <strong>locked</strong> thing is the emergency behaviour (SOP 19), not AVA. If AVA proves
@@ -3829,7 +3829,7 @@ unsuitable, the same dialplan contract (<code>101 → triage → escalate to 111
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

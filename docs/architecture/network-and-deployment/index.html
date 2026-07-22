@@ -3924,8 +3924,8 @@
 
 <h1 id="upes-ecs-network-deployment-topology">UPES-ECS — Network &amp; Deployment Topology<a class="headerlink" href="#upes-ecs-network-deployment-topology" title="Permanent link">&para;</a></h1>
 <p>How UPES-ECS is wired and where it can run. This is the network companion to
-<a href="02-System-Architecture.md">02-System-Architecture.md</a> and the deep version of the
-<a href="../SOP/15-Local-Infrastructure-Diagram.md">Local Infrastructure Diagram</a>. Everything
+<a href="../system-architecture/">02-System-Architecture.md</a> and the deep version of the
+<a href="../../reference/local-infrastructure-diagram/">Local Infrastructure Diagram</a>. Everything
 here is <strong>LAN-only</strong> — no internet, cellular, cloud, PSTN, or SIP trunk anywhere in the
 path. Diagrams are Mermaid with an ASCII fallback for the primary topology.</p>
 <blockquote>
@@ -4023,7 +4023,7 @@ student Wi-Fi, and guest Wi-Fi cannot see the PBX at all.</p>
 </table>
 <p>VLAN/QoS is optional for the first pilot and recommended later; a dedicated <strong>voice
 VLAN</strong> for ERT/fixed devices is the clean way to satisfy client-isolation (§5) and
-prioritise emergency media. See <a href="../SOP/26-Security-Hardening.md">Security Hardening §2</a>.</p>
+prioritise emergency media. See <a href="../../guides/security-hardening/">Security Hardening §2</a>.</p>
 <hr />
 <h2 id="2-van-repeater-topology-mode-b">2. Van + repeater topology (Mode B)<a class="headerlink" href="#2-van-repeater-topology-mode-b" title="Permanent link">&para;</a></h2>
 <p>When campus power/infra is down, the PBX rides in a <strong>self-powered van</strong>, extended by
@@ -4060,7 +4060,7 @@ SOP. The van also doubles as <strong>failover</strong> for the campus PBX.</p>
 <li>Single SSID across all repeaters → phones roam seamlessly toward the van; overlapping coverage so one dead repeater degrades, not kills, coverage.</li>
 <li>Uplink stays <strong>LAN-only</strong> — the van hosts its own local network; 111 works with no internet.</li>
 <li>Each repeater + backhaul link is a <strong>critical device</strong> on the Health Dashboard.</li>
-<li>Full deployment SOP, readiness checklist, and power math: <a href="../SOP/23-Mobile-Van-Deployment.md">Mobile Van Deployment</a>.</li>
+<li>Full deployment SOP, readiness checklist, and power math: <a href="../../guides/mobile-van-deployment/">Mobile Van Deployment</a>.</li>
 </ul>
 <hr />
 <h2 id="3-multi-campus-wireless-bridge-later">3. Multi-campus wireless bridge (later)<a class="headerlink" href="#3-multi-campus-wireless-bridge-later" title="Permanent link">&para;</a></h2>
@@ -4078,7 +4078,7 @@ bridge</strong> (same backhaul tech family as the van repeaters). Out of scope f
     BP --- BR
     BR &lt;-. line-of-sight P2P bridge .-&gt; KR
     KR --- KL</code></pre>
-<p>Detail and design: <a href="../SOP/20-Multi-Campus-Wireless.md">Multi-Campus Wireless</a>.</p>
+<p>Detail and design: <a href="../../guides/multi-campus-wireless/">Multi-Campus Wireless</a>.</p>
 <hr />
 <h2 id="4-ports-firewall">4. Ports &amp; firewall<a class="headerlink" href="#4-ports-firewall" title="Permanent link">&para;</a></h2>
 <p>Minimal surface, LAN-only, default-deny. No rule permits the public internet anywhere.</p>
@@ -4138,8 +4138,8 @@ bridge</strong> (same backhaul tech family as the van repeaters). Out of scope f
 </tbody>
 </table>
 <ul>
-<li><code>allowguest=no</code>, no anonymous endpoint; <strong>fail2ban</strong> Asterisk jail bans repeated failed auth; per-account concurrent-call limits protect the 111 queue. See <a href="../SOP/26-Security-Hardening.md">Security Hardening §1–5</a>.</li>
-<li>Media confidentiality (TLS/SIP + SRTP) is a <strong>planned</strong> hardening item, not yet enabled — <a href="../SOP/26-Security-Hardening.md">Security Hardening §4</a>.</li>
+<li><code>allowguest=no</code>, no anonymous endpoint; <strong>fail2ban</strong> Asterisk jail bans repeated failed auth; per-account concurrent-call limits protect the 111 queue. See <a href="../../guides/security-hardening/">Security Hardening §1–5</a>.</li>
+<li>Media confidentiality (TLS/SIP + SRTP) is a <strong>planned</strong> hardening item, not yet enabled — <a href="../../guides/security-hardening/">Security Hardening §4</a>.</li>
 </ul>
 <hr />
 <h2 id="5-wi-fi-client-isolation-the-one-setting-that-silently-breaks-everything">5. Wi-Fi client isolation — the one setting that silently breaks everything<a class="headerlink" href="#5-wi-fi-client-isolation-the-one-setting-that-silently-breaks-everything" title="Permanent link">&para;</a></h2>
@@ -4159,7 +4159,7 @@ until it isn't.</p>
 2. Add an <strong>explicit allow</strong> so Wi-Fi clients can reach the PBX IP on 5060/udp + 10000–20000/udp even with isolation on.
 3. Move voice devices to a <strong>dedicated voice SSID/VLAN</strong> with isolation off.</p>
 <p><strong>Always</strong> keep guest Wi-Fi isolated <em>and</em> blocked from the PBX. Verify with a real SIP
-registration + a 199 call over Wi-Fi before relying on the system (<a href="../SOP/03-Drill-Test-SOP.md">Drill SOP §4</a>).</p>
+registration + a 199 call over Wi-Fi before relying on the system (<a href="../../operations/drill-test-sop/">Drill SOP §4</a>).</p>
 <hr />
 <h2 id="6-addressing-naming">6. Addressing &amp; naming<a class="headerlink" href="#6-addressing-naming" title="Permanent link">&para;</a></h2>
 <table>
@@ -4243,7 +4243,7 @@ one more thing that can fail in a disaster and the emergency line must not depen
 </table>
 <p>Test before rollout: Wi-Fi registration, 111/199 calling, SAP-ID calling, two-way
 audio, screen-lock behaviour, recording, simultaneous calls, and that emergency calls
-stay priority under load (<a href="../SOP/15-Local-Infrastructure-Diagram.md">Local Infra §6</a>).</p>
+stay priority under load (<a href="../../reference/local-infrastructure-diagram/">Local Infra §6</a>).</p>
 <hr />
 <h2 id="8-deployment-mode-comparison">8. Deployment-mode comparison<a class="headerlink" href="#8-deployment-mode-comparison" title="Permanent link">&para;</a></h2>
 <table>
@@ -4301,7 +4301,7 @@ stay priority under load (<a href="../SOP/15-Local-Infrastructure-Diagram.md">Lo
 </tbody>
 </table>
 <p>Same numbers and SOP everywhere means an operator never re-learns the system when the
-deployment changes — only the wires and power do. Architecture-level view: <a href="02-System-Architecture.md">Architecture §6</a>.</p>
+deployment changes — only the wires and power do. Architecture-level view: <a href="../system-architecture/">Architecture §6</a>.</p>
 <hr />
 <h2 id="9-tbd-collect-from-upes-it-before-go-live">9. TBD — collect from UPES IT before go-live<a class="headerlink" href="#9-tbd-collect-from-upes-it-before-go-live" title="Permanent link">&para;</a></h2>
 <p>These are unknowns that block final wiring, flagged per the README:</p>
@@ -4310,16 +4310,16 @@ deployment changes — only the wires and power do. Architecture-level view: <a 
 <li>[ ] <strong>Wi-Fi SSID(s)</strong> — student / staff / voice SSID names.</li>
 <li>[ ] <strong>Client-isolation status</strong> — is it on? which fix (§5) applies?</li>
 <li>[ ] <strong>Router / switch / AP models</strong> — for ACL/VLAN/QoS capability.</li>
-<li>[ ] <strong>Van power sizing</strong> — battery Ah + generator kW + fuel reserve + repeater count/placement (<a href="../SOP/23-Mobile-Van-Deployment.md">Van SOP §9</a>).</li>
+<li>[ ] <strong>Van power sizing</strong> — battery Ah + generator kW + fuel reserve + repeater count/placement (<a href="../../guides/mobile-van-deployment/">Van SOP §9</a>).</li>
 </ul>
 <hr />
 <h2 id="cross-references">Cross-references<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Static architecture &amp; components → <a href="02-System-Architecture.md">02-System-Architecture.md</a></li>
-<li>What travels these paths (call flows) → <a href="03-Call-Flows.md">03-Call-Flows.md</a></li>
-<li>On-the-ground infra &amp; quality → <a href="../SOP/15-Local-Infrastructure-Diagram.md">Local Infrastructure Diagram</a></li>
-<li>Van &amp; repeaters → <a href="../SOP/23-Mobile-Van-Deployment.md">Mobile Van Deployment</a></li>
-<li>Firewall / hardening → <a href="../SOP/26-Security-Hardening.md">Security Hardening</a></li>
+<li>Static architecture &amp; components → <a href="../system-architecture/">02-System-Architecture.md</a></li>
+<li>What travels these paths (call flows) → <a href="../call-flows/">03-Call-Flows.md</a></li>
+<li>On-the-ground infra &amp; quality → <a href="../../reference/local-infrastructure-diagram/">Local Infrastructure Diagram</a></li>
+<li>Van &amp; repeaters → <a href="../../guides/mobile-van-deployment/">Mobile Van Deployment</a></li>
+<li>Firewall / hardening → <a href="../../guides/security-hardening/">Security Hardening</a></li>
 </ul>
 
 
@@ -4343,7 +4343,7 @@ deployment changes — only the wires and power do. Architecture-level view: <a 
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

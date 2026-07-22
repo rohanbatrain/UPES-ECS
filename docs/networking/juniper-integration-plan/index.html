@@ -4412,13 +4412,13 @@ repo, and is graded by impact/effort so you can pick.</p>
 <p><strong>Scope note.</strong> This is a <em>planning + ideas</em> document — the catalogue, the architecture, the
 decisions, and config <em>sketches</em>. It complements (does not replace) the three existing
 hands-on Juniper guides:
-- <a href="Juniper.md">Docs/Juniper.md</a> — the flat, no-VLAN pilot (current QEMU-on-laptop deployment).
-- <a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — voice VLAN + CoS + PoE + firewall for the <strong>VIP</strong> HA cluster.
-- <a href="../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — same, for the <strong>name-failover</strong> (no-VIP) cluster.</p>
+- <a href="../juniper/">Docs/Juniper.md</a> — the flat, no-VLAN pilot (current QEMU-on-laptop deployment).
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — voice VLAN + CoS + PoE + firewall for the <strong>VIP</strong> HA cluster.
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — same, for the <strong>name-failover</strong> (no-VIP) cluster.</p>
 <p>Where those already carry a full <code>set</code>-command block (CoS, the SRX zone policy), this plan
 <em>references</em> them rather than repeating them, and spends its length on <strong>new</strong> ideas.</p>
 <p><strong>Want the complete menu, not just the curated picks?</strong> See the companion
-<a href="Juniper-Feature-Catalogue.md">Docs/Juniper-Feature-Catalogue.md</a> — <em>every</em> addable Juniper
+<a href="../juniper-feature-catalogue/">Docs/Juniper-Feature-Catalogue.md</a> — <em>every</em> addable Juniper
 feature on your exact hardware, each graded for the air-gap (🟢 offline / 🟡 persisted / 🔴 cloud).</p>
 </blockquote>
 <hr />
@@ -4586,7 +4586,7 @@ LAN-only and the clock that keeps it honest.</em></p>
 <hr />
 <h2 id="2-the-one-big-constraint-air-gapped-a-cloud-managed-ap">2. The one big constraint: air-gapped + a cloud-managed AP<a class="headerlink" href="#2-the-one-big-constraint-air-gapped-a-cloud-managed-ap" title="Permanent link">&para;</a></h2>
 <p>You chose <strong>fully offline / air-gapped</strong>, and the golden rule of this project is <em>"111 never
-depends on AI, internet, or cellular"</em> (<a href="../README.md#golden-rules">README</a>). That is exactly
+depends on AI, internet, or cellular"</em> (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/README.md#golden-rules">README</a>). That is exactly
 right — <strong>and it collides head-on with the AP32 being a cloud-managed access point.</strong> Facing
 that squarely is what keeps this plan honest.</p>
 <p><strong>What actually happens to an AP32 with no Internet:</strong></p>
@@ -4629,8 +4629,8 @@ offline emergency Wi-Fi. Just know the trade you're making.</p>
 <hr />
 <h2 id="3-target-architecture">3. Target architecture<a class="headerlink" href="#3-target-architecture" title="Permanent link">&para;</a></h2>
 <p>One voice fabric, two Wi-Fi cells, one guarded edge. Works for <strong>both</strong> current deployment
-shapes: the single <strong>QEMU-PBX-on-a-laptop</strong> (flat, <a href="Juniper.md">Docs/Juniper.md</a>) <em>and</em> the
-<strong>2-Jetson HA cluster</strong> (<a href="../deploy/jetson/README.md">deploy/jetson</a>).</p>
+shapes: the single <strong>QEMU-PBX-on-a-laptop</strong> (flat, <a href="../juniper/">Docs/Juniper.md</a>) <em>and</em> the
+<strong>2-Jetson HA cluster</strong> (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/README.md">deploy/jetson</a>).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>              Internet  (absent by default; maintenance-window only — Option B)
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  │
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>             ┌────┴─────┐  ge-0/0/0 = untrust/WAN
@@ -4690,8 +4690,8 @@ shapes: the single <strong>QEMU-PBX-on-a-laptop</strong> (flat, <a href="Juniper
 </table>
 <p>The RTP range (<code>10000–10019/udp</code>), SIP (<code>5060/udp</code>), CardDAV (<code>5232/tcp</code>), status API (<code>:8090</code>),
 Console (<code>:8080</code>) all come from this repo — keep the firewall/QoS ranges pinned to
-<a href="../deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> and
-<a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>.</p>
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> and
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>.</p>
 <hr />
 <h2 id="4-key-design-decisions-decide-these-first">4. Key design decisions (decide these first)<a class="headerlink" href="#4-key-design-decisions-decide-these-first" title="Permanent link">&para;</a></h2>
 <p>These four choices shape everything downstream. Recommendations given; each is reversible.</p>
@@ -4788,7 +4788,7 @@ below the table).</p>
 </tbody>
 </table>
 <p>For T0.3 / T0.6 config, use the ready blocks in
-<a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md §5 &amp; §9</a>. New spotlights:</p>
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md §5 &amp; §9</a>. New spotlights:</p>
 <h4 id="t01-virtual-chassis-two-ex2300-c-as-one-switch">T0.1 — Virtual Chassis (two EX2300-C as one switch)<a class="headerlink" href="#t01-virtual-chassis-two-ex2300-c-as-one-switch" title="Permanent link">&para;</a></h4>
 <p>Cable the two members with a <strong>DAC on the SFP+ ports</strong> and make those ports VCPs. Result: one
 logical switch, <code>member0</code>/<code>member1</code>, single config, voice VLAN present on both by nature.</p>
@@ -5013,7 +5013,7 @@ Junos on the LAN</strong>.</p>
 <tr>
 <td><strong>T3.1</strong> ⭐</td>
 <td>Network Health on the Console/TV</td>
-<td><strong>NETCONF/PyEZ</strong> poll → new <code>/network</code> route in <a href="../Console/README.md">Console/Serve.ps1</a> → panel on <code>tv-ops.html</code></td>
+<td><strong>NETCONF/PyEZ</strong> poll → new <code>/network</code> route in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/Console/README.md">Console/Serve.ps1</a> → panel on <code>tv-ops.html</code></td>
 <td>Ops board shows which APs/phones are up, PoE draw vs 124 W budget, LLDP neighbours, CoS queue drops — beside the call KPIs. One glass.</td>
 <td style="text-align: center;">🟢</td>
 </tr>
@@ -5082,7 +5082,7 @@ source for the Ops board — no SNMP server, no cloud.</p>
 <p><strong>The headline offline idea.</strong> When a phone dials 111, Asterisk knows its <strong>contact IP</strong>. The EX
 knows <strong>IP → MAC</strong> (ARP on <code>irb.30</code>) and <strong>MAC → port</strong> (<code>show ethernet-switching table</code>). A port
 maps to a <strong>room</strong> — and this repo <em>already carries a <code>location</code> column</em> in
-<a href="../provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> (<code>Main Gate</code>, <code>Hostel B
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> (<code>Main Gate</code>, <code>Hostel B
 Corridor</code>, …). Chain them and the responder sees <strong>"111 from ge-0/0/7 → Hostel B Corridor"</strong> with
 <strong>zero cloud</strong>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Asterisk 111 event ──▶ caller IP (e.g. 10.20.30.63)
@@ -5244,7 +5244,7 @@ and treat Mist Location as a Phase-2 upgrade gated on Option B. Don't design 111
 <hr />
 <h3 id="tier-6-van-mesh-multi-site">Tier 6 — Van, mesh &amp; multi-site<a class="headerlink" href="#tier-6-van-mesh-multi-site" title="Permanent link">&para;</a></h3>
 <p>The project ships a <strong>disaster-response van with "corner repeaters"</strong> and a future
-<strong>Bidholi↔Kandoli</strong> link (<a href="../SOP/23-Mobile-Van-Deployment.md">SOP/23</a>, SOP/20). Juniper fits the
+<strong>Bidholi↔Kandoli</strong> link (<a href="../../guides/mobile-van-deployment/">SOP/23</a>, SOP/20). Juniper fits the
 van cleanly; the long-range link honestly does not fit <em>this</em> hardware.</p>
 <table>
 <thead>
@@ -5332,7 +5332,7 @@ van cleanly; the long-range link honestly does not fit <em>this</em> hardware.</
 <tr>
 <td><strong>T7.5</strong></td>
 <td>Fold into existing health/admin</td>
-<td>Extend <a href="../scripts/">scripts/</a> health check + Console <strong>Admin</strong> views (Serve.ps1)</td>
+<td>Extend <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/">scripts/</a> health check + Console <strong>Admin</strong> views (Serve.ps1)</td>
 <td>One place to see PBX <strong>and</strong> network health; one place to trigger a rebind or a PoE bounce.</td>
 <td style="text-align: center;">🟢</td>
 </tr>
@@ -5421,7 +5421,7 @@ offline. This is the procedure that makes cloud APs behave as offline emergency 
   (gRPC dial-out + native-UDP sensors, Junos 20.2R1+: PFE CPU/mem/filter stats, physical-interface
   traffic, RE LACP/chassis-env/LLDP/ARP) but <strong>not gNMI</strong>; <strong>SRX300/320 have no streaming telemetry
   at all</strong>. So lean on <strong>SNMP/RMON + RPM + sFlow(EX)/J-Flow(SRX) + structured syslog</strong> (T1.4, T3.x),
-  not model-driven telemetry. Full detail in the <a href="Juniper-Feature-Catalogue.md">Feature Catalogue</a>.</li>
+  not model-driven telemetry. Full detail in the <a href="../juniper-feature-catalogue/">Feature Catalogue</a>.</li>
 <li><strong>Virtual Chassis = one upgrade/control-plane domain.</strong> The convenience (D1) costs you failure
   isolation; mitigate with <code>commit confirmed</code>, dual VCP, and staged upgrades — or run independent
   switches if you value isolation more than simplicity.</li>
@@ -5529,12 +5529,12 @@ failover mechanism the whole HA story depends on.</p>
 - 🔴 <strong>Needs live cloud</strong> — Mist Marvis/Location/webhooks; commissioning-time or Option-B only; 111
   never depends on these.</p>
 <p><strong>Existing docs this plan builds on:</strong>
-- <a href="Juniper.md">Docs/Juniper.md</a> — flat no-VLAN pilot (current QEMU-on-laptop deployment).
-- <a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — VIP-HA VLAN/CoS/PoE/firewall (reuse the CoS + SRX blocks).
-- <a href="../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — name-failover variant + the multicast/mDNS notes.
-- <a href="../deploy/qemu/Test-UpesNetwork.ps1">deploy/qemu/Test-UpesNetwork.ps1</a> — the readiness check to extend with switch/AP checks.
-- <a href="../deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> · <a href="../deploy/asterisk/pjsip.conf">pjsip.conf</a> — the RTP/SIP ranges that pin the QoS/firewall values.
-- <a href="../provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> — the <code>location</code> column <a href="#t32--offline-caller-location-by-switch-port-">T3.2</a> joins against.</p>
+- <a href="../juniper/">Docs/Juniper.md</a> — flat no-VLAN pilot (current QEMU-on-laptop deployment).
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — VIP-HA VLAN/CoS/PoE/firewall (reuse the CoS + SRX blocks).
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — name-failover variant + the multicast/mDNS notes.
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/Test-UpesNetwork.ps1">deploy/qemu/Test-UpesNetwork.ps1</a> — the readiness check to extend with switch/AP checks.
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> · <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">pjsip.conf</a> — the RTP/SIP ranges that pin the QoS/firewall values.
+- <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> — the <code>location</code> column <a href="#t32--offline-caller-location-by-switch-port-">T3.2</a> joins against.</p>
 <p><strong>Blanket disclaimer (same as the jetson guides):</strong> every <code>set</code>/RPC block here is a <em>sketch</em> in
 standard Junos/Mist patterns. <strong>Syntax varies by platform and Junos version (EX2300-C ELS, SRX300/
 320, AP32 firmware).</strong> Validate on the real gear, apply with <code>commit confirmed 5</code>, and test <strong>199
@@ -5564,7 +5564,7 @@ standard Junos/Mist patterns. <strong>Syntax varies by platform and Junos versio
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

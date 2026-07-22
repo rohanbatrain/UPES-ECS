@@ -3987,17 +3987,17 @@ recurring at scale.</p>
 <p><strong>How to read this doc.</strong> Each issue is written as <strong>Symptom → Root cause → Immediate
 fix (what we did in the field) → Production mitigation (how to prevent it entirely at
 scale)</strong>. The build-time roadblocks that pre-date this test live in
-<a href="Roadblocks-and-Solutions.md">Roadblocks-and-Solutions.md</a>; this doc is the <em>field-test</em>
+<a href="../roadblocks-and-solutions/">Roadblocks-and-Solutions.md</a>; this doc is the <em>field-test</em>
 companion and cross-references it where the same root cause recurs.</p>
 </blockquote>
 <p>Related documents:
-<a href="../SOP/05-Student-SIP-Setup-Guide.md">SOP 05 – Student SIP Setup Guide</a> ·
-<a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 – Device Provisioning Sheet</a> ·
-<a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24 – Mobile App Reliability &amp; Battery</a> ·
-<a href="../deploy/qemu/README.md">QEMU deployment README</a> ·
-<a href="../config/extensions_custom.conf">config/extensions_custom.conf</a> ·
-<a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a> ·
-<a href="Roadblocks-and-Solutions.md">Roadblocks-and-Solutions.md</a></p>
+<a href="../../guides/student-sip-setup/">SOP 05 – Student SIP Setup Guide</a> ·
+<a href="../../guides/device-provisioning/">SOP 14 – Device Provisioning Sheet</a> ·
+<a href="../../reference/mobile-app-reliability/">SOP 24 – Mobile App Reliability &amp; Battery</a> ·
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md">QEMU deployment README</a> ·
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf">config/extensions_custom.conf</a> ·
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a> ·
+<a href="../roadblocks-and-solutions/">Roadblocks-and-Solutions.md</a></p>
 <hr />
 <h2 id="issue-1-registration-hangs-on-operation-in-progress-wrong-transport">Issue 1 — Registration hangs on "Operation in progress" (wrong transport)<a class="headerlink" href="#issue-1-registration-hangs-on-operation-in-progress-wrong-transport" title="Permanent link">&para;</a></h2>
 <p><strong>Symptom.</strong> A phone opened Linphone, entered SAP ID + password + domain, and the account
@@ -4005,7 +4005,7 @@ sat forever on <strong>"Operation in progress…"</strong> and never went green/
 timeout, just a hang. On the server there was <strong>zero trace</strong> of the phone.</p>
 <p><strong>Root cause.</strong> Linphone defaulted the account <strong>Transport</strong> to <strong>TLS</strong> (or TCP). The
 UPES-ECS test server is <strong>UDP-only</strong> (<code>transport-udp</code>, <code>bind=0.0.0.0:5060</code>, protocol
-<code>udp</code> — see <a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>). The phone's
+<code>udp</code> — see <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>). The phone's
 <code>REGISTER</code> was sent over a transport the server never listens on, so it got <strong>no reply</strong>
 and the client just kept "in progress." Because nothing UDP left the phone for 5060, <strong>not
 a single SIP packet reached the PBX</strong> — from the server's point of view the phone did not
@@ -4031,7 +4031,7 @@ exist.</p>
    site PBX IP) from the phone's network tools — prove L3 reachability <em>before</em> debugging
    SIP. See the runbook.</li>
 </ol>
-<p>Related: <a href="../SOP/05-Student-SIP-Setup-Guide.md">SOP 05 – Student SIP Setup Guide</a> (the
+<p>Related: <a href="../../guides/student-sip-setup/">SOP 05 – Student SIP Setup Guide</a> (the
 Transport line there must read <strong>UDP</strong>, not "unless IT tells you otherwise").</p>
 <hr />
 <h2 id="issue-2-91-country-code-auto-prepended-to-sap-ids">Issue 2 — <code>+91</code> country code auto-prepended to SAP IDs<a class="headerlink" href="#issue-2-91-country-code-auto-prepended-to-sap-ids" title="Permanent link">&para;</a></h2>
@@ -4046,7 +4046,7 @@ extension pattern (<code>_5XXXXXXXX</code> expects exactly the 9 digits), so the
 <ul>
 <li><strong>Server</strong> — added a strip rule to <code>ctx_student</code> so a mis-dialed <code>+91…</code> is normalized
   back to the bare extension (now committed in
-  <a href="../config/extensions_custom.conf">config/extensions_custom.conf</a>):</li>
+  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf">config/extensions_custom.conf</a>):</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>; strip the +91 country code some softphones auto-prepend, then re-enter
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>exten =&gt; _+91X.,1,Goto(${EXTEN:3},1)
@@ -4084,11 +4084,11 @@ each other</strong>, taking the PBX out of the media path. Behind SLIRP that fai
   (which it told the phones to send peer-to-peer) goes into a black hole.</strong></li>
 </ul>
 <p>This is the same class of problem as build-time roadblock <strong>1.6</strong> (SLIRP hides real client
-IPs) in <a href="Roadblocks-and-Solutions.md#16-hosting-a-sip-server-behind-qemu-user-mode-nat-slirp">Roadblocks-and-Solutions.md</a>
+IPs) in <a href="../roadblocks-and-solutions/#16-hosting-a-sip-server-behind-qemu-user-mode-nat-slirp">Roadblocks-and-Solutions.md</a>
 and <strong>1.1</strong> (container NAT mangles RTP).</p>
 <p><strong>Immediate fix (field).</strong> Force the PBX to <strong>relay</strong> the RTP (stay in the media path) and
 tell it its real reachable address. On the endpoint template in
-<a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>:</p>
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="na">[endpoint-tpl](!)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">type</span><span class="o">=</span><span class="s">endpoint</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">disallow</span><span class="o">=</span><span class="s">all</span>
@@ -4116,7 +4116,7 @@ is ever attempted. Audio came up both ways immediately.</p>
    <strong>own DHCP LAN address</strong> and sits on the LAN as a first-class host. That <strong>removes SLIRP
    entirely</strong> and with it this entire class of NAT-media failures — no <code>external_*_address</code>,
    no port-forward, no fixed-range juggling. This is already flagged as the "truly
-   zero-touch" target in the <a href="../deploy/qemu/README.md">QEMU deployment README</a>.</li>
+   zero-touch" target in the <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md">QEMU deployment README</a>.</li>
 <li><strong>On native/bridged, <code>direct_media</code> can even be re-enabled</strong> (phones on the same flat LAN
    can legitimately talk peer-to-peer), reducing PBX CPU/bandwidth — but keep
    <code>direct_media=no</code> unless you have a specific reason and have tested it, because relaying
@@ -4146,7 +4146,7 @@ one.</p>
 <li><strong>Profile / QR provisioning removes per-phone manual error.</strong> If SAP ID, password,
    domain, and transport come from a <strong>scanned config</strong>, there is nothing to typo. See
    <a href="#a-production-phone-provisioning-do-it-once-right">Section A</a> and
-   <a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 – Device Provisioning Sheet</a>.</li>
+   <a href="../../guides/device-provisioning/">SOP 14 – Device Provisioning Sheet</a>.</li>
 <li><strong>A reachability + registration self-test is the onboarding gate.</strong> Before a device is
    marked <strong>Active</strong>, it must pass: <code>ping PBX</code> → <strong>Registered (green)</strong> → <strong>dial 198</strong>
    (echo) → <strong>dial 199</strong> (drill) → <strong>dial 111</strong> (or a directory SAP ID). No green + no echo
@@ -4186,19 +4186,19 @@ ERT callbacks never rang.</strong></p>
 <p><strong>Root cause.</strong> Android <strong>battery optimization / background app suspension</strong> froze or killed
 the SIP app, which <strong>dropped its SIP registration</strong>. With no live registration the PBX has
 no contact to ring — so inbound calls (exactly the ERT-callback path) silently fail. This
-is <strong>Risk R2</strong> and the whole reason <a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24</a>
+is <strong>Risk R2</strong> and the whole reason <a href="../../reference/mobile-app-reliability/">SOP 24</a>
 exists.</p>
 <p><strong>Immediate fix (field).</strong> Applied the per-OS battery/background exceptions (Unrestricted,
 allow background, allow auto-start, don't swipe-kill) and re-registered the app.</p>
 <p><strong>Production mitigation.</strong></p>
 <ol>
 <li><strong>Follow the per-OS steps in
-   <a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24 – Mobile App Reliability &amp; Battery</a></strong>
+   <a href="../../reference/mobile-app-reliability/">SOP 24 – Mobile App Reliability &amp; Battery</a></strong>
    — summarized in <a href="#b-keep-the-phone-registered-battery--background">Section B</a>.</li>
 <li><strong>Dedicated always-on-charger answer points.</strong> Critical inbound roles (ERT, control
    room, medical, security) run on <strong>fixed dedicated Android devices on the charger</strong>, not
    personal phones — treat them like appliances (SOP 24 §6, and
-   <a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 §3</a>).</li>
+   <a href="../../guides/device-provisioning/">SOP 14 §3</a>).</li>
 <li><strong>Tune keepalive / register expiry server-side</strong> so drops are detected fast and the
    registration path stays warm:</li>
 </ol>
@@ -4270,7 +4270,7 @@ prefix, codec, or encryption.</p>
 <p>The artifact <strong>must</strong> set: <strong>Domain</strong> = site PBX IP (<code>192.168.1.16</code> in this test),
 <strong>Transport = UDP</strong>, <strong>Media encryption = None</strong>, <strong>codecs = G.711 (ulaw/alaw)</strong>,
 <strong>international/dial-assistant prefix OFF</strong>. Credentials (SAP ID + one-time secret) come
-from <a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14</a>; secrets are per-account, never a
+from <a href="../../guides/device-provisioning/">SOP 14</a>; secrets are per-account, never a
 shared password.</p>
 <h3 id="a2-onboarding-self-test-the-gate-to-active">A.2 Onboarding self-test (the gate to "Active")<a class="headerlink" href="#a2-onboarding-self-test-the-gate-to-active" title="Permanent link">&para;</a></h3>
 <p>A device is not <strong>Active</strong> until it passes, in order:</p>
@@ -4281,7 +4281,7 @@ shared password.</p>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>5. dial 111 or a SAP ID     -&gt; reaches ERT / peer   =&gt; two-way audio confirmed
 </code></pre></div>
 <p>Record the result per device model (some Android brands need the SOP 24 battery steps
-before step 2 will <em>stay</em> green). This mirrors <a href="../SOP/05-Student-SIP-Setup-Guide.md">SOP 05 Step 4</a>.</p>
+before step 2 will <em>stay</em> green). This mirrors <a href="../../guides/student-sip-setup/">SOP 05 Step 4</a>.</p>
 <h3 id="a3-the-exact-correct-linphone-settings">A.3 The exact correct Linphone settings<a class="headerlink" href="#a3-the-exact-correct-linphone-settings" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4346,7 +4346,7 @@ before step 2 will <em>stay</em> green). This mirrors <a href="../SOP/05-Student
 <hr />
 <h2 id="b-keep-the-phone-registered-battery-background">B. Keep the phone registered (battery &amp; background)<a class="headerlink" href="#b-keep-the-phone-registered-battery-background" title="Permanent link">&para;</a></h2>
 <p>Full detail lives in
-<strong><a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24 – Mobile App Reliability &amp; Battery</a></strong>
+<strong><a href="../../reference/mobile-app-reliability/">SOP 24 – Mobile App Reliability &amp; Battery</a></strong>
 (Risk <strong>R2</strong>). This is a pointer + the essentials — <strong>do not treat this as the source of
 truth; SOP 24 is.</strong></p>
 <p><strong>The 7 essential rules (SOP 24 §1):</strong></p>
@@ -4385,7 +4385,7 @@ truth; SOP 24 is.</strong></p>
 <blockquote>
 <p><strong>Inbound is never 100% guaranteed on a personal phone.</strong> Critical answer points (ERT,
 control room, medical, security) run on <strong>dedicated always-on-charger devices</strong> —
-SOP 24 §6 and <a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 §3</a>. See SOP 24 for iOS
+SOP 24 §6 and <a href="../../guides/device-provisioning/">SOP 14 §3</a>. See SOP 24 for iOS
 guidance and the per-phone pilot checklist.</p>
 </blockquote>
 <hr />
@@ -4436,10 +4436,10 @@ NAT-media, or battery.</p>
 <hr />
 <p><em>This log covers the SIP/registration/audio issues that actually occurred during the live
 multi-phone field test, with production mitigations. It is the field-test companion to
-<a href="Roadblocks-and-Solutions.md">Roadblocks-and-Solutions.md</a> and is maintained alongside the
+<a href="../roadblocks-and-solutions/">Roadblocks-and-Solutions.md</a> and is maintained alongside the
 config it references —
-<a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>,
-<a href="../config/extensions_custom.conf">config/extensions_custom.conf</a>.</em></p>
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>,
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf">config/extensions_custom.conf</a>.</em></p>
 
 
 
@@ -4462,7 +4462,7 @@ config it references —
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

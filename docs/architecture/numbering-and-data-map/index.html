@@ -4069,8 +4069,8 @@
 <h1 id="upes-ecs-numbering-data-map">UPES-ECS Numbering &amp; Data Map<a class="headerlink" href="#upes-ecs-numbering-data-map" title="Permanent link">&para;</a></h1>
 <p>Two things in one place: <strong>every number</strong> the system uses, and <strong>where every byte of
 data lives</strong> — its path, retention, and who may touch it. The authoritative source for
-numbers is <a href="../SOP/01-Numbering-Plan.md">SOP 01 Numbering Plan</a>; the data model comes
-from <a href="../SOP/12-Incident-Logging-Schema.md">SOP 12</a> and <a href="../SOP/13-Recording-Retention-Policy.md">SOP 13</a>.
+numbers is <a href="../../reference/numbering-plan/">SOP 01 Numbering Plan</a>; the data model comes
+from <a href="../../operations/incident-logging-schema/">SOP 12</a> and <a href="../../operations/recording-retention/">SOP 13</a>.
 This document consolidates them for the engineer.</p>
 <hr />
 <h2 id="1-the-consolidated-numbering-map">1. The consolidated numbering map<a class="headerlink" href="#1-the-consolidated-numbering-map" title="Permanent link">&para;</a></h2>
@@ -4142,7 +4142,7 @@ This document consolidates them for the engineer.</p>
 </blockquote>
 <h3 id="12-responder-positions-fixed-devices-40004999">1.2 Responder positions &amp; fixed devices (4000–4999)<a class="headerlink" href="#12-responder-positions-fixed-devices-40004999" title="Permanent link">&para;</a></h3>
 <p>Positions are generic roles <strong>staffed by shift</strong>, never personal accounts
-(<a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>). Confirmed positions in bold.</p>
+(<a href="../../operations/ert-roles-and-shifts/">SOP 30</a>). Confirmed positions in bold.</p>
 <table>
 <thead>
 <tr>
@@ -4414,8 +4414,8 @@ identifies the person</strong>; the <strong>context decides permissions</strong>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   retention-cleanup.sh (daily 03:30) ─► audited 90-day purge of recordings + voicemail
 </code></pre></div>
 <p>Helper scripts live in <code>/opt/upes-ecs/</code> and run as the <code>asterisk</code> user so the dialplan's
-<code>System()</code>/<code>${SHELL()}</code> can write (<a href="../config/README.md">config/README.md</a>,
-<a href="../setup.sh">setup.sh</a>).</p>
+<code>System()</code>/<code>${SHELL()}</code> can write (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md">config/README.md</a>,
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/setup.sh">setup.sh</a>).</p>
 <hr />
 <h2 id="3-where-every-byte-lives">3. Where every byte lives<a class="headerlink" href="#3-where-every-byte-lives" title="Permanent link">&para;</a></h2>
 <table>
@@ -4510,13 +4510,13 @@ incident</strong>. Deletion requires ERT Lead + authorized university IT/admin a
 <blockquote>
 <p><strong>TBD:</strong> final <strong>university retention policy</strong> — the legal retention period (may extend
 beyond 90 days) and preservation/legal-hold process are for UPES administration to
-confirm (<a href="../SOP/13-Recording-Retention-Policy.md">SOP 13 §8</a>).</p>
+confirm (<a href="../../operations/recording-retention/">SOP 13 §8</a>).</p>
 </blockquote>
 <hr />
 <h2 id="4-incident-record-schema">4. Incident record schema<a class="headerlink" href="#4-incident-record-schema" title="Permanent link">&para;</a></h2>
 <p>Every 111 call creates an incident — including false alarms (closed as such). Asterisk
 produces the raw telephony events; the <strong>incident record</strong> is what the ERT works from
-(<a href="../SOP/12-Incident-Logging-Schema.md">SOP 12</a>).</p>
+(<a href="../../operations/incident-logging-schema/">SOP 12</a>).</p>
 <h3 id="41-ids-filename-convention">4.1 IDs &amp; filename convention<a class="headerlink" href="#41-ids-filename-convention" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4697,9 +4697,9 @@ auto-closes</strong>; review within 5 minutes during active hours.</p>
 </table>
 <p><strong>Never allowed:</strong> students, general staff, normal SIP users, unauthenticated users,
 non-emergency roles. <strong>All recording/voicemail access is itself logged</strong> — least
-privilege, time-limited by retention (<a href="../SOP/13-Recording-Retention-Policy.md">SOP 13 §4</a>,
-<a href="../SOP/12-Incident-Logging-Schema.md">SOP 12 §6</a>). Full capability grid:
-<a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04</a>.</p>
+privilege, time-limited by retention (<a href="../../operations/recording-retention/">SOP 13 §4</a>,
+<a href="../../operations/incident-logging-schema/">SOP 12 §6</a>). Full capability grid:
+<a href="../../reference/sip-account-role-matrix/">SOP 04</a>.</p>
 
 
 
@@ -4722,7 +4722,7 @@ privilege, time-limited by retention (<a href="../SOP/13-Recording-Retention-Pol
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

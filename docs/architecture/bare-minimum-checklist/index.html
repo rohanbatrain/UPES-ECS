@@ -4045,7 +4045,7 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <tr>
 <td>4.2</td>
 <td>Pilot user accounts</td>
-<td>~10 SAP-ID accounts (<a href="../provisioning/pilot-users.csv">pilot-users.csv</a>)</td>
+<td>~10 SAP-ID accounts (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/pilot-users.csv">pilot-users.csv</a>)</td>
 <td>10–25</td>
 </tr>
 <tr>
@@ -4089,7 +4089,7 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <tr>
 <td>5.2</td>
 <td>Shift roster</td>
-<td>Who holds each position, per shift (<a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>)</td>
+<td>Who holds each position, per shift (<a href="../../operations/ert-roles-and-shifts/">SOP 30</a>)</td>
 <td>+ handover log signed</td>
 </tr>
 <tr>
@@ -4101,13 +4101,13 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <tr>
 <td>5.4</td>
 <td>Training</td>
-<td>ERT know the answer script + dispatch (<a href="../SOP/02-ERT-SOP.md">SOP 02</a>)</td>
-<td>Full <a href="../SOP/31-Training-Plan.md">Training Plan</a> + a drill</td>
+<td>ERT know the answer script + dispatch (<a href="../../operations/ert-sop/">SOP 02</a>)</td>
+<td>Full <a href="../../operations/training-plan/">Training Plan</a> + a drill</td>
 </tr>
 <tr>
 <td>5.5</td>
 <td>Desk references</td>
-<td><a href="../SOP/02-ERT-SOP.md">ERT SOP</a> + <a href="../SOP/25-Quick-Cards.md">Quick-Cards</a> printed</td>
+<td><a href="../../operations/ert-sop/">ERT SOP</a> + <a href="../../reference/quick-cards/">Quick-Cards</a> printed</td>
 <td>+ numbering + drill SOP</td>
 </tr>
 </tbody>
@@ -4127,26 +4127,26 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <tr>
 <td>6.1</td>
 <td>Emergency dialplan</td>
-<td>111 → queue → coach-in-parallel + background alert → voicemail live (<a href="../config/">config</a>)</td>
+<td>111 → queue → coach-in-parallel + background alert → voicemail live (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/">config</a>)</td>
 <td>+ paging/conference/dispatch</td>
 </tr>
 <tr>
 <td>6.2</td>
 <td>Recording</td>
 <td>111 recorded whole-call; files land + link to incident</td>
-<td>+ retention cron (<a href="../SOP/13-Recording-Retention-Policy.md">SOP 13</a>)</td>
+<td>+ retention cron (<a href="../../operations/recording-retention/">SOP 13</a>)</td>
 </tr>
 <tr>
 <td>6.3</td>
 <td>Incident logging</td>
 <td>Missed 111 → Missed Emergency Incident</td>
-<td>+ full incident schema (<a href="../SOP/12-Incident-Logging-Schema.md">SOP 12</a>)</td>
+<td>+ full incident schema (<a href="../../operations/incident-logging-schema/">SOP 12</a>)</td>
 </tr>
 <tr>
 <td>6.4</td>
 <td>Prompts</td>
 <td><code>emergency-preanswer</code>, <code>emergency-voicemail-prompt</code>, <code>drill-prompt</code> recorded</td>
-<td>all prompts (<a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28</a>)</td>
+<td>all prompts (<a href="../../reference/voice-prompt-scripts/">SOP 28</a>)</td>
 </tr>
 <tr>
 <td>6.5</td>
@@ -4158,7 +4158,7 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <td>6.6</td>
 <td>Backup</td>
 <td>One tested config backup taken</td>
-<td>daily + pre-change + tested restore (<a href="../SOP/11-Backup-Restore-Procedure.md">SOP 11</a>)</td>
+<td>daily + pre-change + tested restore (<a href="../../guides/backup-restore/">SOP 11</a>)</td>
 </tr>
 <tr>
 <td>6.7</td>
@@ -4169,7 +4169,7 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 </tbody>
 </table>
 <hr />
-<h2 id="go-live-gate-these-must-pass-sop-17-32">Go-live gate — these MUST pass (<a href="../SOP/17-Pilot-Test-Plan.md">SOP 17</a> / <a href="../SOP/32-Test-Evidence-Sheet.md">32</a>)<a class="headerlink" href="#go-live-gate-these-must-pass-sop-17-32" title="Permanent link">&para;</a></h2>
+<h2 id="go-live-gate-these-must-pass-sop-17-32">Go-live gate — these MUST pass (<a href="../../operations/pilot-test-plan/">SOP 17</a> / <a href="../../operations/test-evidence-sheet/">32</a>)<a class="headerlink" href="#go-live-gate-these-must-pass-sop-17-32" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] A registered softphone <strong>dials 111 → an ERT Android rings → answered</strong>.</li>
 <li>[ ] The call produces a <strong>recording</strong> linked to an incident ID.</li>
@@ -4190,9 +4190,9 @@ brief outage doesn't kill 111. The van solves this with autonomous power.</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Free software: Asterisk/FreePBX, Linphone, this repo&#39;s config/scripts
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>People: 2 trained ERT operators + 1 Lead + 1 IT admin (per shift)
 </code></pre></div>
-<p>That, plus the config in <a href="../config/">../config/</a> and the <a href="07-Deployment-Runbook.md">runbook</a>,
+<p>That, plus the config in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/">../config/</a> and the <a href="../deployment-runbook/">runbook</a>,
 is enough to answer real emergencies on 111. Everything else is resilience and reach.</p>
-<p>Full itemized kit (campus + van, minimum + recommended): <a href="05-Bill-of-Materials.md">05-Bill-of-Materials.md</a>.</p>
+<p>Full itemized kit (campus + van, minimum + recommended): <a href="../bill-of-materials/">05-Bill-of-Materials.md</a>.</p>
 
 
 
@@ -4215,7 +4215,7 @@ is enough to answer real emergencies on 111. Everything else is resilience and r
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

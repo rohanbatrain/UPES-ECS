@@ -3968,8 +3968,8 @@
 
 <h1 id="upes-ecs-call-flows">UPES-ECS — Call Flows<a class="headerlink" href="#upes-ecs-call-flows" title="Permanent link">&para;</a></h1>
 <p>Every call type on UPES-ECS, as sequence and flow diagrams with short narration.
-This is the <em>runtime</em> companion to <a href="02-System-Architecture.md">02-System-Architecture.md</a>
-(the static build) and the operational <a href="../SOP/02-ERT-SOP.md">ERT SOP</a>. Diagrams are
+This is the <em>runtime</em> companion to <a href="../system-architecture/">02-System-Architecture.md</a>
+(the static build) and the operational <a href="../../operations/ert-sop/">ERT SOP</a>. Diagrams are
 Mermaid with an ASCII fallback for the primary flow.</p>
 <blockquote>
 <p><strong>Golden rules that shape every flow below.</strong> 111 is <strong>human-first</strong> — no AI,
@@ -3985,7 +3985,7 @@ TTS coach); the richer <strong>local-first AI (101)</strong> only <em>upgrades</
 </blockquote>
 <hr />
 <h2 id="0-number-route-map">0. Number → route map<a class="headerlink" href="#0-number-route-map" title="Permanent link">&para;</a></h2>
-<p>Every dialable number and what it does. Authoritative source: <a href="../SOP/01-Numbering-Plan.md">Numbering Plan</a>.</p>
+<p>Every dialable number and what it does. Authoritative source: <a href="../../reference/numbering-plan/">Numbering Plan</a>.</p>
 <table>
 <thead>
 <tr>
@@ -4144,8 +4144,8 @@ position; the first to answer owns the incident, classifies it, and dispatches.<
 </code></pre></div>
 <ul>
 <li>Recording covers the <strong>whole call</strong>, not just the bridged segment (MixMonitor).</li>
-<li>"Healthy" queue = <strong>≥ 2 available</strong> positions (<a href="../SOP/03-Drill-Test-SOP.md">Drill SOP §4</a>).</li>
-<li>Six mandatory facts and the opening line: <a href="../SOP/02-ERT-SOP.md">ERT SOP Part A</a>.</li>
+<li>"Healthy" queue = <strong>≥ 2 available</strong> positions (<a href="../../operations/drill-test-sop/">Drill SOP §4</a>).</li>
+<li>Six mandatory facts and the opening line: <a href="../../operations/ert-sop/">ERT SOP Part A</a>.</li>
 </ul>
 <hr />
 <h2 id="2-111-no-responder-coach-in-parallel-with-reaching-a-human-disaster-ready">2. 111 — no responder → coach in parallel with reaching a human (disaster-ready)<a class="headerlink" href="#2-111-no-responder-coach-in-parallel-with-reaching-a-human-disaster-ready" title="Permanent link">&para;</a></h2>
@@ -4196,11 +4196,11 @@ works with <strong>no internet and no AI service</strong>.</p>
     K --&gt;|"8 message"| V["Emergency voicemail"]
     A -.-&gt;|"responder joins"| Q</code></pre>
 <ul>
-<li>The coach + prompts: <a href="../config/extensions_aihelpline.conf"><code>../config/extensions_aihelpline.conf</code></a>,
-  <a href="../scripts/gen-coach-prompts.sh"><code>../scripts/gen-coach-prompts.sh</code></a> (offline TTS).</li>
-<li>Background responder alert: <a href="../scripts/alert_responders.sh"><code>../scripts/alert_responders.sh</code></a>.</li>
-<li>Review workflow (listen → identify → <strong>call back</strong> → dispatch/close): <a href="../SOP/02-ERT-SOP.md">ERT SOP Part F</a>.</li>
-<li>EMD grounding (stay-on-line pre-arrival instructions; no redial loops): see <a href="../Journal/Feature-Roadmap.md">Journal/Feature-Roadmap.md</a> and the SOP 19 fallback matrix.</li>
+<li>The coach + prompts: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_aihelpline.conf"><code>../config/extensions_aihelpline.conf</code></a>,
+  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/gen-coach-prompts.sh"><code>../scripts/gen-coach-prompts.sh</code></a> (offline TTS).</li>
+<li>Background responder alert: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/alert_responders.sh"><code>../scripts/alert_responders.sh</code></a>.</li>
+<li>Review workflow (listen → identify → <strong>call back</strong> → dispatch/close): <a href="../../operations/ert-sop/">ERT SOP Part F</a>.</li>
+<li>EMD grounding (stay-on-line pre-arrival instructions; no redial loops): see <a href="../../project/roadmap/">Journal/Feature-Roadmap.md</a> and the SOP 19 fallback matrix.</li>
 </ul>
 <hr />
 <h2 id="3-199-drill-test-isolated-drill-only">3. 199 — drill / test (isolated, DRILL-ONLY)<a class="headerlink" href="#3-199-drill-test-isolated-drill-only" title="Permanent link">&para;</a></h2>
@@ -4222,8 +4222,8 @@ be mistaken for a real event.</p>
     Note over O,C: NO real dispatch · NO real paging&lt;br/&gt;escalation/paging/conf only if ERT Lead enables drill-mode
     O-&gt;&gt;A: drill log written (DRILL-ONLY)</code></pre>
 <ul>
-<li>Any authenticated user may self-test with 199; whether it exercises escalation/paging/conference is <strong>ERT-Lead-controlled drill mode</strong> (<a href="../SOP/03-Drill-Test-SOP.md">Drill SOP §1</a>).</li>
-<li>Guardrails (never casually use 111, never surprise-page, never leave a simulated miss unreviewed): <a href="../SOP/03-Drill-Test-SOP.md">Drill SOP §7</a>.</li>
+<li>Any authenticated user may self-test with 199; whether it exercises escalation/paging/conference is <strong>ERT-Lead-controlled drill mode</strong> (<a href="../../operations/drill-test-sop/">Drill SOP §1</a>).</li>
+<li>Guardrails (never casually use 111, never surprise-page, never leave a simulated miss unreviewed): <a href="../../operations/drill-test-sop/">Drill SOP §7</a>.</li>
 </ul>
 <hr />
 <h2 id="4-dispatch-warm-transfer-three-way-bridge">4. Dispatch — warm transfer &amp; three-way bridge<a class="headerlink" href="#4-dispatch-warm-transfer-three-way-bridge" title="Permanent link">&para;</a></h2>
@@ -4285,7 +4285,7 @@ ownership. The Operator stays <strong>Incident Owner</strong> until a handoff is
 </tr>
 </tbody>
 </table>
-<p>Full dispatch decision tree and quick-guide: <a href="../SOP/02-ERT-SOP.md">ERT SOP Part C</a>.</p>
+<p>Full dispatch decision tree and quick-guide: <a href="../../operations/ert-sop/">ERT SOP Part C</a>.</p>
 <hr />
 <h2 id="5-silent-call-protocol">5. Silent-call protocol<a class="headerlink" href="#5-silent-call-protocol" title="Permanent link">&para;</a></h2>
 <p>A 111 that connects but is <strong>silent, whispering, or sounds like distress</strong> is treated
@@ -4301,7 +4301,7 @@ caller's SAP ID (and location, if from a fixed device).</p>
     D --&gt; LOG["Log: silent emergency · severity critical · keep recording"]</code></pre>
 <ul>
 <li>One number by design: someone hiding from a threat only has to remember <strong>111</strong> — there is deliberately no separate silent line to choose under pressure.</li>
-<li>Full protocol: <a href="../SOP/02-ERT-SOP.md">ERT SOP Part I</a>.</li>
+<li>Full protocol: <a href="../../operations/ert-sop/">ERT SOP Part I</a>.</li>
 </ul>
 <hr />
 <h2 id="6-paging-a-zone-700-with-pin">6. Paging a zone (700 with PIN)<a class="headerlink" href="#6-paging-a-zone-700-with-pin" title="Permanent link">&para;</a></h2>
@@ -4328,9 +4328,9 @@ denied — is logged.</p>
         A-&gt;&gt;A: log Emergency Paging Attempt (OK)
     end</code></pre>
 <ul>
-<li>Zones: 700 all-campus, 701 academic, 702 hostels, 703 security gates, 704 medical/ERT, 705 admin/ops (<a href="../SOP/01-Numbering-Plan.md">Numbering Plan §4</a>).</li>
+<li>Zones: 700 all-campus, 701 academic, 702 hostels, 703 security gates, 704 medical/ERT, 705 admin/ops (<a href="../../reference/numbering-plan/">Numbering Plan §4</a>).</li>
 <li>Students/general staff are <strong>blocked</strong> from all paging codes; drill pages are prefixed <em>"Drill, drill, drill."</em> with prior notice.</li>
-<li>Message template and "use with care" rules: <a href="../SOP/02-ERT-SOP.md">ERT SOP Part D</a>.</li>
+<li>Message template and "use with care" rules: <a href="../../operations/ert-sop/">ERT SOP Part D</a>.</li>
 </ul>
 <hr />
 <h2 id="7-conference-9000-activation">7. Conference 9000 activation<a class="headerlink" href="#7-conference-9000-activation" title="Permanent link">&para;</a></h2>
@@ -4351,7 +4351,7 @@ when the ERT Lead needs live coordination. It is <strong>recorded when active</s
     Note over B: linked to Incident ID · limit 20 (side rooms 10)</code></pre>
 <ul>
 <li>Side rooms 9001–9004 (Security / Medical / Warden / Ops) are <strong>not recorded</strong> by default.</li>
-<li>"Do not open 9000 for every call": <a href="../SOP/02-ERT-SOP.md">ERT SOP Part E</a>. Surge posture (broadcast first, pull coordination into 9000): <a href="../SOP/02-ERT-SOP.md">ERT SOP Part J</a>.</li>
+<li>"Do not open 9000 for every call": <a href="../../operations/ert-sop/">ERT SOP Part E</a>. Surge posture (broadcast first, pull coordination into 9000): <a href="../../operations/ert-sop/">ERT SOP Part J</a>.</li>
 </ul>
 <hr />
 <h2 id="8-student-to-student-normal-call-not-recorded">8. Student-to-student (normal call, not recorded)<a class="headerlink" href="#8-student-to-student-normal-call-not-recorded" title="Permanent link">&para;</a></h2>
@@ -4369,7 +4369,7 @@ governed by context (<code>ctx_student</code> / <code>ctx_staff</code>).</p>
     PBX-&gt;&gt;B: ring
     B--&gt;&gt;A: talk (no recording · no incident)</code></pre>
 <ul>
-<li>Privacy by design: student calls stay private; only emergency traffic is recorded (<a href="02-System-Architecture.md">Architecture §7</a>).</li>
+<li>Privacy by design: student calls stay private; only emergency traffic is recorded (<a href="../system-architecture/">Architecture §7</a>).</li>
 </ul>
 <hr />
 <h2 id="9-101-ai-assistant-future-always-falls-back-to-111">9. 101 — AI assistant (future, always falls back to 111)<a class="headerlink" href="#9-101-ai-assistant-future-always-falls-back-to-111" title="Permanent link">&para;</a></h2>
@@ -4398,16 +4398,16 @@ line. 196 is its isolated test line.</p>
     end
     Note over AI,H: 111 never depends on AI; AI never blocks 111</code></pre>
 <ul>
-<li><strong>Do not</strong> alias 101 to 111 — 101 is reserved for the AI (<a href="../SOP/01-Numbering-Plan.md">Numbering Plan §1</a>).</li>
-<li>Design principle: 111 is human-first and AI always falls back to it (<a href="02-System-Architecture.md">Architecture §7</a>).</li>
+<li><strong>Do not</strong> alias 101 to 111 — 101 is reserved for the AI (<a href="../../reference/numbering-plan/">Numbering Plan §1</a>).</li>
+<li>Design principle: 111 is human-first and AI always falls back to it (<a href="../system-architecture/">Architecture §7</a>).</li>
 </ul>
 <hr />
 <h2 id="cross-references">Cross-references<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Static architecture behind these flows → <a href="02-System-Architecture.md">02-System-Architecture.md</a></li>
-<li>Where recordings/incidents/logs live → <a href="06-Numbering-and-Data-Map.md">06-Numbering-and-Data-Map.md</a></li>
-<li>Network paths these calls traverse → <a href="04-Network-and-Deployment.md">04-Network-and-Deployment.md</a></li>
-<li>Operate the flows → <a href="../SOP/02-ERT-SOP.md">ERT SOP</a> · <a href="../SOP/03-Drill-Test-SOP.md">Drill SOP</a></li>
+<li>Static architecture behind these flows → <a href="../system-architecture/">02-System-Architecture.md</a></li>
+<li>Where recordings/incidents/logs live → <a href="../numbering-and-data-map/">06-Numbering-and-Data-Map.md</a></li>
+<li>Network paths these calls traverse → <a href="../network-and-deployment/">04-Network-and-Deployment.md</a></li>
+<li>Operate the flows → <a href="../../operations/ert-sop/">ERT SOP</a> · <a href="../../operations/drill-test-sop/">Drill SOP</a></li>
 </ul>
 
 
@@ -4431,7 +4431,7 @@ line. 196 is its isolated test line.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

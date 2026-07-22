@@ -3834,7 +3834,7 @@ These settings prevent that.</p>
 errors (wrong transport, <code>+91</code> prefix, SRTP mismatch) are best eliminated with a
 <strong>pre-built Linphone profile / QR / <code>.rc</code> config</strong> — standardize <strong>Transport = UDP</strong>,
 <strong>Media encryption = None</strong>, and <strong>G.711</strong> once, so no user picks them wrong. See
-<a href="../Journal/Field-Test-Issues-and-Mitigations.md">Field-Test Issues &amp; Mitigations</a>.</p>
+<a href="../../project/field-test-issues/">Field-Test Issues &amp; Mitigations</a>.</p>
 </blockquote>
 <hr />
 <h2 id="1-the-7-rules-everyone-must-follow">1. The 7 rules everyone must follow<a class="headerlink" href="#1-the-7-rules-everyone-must-follow" title="Permanent link">&para;</a></h2>
@@ -3934,7 +3934,7 @@ locked/backgrounded iPhone are best-effort, not guaranteed.</strong></p>
 </tr>
 </tbody>
 </table>
-<p>Monitor registration health on the <a href="10-Health-Monitoring-Checklist.md">Health Dashboard</a>;
+<p>Monitor registration health on the <a href="../../operations/health-monitoring/">Health Dashboard</a>;
 repeated drops from a device → apply the battery steps above or move that role to a fixed phone.</p>
 <hr />
 <h2 id="6-design-principle-belt-and-suspenders">6. Design principle — belt and suspenders<a class="headerlink" href="#6-design-principle-belt-and-suspenders" title="Permanent link">&para;</a></h2>
@@ -3947,7 +3947,7 @@ repeated drops from a device → apply the battery steps above or move that role
     treat it like an appliance, not a personal phone.</li>
 <li><strong>Later:</strong> wired <strong>IP phones</strong> on the same extensions remove the battery problem entirely.</li>
 <li><strong>Mobiles are the primary path for reaching 111 outbound</strong> — which is the common case and works reliably.</li>
-<li>Missed-call recovery (<a href="02-ERT-SOP.md">ERT SOP Part F</a>) exists precisely because a
+<li>Missed-call recovery (<a href="../../operations/ert-sop/">ERT SOP Part F</a>) exists precisely because a
   callback might not connect first try — the incident stays open until reviewed.</li>
 </ul>
 <hr />
@@ -3960,7 +3960,7 @@ repeated drops from a device → apply the battery steps above or move that role
 <li>[ ] Test <strong>inbound</strong>: have ERT call the phone <strong>while locked</strong> → does it ring? Record result per device model.</li>
 <li>[ ] Document any brand quirks for the support runbook.</li>
 </ul>
-<p>The <strong>future UPES VoIP app</strong> (see <a href="21-Risk-Register-and-Gaps.md">Risk Register R2/R5</a>)
+<p>The <strong>future UPES VoIP app</strong> (see <a href="../../operations/risk-register/">Risk Register R2/R5</a>)
 can solve inbound properly with app-level wake + coordinate broadcast — until then,
 these practices + fixed-phone answer points are the mitigation.</p>
 
@@ -3985,7 +3985,7 @@ these practices + fixed-phone answer points are the mitigation.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

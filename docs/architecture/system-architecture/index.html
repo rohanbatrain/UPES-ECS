@@ -3963,10 +3963,10 @@ with ASCII fallbacks.</p>
 <ul>
 <li><strong>Humans use SAP ID</strong> as extension + username. Same person, different job = same SAP ID, different context.</li>
 <li><strong>Responder roles are POSITIONS</strong> (<code>4101</code>, <code>4110</code>, <code>4200</code>, …) staffed by trained
-  officers per shift — never a personal account (<a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>).</li>
+  officers per shift — never a personal account (<a href="../../operations/ert-roles-and-shifts/">SOP 30</a>).</li>
 <li><strong>ERT positions answer the 111 queue</strong>; <code>ctx_responder</code> (Medical/Security/…) are
   <strong>dispatch targets</strong>, not queue answerers.</li>
-<li>Full capability grid: <a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04</a>.</li>
+<li>Full capability grid: <a href="../../reference/sip-account-role-matrix/">SOP 04</a>.</li>
 </ul>
 <hr />
 <h2 id="4-emergency-call-path-logical">4. Emergency call path (logical)<a class="headerlink" href="#4-emergency-call-path-logical" title="Permanent link">&para;</a></h2>
@@ -3981,7 +3981,7 @@ with ASCII fallbacks.</p>
   K --&gt;|"8 message"| VM["Emergency voicemail (60s)"]
   VM --&gt; MI["Missed Emergency Incident&lt;br/&gt;severity: critical · pending review"]
   ANS --&gt; CL["Incident logged + recording linked"]</code></pre>
-<p>Detailed sequence diagrams for every call type: <a href="03-Call-Flows.md">03-Call-Flows.md</a>.</p>
+<p>Detailed sequence diagrams for every call type: <a href="../call-flows/">03-Call-Flows.md</a>.</p>
 <hr />
 <h2 id="5-storage-data-where-things-live">5. Storage &amp; data (where things live)<a class="headerlink" href="#5-storage-data-where-things-live" title="Permanent link">&para;</a></h2>
 <table>
@@ -4030,7 +4030,7 @@ with ASCII fallbacks.</p>
 </tr>
 </tbody>
 </table>
-<p>Full data map + incident schema: <a href="06-Numbering-and-Data-Map.md">06-Numbering-and-Data-Map.md</a>.</p>
+<p>Full data map + incident schema: <a href="../numbering-and-data-map/">06-Numbering-and-Data-Map.md</a>.</p>
 <hr />
 <h2 id="6-deployment-modes">6. Deployment modes<a class="headerlink" href="#6-deployment-modes" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>graph TB
@@ -4045,11 +4045,11 @@ with ASCII fallbacks.</p>
 <ul>
 <li><strong>Mode A</strong> — normal operation on the campus server.</li>
 <li><strong>Mode B</strong> — self-powered van + rooftop repeaters for disasters or as <strong>failover</strong> for
-  the campus PBX (<a href="../SOP/23-Mobile-Van-Deployment.md">SOP 23</a>). Same config and numbers.</li>
+  the campus PBX (<a href="../../guides/mobile-van-deployment/">SOP 23</a>). Same config and numbers.</li>
 <li>Both are <strong>LAN-only</strong>. Multi-campus (Bidholi↔Kandoli) uses a rooftop wireless bridge
-  (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</a>).</li>
+  (<a href="../../guides/multi-campus-wireless/">SOP 20</a>).</li>
 </ul>
-<p>Network topology detail: <a href="04-Network-and-Deployment.md">04-Network-and-Deployment.md</a>.</p>
+<p>Network topology detail: <a href="../network-and-deployment/">04-Network-and-Deployment.md</a>.</p>
 <hr />
 <h2 id="7-design-principles-the-why">7. Design principles (the "why")<a class="headerlink" href="#7-design-principles-the-why" title="Permanent link">&para;</a></h2>
 <ol>
@@ -4083,7 +4083,7 @@ with ASCII fallbacks.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

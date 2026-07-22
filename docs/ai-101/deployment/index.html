@@ -3858,8 +3858,8 @@
 
 <h1 id="ai-101-deployment-running-ava-a-local-llm-alongside-the-asterisk-vm">AI-101 Deployment — Running AVA + a local LLM alongside the Asterisk VM<a class="headerlink" href="#ai-101-deployment-running-ava-a-local-llm-alongside-the-asterisk-vm" title="Permanent link">&para;</a></h1>
 <p>Deploys the AVA AI Voice Agent next to the existing UPES-ECS Asterisk stack (the QEMU VM
-in <a href="../deploy/qemu/README.md"><code>../deploy/qemu/</code></a>) so extension <strong>101</strong> works, <strong>without
-touching the human-first 111 line</strong>. Follows <a href="../SOP/19-AI-101-Design.md">SOP 19 §8–§10</a>.</p>
+in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md"><code>../deploy/qemu/</code></a>) so extension <strong>101</strong> works, <strong>without
+touching the human-first 111 line</strong>. Follows <a href="../design/">SOP 19 §8–§10</a>.</p>
 <blockquote>
 <p>✅ Verified from AVA docs · ⚠️ Assumed / verify on our stack · 🔒 Locked by SOP 19.</p>
 </blockquote>
@@ -3878,7 +3878,7 @@ touching the human-first 111 line</strong>. Follows <a href="../SOP/19-AI-101-De
 only</strong>. Nothing about 101 is exposed to the LAN except the dialplan extension itself.
 <strong>Nothing leaves the premises at all</strong> — STT, LLM and TTS are all local (no cloud, no API
 keys). 111 has <strong>zero</strong> new dependencies.</p>
-<p>⚠️ <strong>Where AVA runs — decide first (see <a href="TODO.md">TODO.md</a> step 1). Capacity, not wiring,
+<p>⚠️ <strong>Where AVA runs — decide first (see <a href="../todo/">TODO.md</a> step 1). Capacity, not wiring,
 is the deciding factor:</strong></p>
 <ul>
 <li><strong>(a) Inside the same VM</strong> — simplest wiring (ARI over <code>127.0.0.1</code>), <strong>but not viable for
@@ -3890,7 +3890,7 @@ is the deciding factor:</strong></p>
   <strong>real GPU (or a strong many-core CPU)</strong>; ARI points at the VM's mgmt IP (still not
   student-facing). This is the <strong>recommended and realistic</strong> deployment. Target turn
   latency: GPU ~0.5–2s; CPU-only ~5–15s (marginal). Size VRAM/RAM to the chosen model
-  (see <a href="TODO.md">TODO.md</a> §1).</li>
+  (see <a href="../todo/">TODO.md</a> §1).</li>
 </ul>
 <p>Either way the dialplan (<code>Stasis(asterisk-ai-voice-agent)</code>) is identical.</p>
 <hr />
@@ -3933,8 +3933,8 @@ what is verified here.</p>
 <li>Register the Stasis app name AVA uses: <code>asterisk-ai-voice-agent</code> ✅ (created implicitly
   when <code>ai_engine</code> connects; no static config needed beyond ARI being on).</li>
 <li>Add <code>ctx_ai_101</code>, <code>ctx_ai_196</code>, <code>ctx_ai_fallback</code> from
-  <a href="Integration-Plan.md#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a> to
-  <a href="../config/extensions_custom.conf"><code>../config/extensions_custom.conf</code></a>. <strong>Test order:</strong>
+  <a href="../integration-plan/#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a> to
+  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf"><code>../config/extensions_custom.conf</code></a>. <strong>Test order:</strong>
   198 echo → 196 AI test → 101 → confirm 111 still works.</li>
 </ul>
 <hr />
@@ -3949,7 +3949,7 @@ AVA's git-ignored <strong><code>.env</code></strong> ✅; nothing in this repo o
 </code></pre></div>
 <ul>
 <li><strong>ARI creds:</strong> strong, random, <strong>used only over localhost/mgmt</strong>; rotate the VM's dev
-  defaults per the <a href="../deploy/qemu/README.md#production-hardening-checklist">qemu hardening checklist</a>.</li>
+  defaults per the <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md#production-hardening-checklist">qemu hardening checklist</a>.</li>
 <li><strong>Local model management (replaces cloud key handling):</strong></li>
 <li><strong>LLM:</strong> <code>ollama pull &lt;model&gt;</code> once (e.g. <code>qwen2.5:7b-instruct</code> or
     <code>llama3.1:8b-instruct</code>); the model file lives on the AI host's disk. Point
@@ -3970,10 +3970,10 @@ AVA's git-ignored <strong><code>.env</code></strong> ✅; nothing in this repo o
 <ul>
 <li><strong>Pipeline = fully local</strong> (<code>local_ai_server</code>): faster-whisper STT + Ollama/llama.cpp
   LLM + Piper TTS. No cloud provider, no keys — see
-  <a href="Integration-Plan.md#31-where-the-local-model-plugs-in-the-key-decision">Integration-Plan §3.1</a>.</li>
+  <a href="../integration-plan/#31-where-the-local-model-plugs-in-the-key-decision">Integration-Plan §3.1</a>.</li>
 <li><strong>Transport:</strong> AudioSocket (default) ✅.</li>
 <li><strong>System prompt:</strong> the SOP 19 triage script + hard limits
-  (<a href="Integration-Plan.md#32-triage-system-prompt-lives-in-the-ava-agent-config">Integration-Plan §3.2</a>).</li>
+  (<a href="../integration-plan/#32-triage-system-prompt-lives-in-the-ava-agent-config">Integration-Plan §3.2</a>).</li>
 <li><strong>Tools:</strong> enable <strong>only</strong> <code>transfer</code> (→ extension <code>111</code>) and a <strong>post-call HTTP hook</strong>
   to write <code>ai_*</code> fields. 🔒 <strong>Do NOT enable</strong> anything that could close/hang-up-instead-
   of-escalate, page, or mark false alarm.</li>
@@ -3981,7 +3981,7 @@ AVA's git-ignored <strong><code>.env</code></strong> ✅; nothing in this repo o
 </ul>
 <hr />
 <h2 id="5-health-checks">5. Health checks<a class="headerlink" href="#5-health-checks" title="Permanent link">&para;</a></h2>
-<p>Per <a href="../SOP/19-AI-101-Design.md">SOP 19 §9</a> — <strong>separate from the 111 health check</strong>. 101
+<p>Per <a href="../design/">SOP 19 §9</a> — <strong>separate from the 111 health check</strong>. 101
 health is Warning/Degraded when down (111 still Critical-gated on its own).</p>
 <table>
 <thead>
@@ -4059,7 +4059,7 @@ non-blocking</strong> signal — it must never flip the 111/system status to Cri
 (SOP 19 §6: 101 AI failure = Warning/Degraded when 111 works).</p>
 <hr />
 <h2 id="6-phased-rollout">6. Phased rollout<a class="headerlink" href="#6-phased-rollout" title="Permanent link">&para;</a></h2>
-<p>🔒 Follows <a href="../SOP/19-AI-101-Design.md">SOP 19 §10</a>. <strong>Do not skip stages.</strong></p>
+<p>🔒 Follows <a href="../design/">SOP 19 §10</a>. <strong>Do not skip stages.</strong></p>
 <table>
 <thead>
 <tr>
@@ -4092,7 +4092,7 @@ non-blocking</strong> signal — it must never flip the 111/system status to Cri
 <td><strong>2</strong></td>
 <td>Students / staff</td>
 <td><strong>101</strong> included in student/staff role contexts</td>
-<td>🔒 <strong>Requires:</strong> the <strong>dedicated AI host</strong> provisioned with acceptable turn latency, ERT sign-off on triage quality, and the (already-local) privacy decision recorded (<a href="Integration-Plan.md#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>). No cloud approval needed — nothing leaves campus.</td>
+<td>🔒 <strong>Requires:</strong> the <strong>dedicated AI host</strong> provisioned with acceptable turn latency, ERT sign-off on triage quality, and the (already-local) privacy decision recorded (<a href="../integration-plan/#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>). No cloud approval needed — nothing leaves campus.</td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
@@ -4114,7 +4114,7 @@ non-blocking</strong> signal — it must never flip the 111/system status to Cri
   transcript, or summary) ever leaves the premises. This applies to 101 as much as 111.</li>
 <li>🔒 ARI/AVA reachable on <strong>localhost/mgmt only</strong>, never the student LAN.</li>
 <li>🔒 Secrets never committed; recordings/logs retention stays under
-  <a href="../SOP/12-Incident-Logging-Schema.md">SOP 12 §7</a>.</li>
+  <a href="../../operations/incident-logging-schema/">SOP 12 §7</a>.</li>
 </ul>
 
 
@@ -4138,7 +4138,7 @@ non-blocking</strong> signal — it must never flip the 111/system status to Cri
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

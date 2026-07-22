@@ -3838,9 +3838,9 @@
 <p>How the responder departments are wired together, and how the Operations Console
 renders them as a <strong>real-time department map</strong> during an emergency — a student calls,
 a department position receives, and the map updates live as state changes.</p>
-<p>Numbering authority: <a href="../SOP/01-Numbering-Plan.md">SOP 01 Numbering Plan</a> ·
-Roles/shifts: <a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a> ·
-Permissions: <a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04 Role Matrix</a>.</p>
+<p>Numbering authority: <a href="../../reference/numbering-plan/">SOP 01 Numbering Plan</a> ·
+Roles/shifts: <a href="../../operations/ert-roles-and-shifts/">SOP 30</a> ·
+Permissions: <a href="../../reference/sip-account-role-matrix/">SOP 04 Role Matrix</a>.</p>
 <hr />
 <h2 id="1-the-shape-of-it">1. The shape of it<a class="headerlink" href="#1-the-shape-of-it" title="Permanent link">&para;</a></h2>
 <p>Every responder team is a <strong>generic position staffed by shift</strong> (never a personal SAP
@@ -3946,8 +3946,8 @@ departments are <strong>dispatch targets</strong>.</p>
 </table>
 <p>Spare seats live in each hundred-block (e.g. <code>4203–4299</code>); add them only when a shift
 actually staffs them. Source of truth for accounts:
-<a href="../deploy/asterisk/pjsip_accounts.conf"><code>deploy/asterisk/pjsip_accounts.conf</code></a> and
-<a href="../provisioning/responder-positions.csv"><code>provisioning/responder-positions.csv</code></a>.</p>
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip_accounts.conf"><code>deploy/asterisk/pjsip_accounts.conf</code></a> and
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv"><code>provisioning/responder-positions.csv</code></a>.</p>
 <hr />
 <h2 id="3-the-realtime-map-operations-console-department-map">3. The realtime map (Operations Console → <strong>Department Map</strong>)<a class="headerlink" href="#3-the-realtime-map-operations-console-department-map" title="Permanent link">&para;</a></h2>
 <p>The Console's <strong>Department Map</strong> view draws this topology and animates it live. It is a
@@ -3986,8 +3986,8 @@ extra service, no cloud.</p>
 </tbody>
 </table>
 <p><code>liveCalls[]</code> is parsed from <code>asterisk -rx "core show channels concise"</code> — see
-<a href="../api/upes_api.py"><code>api/upes_api.py</code></a> <code>get_live_calls()</code> (live path) and
-<a href="../Console/Update-Status.ps1"><code>Console/Update-Status.ps1</code></a> (static-snapshot fallback).
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/api/upes_api.py"><code>api/upes_api.py</code></a> <code>get_live_calls()</code> (live path) and
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/Console/Update-Status.ps1"><code>Console/Update-Status.ps1</code></a> (static-snapshot fallback).
 Two legs sharing a non-empty <strong>bridge id</strong> are talking to each other; the Console pairs
 them into an edge. An unbridged leg dialing 111 is a caller still in the queue.</p>
 <h3 id="32-what-you-see-moment-to-moment">3.2 What you see, moment to moment<a class="headerlink" href="#32-what-you-see-moment-to-moment" title="Permanent link">&para;</a></h3>
@@ -4047,14 +4047,14 @@ the steady-state staffing (who is on shift in each department) so it is never bl
   is doing.</li>
 <li><strong>Positions, not people.</strong> Nodes are extensions (positions); the person on the seat
   comes from the shift log. A node lighting up means <em>that seat</em> is engaged, whoever is
-  in it — exactly the accountability model in <a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>.</li>
+  in it — exactly the accountability model in <a href="../../operations/ert-roles-and-shifts/">SOP 30</a>.</li>
 <li><strong>Department-shaped.</strong> Grouping by department (with dispatch + seats + Security lead)
   means an incident commander sees at a glance which <em>team</em> is saturated, not just which
   extension is busy.</li>
 </ul>
-<p>Related: <a href="02-System-Architecture.md">Blueprint 02 System Architecture</a> ·
-<a href="03-Call-Flows.md">Blueprint 03 Call Flows</a> ·
-<a href="06-Numbering-and-Data-Map.md">Blueprint 06 Numbering &amp; Data Map</a>.</p>
+<p>Related: <a href="../system-architecture/">Blueprint 02 System Architecture</a> ·
+<a href="../call-flows/">Blueprint 03 Call Flows</a> ·
+<a href="../numbering-and-data-map/">Blueprint 06 Numbering &amp; Data Map</a>.</p>
 
 
 
@@ -4077,7 +4077,7 @@ the steady-state staffing (who is on shift in each department) so it is never bl
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

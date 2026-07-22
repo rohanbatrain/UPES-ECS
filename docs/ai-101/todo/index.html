@@ -3946,7 +3946,7 @@
 
 <h1 id="ai-101-build-checklist-working-101-prototype">AI-101 Build Checklist — working 101 prototype<a class="headerlink" href="#ai-101-build-checklist-working-101-prototype" title="Permanent link">&para;</a></h1>
 <p>Ordered path to a working AVA + <strong>local-LLM</strong> extension <strong>101</strong> that obeys
-<a href="../SOP/19-AI-101-Design.md">SOP 19</a>. <strong>No cloud AI</strong> — STT, LLM and TTS all run on-prem.
+<a href="../design/">SOP 19</a>. <strong>No cloud AI</strong> — STT, LLM and TTS all run on-prem.
 Do these in order; <strong>do not</strong> enable 101 for students until Phase 2 gates pass.
 🔒 = SOP-locked, non-negotiable.</p>
 <p>Legend: <code>[ ]</code> todo · ✅ verified fact · ⚠️ must verify on our stack.</p>
@@ -3954,8 +3954,8 @@ Do these in order; <strong>do not</strong> enable 101 for students until Phase 2
 <h2 id="0-prerequisites">0. Prerequisites<a class="headerlink" href="#0-prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Confirm the QEMU VM is up and <strong>111 works today</strong> (baseline): call 111 → ANSWERED
-      (already proven ✅ in <a href="../deploy/qemu/README.md">../deploy/qemu/README.md</a>).</li>
-<li>[ ] Read <a href="Integration-Plan.md">Integration-Plan.md</a> and <a href="../deployment/">deployment.md</a>.</li>
+      (already proven ✅ in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md">../deploy/qemu/README.md</a>).</li>
+<li>[ ] Read <a href="../integration-plan/">Integration-Plan.md</a> and <a href="../deployment/">deployment.md</a>.</li>
 <li>[ ] No cloud sign-off needed (nothing leaves campus). Instead, confirm budget/availability
       of a <strong>dedicated AI host</strong> (see §1). Internal 196 only until quality is proven.</li>
 </ul>
@@ -4004,7 +4004,7 @@ Do these in order; <strong>do not</strong> enable 101 for students until Phase 2
 <li>[ ] In <code>config/ai-agent.local.yaml</code>: agent slug <strong><code>upes-ecs-101</code></strong>, pipeline =
       <strong>fully local</strong> (faster-whisper + Ollama/llama.cpp + Piper) ✅.</li>
 <li>[ ] Paste the <strong>SOP 19 system prompt</strong> (opening / collect / escalation / hard limits)
-      from <a href="Integration-Plan.md#32-triage-system-prompt-lives-in-the-ava-agent-config">Integration-Plan §3.2</a>.</li>
+      from <a href="../integration-plan/#32-triage-system-prompt-lives-in-the-ava-agent-config">Integration-Plan §3.2</a>.</li>
 <li>[ ] Enable <strong>only</strong> the <code>transfer</code> tool (→ ext <code>111</code>) + a post-call HTTP hook.
       🔒 <strong>Do NOT</strong> enable close / false-alarm / page / voicemail-instead-of-escalate.</li>
 <li>[ ] <code>agent config validate</code> passes ✅.</li>
@@ -4012,10 +4012,10 @@ Do these in order; <strong>do not</strong> enable 101 for students until Phase 2
 <h2 id="5-add-the-dialplan-196-101-fallback">5. Add the dialplan (196 + 101 + fallback)<a class="headerlink" href="#5-add-the-dialplan-196-101-fallback" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[ ] Add <code>ctx_ai_196</code>, <code>ctx_ai_101</code>, <code>ctx_ai_fallback</code> to
-      <a href="../config/extensions_custom.conf">../config/extensions_custom.conf</a>
-      (<a href="Integration-Plan.md#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>).</li>
+      <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf">../config/extensions_custom.conf</a>
+      (<a href="../integration-plan/#4-upes-ecs-dialplan-wiring">Integration-Plan §4</a>).</li>
 <li>[ ] Record prompt <code>upes-ecs/ai-unavailable</code> (SOP 19 failure line) into the sounds dir
-      (<a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28</a>).</li>
+      (<a href="../../reference/voice-prompt-scripts/">SOP 28</a>).</li>
 <li>[ ] <code>include =&gt; ctx_ai_196</code> in <strong>ctx_staff / ctx_ert only</strong> (NOT ctx_student). Leave
       <code>ctx_ai_101</code> <strong>out</strong> of student contexts for now.</li>
 <li>[ ] Reload dialplan; <strong>test order 198 → 196 → 101 → 111</strong>.</li>
@@ -4044,7 +4044,7 @@ Do these in order; <strong>do not</strong> enable 101 for students until Phase 2
 <li>[ ] Build the small post-call endpoint / <code>ai_incident.sh</code> that writes <code>ai_summary</code>,
       <code>ai_detected_category</code>, <code>ai_detected_location</code>, <code>ai_urgency_hint</code>,
       <code>ai_questions_completed</code> keyed by <code>INCIDENT_ID</code>
-      (<a href="Integration-Plan.md#5-incident-logging-ai_-fields">Integration-Plan §5</a>).</li>
+      (<a href="../integration-plan/#5-incident-logging-ai_-fields">Integration-Plan §5</a>).</li>
 <li>[ ] Verify a 101 incident shows <code>source_number=101</code>, <code>ai_triage_enabled=true</code>,
       <code>transferred_to_111</code>, <code>transfer_time</code>, and is <strong>ERT-editable</strong> (SOP 12 §5).</li>
 <li>[ ] Confirm <strong>AI cannot close</strong> an incident (no such tool; only ERT Lead closes) 🔒.</li>
@@ -4063,7 +4063,7 @@ Do these in order; <strong>do not</strong> enable 101 for students until Phase 2
       approves prompt/routing.</li>
 <li>[ ] <strong>Before Phase 2 (students):</strong> 🔒 confirm the <strong>dedicated AI host</strong> meets the latency
       budget, record the (already-local) privacy decision
-      (<a href="Integration-Plan.md#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>),
+      (<a href="../integration-plan/#33-privacy-decision-fully-local-audio-stays-on-campus">Integration-Plan §3.3</a>),
       then add <code>include =&gt; ctx_ai_101</code> to student/staff contexts. No cloud approval needed.</li>
 <li>[ ] Document the <strong>kill switch</strong> (remove include / stop AVA → callers get 111) in the
       ERT runbook.</li>
@@ -4096,7 +4096,7 @@ recorded for the Phase 2 gate.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

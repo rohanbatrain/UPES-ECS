@@ -3836,10 +3836,10 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
 <li>[ ] Router, switch, access point powered; <strong>Wi-Fi client isolation OFF</strong> (or voice VLAN)</li>
 <li>[ ] 3–4 <strong>dedicated Android phones</strong> (ERT answer points) + chargers</li>
 <li>[ ] A couple of test phones for "callers"</li>
-<li>[ ] The confirmed roster (<a href="../Notes/Confirmed%20Details.md">Notes/Confirmed Details.md</a>)</li>
+<li>[ ] The confirmed roster (Notes/Confirmed Details.md)</li>
 </ul>
 <hr />
-<h2 id="block-a-server-freepbx-sop-08-0">Block A — Server &amp; FreePBX  (<a href="08-FreePBX-Build-Guide.md">SOP 08 §0</a>)<a class="headerlink" href="#block-a-server-freepbx-sop-08-0" title="Permanent link">&para;</a></h2>
+<h2 id="block-a-server-freepbx-sop-08-0">Block A — Server &amp; FreePBX  (<a href="../../guides/freepbx-build/">SOP 08 §0</a>)<a class="headerlink" href="#block-a-server-freepbx-sop-08-0" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Install FreePBX (distro or on Asterisk 18+/20+); apply module updates.</li>
 <li>Set static IP; resolve <code>pbx.upes.lan</code> / <code>sip.upes.lan</code> (or note the IP).</li>
@@ -3848,18 +3848,18 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
 </ol>
 <p><strong>Test:</strong> create two temp extensions, register two Androids on Wi-Fi, call each other + dial <strong>198</strong> (echo).</p>
 <hr />
-<h2 id="block-b-emergency-core-sop-08-1-config">Block B — Emergency core  (<a href="08-FreePBX-Build-Guide.md">SOP 08 §1</a>, <a href="../config/">config/</a>)<a class="headerlink" href="#block-b-emergency-core-sop-08-1-config" title="Permanent link">&para;</a></h2>
+<h2 id="block-b-emergency-core-sop-08-1-config">Block B — Emergency core  (<a href="../../guides/freepbx-build/">SOP 08 §1</a>, <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/">config/</a>)<a class="headerlink" href="#block-b-emergency-core-sop-08-1-config" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Merge <code>config/extensions_custom.conf</code> into <code>/etc/asterisk/</code>, then <code>dialplan reload</code>.</li>
-<li>Record the prompts into <code>/var/lib/asterisk/sounds/en/upes-ecs/</code>  (<a href="28-Voice-Prompt-Scripts.md">SOP 28</a>).</li>
+<li>Record the prompts into <code>/var/lib/asterisk/sounds/en/upes-ecs/</code>  (<a href="../../reference/voice-prompt-scripts/">SOP 28</a>).</li>
 <li><strong>Queue:</strong> create <code>ert_emergency_queue</code> — ringall, 20s, skip-busy, no MoH.</li>
-<li><strong>Fixed answer points:</strong> import <a href="../provisioning/fixed-devices.csv">fixed-devices.csv</a> → put Linphone on the dedicated Androids as <code>4101</code> (ERT Lead), <code>4200</code> (Medical), <code>4300</code> (Security). Keep them <strong>on charger, battery-unrestricted</strong> (<a href="24-Mobile-App-Reliability-and-Battery.md">SOP 24</a>).</li>
+<li><strong>Fixed answer points:</strong> import <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv">fixed-devices.csv</a> → put Linphone on the dedicated Androids as <code>4101</code> (ERT Lead), <code>4200</code> (Medical), <code>4300</code> (Security). Keep them <strong>on charger, battery-unrestricted</strong> (<a href="../../reference/mobile-app-reliability/">SOP 24</a>).</li>
 <li>Add those ERT devices as queue agents.</li>
 <li><strong>Route 111 + 199</strong> (FreePBX Custom Destinations) → <code>ctx_emergency_111</code> / <code>ctx_drill_199</code>.</li>
 </ol>
 <p><strong>Test:</strong> dial <strong>199</strong> (drill, no real dispatch) → then <strong>111</strong> → an ERT Android rings → answer → confirm a recording file appears under <code>/var/spool/asterisk/monitor/upes-ecs/</code>.</p>
 <hr />
-<h2 id="block-c-users-access-sop-04-provisioning">Block C — Users &amp; access  (<a href="04-SIP-Account-Role-Matrix.md">SOP 04</a>, <a href="../provisioning/">provisioning/</a>)<a class="headerlink" href="#block-c-users-access-sop-04-provisioning" title="Permanent link">&para;</a></h2>
+<h2 id="block-c-users-access-sop-04-provisioning">Block C — Users &amp; access  (<a href="../../reference/sip-account-role-matrix/">SOP 04</a>, <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/">provisioning/</a>)<a class="headerlink" href="#block-c-users-access-sop-04-provisioning" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Fill secrets into a throwaway file and import the roster:
    <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>awk<span class="w"> </span>-F,<span class="w"> </span><span class="s1">&#39;BEGIN{OFS=&quot;,&quot;} NR==1{print;next}{ &quot;openssl rand -base64 15&quot;|getline s; $3=s; print }&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -3873,9 +3873,9 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
 <hr />
 <h2 id="block-d-prove-it-back-it-up">Block D — Prove it &amp; back it up<a class="headerlink" href="#block-d-prove-it-back-it-up" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Run the <a href="10-Health-Monitoring-Checklist.md">Health Check</a>: <code>sudo /opt/upes-ecs/upes-ecs-healthcheck.sh</code></li>
-<li>Walk the <a href="17-Pilot-Test-Plan.md">Pilot Test Plan</a> — the 19 tests.</li>
-<li>Take a config backup + commit custom config to the <code>upes-ecs-config</code> git repo (<a href="11-Backup-Restore-Procedure.md">SOP 11</a>).</li>
+<li>Run the <a href="../../operations/health-monitoring/">Health Check</a>: <code>sudo /opt/upes-ecs/upes-ecs-healthcheck.sh</code></li>
+<li>Walk the <a href="../../operations/pilot-test-plan/">Pilot Test Plan</a> — the 19 tests.</li>
+<li>Take a config backup + commit custom config to the <code>upes-ecs-config</code> git repo (<a href="../../guides/backup-restore/">SOP 11</a>).</li>
 </ol>
 <hr />
 <h2 id="day-1-done-when">Day-1 done when<a class="headerlink" href="#day-1-done-when" title="Permanent link">&para;</a></h2>
@@ -3887,7 +3887,7 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
 <li>[ ] Health check reports READY</li>
 </ul>
 <p><strong>Then</strong> move to Phase 2/3 (roles, paging, conference, van drill) via the
-<a href="07-Master-Implementation-Plan.md">Master Plan</a>, and toward the <a href="18-Go-Live-Checklist.md">Go-Live Checklist</a>.</p>
+<a href="../../operations/master-implementation-plan/">Master Plan</a>, and toward the <a href="../go-live-checklist/">Go-Live Checklist</a>.</p>
 <hr />
 <h2 id="if-something-fails">If something fails<a class="headerlink" href="#if-something-fails" title="Permanent link">&para;</a></h2>
 <table>
@@ -3912,11 +3912,11 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
 </tr>
 <tr>
 <td>Android misses calls when idle</td>
-<td>Battery optimization OFF, on charger, screen stay-awake (<a href="24-Mobile-App-Reliability-and-Battery.md">SOP 24</a>)</td>
+<td>Battery optimization OFF, on charger, screen stay-awake (<a href="../../reference/mobile-app-reliability/">SOP 24</a>)</td>
 </tr>
 <tr>
 <td>Incident ID blank</td>
-<td><code>func_shell</code> not loaded — see <a href="../config/README.md">config/README.md</a></td>
+<td><code>func_shell</code> not loaded — see <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md">config/README.md</a></td>
 </tr>
 </tbody>
 </table>
@@ -3942,7 +3942,7 @@ That's the Phase-1 milestone. Everything else layers on later.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

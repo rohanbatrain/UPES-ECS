@@ -3957,7 +3957,7 @@
 <h1 id="upes-ecs-feature-roadmap-next-horizon">UPES-ECS — Feature Roadmap (Next Horizon)<a class="headerlink" href="#upes-ecs-feature-roadmap-next-horizon" title="Permanent link">&para;</a></h1>
 <p><strong>Scope:</strong> Features <strong>beyond</strong> what is already built or being built now, for the UPES Emergency Communication System — a <strong>LAN-only</strong> Asterisk PBX deployed on a van laptop (QEMU Ubuntu VM), with a web <strong>Operations Console</strong>.</p>
 <p><strong>Last updated:</strong> 2026-07-05</p>
-<p>This document is deliberately forward-looking. It does <strong>not</strong> re-list the current backlog (which lives in <a href="./Project-Status.md">Project-Status.md</a>) — it catalogs the <em>next</em> wave of capability once the core is in production.</p>
+<p>This document is deliberately forward-looking. It does <strong>not</strong> re-list the current backlog (which lives in <a href="../status/">Project-Status.md</a>) — it catalogs the <em>next</em> wave of capability once the core is in production.</p>
 <hr />
 <h2 id="what-already-exists-do-not-re-plan">What already exists (do not re-plan)<a class="headerlink" href="#what-already-exists-do-not-re-plan" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3972,8 +3972,8 @@
 <li><strong>Presence &amp; Shifts</strong> — registration + queue state of every defined endpoint (<code>pjsip show endpoints</code>), split into responder positions (on-shift / in-queue / reachable) and registered clients. <em>(Console section <code>presence</code>, fed by <code>status.json.presence[]</code>.)</em> Supersedes the "Presence / BLF for responders" line below for the Console view (deskphone BLF still future).</li>
 <li><strong>Call Records + recording playback</strong> — recent call-detail log (roster-named) plus in-browser playback of whole-call recordings synced by <code>Pull-Recordings.ps1</code>. <em>(Console section <code>records</code>, fed by <code>status.json.cdr[]</code> + <code>recordings[]</code>.)</em></li>
 <li><strong>Insights / CDR analytics</strong> — emergency KPIs (answer-rate + answer-time on 111), <strong>drill pass-rate</strong> (199 answered/total over time), calls-by-type, activity-by-hour histogram, per-day volume, and top callers. Aggregated over the <strong>full</strong> <code>Master.csv</code> on the VM (python) → <code>status.json.analytics{}</code> → pure-CSS charts. <em>(Console section <code>insights</code>, new </em><em>Insights</em><em> nav group.)</em> Delivers the "CDR analytics dashboard" <strong>and</strong> "Drill pass-rate reporting" lines below.</li>
-<li><strong>111 made answerable + offline panic-coach (<code>102</code>)</strong> — the ERT queue is now staffed by the on-shift registered handset (<code>ert-shift.sh</code>), so 111 rings a real phone (wallboard READY). And when <em>nobody</em> answers (queue timeout + escalation unanswered), the call now routes to a <strong>fully-offline, deterministic panic-coach</strong> (<code>ctx_ai_helpline</code>): a calm scripted decision-tree that coaches the caller through CPR, bleeding, choking, fire, lockdown, recovery position, and being trapped — with "9 = retry a responder" and "8 = leave a message". All audio is offline TTS (pico2wave+sox); no internet. Direct test dial <code>102</code>. This is the <strong>zero-internet floor beneath the future AI triage (<code>101</code>, a local-first stack — Ollama/llama.cpp + Whisper (STT) + Piper (TTS), </strong>no Gemini/cloud<strong> — see <a href="../AI-101/README.md">../AI-101/</a>)</strong>, and it satisfies SOP 19's rule that the fallback must work with every AI component offline.</li>
-<li><strong>Disaster-ready 111 flow (press-1 fast-path + parallel coaching)</strong> — grounded in Emergency Medical Dispatch practice (stay-on-line pre-arrival instructions, no redial loops). The old serial ring-out (queue → Lead 20s → backup 20s → <em>then</em> voicemail, ~45–60s of silence before any guidance) is replaced: the caller can <strong>press 1 any time during the queue</strong> to jump to first-aid (<code>ctx_111_fastpath</code>), and when no human answers the system does two things <strong>at once</strong> — rings the Lead + backup in the <strong>background</strong> (non-blocking call-files, <code>alert_responders.sh</code>, with "press 1 to join the queue") <strong>and</strong> starts the offline coach immediately + logs the incident. New prompts (real press-1 preanswer, periodic "press 1 for first-aid", responder alert). Full flow documented in <a href="../Blueprint/03-Call-Flows.md">../Blueprint/03-Call-Flows.md</a> §2, <a href="../SOP/19-AI-101-Design.md">SOP 19</a> (de-vagued: 101/102 are internal routes, never a number a caller dials), and a new <strong>Emergency Call Flow</strong> Console section.</li>
+<li><strong>111 made answerable + offline panic-coach (<code>102</code>)</strong> — the ERT queue is now staffed by the on-shift registered handset (<code>ert-shift.sh</code>), so 111 rings a real phone (wallboard READY). And when <em>nobody</em> answers (queue timeout + escalation unanswered), the call now routes to a <strong>fully-offline, deterministic panic-coach</strong> (<code>ctx_ai_helpline</code>): a calm scripted decision-tree that coaches the caller through CPR, bleeding, choking, fire, lockdown, recovery position, and being trapped — with "9 = retry a responder" and "8 = leave a message". All audio is offline TTS (pico2wave+sox); no internet. Direct test dial <code>102</code>. This is the <strong>zero-internet floor beneath the future AI triage (<code>101</code>, a local-first stack — Ollama/llama.cpp + Whisper (STT) + Piper (TTS), </strong>no Gemini/cloud<strong> — see <a href="../../ai-101/">../AI-101/</a>)</strong>, and it satisfies SOP 19's rule that the fallback must work with every AI component offline.</li>
+<li><strong>Disaster-ready 111 flow (press-1 fast-path + parallel coaching)</strong> — grounded in Emergency Medical Dispatch practice (stay-on-line pre-arrival instructions, no redial loops). The old serial ring-out (queue → Lead 20s → backup 20s → <em>then</em> voicemail, ~45–60s of silence before any guidance) is replaced: the caller can <strong>press 1 any time during the queue</strong> to jump to first-aid (<code>ctx_111_fastpath</code>), and when no human answers the system does two things <strong>at once</strong> — rings the Lead + backup in the <strong>background</strong> (non-blocking call-files, <code>alert_responders.sh</code>, with "press 1 to join the queue") <strong>and</strong> starts the offline coach immediately + logs the incident. New prompts (real press-1 preanswer, periodic "press 1 for first-aid", responder alert). Full flow documented in <a href="../../architecture/call-flows/">../Blueprint/03-Call-Flows.md</a> §2, <a href="../../ai-101/design/">SOP 19</a> (de-vagued: 101/102 are internal routes, never a number a caller dials), and a new <strong>Emergency Call Flow</strong> Console section.</li>
 </ul>
 <p>Everything below is the <strong>next horizon</strong> — sequenced, realistic, and mapped to real Asterisk capabilities.</p>
 <hr />
@@ -4024,7 +4024,7 @@
 <td><strong>Missed-emergency trend board</strong></td>
 <td>Aggregates the existing <code>missed_incident.sh</code> flags into a trended view</td>
 <td>Repeated misses are a safety failure that must be visible, not buried in a log file</td>
-<td>Read the incident logs / dashboard flags already produced by <a href="../config/"><code>../config/</code></a> scripts; render trend</td>
+<td>Read the incident logs / dashboard flags already produced by <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/"><code>../config/</code></a> scripts; render trend</td>
 <td>Quick</td>
 <td>yes</td>
 </tr>
@@ -4040,7 +4040,7 @@
 <td><strong>Recordings &amp; incident review portal (restricted)</strong></td>
 <td>Web portal to search, play, and annotate <code>111</code> recordings tied to their incident ID</td>
 <td>After-action review, training, and dispute resolution — with access tightly controlled</td>
-<td>Serve <code>MixMonitor</code> files behind RBAC; index by <code>ERT-YYYYMMDD-NNNN</code> from <code>incident_id.sh</code>; enforce <a href="../SOP/13-Recording-Retention-Policy.md">SOP 13 retention</a></td>
+<td>Serve <code>MixMonitor</code> files behind RBAC; index by <code>ERT-YYYYMMDD-NNNN</code> from <code>incident_id.sh</code>; enforce <a href="../../operations/recording-retention/">SOP 13 retention</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4048,7 +4048,7 @@
 <td><strong>Immutable audit log</strong></td>
 <td>Append-only record of <em>who listened to / exported / deleted</em> recordings and who changed config</td>
 <td>Recordings are sensitive; access itself must be auditable. Config changes need a paper trail</td>
-<td>Structured audit table + hash-chain / append-only file; surface in Console; ties to <a href="../SOP/26-Security-Hardening.md">SOP 26</a></td>
+<td>Structured audit table + hash-chain / append-only file; surface in Console; ties to <a href="../../guides/security-hardening/">SOP 26</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4097,7 +4097,7 @@
 <td><strong>Scheduled restore drills</strong></td>
 <td>Automated, logged test that a backup actually restores and the PBX answers <code>198</code>/<code>199</code> after</td>
 <td>Backups that were never restored are hope, not a plan. Proves recoverability on a schedule</td>
-<td>Cron-driven restore into a scratch VM + automated <code>199</code> self-test; record pass/fail to the audit log; extends <a href="../SOP/11-Backup-Restore-Procedure.md">SOP 11</a></td>
+<td>Cron-driven restore into a scratch VM + automated <code>199</code> self-test; record pass/fail to the audit log; extends <a href="../../guides/backup-restore/">SOP 11</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4105,7 +4105,7 @@
 <td><strong>UPS / power monitoring</strong></td>
 <td>Reads UPS state; alarms on mains loss and low battery; can trigger graceful shutdown</td>
 <td>Risk <strong>R1</strong> — no power, no PBX. The van especially needs a monitored battery runway</td>
-<td><strong>NUT</strong> (Network UPS Tools) on the host → alert into Console; optional dialplan alarm page via <code>700x</code>; ties to <a href="../SOP/21-Risk-Register-and-Gaps.md">SOP 21 R1</a></td>
+<td><strong>NUT</strong> (Network UPS Tools) on the host → alert into Console; optional dialplan alarm page via <code>700x</code>; ties to <a href="../../operations/risk-register/">SOP 21 R1</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4113,7 +4113,7 @@
 <td><strong>Watchdog &amp; auto-recovery</strong></td>
 <td>Detects a hung Asterisk / stuck registration and restarts the service</td>
 <td>Unattended van deployment can't rely on a human noticing a crash at 2am</td>
-<td><code>systemd</code> restart policy + a liveness probe (SIP OPTIONS ping / AMI heartbeat) extending <a href="../SOP/10-Health-Monitoring-Checklist.md">SOP 10</a></td>
+<td><code>systemd</code> restart policy + a liveness probe (SIP OPTIONS ping / AMI heartbeat) extending <a href="../../operations/health-monitoring/">SOP 10</a></td>
 <td>Quick</td>
 <td>yes</td>
 </tr>
@@ -4154,7 +4154,7 @@
 <td><strong>Zone-based paging</strong></td>
 <td>Address specific buildings/zones (block A, hostels, labs) instead of all-or-nothing</td>
 <td>Localizes response; avoids panicking the whole campus for a contained incident</td>
-<td>Per-zone paging groups (extension ranges / multicast groups) layered on the <code>700x</code> paging plan (<a href="../SOP/01-Numbering-Plan.md">SOP 01</a>)</td>
+<td>Per-zone paging groups (extension ranges / multicast groups) layered on the <code>700x</code> paging plan (<a href="../../reference/numbering-plan/">SOP 01</a>)</td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4162,7 +4162,7 @@
 <td><strong>Multilingual announcements at scale (Hindi / English)</strong></td>
 <td>Plays the correct-language prompt per zone, or bilingual back-to-back</td>
 <td>UPES is bilingual; an alert nobody understands is not an alert</td>
-<td>Pre-recorded prompt sets per language (extends <a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28</a>) selected by zone variable in the dialplan</td>
+<td>Pre-recorded prompt sets per language (extends <a href="../../reference/voice-prompt-scripts/">SOP 28</a>) selected by zone variable in the dialplan</td>
 <td>Quick</td>
 <td>yes</td>
 </tr>
@@ -4170,7 +4170,7 @@
 <td><strong>Multi-campus wireless bridge (Bidholi ↔ Kandoli)</strong></td>
 <td>Extends the LAN across campuses over the rooftop point-to-point link</td>
 <td>One PBX can serve both campuses; ERT and paging reach Kandoli — already designed</td>
-<td>Layer-2/3 PtP bridge carrying SIP/RTP; failover-aware; <strong>already designed</strong> in <a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</a> (cross-link SOP)</td>
+<td>Layer-2/3 PtP bridge carrying SIP/RTP; failover-aware; <strong>already designed</strong> in <a href="../../guides/multi-campus-wireless/">SOP 20</a> (cross-link SOP)</td>
 <td>Project</td>
 <td>yes</td>
 </tr>
@@ -4203,7 +4203,7 @@
 <td><strong>Bulk SAP-ID onboarding automation</strong></td>
 <td>Ingests a roster CSV and generates PJSIP endpoints, secrets, and voicemail boxes en masse</td>
 <td>Thousands of students can't be added by hand; hand-config is the current top failure mode</td>
-<td>Template + generator over <code>pjsip.conf</code>/<code>realtime</code>; extends <a href="../provisioning/"><code>../provisioning/pilot-users.csv</code></a> flow; secrets set at import (never in repo)</td>
+<td>Template + generator over <code>pjsip.conf</code>/<code>realtime</code>; extends <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/"><code>../provisioning/pilot-users.csv</code></a> flow; secrets set at import (never in repo)</td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4219,7 +4219,7 @@
 <td><strong>QR self-provisioning kiosk</strong></td>
 <td>Student scans a QR at a kiosk → phone auto-configures the correct, encrypted profile</td>
 <td>One scan replaces the transport/<code>+91</code>/encryption mistakes phones hit today</td>
-<td>Extends the QR/profile work in <a href="../provisioning/"><code>../provisioning/linphone/</code></a>; kiosk validates SAP-ID before issuing config</td>
+<td>Extends the QR/profile work in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/"><code>../provisioning/linphone/</code></a>; kiosk validates SAP-ID before issuing config</td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4227,7 +4227,7 @@
 <td><strong>MDM-managed ERT Androids</strong></td>
 <td>Central management of the always-on ERT answer-point phones (app, config, lockdown, remote wipe)</td>
 <td>ERT phones must never sleep, must stay on the right app/config, and survive loss/theft</td>
-<td>MDM (e.g. Headwind/open-source) pushing the SIP client + <a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24</a> battery/background hardening</td>
+<td>MDM (e.g. Headwind/open-source) pushing the SIP client + <a href="../../reference/mobile-app-reliability/">SOP 24</a> battery/background hardening</td>
 <td>Project</td>
 <td>needs external*</td>
 </tr>
@@ -4235,7 +4235,7 @@
 <td><strong>Admin console for account lifecycle</strong></td>
 <td>Create / suspend / role-change / offboard accounts with approvals, from the Console</td>
 <td>Turnover (students graduate, staff leave) needs a governed lifecycle, not ad-hoc edits</td>
-<td>Console v2 UI over PJSIP Realtime + AMI reloads; every change to the audit log; ties to <a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04 role matrix</a></td>
+<td>Console v2 UI over PJSIP Realtime + AMI reloads; every change to the audit log; ties to <a href="../../reference/sip-account-role-matrix/">SOP 04 role matrix</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4263,7 +4263,7 @@
 <td><strong>TLS + SRTP (encrypted signalling &amp; media)</strong></td>
 <td>Encrypts SIP and RTP so calls can't be sniffed or spoofed on the LAN</td>
 <td>Emergency and duress calls are exactly the traffic you must not leak or tamper with (Risk <strong>H2/D3</strong>)</td>
-<td><code>res_pjsip</code> TLS transport + <code>media_encryption=sdes</code> (or DTLS-SRTP); cert management; per-client profile decision — <a href="../SOP/26-Security-Hardening.md">SOP 26</a></td>
+<td><code>res_pjsip</code> TLS transport + <code>media_encryption=sdes</code> (or DTLS-SRTP); cert management; per-client profile decision — <a href="../../guides/security-hardening/">SOP 26</a></td>
 <td>Project</td>
 <td>yes</td>
 </tr>
@@ -4271,7 +4271,7 @@
 <td><strong>Per-role RBAC hardening</strong></td>
 <td>Enforces least-privilege on Console, portal, and dialplan features by role</td>
 <td>Not everyone should page campus, hear recordings, or change config. Blast-radius control</td>
-<td>Console RBAC + Asterisk contexts per role (already role-scoped in dialplan); align to <a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04</a> / <a href="../SOP/27-Roles-Ownership-RACI.md">SOP 27 RACI</a></td>
+<td>Console RBAC + Asterisk contexts per role (already role-scoped in dialplan); align to <a href="../../reference/sip-account-role-matrix/">SOP 04</a> / <a href="../../operations/roles-ownership-raci/">SOP 27 RACI</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4320,7 +4320,7 @@
 <td><strong>Shift roster automation + auto-unpause</strong></td>
 <td>Loads the ERT roster; auto-pauses off-shift responders and unpauses the on-shift ones at handover</td>
 <td>Removes reliance on responders remembering <code>*45</code>/<code>*46</code>; guarantees the queue always has live agents</td>
-<td>Scheduled AMI <code>QueuePause</code>/<code>QueueUnpause</code> driven by the roster; complements manual <code>*45</code>/<code>*46</code>; ties to <a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a></td>
+<td>Scheduled AMI <code>QueuePause</code>/<code>QueueUnpause</code> driven by the roster; complements manual <code>*45</code>/<code>*46</code>; ties to <a href="../../operations/ert-roles-and-shifts/">SOP 30</a></td>
 <td>Medium</td>
 <td>yes</td>
 </tr>
@@ -4387,7 +4387,7 @@
 <td><strong>PSTN dial-out to real 100 / 108</strong></td>
 <td>Bridges an on-campus incident to real police (<code>100</code>) / ambulance (<code>108</code>)</td>
 <td>Some emergencies must escalate to public services — the system should hand off cleanly</td>
-<td>SIP trunk to an ITSP or a <strong>DAHDI/analog FXO</strong> gateway; strict allow-list; caller-ID/CLI policy — <strong>note <a href="../SOP/21-Risk-Register-and-Gaps.md">SOP 21 D1</a> <code>100</code>-collision risk</strong></td>
+<td>SIP trunk to an ITSP or a <strong>DAHDI/analog FXO</strong> gateway; strict allow-list; caller-ID/CLI policy — <strong>note <a href="../../operations/risk-register/">SOP 21 D1</a> <code>100</code>-collision risk</strong></td>
 <td>Project</td>
 <td><strong>needs external</strong></td>
 </tr>
@@ -4418,7 +4418,7 @@
 <tr>
 <td><strong>App-push wake-on-INVITE</strong></td>
 <td>Wakes a backgrounded/sleeping phone so an incoming emergency call actually rings</td>
-<td>Battery-optimized Androids silently drop SIP; without push, calls to sleeping phones are lost (<a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24</a>)</td>
+<td>Battery-optimized Androids silently drop SIP; without push, calls to sleeping phones are lost (<a href="../../reference/mobile-app-reliability/">SOP 24</a>)</td>
 <td><code>res_pjsip</code> push params (<code>PJSIP-endpoint</code> push) + a push gateway (FCM/APNs) — the wake path is inherently cloud</td>
 <td>Project</td>
 <td><strong>needs external</strong></td>
@@ -4460,7 +4460,7 @@
 <td><strong>Louder / vibrate answer-point handling</strong></td>
 <td>High-volume ring + strong vibrate + visual flash on ERT answer points</td>
 <td>ERT phones in noisy/pocketed conditions must never be missed</td>
-<td>Client-side profile on the always-on ERT Androids (via MDM, §4) + <a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24</a> hardening</td>
+<td>Client-side profile on the always-on ERT Androids (via MDM, §4) + <a href="../../reference/mobile-app-reliability/">SOP 24</a> hardening</td>
 <td>Quick</td>
 <td>yes</td>
 </tr>
@@ -4489,15 +4489,15 @@
 </blockquote>
 <hr />
 <h2 id="note-on-ai-101">Note on AI-101<a class="headerlink" href="#note-on-ai-101" title="Permanent link">&para;</a></h2>
-<p><strong>AI-101 (local-first — Ollama/llama.cpp + Whisper + Piper, no cloud/Gemini)</strong> — an AI triage front end on extension <code>101</code> — is fully designed in <a href="../AI-101/"><code>../AI-101/</code></a> and <a href="../SOP/19-AI-101-Design.md">SOP 19</a>, but is <strong>deferred by decision</strong>. <code>111</code> stays human-first and must keep working even if every AI component is offline. It is intentionally <em>not</em> on this roadmap's active track.</p>
+<p><strong>AI-101 (local-first — Ollama/llama.cpp + Whisper + Piper, no cloud/Gemini)</strong> — an AI triage front end on extension <code>101</code> — is fully designed in <a href="../AI-101/"><code>../AI-101/</code></a> and <a href="../../ai-101/design/">SOP 19</a>, but is <strong>deferred by decision</strong>. <code>111</code> stays human-first and must keep working even if every AI component is offline. It is intentionally <em>not</em> on this roadmap's active track.</p>
 <hr />
 <h2 id="cross-links">Cross-links<a class="headerlink" href="#cross-links" title="Permanent link">&para;</a></h2>
 <ul>
-<li>SOPs: <a href="../SOP/"><code>../SOP/</code></a> — esp. <a href="../SOP/01-Numbering-Plan.md">SOP 01 Numbering</a> · <a href="../SOP/04-SIP-Account-Role-Matrix.md">SOP 04 Role Matrix</a> · <a href="../SOP/11-Backup-Restore-Procedure.md">SOP 11 Backup/Restore</a> · <a href="../SOP/13-Recording-Retention-Policy.md">SOP 13 Retention</a> · <a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20 Multi-Campus Wireless</a> · <a href="../SOP/21-Risk-Register-and-Gaps.md">SOP 21 Risk Register</a> · <a href="../SOP/24-Mobile-App-Reliability-and-Battery.md">SOP 24 Mobile Reliability</a> · <a href="../SOP/26-Security-Hardening.md">SOP 26 Security Hardening</a> · <a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28 Voice Prompts</a> · <a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30 ERT Shifts</a></li>
-<li>Blueprint: <a href="../Blueprint/"><code>../Blueprint/</code></a> — esp. <a href="../Blueprint/04-Network-and-Deployment.md">04 Network &amp; Deployment</a></li>
+<li>SOPs: <a href="../SOP/"><code>../SOP/</code></a> — esp. <a href="../../reference/numbering-plan/">SOP 01 Numbering</a> · <a href="../../reference/sip-account-role-matrix/">SOP 04 Role Matrix</a> · <a href="../../guides/backup-restore/">SOP 11 Backup/Restore</a> · <a href="../../operations/recording-retention/">SOP 13 Retention</a> · <a href="../../guides/multi-campus-wireless/">SOP 20 Multi-Campus Wireless</a> · <a href="../../operations/risk-register/">SOP 21 Risk Register</a> · <a href="../../reference/mobile-app-reliability/">SOP 24 Mobile Reliability</a> · <a href="../../guides/security-hardening/">SOP 26 Security Hardening</a> · <a href="../../reference/voice-prompt-scripts/">SOP 28 Voice Prompts</a> · <a href="../../operations/ert-roles-and-shifts/">SOP 30 ERT Shifts</a></li>
+<li>Blueprint: <a href="../Blueprint/"><code>../Blueprint/</code></a> — esp. <a href="../../architecture/network-and-deployment/">04 Network &amp; Deployment</a></li>
 <li>AI-101 (deferred): <a href="../AI-101/"><code>../AI-101/</code></a></li>
-<li>Status of record: <a href="../Journal/Project-Status.md"><code>../Journal/Project-Status.md</code></a></li>
-<li>Feature catalog / config: <a href="../config/FEATURES.md"><code>../config/FEATURES.md</code></a> <em>(intended catalog — see <a href="../config/"><code>../config/</code></a> for current config + scripts)</em></li>
+<li>Status of record: <a href="../status/"><code>../Journal/Project-Status.md</code></a></li>
+<li>Feature catalog / config: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/FEATURES.md"><code>../config/FEATURES.md</code></a> <em>(intended catalog — see <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/"><code>../config/</code></a> for current config + scripts)</em></li>
 </ul>
 
 
@@ -4521,7 +4521,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

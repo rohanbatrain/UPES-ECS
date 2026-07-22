@@ -3715,7 +3715,7 @@
 <h1 id="upes-ecs-feature-demonstration-evidence">UPES-ECS Feature Demonstration Evidence<a class="headerlink" href="#upes-ecs-feature-demonstration-evidence" title="Permanent link">&para;</a></h1>
 <p>Live verification, on the running QEMU PBX, of the features that were designed and in
 the dialplan but not yet demonstrated. Run 2026-07-04. Complements the informal pilot;
-feeds <a href="../SOP/32-Test-Evidence-Sheet.md">SOP 32 Test-Evidence</a>.</p>
+feeds <a href="../../operations/test-evidence-sheet/">SOP 32 Test-Evidence</a>.</p>
 <table>
 <thead>
 <tr>
@@ -3769,20 +3769,20 @@ feeds <a href="../SOP/32-Test-Evidence-Sheet.md">SOP 32 Test-Evidence</a>.</p>
 <ul>
 <li><strong>F18</strong> — this was a real <em>restore</em> test, not just a backup: a file was extracted from
   the archive and diffed against the live config (matched). Backup process per
-  <a href="../SOP/11-Backup-Restore-Procedure.md">SOP 11</a>; the snapshot lives at
+  <a href="../../guides/backup-restore/">SOP 11</a>; the snapshot lives at
   <code>/var/backups/upes-ecs/</code> on the VM.</li>
 <li><strong>F13</strong> — fail2ban jail config persisted to
-  <a href="../deploy/asterisk/fail2ban-asterisk.conf">../deploy/asterisk/fail2ban-asterisk.conf</a>.
-  Full hardening plan (TLS/SRTP, firewall, module lockdown) is <a href="../SOP/26-Security-Hardening.md">SOP 26</a>;
+  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/fail2ban-asterisk.conf">../deploy/asterisk/fail2ban-asterisk.conf</a>.
+  Full hardening plan (TLS/SRTP, firewall, module lockdown) is <a href="../../guides/security-hardening/">SOP 26</a>;
   TLS/SRTP remains a production step.</li>
 <li><strong>F7</strong> — ConfBridge profiles persisted to
-  <a href="../deploy/asterisk/confbridge.conf">../deploy/asterisk/confbridge.conf</a> and threaded
+  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/confbridge.conf">../deploy/asterisk/confbridge.conf</a> and threaded
   into the VM build. The room is live and reachable; a multi-party audio demo is best
   done with real phones dialing <code>9000</code> (same as F11).</li>
 <li><strong>F11</strong> — the only item that is inherently interactive. To demo: Rohan calls Student Example Three,
   Student Example Three does an attended transfer / adds a third phone (three-way). Happy to run it live.</li>
 </ul>
-<h2 id="still-open-from-project-statusmd">Still open (from <a href="Project-Status.md">Project-Status.md</a>)<a class="headerlink" href="#still-open-from-project-statusmd" title="Permanent link">&para;</a></h2>
+<h2 id="still-open-from-project-statusmd">Still open (from <a href="../status/">Project-Status.md</a>)<a class="headerlink" href="#still-open-from-project-statusmd" title="Permanent link">&para;</a></h2>
 <p>Online AI-<code>101</code> build (local-first) · production move to the van's Linux box / bridged ·
 TLS/SRTP · formal pilot sign-off.</p>
 <blockquote>
@@ -3812,7 +3812,7 @@ police-number/OS-interception collision.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

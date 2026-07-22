@@ -3958,7 +3958,7 @@ This is the single index: pick a deployment, wire the network, add people, go mu
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="p">.\</span><span class="nb">Install-UpesEcs</span><span class="p">.</span><span class="n">ps1</span>
 </code></pre></div>
 Installs prereqs + firewall, builds/boots the PBX VM, autostarts it, starts the Console on <code>:8080</code>.
-Full detail: <a href="README.md#set-up-on-a-new-windows-pc-one-command">README.md</a>. Region/language picker: double-click <strong><code>Deploy-UPES.cmd</code></strong>.</p>
+Full detail: <a href="../../getting-started/quickstart/">README.md</a>. Region/language picker: double-click <strong><code>Deploy-UPES.cmd</code></strong>.</p>
 <hr />
 <h2 id="b-two-jetson-nano-high-availability-production">B · Two Jetson Nano — High Availability (production)<a class="headerlink" href="#b-two-jetson-nano-high-availability-production" title="Permanent link">&para;</a></h2>
 <p>A Jetson Nano is ARM64 Linux, so Asterisk runs <strong>natively</strong> (no QEMU → fast), and two boards form an
@@ -3971,13 +3971,13 @@ phones follow the name. One command per box:
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>./setup-node.sh<span class="w"> </span>--role<span class="w"> </span>primary<span class="w">   </span>--self<span class="w"> </span>&lt;BOX-A-IP&gt;<span class="w"> </span>--peer<span class="w"> </span>&lt;BOX-B-IP&gt;<span class="w"> </span>--iface<span class="w"> </span>eth0<span class="w">   </span><span class="c1"># on box A</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>./setup-node.sh<span class="w"> </span>--role<span class="w"> </span>secondary<span class="w"> </span>--self<span class="w"> </span>&lt;BOX-B-IP&gt;<span class="w"> </span>--peer<span class="w"> </span>&lt;BOX-A-IP&gt;<span class="w"> </span>--iface<span class="w"> </span>eth0<span class="w">   </span><span class="c1"># on box B</span>
 </code></pre></div>
-Full runbook: <a href="deploy/jetson/mdns/README-MDNS.md">deploy/jetson/mdns/README-MDNS.md</a> · trimmed switch guide:
-<a href="deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a>.
+Full runbook: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/README-MDNS.md">deploy/jetson/mdns/README-MDNS.md</a> · trimmed switch guide:
+<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a>.
 Point phones at <code>upes-ecs.local</code> with a short (~60 s) SIP registration; failover recovers 111 in seconds.</p>
 </blockquote>
 <p>The <strong>VIP variant</strong> below (a floating Virtual IP phones register to) is the alternative if some devices
 can't resolve <code>.local</code> mDNS — it needs an L2-contiguous voice VLAN and a little more switch config.</p>
-<p><strong>Steps (full runbook: <a href="deploy/jetson/README.md">deploy/jetson/README.md</a>):</strong>
+<p><strong>Steps (full runbook: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/README.md">deploy/jetson/README.md</a>):</strong>
 1. Flash both Jetsons with Ubuntu (JetPack). Put both on the <strong>voice VLAN</strong>, static IPs, plus a VIP in the same subnet.
 2. Exchange SSH keys (for config sync). Copy the repo to each board.
 3. Install (from <code>deploy/jetson/</code>):
@@ -3994,7 +3994,7 @@ primary propagates. Limitation: registrations re-establish on failover (that's w
 zero-touch failover (shared DB) is documented as an upgrade.</p>
 <hr />
 <h2 id="2-network-with-your-juniper-gear-the-100-checklist">2 · Network with your Juniper gear — the "100%" checklist<a class="headerlink" href="#2-network-with-your-juniper-gear-the-100-checklist" title="Permanent link">&para;</a></h2>
-<p>Full Junos <code>set</code> config: <a href="deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a>. The essentials:</p>
+<p>Full Junos <code>set</code> config: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a>. The essentials:</p>
 <ul>
 <li>[ ] <strong>One voice VLAN</strong> spanning both switches (trunked uplinks) so it's L2-contiguous across both Jetsons — this is what lets the VIP move on failover.</li>
 <li>[ ] <strong>Both Jetsons + the VIP</strong> in that one voice subnet (Jetsons static; VIP excluded from DHCP).</li>
@@ -4014,7 +4014,7 @@ zero-touch failover (shared DB) is documented as an upgrade.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">powershell</span> <span class="o">-File</span> <span class="n">deploy</span><span class="p">\</span><span class="n">qemu</span><span class="p">\</span><span class="nb">Add-UpesUser</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-SapId</span> <span class="n">500000005</span> <span class="n">-Name</span> <span class="s2">&quot;Student Example Five&quot;</span>
 </code></pre></div>
 On the Jetson cluster, run it on the <strong>primary</strong>; the sync propagates to the backup.
-Rules + credentials: <a href="deploy/qemu/ADD-USER-RUNBOOK.md">deploy/qemu/ADD-USER-RUNBOOK.md</a> · <a href="secrets/TEAM-CREDENTIALS.md">secrets/TEAM-CREDENTIALS.md</a>.</p>
+Rules + credentials: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/ADD-USER-RUNBOOK.md">deploy/qemu/ADD-USER-RUNBOOK.md</a> · secrets/TEAM-CREDENTIALS.md.</p>
 <hr />
 <h2 id="4-regional-languages-voice-prompts-and-dashboard-ui">4 · Regional languages (voice prompts <strong>and</strong> dashboard UI)<a class="headerlink" href="#4-regional-languages-voice-prompts-and-dashboard-ui" title="Permanent link">&para;</a></h2>
 <p>Everything localizes to the deployed region: the ~41 voice prompts AND the dashboard UI (~679 strings).
@@ -4024,7 +4024,7 @@ The system speaks <strong>44 languages</strong> (all Piper natural voices); Indi
 <ul>
 <li><strong>Who:</strong> one <strong>native speaker per language</strong>, ideally with first-aid/emergency familiarity — these are CPR/evacuation instructions, so accuracy &gt; fluency.</li>
 <li><strong>Give them two files</strong> (they <em>correct the AI draft</em>, they don't start from scratch):</li>
-<li>Voice: <code>i18n/translations/&lt;code&gt;.csv</code> (41 rows, English + draft) + the rules in <a href="i18n/TRANSLATION-GUIDE.md">i18n/TRANSLATION-GUIDE.md</a>.</li>
+<li>Voice: <code>i18n/translations/&lt;code&gt;.csv</code> (41 rows, English + draft) + the rules in <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/i18n/TRANSLATION-GUIDE.md">i18n/TRANSLATION-GUIDE.md</a>.</li>
 <li>UI: <code>Console/ui-lang/&lt;code&gt;.json</code> (~679 short strings).</li>
 <li><strong>Rules they follow:</strong> keep the DTMF digit on "press 1", keep <code>*22</code>/<code>111</code>/<code>UPES</code>/<code>SIP</code> verbatim, don't add/drop first-aid steps, stay within the length target.</li>
 </ul>
@@ -4033,7 +4033,7 @@ The system speaks <strong>44 languages</strong> (all Piper natural voices); Indi
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">powershell</span> <span class="o">-File</span> <span class="n">scripts</span><span class="p">\</span><span class="n">gen-lang-prompts</span><span class="p">.</span><span class="n">win</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Lang</span> <span class="p">&lt;</span><span class="n">code</span><span class="p">&gt;</span>     <span class="c"># regenerates the audio pack</span>
 </code></pre></div>
 Then <code>Deploy-UPES</code> → pick the language (Windows), or the Jetson sync picks it up. The dashboard flips
-to that language automatically (from <code>region.json</code>). Details: <a href="DEPLOY-REGIONAL.md">DEPLOY-REGIONAL.md</a>.</p>
+to that language automatically (from <code>region.json</code>). Details: <a href="../../getting-started/regional-deployment/">DEPLOY-REGIONAL.md</a>.</p>
 <hr />
 <h2 id="5-the-dashboards">5 · The dashboards<a class="headerlink" href="#5-the-dashboards" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4081,7 +4081,7 @@ to that language automatically (from <code>region.json</code>). Details: <a href
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

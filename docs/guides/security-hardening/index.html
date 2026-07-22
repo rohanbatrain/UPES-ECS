@@ -3975,7 +3975,7 @@
 </tr>
 <tr>
 <td>Failed-reg logging</td>
-<td>On → feeds <a href="10-Health-Monitoring-Checklist.md">Health Monitoring</a> as an Access/registration event</td>
+<td>On → feeds <a href="../../operations/health-monitoring/">Health Monitoring</a> as an Access/registration event</td>
 </tr>
 </tbody>
 </table>
@@ -4002,7 +4002,7 @@
 <p>Plain UDP RTP is sniffable on shared Wi-Fi. <strong>Future security enhancement:</strong>
 - <strong>TLS</strong> for SIP signaling + <strong>SRTP</strong> for media, at least on ERT/fixed devices (Linphone/MicroSIP support it).
 - Certificate management on the PBX.
-- Marked deferred in the <a href="21-Risk-Register-and-Gaps.md#r7">Risk Register</a>; revisit before wide student rollout.</p>
+- Marked deferred in the <a href="../../operations/risk-register/#r7">Risk Register</a>; revisit before wide student rollout.</p>
 <hr />
 <h2 id="5-protecting-the-111-queue-from-flooding">5. Protecting the 111 queue from flooding<a class="headerlink" href="#5-protecting-the-111-queue-from-flooding" title="Permanent link">&para;</a></h2>
 <p>The emergency line must not be drownable by junk:</p>
@@ -4030,13 +4030,13 @@
 <li>Force re-provision; block the old credential; log the event.</li>
 <li>Preserve the account's history/logs (identity is never reused).</li>
 </ul>
-<p>(Full lifecycle in <a href="14-Device-Provisioning-Sheet.md">Device Provisioning</a>.)</p>
+<p>(Full lifecycle in <a href="../device-provisioning/">Device Provisioning</a>.)</p>
 <hr />
 <h2 id="8-what-gets-logged-security">8. What gets logged (security)<a class="headerlink" href="#8-what-gets-logged-security" title="Permanent link">&para;</a></h2>
 <p>Successful + failed registration · unknown-device attempts · Access Denied Events ·
 paging attempts (allowed + denied) · conference joins · transfer/dispatch · voicemail
 &amp; recording access · config changes · account disable/revoke · fail2ban bans.</p>
-<p>Review these in the <a href="10-Health-Monitoring-Checklist.md">Health Dashboard</a> and the weekly drill report.</p>
+<p>Review these in the <a href="../../operations/health-monitoring/">Health Dashboard</a> and the weekly drill report.</p>
 <hr />
 <h2 id="9-live-statuscontrol-api-upes-api-8090-attack-surface">9. Live status/control API (<code>upes-api</code> :8090) — attack surface<a class="headerlink" href="#9-live-statuscontrol-api-upes-api-8090-attack-surface" title="Permanent link">&para;</a></h2>
 <p>The Console is backed by a <strong>FastAPI</strong> service (<code>systemd</code> unit <code>upes-api</code>, <code>Restart=always</code>)
@@ -4063,7 +4063,7 @@ attack surface and is locked down accordingly:</p>
 <li><strong>Boot autostart</strong> of the VM and the Console (Windows Startup-folder launchers, <strong>no admin
   required</strong>) so the whole stack comes back after a host reboot.</li>
 <li><strong>Nightly backups</strong> — <code>upes-ecs-backup.sh</code> + cron → <code>/var/backups/upes-ecs/</code> (per
-  <a href="11-Backup-Restore-Procedure.md">SOP 11</a>); restore has been test-verified.</li>
+  <a href="../backup-restore/">SOP 11</a>); restore has been test-verified.</li>
 <li><strong>Real all-campus paging PIN</strong> provisioned (no placeholder/default).</li>
 <li><strong>SSH hardened for speed + surface:</strong> <code>UseDNS</code>/GSSAPI off, <code>motd-news</code> disabled.</li>
 </ul>
@@ -4114,7 +4114,7 @@ and the paging PIN live in restricted include files, not in world-readable confi
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

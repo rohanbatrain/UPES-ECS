@@ -3958,8 +3958,8 @@
 
 <h1 id="ai-101-integration-plan-ava-a-fully-local-llm-on-upes-ecs-asterisk">AI-101 Integration Plan — AVA + a fully-local LLM on UPES-ECS Asterisk<a class="headerlink" href="#ai-101-integration-plan-ava-a-fully-local-llm-on-upes-ecs-asterisk" title="Permanent link">&para;</a></h1>
 <p>How the <strong>AVA AI Voice Agent</strong> is wired onto the existing UPES-ECS Asterisk stack to
-provide extension <strong>101</strong> (AI triage), and how it obeys <a href="../SOP/19-AI-101-Design.md">SOP 19</a>
-and <a href="../SOP/12-Incident-Logging-Schema.md">SOP 12</a>.</p>
+provide extension <strong>101</strong> (AI triage), and how it obeys <a href="../design/">SOP 19</a>
+and <a href="../../operations/incident-logging-schema/">SOP 12</a>.</p>
 <blockquote>
 <p><strong>Legend:</strong> ✅ <strong>Verified</strong> from AVA's public README/docs · ⚠️ <strong>Assumed / to-verify on
 our stack</strong> · 🔒 <strong>Locked</strong> by SOP 19 (must not change).</p>
@@ -4046,7 +4046,7 @@ CLI <code>agent setup|check|dialplan|config validate</code>; optional Prometheus
 <tr>
 <td><strong>ExternalMedia RTP</strong></td>
 <td>Asterisk <code>externalMedia</code> channel streams RTP to the engine.</td>
-<td>Fallback if AudioSocket has codec/latency issues. Note our VM already pins RTP to <code>10000-10019</code> (<a href="../deploy/qemu/README.md">qemu README</a>); ExternalMedia would need its own port plan.</td>
+<td>Fallback if AudioSocket has codec/latency issues. Note our VM already pins RTP to <code>10000-10019</code> (<a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md">qemu README</a>); ExternalMedia would need its own port plan.</td>
 </tr>
 </tbody>
 </table>
@@ -4183,14 +4183,14 @@ no cloud.</p>
 <li>The only secrets are <strong>ARI credentials</strong> (localhost/mgmt-scoped); there are <strong>no LLM API
   keys</strong> to manage — see <a href="../deployment/#3-secrets--local-model-management">deployment.md §3</a>.</li>
 <li>Incident <strong>recordings</strong> remain the Asterisk-side WAVs governed by
-  <a href="../SOP/12-Incident-Logging-Schema.md">SOP 12 §7</a> retention — unchanged.</li>
+  <a href="../../operations/incident-logging-schema/">SOP 12 §7</a> retention — unchanged.</li>
 <li>⚠️ <strong>Prerequisite, not a privacy risk:</strong> a <strong>capable AI host (dedicated CPU/GPU box)</strong> is
   required for real-time performance. The current TCG VM cannot run the local models at
   usable latency — see §3.1 and <a href="../deployment/#1-topology">deployment.md §1</a>.</li>
 </ul>
 <hr />
 <h2 id="4-upes-ecs-dialplan-wiring">4. UPES-ECS dialplan wiring<a class="headerlink" href="#4-upes-ecs-dialplan-wiring" title="Permanent link">&para;</a></h2>
-<p>Add to <a href="../config/extensions_custom.conf"><code>../config/extensions_custom.conf</code></a>. Two new
+<p>Add to <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf"><code>../config/extensions_custom.conf</code></a>. Two new
 contexts (<code>ctx_ai_101</code>, <code>ctx_ai_196</code>) plus a shared <strong>hard-fallback</strong> target. <strong>101 and
 196 do the AI; escalation and failure both land on the existing 111 path</strong> — the human
 logic in <code>ctx_emergency_111</code> / <code>ctx_escalation</code> is unchanged.</p>
@@ -4260,13 +4260,13 @@ logic in <code>ctx_emergency_111</code> / <code>ctx_escalation</code> is unchang
   <code>ctx_student</code>). <code>include =&gt; ctx_ai_101</code> is added to student/staff contexts <strong>only at
   Phase 2</strong> rollout; during Phase 1.5 only ERT/test extensions include it.</li>
 <li>Prompt files <code>upes-ecs/ai-unavailable</code> (and any AI prompts) recorded per
-  <a href="../SOP/28-Voice-Prompt-Scripts.md">SOP 28</a>, same sounds dir as the 111 prompts.</li>
+  <a href="../../reference/voice-prompt-scripts/">SOP 28</a>, same sounds dir as the 111 prompts.</li>
 </ul>
 <hr />
 <h2 id="5-incident-logging-ai_-fields">5. Incident logging (<code>ai_*</code> fields)<a class="headerlink" href="#5-incident-logging-ai_-fields" title="Permanent link">&para;</a></h2>
-<p>Every 101 call is an incident, same as 111 (<a href="../SOP/12-Incident-Logging-Schema.md">SOP 12 §1</a>),
+<p>Every 101 call is an incident, same as 111 (<a href="../../operations/incident-logging-schema/">SOP 12 §1</a>),
 with <code>source_number = 101</code> and the <strong>additional AI fields</strong> from
-<a href="../SOP/12-Incident-Logging-Schema.md#5-ai-assisted-101-additional-fields">SOP 12 §5</a>:</p>
+<a href="../../operations/incident-logging-schema/#5-ai-assisted-101-additional-fields">SOP 12 §5</a>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>source_number = 101        ai_triage_enabled = true
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ai_detected_location       ai_detected_category      ai_urgency_hint
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ai_summary                 ai_questions_completed
@@ -4278,7 +4278,7 @@ with <code>source_number = 101</code> and the <strong>additional AI fields</stro
 <li>The dialplan mints <code>INCIDENT_ID</code> and records the WAV <strong>before</strong> <code>Stasis()</code> (above), so
    an incident exists even if AVA dies mid-call.</li>
 <li>AVA's local-LLM agent produces the structured pre-brief (SOP 19 §4). We capture it one
-   of two ways — pick during build (<a href="TODO.md">TODO.md</a>):</li>
+   of two ways — pick during build (<a href="../todo/">TODO.md</a>):</li>
 <li><strong>AVA post-call webhook / <code>send_email_summary</code>-style HTTP tool</strong> ✅ (AVA supports
      pre/in/post-call HTTP tools) → a small UPES endpoint writes <code>ai_summary</code>,
      <code>ai_detected_category</code>, <code>ai_detected_location</code>, <code>ai_urgency_hint</code>,
@@ -4294,7 +4294,7 @@ with <code>source_number = 101</code> and the <strong>additional AI fields</stro
 </ol>
 <hr />
 <h2 id="6-safety-fallback-matrix">6. Safety / fallback matrix<a class="headerlink" href="#6-safety-fallback-matrix" title="Permanent link">&para;</a></h2>
-<p>Mirrors <a href="../SOP/19-AI-101-Design.md">SOP 19 §5–§6</a>. 🔒 = locked behaviour.</p>
+<p>Mirrors <a href="../design/">SOP 19 §5–§6</a>. 🔒 = locked behaviour.</p>
 <table>
 <thead>
 <tr>
@@ -4428,7 +4428,7 @@ lands the caller on the human 111 line.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

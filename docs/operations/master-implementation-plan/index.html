@@ -3956,7 +3956,7 @@ Everything else layers on without changing that core.</p>
 <hr />
 <h2 id="phase-2-roles-access">Phase 2 — Roles &amp; access<a class="headerlink" href="#phase-2-roles-access" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong>
-1. Create the 7 contexts (<code>ctx_student … ctx_admin</code>) per the <a href="04-SIP-Account-Role-Matrix.md">Role Matrix</a>.
+1. Create the 7 contexts (<code>ctx_student … ctx_admin</code>) per the <a href="../../reference/sip-account-role-matrix/">Role Matrix</a>.
 2. Enable student-to-student / internal calling (not recorded).
 3. Provision fixed devices in <strong>4000–4999</strong> (Medical 4200, Security 4300, ERT desks 41xx).
 4. Lock paging, conference, recordings, voicemail review to emergency roles.
@@ -3973,16 +3973,16 @@ Everything else layers on without changing that core.</p>
 <hr />
 <h2 id="phase-4-operational-hardening">Phase 4 — Operational hardening<a class="headerlink" href="#phase-4-operational-hardening" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong>
-1. Health checks (script/CLI first, dashboard later) — see <a href="10-Health-Monitoring-Checklist.md">Health Checklist</a>.
-2. Backups: git repo <code>upes-ecs-config</code>, daily config + pre-change snapshots, encrypted sensitive data — see <a href="11-Backup-Restore-Procedure.md">Backup &amp; Restore</a>.
+1. Health checks (script/CLI first, dashboard later) — see <a href="../health-monitoring/">Health Checklist</a>.
+2. Backups: git repo <code>upes-ecs-config</code>, daily config + pre-change snapshots, encrypted sensitive data — see <a href="../../guides/backup-restore/">Backup &amp; Restore</a>.
 3. <strong>Tested restore</strong> (config restore under 1 hour target).
 4. Train ERT on the SOP; run the <strong>first drill</strong>; capture a post-drill review.</p>
 <p><strong>Exit criteria:</strong> health check reports correctly; a restore test passes; ERT completes a drill successfully.</p>
 <hr />
 <h2 id="later-phases">Later phases<a class="headerlink" href="#later-phases" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>AI line 101</strong> (<a href="19-AI-101-Design.md">19-AI-101-Design.md</a>) — AI-first triage on its own number, <strong>always</strong> escalates/falls back to 111. 111 never depends on AI.</li>
-<li><strong>Multi-campus</strong> (<a href="20-Multi-Campus-Wireless.md">20-Multi-Campus-Wireless.md</a>) — rooftop point-to-point wireless links Bidholi ↔ Kandoli while staying "LAN-only."</li>
+<li><strong>AI line 101</strong> (<a href="../../ai-101/design/">19-AI-101-Design.md</a>) — AI-first triage on its own number, <strong>always</strong> escalates/falls back to 111. 111 never depends on AI.</li>
+<li><strong>Multi-campus</strong> (<a href="../../guides/multi-campus-wireless/">20-Multi-Campus-Wireless.md</a>) — rooftop point-to-point wireless links Bidholi ↔ Kandoli while staying "LAN-only."</li>
 </ul>
 <hr />
 <h2 id="tbd-items-to-collect-from-upes-it-blocking-go-live">TBD items to collect from UPES IT (blocking go-live)<a class="headerlink" href="#tbd-items-to-collect-from-upes-it-blocking-go-live" title="Permanent link">&para;</a></h2>
@@ -4067,7 +4067,7 @@ Wi-Fi can't carry calls, unauthorized-access risk, or no available ERT coverage.
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     

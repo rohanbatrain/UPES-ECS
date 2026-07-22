@@ -4037,7 +4037,7 @@ yet decided. <strong>Min/Rec:</strong> <code>M</code> = minimum to go live · <c
 <hr />
 <h2 id="a-campus-fixed-deployment-mode-a">(a) Campus fixed deployment — Mode A<a class="headerlink" href="#a-campus-fixed-deployment-mode-a" title="Permanent link">&para;</a></h2>
 <p>The everyday emergency line: one server, the campus network, and dedicated ERT answer
-points. Ties to <a href="02-System-Architecture.md">02 §5–6</a> and <a href="../SOP/15-Local-Infrastructure-Diagram.md">SOP 15</a>.</p>
+points. Ties to <a href="../system-architecture/">02 §5–6</a> and <a href="../../reference/local-infrastructure-diagram/">SOP 15</a>.</p>
 <h3 id="a1-server-the-pbx">a.1 Server (the PBX)<a class="headerlink" href="#a1-server-the-pbx" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4167,7 +4167,7 @@ client-isolation status, and the exact router / switch / AP models.</p>
 <h3 id="a3-ert-answer-points-dedicated-androids-phase-1">a.3 ERT answer points (dedicated Androids — Phase 1)<a class="headerlink" href="#a3-ert-answer-points-dedicated-androids-phase-1" title="Permanent link">&para;</a></h3>
 <p>Fixed answer points are <strong>dedicated Android phones running Linphone</strong>, logged in as a
 <strong>responder position</strong> (not a person). IP phones come later on the <strong>same extension</strong>
-(<a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 §3</a>).</p>
+(<a href="../../guides/device-provisioning/">SOP 14 §3</a>).</p>
 <table>
 <thead>
 <tr>
@@ -4291,7 +4291,7 @@ client-isolation status, and the exact router / switch / AP models.</p>
 <hr />
 <h2 id="b-van-mobile-deployment-mode-b">(b) Van / mobile deployment — Mode B<a class="headerlink" href="#b-van-mobile-deployment-mode-b" title="Permanent link">&para;</a></h2>
 <p>Self-powered PBX-in-a-van + corner repeaters — disaster operation <strong>and</strong> failover for
-the campus PBX. Same config, numbers, SOP. Ties to <a href="../SOP/23-Mobile-Van-Deployment.md">SOP 23</a>.</p>
+the campus PBX. Same config, numbers, SOP. Ties to <a href="../../guides/mobile-van-deployment/">SOP 23</a>.</p>
 <h3 id="b1-van-core">b.1 Van core<a class="headerlink" href="#b1-van-core" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4399,7 +4399,7 @@ the campus PBX. Same config, numbers, SOP. Ties to <a href="../SOP/23-Mobile-Van
 <blockquote>
 <p><strong>TBD to confirm:</strong> van <strong>power sizing</strong> — battery Ah + generator kW + fuel reserve —
 sized to the disaster window UPES must cover. Do the load math before deploying
-(<a href="../SOP/23-Mobile-Van-Deployment.md">SOP 23 §4</a>).</p>
+(<a href="../../guides/mobile-van-deployment/">SOP 23 §4</a>).</p>
 </blockquote>
 <h3 id="b3-mast-antenna-corner-repeaters">b.3 Mast / antenna + corner repeaters<a class="headerlink" href="#b3-mast-antenna-corner-repeaters" title="Permanent link">&para;</a></h3>
 <table>
@@ -4456,7 +4456,7 @@ sized to the disaster window UPES must cover. Do the load math before deploying
 <blockquote>
 <p><strong>TBD to confirm:</strong> repeater <strong>model / backhaul radio</strong>, <strong>number + placement</strong> for
 full campus coverage, and target van setup time. Multi-campus Bidholi↔Kandoli rooftop
-wireless is a later phase (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</a>).</p>
+wireless is a later phase (<a href="../../guides/multi-campus-wireless/">SOP 20</a>).</p>
 </blockquote>
 <h3 id="b4-van-spare-kit">b.4 Van spare kit<a class="headerlink" href="#b4-van-spare-kit" title="Permanent link">&para;</a></h3>
 <table>
@@ -4564,7 +4564,7 @@ wireless is a later phase (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</
 </tr>
 </tbody>
 </table>
-<p>Reference: <a href="../config/README.md">config/README.md</a> · <a href="../provisioning/README.md">provisioning/README.md</a> · <a href="../deploy/README.md">deploy/README.md</a>.</p>
+<p>Reference: <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md">config/README.md</a> · <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/README.md">provisioning/README.md</a> · <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md">deploy/README.md</a>.</p>
 <hr />
 <h2 id="d-consumables-misc">(d) Consumables &amp; misc<a class="headerlink" href="#d-consumables-misc" title="Permanent link">&para;</a></h2>
 <table>
@@ -4619,7 +4619,7 @@ wireless is a later phase (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</
 <tr>
 <td>Printed desk references</td>
 <td>per position</td>
-<td><a href="../SOP/02-ERT-SOP.md">ERT SOP</a> + <a href="../SOP/25-Quick-Cards.md">Quick-Cards</a></td>
+<td><a href="../../operations/ert-sop/">ERT SOP</a> + <a href="../../reference/quick-cards/">Quick-Cards</a></td>
 <td>Answer script + dispatch at the desk</td>
 <td>M</td>
 <td>need</td>
@@ -4629,7 +4629,7 @@ wireless is a later phase (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</
 <td>Sealed credential sheets</td>
 <td>per account</td>
 <td>For one-time secret delivery</td>
-<td>Deliver SIP secrets once, securely (<a href="../SOP/14-Device-Provisioning-Sheet.md">SOP 14 §5</a>)</td>
+<td>Deliver SIP secrets once, securely (<a href="../../guides/device-provisioning/">SOP 14 §5</a>)</td>
 <td>R</td>
 <td>need</td>
 <td>TBD</td>
@@ -4640,7 +4640,7 @@ wireless is a later phase (<a href="../SOP/20-Multi-Campus-Wireless.md">SOP 20</
 <h2 id="people-not-a-purchase-but-a-hard-prerequisite">People (not a purchase, but a hard prerequisite)<a class="headerlink" href="#people-not-a-purchase-but-a-hard-prerequisite" title="Permanent link">&para;</a></h2>
 <p>The confirmed roster is real people only — <strong>no fabricated names</strong>. They are normal
 staff/student accounts <strong>and</strong> trained officers who occupy a <strong>position</strong> on their shift
-(<a href="../SOP/30-ERT-Roles-and-Shifts.md">SOP 30</a>, <a href="../provisioning/pilot-users.csv">provisioning/pilot-users.csv</a>):</p>
+(<a href="../../operations/ert-roles-and-shifts/">SOP 30</a>, <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/pilot-users.csv">provisioning/pilot-users.csv</a>):</p>
 <table>
 <thead>
 <tr>
@@ -4688,7 +4688,7 @@ everything else in this BOM is resilience (van, repeaters, extra answer points) 
 <blockquote>
 <p><strong>Prices deferred:</strong> every Cost cell is <strong>TBD</strong> until quotes are gathered. This BOM
 commits to quantity, spec, and purpose only. See the minimum-viable view in
-<a href="01-Bare-Minimum-Checklist.md">01-Bare-Minimum-Checklist.md</a>.</p>
+<a href="../bare-minimum-checklist/">01-Bare-Minimum-Checklist.md</a>.</p>
 </blockquote>
 
 
@@ -4712,7 +4712,7 @@ commits to quantity, spec, and purpose only. See the minimum-viable view in
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 18:16:43 UTC">July 22, 2026</span>
   </span>
 
     
