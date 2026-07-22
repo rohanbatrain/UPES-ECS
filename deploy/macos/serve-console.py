@@ -18,6 +18,7 @@ Env (set by serve-console.service):
   UPES_CONSOLE_PORT   listen port             (default 8080)
   UPES_API_BASE       local API base to proxy (default http://127.0.0.1:8090)
 """
+
 import json
 import os
 import posixpath
@@ -45,8 +46,7 @@ CTYPES = {
     ".woff2": "font/woff2",
 }
 # Front-end assets whose mtime feeds the /__build stamp.
-BUILD_ASSETS = ["app.js", "app.css", "index.html", "tv.js", "tv.css",
-                "tv-safety.html", "tv-ops.html", "directory.json"]
+BUILD_ASSETS = ["app.js", "app.css", "index.html", "tv.js", "tv.css", "tv-safety.html", "tv-ops.html", "directory.json"]
 API_TIMEOUT = 25
 
 
@@ -122,7 +122,7 @@ class Handler(BaseHTTPRequestHandler):
     # --- /api/* proxy --------------------------------------------------------
     def _proxy_api(self, method):
         # /api/status -> <API_BASE>/status  (strip the /api prefix)
-        rel = self.path[len("/api"):]
+        rel = self.path[len("/api") :]
         if not rel.startswith("/"):
             rel = "/" + rel
         target = API_BASE + rel
@@ -140,11 +140,11 @@ class Handler(BaseHTTPRequestHandler):
                 rctype = resp.headers.get("Content-Type", "application/json; charset=utf-8")
                 self._send(resp.status, data, ctype=rctype)
         except urllib.error.HTTPError as e:
-            self._send(e.code, e.read() or b"{}",
-                       ctype=e.headers.get("Content-Type", "application/json; charset=utf-8"))
+            self._send(
+                e.code, e.read() or b"{}", ctype=e.headers.get("Content-Type", "application/json; charset=utf-8")
+            )
         except Exception:
-            self._send(502, json.dumps(
-                {"ok": False, "output": "Local API unreachable -- is upes-api.service up?"}))
+            self._send(502, json.dumps({"ok": False, "output": "Local API unreachable -- is upes-api.service up?"}))
 
     # --- static files --------------------------------------------------------
     def _static(self, path):

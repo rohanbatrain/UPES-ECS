@@ -84,3 +84,10 @@ _site/
 # Generated demo softphone profiles (contain the demo secret)
 demo/linphone-profiles/
 *.filled.xml
+
+# Editor/script backup files
+*.bak
+*.bak-*
+
+# Personal career/portfolio notes (never publish)
+Career/

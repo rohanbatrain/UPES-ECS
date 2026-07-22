@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Merge landing/_i18n/*.json into landing/index.html at the /*__I18N_DATA__*/ marker.
 Produces a single self-contained, local landing/index.html (no external deps)."""
+
 import glob
 import json
 import os
@@ -20,11 +21,14 @@ for f in sorted(glob.glob(os.path.join(i18n_dir, "*.json"))):
     try:
         obj = json.load(open(f, encoding="utf-8"))
     except Exception as e:
-        report.append(f"{code}: INVALID JSON ({e})"); continue
+        report.append(f"{code}: INVALID JSON ({e})")
+        continue
     missing = en_keys - set(obj)
     extra = set(obj) - en_keys
-    if missing: report.append(f"{code}: missing {sorted(missing)}")
-    if extra:   report.append(f"{code}: extra {sorted(extra)}")
+    if missing:
+        report.append(f"{code}: missing {sorted(missing)}")
+    if extra:
+        report.append(f"{code}: extra {sorted(extra)}")
     # fill any missing keys from English so the page never shows blanks
     for k in en_keys:
         obj.setdefault(k, en[k])

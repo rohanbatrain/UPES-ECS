@@ -8,6 +8,7 @@ SIP-registration is simply reported False here.
 Run:  python api/test_safety_api.py     (needs: pip install fastapi httpx)
 Exit code is non-zero if any check fails, so it doubles as a CI gate.
 """
+
 import base64
 import importlib.util
 import json
@@ -48,8 +49,7 @@ os.environ["UPES_FAMILY_DIR"] = FAM
 os.environ["UPES_STATE_DIR"] = STATE
 
 # Import safety_api.py by path so this test runs from any working directory.
-_spec = importlib.util.spec_from_file_location(
-    "safety_api", os.path.join(_API_DIR, "safety_api.py"))
+_spec = importlib.util.spec_from_file_location("safety_api", os.path.join(_API_DIR, "safety_api.py"))
 safety = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(safety)
 from fastapi.testclient import TestClient  # noqa: E402
@@ -103,7 +103,10 @@ with TestClient(safety.app) as c:
 
     r = c.post("/emergency", headers=OPER, json={"active": True, "reason": "drill"})
     check("operator can raise emergency", r.status_code == 200 and r.json()["emergency"]["active"])
-    check("child forbidden from raising emergency", c.post("/emergency", headers=CHILD, json={"active": True}).status_code == 403)
+    check(
+        "child forbidden from raising emergency",
+        c.post("/emergency", headers=CHILD, json={"active": True}).status_code == 403,
+    )
     check("emergency now active", c.get("/emergency", headers=CHILD).json()["active"] is True)
 
     check("safe rejects bad status", c.post("/safe", headers=CHILD, json={"status": "maybe"}).status_code == 422)
@@ -163,11 +166,15 @@ with TestClient(safety.app) as c:
         check("lang POST wrote astdb key", any("500120597 hi" in x for x in _apply_calls))
 
         # POST rejects a non-digit SAP.
-        check("lang POST bad sap 422",
-              c.post("/lang", headers=CHILD, json={"sap": "abc", "lang": "hi"}).status_code == 422)
+        check(
+            "lang POST bad sap 422",
+            c.post("/lang", headers=CHILD, json={"sap": "abc", "lang": "hi"}).status_code == 422,
+        )
         # POST rejects a code that isn't in languages.json.
-        check("lang POST unknown lang 422",
-              c.post("/lang", headers=CHILD, json={"sap": "500120597", "lang": "zz"}).status_code == 422)
+        check(
+            "lang POST unknown lang 422",
+            c.post("/lang", headers=CHILD, json={"sap": "500120597", "lang": "zz"}).status_code == 422,
+        )
 
         # GET-after-POST round-trip reflects the new value (from the runtime CSV).
         check("lang GET after POST is hi", c.get("/lang", headers=CHILD).json()["lang"] == "hi")
@@ -177,13 +184,17 @@ with TestClient(safety.app) as c:
         check("me now carries lang", me.get("lang") == "hi")
 
         # A non-operator cannot change someone else's language.
-        check("lang POST cross-user 403",
-              c.post("/lang", headers=CHILD, json={"sap": "500000002", "lang": "hi"}).status_code == 403)
+        check(
+            "lang POST cross-user 403",
+            c.post("/lang", headers=CHILD, json={"sap": "500000002", "lang": "hi"}).status_code == 403,
+        )
         # An operator can.
         r = c.post("/lang", headers=OPER, json={"sap": "500000002", "lang": "te"})
         check("operator sets other user's lang", r.status_code == 200 and r.json()["ok"] is True)
-        check("operator reads other user's lang",
-              c.get("/lang", headers=OPER, params={"sap": "500000002"}).json()["lang"] == "te")
+        check(
+            "operator reads other user's lang",
+            c.get("/lang", headers=OPER, params={"sap": "500000002"}).json()["lang"] == "te",
+        )
 
         # Runtime CSV really was written (durable across process restart).
         csv_path = os.path.join(FAM, "user-languages.csv")

@@ -21,6 +21,7 @@ Usage:
   gen_vcards.py [--directory PATH] [--out COLLECTION_DIR] [--host HOSTNAME] [--owner USER]
 Defaults match install-carddav.sh.
 """
+
 import argparse
 import json
 import os
@@ -28,14 +29,14 @@ import sys
 
 # Directory "kind" -> (included?, friendly group label for ORG/TITLE).
 KIND_LABELS = {
-    "ert-lead":  "ERT Lead",
-    "ert":       "ERT Operator",
-    "control":   "ERT Control Room",
+    "ert-lead": "ERT Lead",
+    "ert": "ERT Operator",
+    "control": "ERT Control Room",
     "responder": "Responder",
-    "staff":     "Staff",
+    "staff": "Staff",
     # excluded on purpose:
-    "student":   None,
-    "other":     None,
+    "student": None,
+    "other": None,
 }
 INCLUDE_KINDS = {k for k, v in KIND_LABELS.items() if v is not None}
 
@@ -122,6 +123,7 @@ def main():
     # Hand the whole tree to the radicale service user so the server can read/serve it.
     try:
         import pwd  # Unix-only; harmless to skip on non-Linux (build/test hosts).
+
         uid = pwd.getpwnam(args.owner).pw_uid
         gid = pwd.getpwnam(args.owner).pw_gid
         for root, dirs, files in os.walk(os.path.dirname(os.path.dirname(args.out))):

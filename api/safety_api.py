@@ -47,17 +47,17 @@ ACCOUNTS_CONF = os.environ.get("UPES_ACCOUNTS_CONF", "/etc/asterisk/pjsip_accoun
 # Base dirs are env-overridable so the service can run outside the VM (dev/tests) and
 # so an operator can relocate state. Defaults match the production layout.
 FAMILY_DIR = os.environ.get("UPES_FAMILY_DIR", "/opt/upes-ecs/family")
-FAMILIES_CSV = os.path.join(FAMILY_DIR, "families.csv")     # parent_sap,child_sap  (one per line)
-CAMPUS_JSON = os.path.join(FAMILY_DIR, "campus.json")       # {"lat":..,"lon":..,"radiusM":..}
-DIRECTORY_JSON = os.path.join(FAMILY_DIR, "directory.json") # {sap: {name, kind}}  (copy of Console/directory.json)
+FAMILIES_CSV = os.path.join(FAMILY_DIR, "families.csv")  # parent_sap,child_sap  (one per line)
+CAMPUS_JSON = os.path.join(FAMILY_DIR, "campus.json")  # {"lat":..,"lon":..,"radiusM":..}
+DIRECTORY_JSON = os.path.join(FAMILY_DIR, "directory.json")  # {sap: {name, kind}}  (copy of Console/directory.json)
 
 STATE_DIR = os.environ.get("UPES_STATE_DIR", "/var/lib/upes-ecs")
 LOC_DIR = os.path.join(STATE_DIR, "location")
-LOC_TRAIL = os.path.join(LOC_DIR, "trail.ndjson")           # append-only breadcrumb history
+LOC_TRAIL = os.path.join(LOC_DIR, "trail.ndjson")  # append-only breadcrumb history
 SAFETY_DIR = os.path.join(STATE_DIR, "safety")
-SAFE_LOG = os.path.join(SAFETY_DIR, "declared.ndjson")      # append-only "I'm safe / need help"
+SAFE_LOG = os.path.join(SAFETY_DIR, "declared.ndjson")  # append-only "I'm safe / need help"
 NEEDHELP_ALERTS = os.path.join(SAFETY_DIR, "needhelp-pending.log")  # Console-visible urgent list
-EMERGENCY_FLAG = os.path.join(SAFETY_DIR, "emergency.json") # {"active":bool,"since":iso,"reason":..,"by":..}
+EMERGENCY_FLAG = os.path.join(SAFETY_DIR, "emergency.json")  # {"active":bool,"since":iso,"reason":..,"by":..}
 
 # Per-user voice language: the app writes it here and the Asterisk dialplan reads it at
 # call time via astdb DB(lang/<ext>). Repo source of truth is provisioning/user-languages.csv;
@@ -71,7 +71,7 @@ DEFAULT_LANG = os.environ.get("UPES_DEFAULT_LANG", "")
 
 # ERT / control positions that may drive the emergency campaign + see the map.
 OPERATOR_EXTS = {"4101", "4110", "4111", "4112", "4113", "4120"}
-OPERATOR_PREFIXES = ("41", "42", "43", "44", "45", "46")   # responders/dispatch too
+OPERATOR_PREFIXES = ("41", "42", "43", "44", "45", "46")  # responders/dispatch too
 
 # A phone that pinged within this window is "app-active" (independent of SIP registration).
 APP_ACTIVE_SEC = 150
@@ -86,6 +86,7 @@ security = HTTPBasic()
 # --------------------------------------------------------------------------- #
 # Small helpers (defensive: never raise)
 # --------------------------------------------------------------------------- #
+
 
 def now_iso():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S%z")
@@ -143,8 +144,8 @@ def haversine_m(lat1, lon1, lat2, lon2):
 _accounts = {"mtime": 0, "map": {}}
 _accounts_lock = threading.Lock()
 
-_USER_RE = re.compile(r'^\s*username\s*=\s*(\S+)\s*$')
-_PASS_RE = re.compile(r'^\s*password\s*=\s*(\S+)\s*$')
+_USER_RE = re.compile(r"^\s*username\s*=\s*(\S+)\s*$")
+_PASS_RE = re.compile(r"^\s*password\s*=\s*(\S+)\s*$")
 
 
 def account_map():
@@ -198,8 +199,8 @@ def require_operator(sap: str):
 # Live in-memory state (latest position + latest safe declaration per SAP)
 # --------------------------------------------------------------------------- #
 
-_latest_loc = {}    # sap -> {lat,lon,acc,battery,ts(epoch),iso}
-_latest_safe = {}   # sap -> {status,note,ts(epoch),iso}
+_latest_loc = {}  # sap -> {lat,lon,acc,battery,ts(epoch),iso}
+_latest_safe = {}  # sap -> {status,note,ts(epoch),iso}
 _state_lock = threading.Lock()
 
 
@@ -223,6 +224,7 @@ def _load_persisted_state():
 # Emergency flag + campus geofence + directory
 # --------------------------------------------------------------------------- #
 
+
 def emergency_state():
     """Active if the operator flag is set OR a live 111 call is in progress."""
     flag = read_json(EMERGENCY_FLAG, {})
@@ -235,8 +237,7 @@ def emergency_state():
 
 
 def set_emergency(active, reason, by):
-    write = {"active": bool(active), "since": now_iso() if active else "",
-             "reason": reason or "", "by": by}
+    write = {"active": bool(active), "since": now_iso() if active else "", "reason": reason or "", "by": by}
     try:
         with open(EMERGENCY_FLAG, "w", encoding="utf-8") as fh:
             json.dump(write, fh)
@@ -250,7 +251,9 @@ def _live_111():
     try:
         out = subprocess.run(
             ["asterisk", "-rx", "core show channels concise"],
-            capture_output=True, text=True, timeout=4,
+            capture_output=True,
+            text=True,
+            timeout=4,
         ).stdout
         for ln in out.splitlines():
             f = ln.split("!")
@@ -273,10 +276,12 @@ def online_saps():
     try:
         out = subprocess.run(
             ["asterisk", "-rx", "pjsip show contacts"],
-            capture_output=True, text=True, timeout=6,
+            capture_output=True,
+            text=True,
+            timeout=6,
         ).stdout
         for ln in out.splitlines():
-            m = re.search(r'([0-9]{3,9})/sip:', ln)
+            m = re.search(r"([0-9]{3,9})/sip:", ln)
             if m:
                 saps.add(m.group(1))
     except Exception:
@@ -348,8 +353,8 @@ def family_map():
 # Per-user voice language (ext -> lang code) -- app writes it, dialplan reads astdb
 # --------------------------------------------------------------------------- #
 
-_SAP_DIGITS_RE = re.compile(r'^\d{3,}$')
-_LANG_FALLBACK_RE = re.compile(r'^[a-z]{2,3}$')
+_SAP_DIGITS_RE = re.compile(r"^\d{3,}$")
+_LANG_FALLBACK_RE = re.compile(r"^[a-z]{2,3}$")
 
 # languages.json catalog (code set + default), cached by mtime; codes=None => file absent.
 _lang_catalog_cache = {"mtime": 0, "codes": None, "default": ""}
@@ -364,9 +369,9 @@ def _languages_path():
         return LANGUAGES_JSON if os.path.isfile(LANGUAGES_JSON) else None
     here = os.path.dirname(os.path.abspath(__file__))
     for cand in (
-        os.path.join(here, "..", "i18n", "languages.json"),   # repo checkout (api/ -> ../i18n)
+        os.path.join(here, "..", "i18n", "languages.json"),  # repo checkout (api/ -> ../i18n)
         os.path.join(here, "i18n", "languages.json"),
-        "/opt/upes-ecs/i18n/languages.json",                  # VM, if i18n was shipped
+        "/opt/upes-ecs/i18n/languages.json",  # VM, if i18n was shipped
         os.path.join(FAMILY_DIR, "languages.json"),
     ):
         if os.path.isfile(cand):
@@ -455,7 +460,7 @@ def set_lang(sap, code):
             for k in sorted(m):
                 fh.write("%s,%s\n" % (k, m[k]))
         os.replace(tmp, USER_LANG_CSV)
-        _lang_cache["mtime"] = 0   # force reload on next read
+        _lang_cache["mtime"] = 0  # force reload on next read
         return True
     except Exception:
         return False
@@ -467,7 +472,9 @@ def apply_lang_live(sap, code):
     try:
         r = subprocess.run(
             ["asterisk", "-rx", "database put lang %s %s" % (sap, code)],
-            capture_output=True, text=True, timeout=4,
+            capture_output=True,
+            text=True,
+            timeout=4,
         )
         out = ((r.stdout or "") + (r.stderr or "")).lower()
         return ("success" in out) or (r.returncode == 0 and "unable" not in out)
@@ -478,6 +485,7 @@ def apply_lang_live(sap, code):
 # --------------------------------------------------------------------------- #
 # Status assembly for a single person
 # --------------------------------------------------------------------------- #
+
 
 def child_status(sap, emergency_since_epoch=None):
     now = time.time()
@@ -494,9 +502,12 @@ def child_status(sap, emergency_since_epoch=None):
         dist = haversine_m(camp["lat"], camp["lon"], loc.get("lat", 0), loc.get("lon", 0))
         oncampus = dist <= camp["radiusM"]
         loc_out = {
-            "lat": loc.get("lat"), "lon": loc.get("lon"),
-            "acc": loc.get("acc"), "ageSec": age,
-            "distM": round(dist), "battery": loc.get("battery"),
+            "lat": loc.get("lat"),
+            "lon": loc.get("lon"),
+            "acc": loc.get("acc"),
+            "ageSec": age,
+            "distM": round(dist),
+            "battery": loc.get("battery"),
         }
 
     # Safe state is only meaningful if declared AFTER the emergency began (or recently).
@@ -515,7 +526,7 @@ def child_status(sap, emergency_since_epoch=None):
         "appActive": bool(loc and (now - loc.get("ts", 0)) <= APP_ACTIVE_SEC),
         "location": loc_out,
         "onCampus": oncampus,
-        "safe": safe_status,           # safe | needshelp | unknown
+        "safe": safe_status,  # safe | needshelp | unknown
         "safeAgeSec": safe_age,
     }
 
@@ -525,8 +536,7 @@ def _emergency_since_epoch():
     if not e["active"]:
         return None
     try:
-        return datetime.strptime(e["since"][:19], "%Y-%m-%dT%H:%M:%S").replace(
-            tzinfo=timezone.utc).timestamp()
+        return datetime.strptime(e["since"][:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc).timestamp()
     except Exception:
         return None
 
@@ -534,6 +544,7 @@ def _emergency_since_epoch():
 # --------------------------------------------------------------------------- #
 # Routes
 # --------------------------------------------------------------------------- #
+
 
 @app.get("/health")
 def health():
@@ -554,9 +565,13 @@ async def post_loc(request: Request, sap: str = Depends(authenticate)):
     except Exception:
         raise HTTPException(status_code=422, detail="lat/lon required (numeric)")
     rec = {
-        "sap": sap, "lat": lat, "lon": lon,
-        "acc": body.get("acc"), "battery": body.get("battery"),
-        "ts": time.time(), "iso": now_iso(),
+        "sap": sap,
+        "lat": lat,
+        "lon": lon,
+        "acc": body.get("acc"),
+        "battery": body.get("battery"),
+        "ts": time.time(),
+        "iso": now_iso(),
     }
     with _state_lock:
         _latest_loc[sap] = rec
@@ -576,8 +591,7 @@ async def post_safe(request: Request, sap: str = Depends(authenticate)):
     if st not in ("safe", "needshelp"):
         raise HTTPException(status_code=422, detail="status must be 'safe' or 'needshelp'")
     note = str(body.get("note", ""))[:200]
-    rec = {"sap": sap, "name": name_of(sap), "status": st, "note": note,
-           "ts": time.time(), "iso": now_iso()}
+    rec = {"sap": sap, "name": name_of(sap), "status": st, "note": note, "ts": time.time(), "iso": now_iso()}
     with _state_lock:
         _latest_safe[sap] = rec
     append_ndjson(SAFE_LOG, rec)
@@ -593,7 +607,8 @@ async def post_safe(request: Request, sap: str = Depends(authenticate)):
 @app.get("/me")
 def get_me(sap: str = Depends(authenticate)):
     return {
-        "sap": sap, "name": name_of(sap),
+        "sap": sap,
+        "name": name_of(sap),
         "isParent": sap in family_map(),
         "isOperator": is_operator(sap),
         "lang": lang_of(sap),
@@ -632,8 +647,7 @@ async def post_lang(request: Request, caller: str = Depends(authenticate)):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="operator only")
     persisted = set_lang(target, code)
     applied = apply_lang_live(target, code)
-    return {"ok": persisted, "ext": target, "lang": code,
-            "default": default_lang(), "applied": applied}
+    return {"ok": persisted, "ext": target, "lang": code, "default": default_lang(), "applied": applied}
 
 
 @app.get("/emergency")
@@ -679,6 +693,7 @@ def get_map(sap: str = Depends(authenticate)):
 
 # --------------------------------------------------------------------------- #
 
+
 @app.on_event("startup")
 def _startup():
     ensure_dirs()
@@ -687,6 +702,7 @@ def _startup():
 
 if __name__ == "__main__":
     import uvicorn  # imported lazily so the app can be imported (tests/tools) without uvicorn
+
     ensure_dirs()
     _load_persisted_state()
     # Bind all interfaces: campus phones reach this directly over Wi-Fi. Every route

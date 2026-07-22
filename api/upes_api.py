@@ -39,7 +39,7 @@ QUEUE_NAME = "ert_emergency_queue"
 ALERTS_MISSED_PENDING = "/var/lib/upes-ecs/alerts/missed-pending.log"
 INCIDENTS_MISSED_NDJSON = "/var/lib/upes-ecs/incidents/missed-emergency.ndjson"
 FOLLOWUPS_NDJSON = "/var/lib/upes-ecs/incidents/followups.ndjson"
-CALLBACK_TARGET_SEC = 300   # 5-minute callback SLA; a still-open follow-up older than this is OVERDUE
+CALLBACK_TARGET_SEC = 300  # 5-minute callback SLA; a still-open follow-up older than this is OVERDUE
 CDR_MASTER_CSV = "/var/log/asterisk/cdr-csv/Master.csv"
 RECORDINGS_DIR = "/var/spool/asterisk/monitor/upes-ecs/"
 SHIFT_LOG = "/var/lib/upes-ecs/shift/shift.log"
@@ -59,7 +59,7 @@ CAMPUS_DEFAULT = {"lat": 30.4159443, "lon": 77.9668329, "radiusM": 800}
 UPES_OPT = "/opt/upes-ecs"
 
 # ANSI escape / colour codes emitted by the Asterisk CLI.
-ANSI_RE = re.compile(r'\x1b\[[0-9;]*m')
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 
 app = FastAPI(title="upes-api", version="1.0")
 
@@ -80,6 +80,7 @@ app.add_middleware(
 # Low-level helpers (all defensive: never raise)
 # --------------------------------------------------------------------------- #
 
+
 def ax(cmd):
     """Run `asterisk -rx <cmd>` locally and return stdout (str).
 
@@ -89,7 +90,9 @@ def ax(cmd):
     try:
         return subprocess.run(
             ["asterisk", "-rx", cmd],
-            capture_output=True, text=True, timeout=8,
+            capture_output=True,
+            text=True,
+            timeout=8,
         ).stdout
     except Exception:
         return ""
@@ -97,14 +100,17 @@ def ax(cmd):
 
 def strip_ansi(s):
     """Remove ANSI colour codes from a string."""
-    return ANSI_RE.sub('', s or '')
+    return ANSI_RE.sub("", s or "")
 
 
 def sh(args, timeout=8):
     """Run an arbitrary command (list of args, no shell) -> stdout str or ""."""
     try:
         return subprocess.run(
-            args, capture_output=True, text=True, timeout=timeout,
+            args,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
         ).stdout
     except Exception:
         return ""
@@ -133,6 +139,7 @@ def first_line(text):
 # --------------------------------------------------------------------------- #
 # Individual status collectors -- each guarded, each returns a safe default
 # --------------------------------------------------------------------------- #
+
 
 def get_asterisk_active():
     """Return 'active' if asterisk unit is active, else the raw is-active value."""
@@ -181,7 +188,7 @@ def get_registrations():
     """Count contacts whose URI is sip:<digit...> in pjsip show contacts."""
     out = ax("pjsip show contacts")
     try:
-        return sum(1 for ln in out.splitlines() if re.search(r'sip:[0-9]', ln))
+        return sum(1 for ln in out.splitlines() if re.search(r"sip:[0-9]", ln))
     except Exception:
         return 0
 
@@ -193,7 +200,7 @@ def get_disk_pct():
         lines = out.splitlines()
         if len(lines) >= 2:
             # Use% is the 5th column of the data row.
-            m = re.search(r'(\d+)%', lines[1])
+            m = re.search(r"(\d+)%", lines[1])
             if m:
                 return int(m.group(1))
     except Exception:
@@ -212,7 +219,7 @@ def get_active_calls():
     """Parse 'N active call(s)' out of core show channels."""
     out = ax("core show channels")
     try:
-        m = re.search(r'(\d+) active call', out)
+        m = re.search(r"(\d+) active call", out)
         if m:
             return int(m.group(1))
     except Exception:
@@ -232,7 +239,7 @@ def _dur_to_secs(s):
 
 
 # Extension embedded in a channel name, e.g. PJSIP/4110-0000000a -> 4110.
-_CHAN_EXT_RE = re.compile(r'/(\d+)-')
+_CHAN_EXT_RE = re.compile(r"/(\d+)-")
 
 
 def get_live_calls():
@@ -256,26 +263,26 @@ def get_live_calls():
             continue
         name = f[0]
         m = _CHAN_EXT_RE.search(name)
-        legs.append({
-            "ext": m.group(1) if m else "",
-            "cid": f[7] if len(f) > 7 else "",
-            "dialed": f[2] if len(f) > 2 else "",
-            "state": f[4] if len(f) > 4 else "",
-            "app": f[5] if len(f) > 5 else "",
-            # BridgeId is second-to-last (UniqueId is last) on Asterisk 12+ concise.
-            "bridge": f[-2] if len(f) >= 14 else "",
-            "seconds": _dur_to_secs(f[11]) if len(f) > 11 else 0,
-        })
+        legs.append(
+            {
+                "ext": m.group(1) if m else "",
+                "cid": f[7] if len(f) > 7 else "",
+                "dialed": f[2] if len(f) > 2 else "",
+                "state": f[4] if len(f) > 4 else "",
+                "app": f[5] if len(f) > 5 else "",
+                # BridgeId is second-to-last (UniqueId is last) on Asterisk 12+ concise.
+                "bridge": f[-2] if len(f) >= 14 else "",
+                "seconds": _dur_to_secs(f[11]) if len(f) > 11 else 0,
+            }
+        )
     return legs
 
 
 def get_queue_members(queue_raw):
     """List of {name, iface, state} for each PJSIP member in the queue."""
     members = []
-    state_re = re.compile(
-        r'\((Not in use|Unavailable|In use|Paused|Invalid|Ringing|Busy)\)'
-    )
-    iface_re = re.compile(r'(PJSIP/\S+)')
+    state_re = re.compile(r"\((Not in use|Unavailable|In use|Paused|Invalid|Ringing|Busy)\)")
+    iface_re = re.compile(r"(PJSIP/\S+)")
     for raw in (queue_raw or "").splitlines():
         if "PJSIP/" not in raw:
             continue
@@ -294,7 +301,7 @@ def get_registered_users():
     """List of {ext, ip} parsed from pjsip show contacts."""
     users = []
     out = ax("pjsip show contacts")
-    pat = re.compile(r'([0-9]{8,9})/sip:[0-9]+@([0-9.]+)')
+    pat = re.compile(r"([0-9]{8,9})/sip:[0-9]+@([0-9.]+)")
     for ln in out.splitlines():
         if "sip:" not in ln:
             continue
@@ -309,8 +316,8 @@ def get_presence():
     presence = []
     out = ax("pjsip show endpoints")
     pat = re.compile(
-        r'Endpoint:\s+(\S+?)(?:/\S+)?\s+'
-        r'(Not in use|Unavailable|In use|Busy|Ringing|Unknown|Invalid)'
+        r"Endpoint:\s+(\S+?)(?:/\S+)?\s+"
+        r"(Not in use|Unavailable|In use|Busy|Ringing|Unknown|Invalid)"
     )
     for ln in out.splitlines():
         m = pat.search(ln)
@@ -331,12 +338,14 @@ def get_missed_recent():
             obj = json.loads(ln)
         except Exception:
             continue
-        out.append({
-            "incident_id": obj.get("incident_id", ""),
-            "caller": obj.get("caller_extension", ""),
-            "time": obj.get("datetime", ""),
-            "severity": obj.get("severity", ""),
-        })
+        out.append(
+            {
+                "incident_id": obj.get("incident_id", ""),
+                "caller": obj.get("caller_extension", ""),
+                "time": obj.get("datetime", ""),
+                "severity": obj.get("severity", ""),
+            }
+        )
     return out
 
 
@@ -392,7 +401,7 @@ def get_followup_state():
             continue
         iid = o.get("incident_id")
         if iid:
-            byid[iid] = o   # last record wins if an id repeats
+            byid[iid] = o  # last record wins if an id repeats
 
     now = datetime.now().astimezone()
     queue, closed = [], []
@@ -403,31 +412,43 @@ def get_followup_state():
         age = int((now - dt).total_seconds()) if dt else 0
         caller = o.get("caller_name") or o.get("caller_extension") or "unknown"
         if fu and fu.get("outcome") in ("safe", "escalated"):
-            closed.append({
-                "incident_id": iid, "caller": caller,
-                "ext": o.get("caller_extension", ""),
-                "outcome": fu.get("outcome", ""), "operator": fu.get("operator", ""),
-                "time": fu.get("datetime", ""), "note": fu.get("note", ""),
-            })
+            closed.append(
+                {
+                    "incident_id": iid,
+                    "caller": caller,
+                    "ext": o.get("caller_extension", ""),
+                    "outcome": fu.get("outcome", ""),
+                    "operator": fu.get("operator", ""),
+                    "time": fu.get("datetime", ""),
+                    "note": fu.get("note", ""),
+                }
+            )
         else:
             is_overdue = age > CALLBACK_TARGET_SEC
             if is_overdue:
                 overdue += 1
-            queue.append({
-                "incident_id": iid, "caller": caller,
-                "ext": o.get("caller_extension", ""),
-                "time": o.get("datetime", ""), "ageSec": age,
-                "status": (fu.get("outcome") if fu else "new"),   # new | noanswer | needshelp
-                "attempts": (fu.get("attempts", 0) if fu else 0),
-                "lastNote": (fu.get("note", "") if fu else ""),
-                "voicemail": o.get("voicemail", ""),
-                "overdue": is_overdue,
-            })
-    queue.sort(key=lambda q: q["ageSec"], reverse=True)      # oldest / most overdue first
+            queue.append(
+                {
+                    "incident_id": iid,
+                    "caller": caller,
+                    "ext": o.get("caller_extension", ""),
+                    "time": o.get("datetime", ""),
+                    "ageSec": age,
+                    "status": (fu.get("outcome") if fu else "new"),  # new | noanswer | needshelp
+                    "attempts": (fu.get("attempts", 0) if fu else 0),
+                    "lastNote": (fu.get("note", "") if fu else ""),
+                    "voicemail": o.get("voicemail", ""),
+                    "overdue": is_overdue,
+                }
+            )
+    queue.sort(key=lambda q: q["ageSec"], reverse=True)  # oldest / most overdue first
     closed.sort(key=lambda c: c["time"], reverse=True)
     return {
-        "pending": len(queue), "overdue": overdue, "targetSec": CALLBACK_TARGET_SEC,
-        "queue": queue[:20], "recentClosed": closed[:8],
+        "pending": len(queue),
+        "overdue": overdue,
+        "targetSec": CALLBACK_TARGET_SEC,
+        "queue": queue[:20],
+        "recentClosed": closed[:8],
     }
 
 
@@ -450,8 +471,7 @@ def read_cdr_rows():
     """
     rows = []
     try:
-        with open(CDR_MASTER_CSV, "r", encoding="utf-8", errors="replace",
-                  newline="") as fh:
+        with open(CDR_MASTER_CSV, "r", encoding="utf-8", errors="replace", newline="") as fh:
             for fields in csv.reader(fh):
                 if len(fields) < 17:
                     continue
@@ -470,23 +490,25 @@ def get_cdr(rows):
             dur = int(f[CDR_DURATION])
         except Exception:
             dur = 0
-        out.append({
-            "time": f[CDR_START],
-            "src": f[CDR_SRC],
-            "dst": f[CDR_DST],
-            "context": f[CDR_DCONTEXT],
-            "app": f[CDR_LASTAPP],
-            "dur": dur,
-            "disposition": f[CDR_DISPOSITION],
-            "uniqueid": f[CDR_UNIQUEID],
-        })
+        out.append(
+            {
+                "time": f[CDR_START],
+                "src": f[CDR_SRC],
+                "dst": f[CDR_DST],
+                "context": f[CDR_DCONTEXT],
+                "app": f[CDR_LASTAPP],
+                "dur": dur,
+                "disposition": f[CDR_DISPOSITION],
+                "uniqueid": f[CDR_UNIQUEID],
+            }
+        )
     return out
 
 
 def get_recordings():
     """Newest 12 recordings in the monitor dir, parsed from filename."""
     out = []
-    pat = re.compile(r'^(.*?)_([0-9]+)_([0-9]{8}-[0-9]{6})\.wav$')
+    pat = re.compile(r"^(.*?)_([0-9]+)_([0-9]{8}-[0-9]{6})\.wav$")
     try:
         entries = []
         for name in os.listdir(RECORDINGS_DIR):
@@ -506,12 +528,14 @@ def get_recordings():
                 incident, caller, tstamp = m.group(1), m.group(2), m.group(3)
             else:
                 incident, caller, tstamp = "", "", ""
-            out.append({
-                "file": name,
-                "incident": incident,
-                "caller": caller,
-                "time": tstamp,
-            })
+            out.append(
+                {
+                    "file": name,
+                    "incident": incident,
+                    "caller": caller,
+                    "time": tstamp,
+                }
+            )
     except Exception:
         return []
     return out
@@ -536,8 +560,7 @@ def _classify_kind(dst, app):
 
 def get_analytics(rows):
     """Aggregate the FULL Master.csv into the analytics block."""
-    kinds = {"emergency": 0, "drill": 0, "echo": 0,
-             "bridge": 0, "paging": 0, "other": 0}
+    kinds = {"emergency": 0, "drill": 0, "echo": 0, "bridge": 0, "paging": 0, "other": 0}
     hours = [0] * 24
     day_counts = {}
     caller_counts = {}
@@ -603,9 +626,7 @@ def get_analytics(rows):
         days[d] = day_counts.get(d, 0)
 
     # Top 8 callers by count.
-    top_callers = sorted(
-        caller_counts.items(), key=lambda kv: kv[1], reverse=True
-    )[:8]
+    top_callers = sorted(caller_counts.items(), key=lambda kv: kv[1], reverse=True)[:8]
     top_callers = [[src, cnt] for src, cnt in top_callers]
 
     def pct(numer, denom):
@@ -650,11 +671,13 @@ def get_shift_log():
         parts = ln.split("|")
         if len(parts) < 3:
             continue
-        out.append({
-            "time": parts[0],
-            "ext": parts[1],
-            "action": parts[2],
-        })
+        out.append(
+            {
+                "time": parts[0],
+                "ext": parts[1],
+                "action": parts[2],
+            }
+        )
     return out
 
 
@@ -669,18 +692,17 @@ def get_rollcall():
     Returns None if no run exists yet.
     """
     try:
-        rosters = [os.path.join(ROLLCALL_DIR, f) for f in os.listdir(ROLLCALL_DIR)
-                   if f.endswith(".roster")]
+        rosters = [os.path.join(ROLLCALL_DIR, f) for f in os.listdir(ROLLCALL_DIR) if f.endswith(".roster")]
     except Exception:
         return None
     if not rosters:
         return None
     try:
         latest = max(rosters, key=os.path.getmtime)
-        runid = os.path.basename(latest)[:-len(".roster")]
+        runid = os.path.basename(latest)[: -len(".roster")]
         called = [x.strip() for x in open(latest).read().splitlines() if x.strip()]
         safe, responded, ts = [], [], None
-        csvf = latest[:-len(".roster")] + ".csv"
+        csvf = latest[: -len(".roster")] + ".csv"
         if os.path.exists(csvf):
             for ln in open(csvf).read().splitlines():
                 p = ln.split(",")
@@ -695,10 +717,14 @@ def get_rollcall():
         m = re.match(r"(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})(\d{2})", runid)
         when = ("%s-%s-%s %s:%s:%s" % m.groups()) if m else runid
         return {
-            "runid": runid, "time": ts or when,
-            "called": len(called), "safe": len(safe),
-            "responded": len(responded), "unaccounted": len(unaccounted),
-            "safeExts": safe, "unaccountedExts": unaccounted,
+            "runid": runid,
+            "time": ts or when,
+            "called": len(called),
+            "safe": len(safe),
+            "responded": len(responded),
+            "unaccounted": len(unaccounted),
+            "safeExts": safe,
+            "unaccountedExts": unaccounted,
         }
     except Exception:
         return None
@@ -722,7 +748,7 @@ def get_safety(live_calls):
     reason = flag.get("reason", "")
     since = flag.get("since", "")
     if not active:
-        for c in (live_calls or []):
+        for c in live_calls or []:
             if c.get("dialed") == "111":
                 active, reason, since = True, "live 111 call", ""
                 break
@@ -749,7 +775,7 @@ def get_safety(live_calls):
     safe_count = need_count = 0
     for o in latest.values():
         if since_epoch and o.get("ts", 0) < since_epoch:
-            continue   # stale declaration from before this emergency
+            continue  # stale declaration from before this emergency
         if o.get("status") == "safe":
             safe_count += 1
         elif o.get("status") == "needshelp":
@@ -760,10 +786,14 @@ def get_safety(live_calls):
     for ln in read_lines(NEEDHELP_LOG)[-30:]:
         parts = ln.split("|")
         if len(parts) >= 3:
-            need_help.append({
-                "time": parts[0], "sap": parts[1], "name": parts[2],
-                "note": parts[3] if len(parts) > 3 else "",
-            })
+            need_help.append(
+                {
+                    "time": parts[0],
+                    "sap": parts[1],
+                    "name": parts[2],
+                    "note": parts[3] if len(parts) > 3 else "",
+                }
+            )
     need_help.reverse()
 
     return {
@@ -777,6 +807,7 @@ def get_safety(live_calls):
 # --------------------------------------------------------------------------- #
 # Routes
 # --------------------------------------------------------------------------- #
+
 
 @app.get("/health")
 def health():
@@ -795,7 +826,7 @@ def health():
 # caches here); a rare double-miss just recomputes once -- harmless.
 # --------------------------------------------------------------------------- #
 _status_cache = {"ts": 0.0, "data": None}
-STATUS_TTL = 2.5   # seconds
+STATUS_TTL = 2.5  # seconds
 
 # --------------------------------------------------------------------------- #
 # /live response cache  (REVERSIBLE: delete this block + the 3 "CACHE" lines
@@ -808,7 +839,7 @@ STATUS_TTL = 2.5   # seconds
 # lock (matches the other caches here); a rare double-miss just recomputes once.
 # --------------------------------------------------------------------------- #
 _live_cache = {"ts": 0.0, "data": None}
-LIVE_TTL = 0.4   # seconds  (tight so a natural call-end clears fast; hangup action busts it to 0)
+LIVE_TTL = 0.4  # seconds  (tight so a natural call-end clears fast; hangup action busts it to 0)
 
 
 def _gather(tasks):
@@ -840,9 +871,9 @@ def status():
     defensive, so a partial failure yields empty/default values rather than
     a 500 or a hang.
     """
-    _now = time.time()                                                    # CACHE
+    _now = time.time()  # CACHE
     if _status_cache["data"] is not None and _now - _status_cache["ts"] < STATUS_TTL:  # CACHE
-        return _status_cache["data"]                                      # CACHE
+        return _status_cache["data"]  # CACHE
     updated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     hostname = socket.gethostname()
 
@@ -850,35 +881,37 @@ def status():
     # is defensive, so order doesn't matter and nothing here can raise. queue_raw,
     # cdr_rows and live_calls are gathered ONCE and reused by the derived fields
     # below (count_available/queue_members, cdr/analytics, safety) exactly as before.
-    g = _gather({
-        "asterisk_state": get_asterisk_active,
-        "queue_raw": get_queue_raw,
-        "disk_pct": get_disk_pct,
-        "followups": get_followup_state,
-        "cdr_rows": read_cdr_rows,
-        "live_calls": get_live_calls,
-        "version": get_version,
-        "uptime": get_uptime,
-        "media_address": get_media_address,
-        "registrations": get_registrations,
-        "active_calls": get_active_calls,
-        "registered_users": get_registered_users,
-        "presence": get_presence,
-        "missed_recent": get_missed_recent,
-        "recordings": get_recordings,
-        "shift_log": get_shift_log,
-        "rollcall": get_rollcall,
-    })
+    g = _gather(
+        {
+            "asterisk_state": get_asterisk_active,
+            "queue_raw": get_queue_raw,
+            "disk_pct": get_disk_pct,
+            "followups": get_followup_state,
+            "cdr_rows": read_cdr_rows,
+            "live_calls": get_live_calls,
+            "version": get_version,
+            "uptime": get_uptime,
+            "media_address": get_media_address,
+            "registrations": get_registrations,
+            "active_calls": get_active_calls,
+            "registered_users": get_registered_users,
+            "presence": get_presence,
+            "missed_recent": get_missed_recent,
+            "recordings": get_recordings,
+            "shift_log": get_shift_log,
+            "rollcall": get_rollcall,
+        }
+    )
 
     asterisk_state = g["asterisk_state"]
     queue_raw = g["queue_raw"]
     cdr_rows = g["cdr_rows"]
     live_calls = g["live_calls"]
     followups = g["followups"] or {}
-    disk_pct = g["disk_pct"] or 0   # never None: keeps the >= comparisons (and never-500 contract) safe
+    disk_pct = g["disk_pct"] or 0  # never None: keeps the >= comparisons (and never-500 contract) safe
 
     queue_available = count_available(queue_raw)
-    missed_pending = followups.get("pending", 0)   # OPEN callbacks (derived), not the append-only log length
+    missed_pending = followups.get("pending", 0)  # OPEN callbacks (derived), not the append-only log length
 
     # Derive the top-level health state.
     if asterisk_state != "active":
@@ -921,8 +954,8 @@ def status():
         "rollcall": g["rollcall"],
     }
 
-    _status_cache["ts"] = time.time()   # CACHE
-    _status_cache["data"] = result      # CACHE
+    _status_cache["ts"] = time.time()  # CACHE
+    _status_cache["data"] = result  # CACHE
     return result
 
 
@@ -930,9 +963,11 @@ def _campus():
     try:
         with open(CAMPUS_JSON, "r", encoding="utf-8") as fh:
             c = json.load(fh)
-        return {"lat": c.get("lat", CAMPUS_DEFAULT["lat"]),
-                "lon": c.get("lon", CAMPUS_DEFAULT["lon"]),
-                "radiusM": c.get("radiusM", CAMPUS_DEFAULT["radiusM"])}
+        return {
+            "lat": c.get("lat", CAMPUS_DEFAULT["lat"]),
+            "lon": c.get("lon", CAMPUS_DEFAULT["lon"]),
+            "radiusM": c.get("radiusM", CAMPUS_DEFAULT["radiusM"]),
+        }
     except Exception:
         return dict(CAMPUS_DEFAULT)
 
@@ -940,6 +975,7 @@ def _campus():
 def _haversine_m(lat1, lon1, lat2, lon2):
     try:
         import math
+
         r = 6371000.0
         p1, p2 = math.radians(lat1), math.radians(lat2)
         dp = math.radians(lat2 - lat1)
@@ -973,7 +1009,7 @@ def live_map():
         except Exception:
             continue
         if o.get("sap"):
-            latest[o["sap"]] = o   # last line for a sap wins
+            latest[o["sap"]] = o  # last line for a sap wins
 
     now = datetime.now().timestamp()
     people = []
@@ -984,16 +1020,19 @@ def live_map():
         dist = _haversine_m(camp["lat"], camp["lon"], lat, lon)
         age = int(now - o.get("ts", 0)) if o.get("ts") else None
         nm = names.get(sap, {})
-        people.append({
-            "sap": sap,
-            "name": nm.get("name") if isinstance(nm, dict) else sap,
-            "lat": lat, "lon": lon,
-            "distM": round(dist),
-            "onCampus": dist <= camp["radiusM"],
-            "ageSec": age,
-            "appActive": age is not None and age <= 150,
-            "battery": o.get("battery"),
-        })
+        people.append(
+            {
+                "sap": sap,
+                "name": nm.get("name") if isinstance(nm, dict) else sap,
+                "lat": lat,
+                "lon": lon,
+                "distM": round(dist),
+                "onCampus": dist <= camp["radiusM"],
+                "ageSec": age,
+                "appActive": age is not None and age <= 150,
+                "battery": o.get("battery"),
+            }
+        )
     people.sort(key=lambda p: (p["onCampus"] is False, p["ageSec"] if p["ageSec"] is not None else 1e9))
     return {"campus": camp, "people": people, "updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
@@ -1007,9 +1046,9 @@ def live():
     + analytics on every call). Just the channel/queue reads -- a few `asterisk -rx`
     calls, no file/CDR/analytics work.
     """
-    _now = time.time()                                                    # CACHE
+    _now = time.time()  # CACHE
     if _live_cache["data"] is not None and _now - _live_cache["ts"] < LIVE_TTL:  # CACHE
-        return _live_cache["data"]                                        # CACHE
+        return _live_cache["data"]  # CACHE
     queue_raw = get_queue_raw()
     result = {
         "updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -1019,8 +1058,8 @@ def live():
         "queueAvailable": count_available(queue_raw),
         "queueMembers": get_queue_members(queue_raw),
     }
-    _live_cache["ts"] = time.time()   # CACHE
-    _live_cache["data"] = result      # CACHE
+    _live_cache["ts"] = time.time()  # CACHE
+    _live_cache["data"] = result  # CACHE
     return result
 
 
@@ -1028,7 +1067,7 @@ def live():
 # /exec -- strictly whitelisted control actions
 # --------------------------------------------------------------------------- #
 
-DIGITS_RE = re.compile(r'^[0-9]+$')
+DIGITS_RE = re.compile(r"^[0-9]+$")
 
 
 def _sanitize(value, allowed_re):
@@ -1047,6 +1086,7 @@ async def do_exec(request: Request):
     build a shell string -- commands are passed as explicit arg lists with
     shell=False so user input can never be interpreted by a shell.
     """
+
     def reject():
         return {"ok": False, "command": "", "output": "rejected"}
 
@@ -1077,8 +1117,8 @@ async def do_exec(request: Request):
 
     # ---- callout -------------------------------------------------------- #
     if action == "callout":
-        group = _sanitize(args.get("group"), re.compile(r'^[a-z0-9]+$'))
-        sound = _sanitize(args.get("sound"), re.compile(r'^(custom/)?[A-Za-z0-9_-]+$'))
+        group = _sanitize(args.get("group"), re.compile(r"^[a-z0-9]+$"))
+        sound = _sanitize(args.get("sound"), re.compile(r"^(custom/)?[A-Za-z0-9_-]+$"))
         mode = args.get("mode", "notify")
         if mode not in ("notify", "rollcall"):
             return reject()
@@ -1100,14 +1140,14 @@ async def do_exec(request: Request):
 
     # ---- followup ------------------------------------------------------- #
     if action == "followup":
-        iid = _sanitize(args.get("incident_id"), re.compile(r'^[A-Za-z0-9-]{1,40}$'))
-        ext = _sanitize(args.get("ext"), re.compile(r'^[0-9]{1,12}$'))
+        iid = _sanitize(args.get("incident_id"), re.compile(r"^[A-Za-z0-9-]{1,40}$"))
+        ext = _sanitize(args.get("ext"), re.compile(r"^[0-9]{1,12}$"))
         outcome = args.get("outcome")
         if outcome not in ("safe", "escalated", "noanswer", "needshelp"):
             return reject()
         if not iid or not ext:
             return reject()
-        note = _sanitize(args.get("note", ""), re.compile(r'^[\w .,:@/()\-]{0,200}$'))
+        note = _sanitize(args.get("note", ""), re.compile(r"^[\w .,:@/()\-]{0,200}$"))
         cmd = [os.path.join(UPES_OPT, "followup.sh"), iid, ext, outcome, note]
         out = sh(cmd, timeout=15)
         return {"ok": True, "command": " ".join(cmd[:4]), "output": out}
@@ -1115,7 +1155,7 @@ async def do_exec(request: Request):
     # ---- emergency (raise/clear the mobile-app "mark yourself safe" campaign) ---- #
     if action == "emergency":
         active = bool(args.get("active", True))
-        reason = _sanitize(args.get("reason", ""), re.compile(r'^[\w .,:@/()\-]{0,120}$'))
+        reason = _sanitize(args.get("reason", ""), re.compile(r"^[\w .,:@/()\-]{0,120}$"))
         rec = {
             "active": active,
             "since": datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z") if active else "",
@@ -1150,7 +1190,7 @@ async def do_exec(request: Request):
         scope = str(args.get("scope", ""))
         if scope == "all":
             cli = "channel request hangup all"
-        elif re.match(r'^PJSIP/[A-Za-z0-9._/-]{1,80}$', scope):
+        elif re.match(r"^PJSIP/[A-Za-z0-9._/-]{1,80}$", scope):
             cli = "channel request hangup %s" % scope
         else:
             return reject()

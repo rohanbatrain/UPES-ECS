@@ -9,8 +9,9 @@ repos:
       - id: end-of-file-fixer
       - id: check-merge-conflict
       - id: mixed-line-ending
-        args: [--fix=no]      # .gitattributes governs EOL; just flag conflicts
+        args: [--fix=lf]      # normalize to LF (matches .gitattributes)
       - id: check-yaml
+        args: [--unsafe]      # mkdocs.yml uses custom !!python/name: tags
       - id: check-json
       - id: check-added-large-files
         args: [--maxkb=1024]  # large binaries belong in Git LFS
@@ -32,8 +33,3 @@ repos:
     rev: v8.21.2
     hooks:
       - id: gitleaks
-
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.14.0
-    hooks:
-      - id: markdownlint-cli2
