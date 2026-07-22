@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/assets/social-preview.png" alt="UPES-ECS — When networks fail, we don't." width="840">
+
 # UPES-ECS — Campus Emergency Communication System
 
 **One number. Every emergency. No internet required.**
