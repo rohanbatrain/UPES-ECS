@@ -2,4 +2,4 @@
 # Install with:  pip install -r docs/requirements.txt
 mkdocs-material>=9.5
 mkdocs-git-revision-date-localized-plugin>=1.2
-pymdown-extensions>=10.7
+pymdown-extensions>=11.0.1
