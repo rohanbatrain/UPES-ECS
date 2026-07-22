@@ -1,0 +1,180 @@
+site_name: UPES-ECS
+site_description: >-
+  UPES-ECS — a LAN-first campus emergency communication system:
+  one-number hotline, ERT dispatch, multilingual IVR, and live wallboards.
+site_author: Rohan Batra
+# Docs are served under /docs/ ; the landing page is the Pages site root.
+site_url: https://rohanbatrain.github.io/UPES-ECS/docs/
+repo_url: https://github.com/rohanbatrain/UPES-ECS
+repo_name: rohanbatrain/UPES-ECS
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Rohan Batra
+
+theme:
+  name: material
+  language: en
+  icon:
+    logo: material/phone-alert
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+  - tags
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/rohanbatrain/UPES-ECS
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - getting-started/index.md
+      - Day-1 quickstart: getting-started/quickstart.md
+      - Go-live checklist: getting-started/go-live-checklist.md
+      - Regional / multilingual deployment: getting-started/regional-deployment.md
+  - Architecture:
+      - architecture/index.md
+      - Bare-minimum checklist: architecture/bare-minimum-checklist.md
+      - System architecture: architecture/system-architecture.md
+      - Call flows: architecture/call-flows.md
+      - Network & deployment: architecture/network-and-deployment.md
+      - Numbering & data map: architecture/numbering-and-data-map.md
+      - Responder / department architecture: architecture/responder-department-architecture.md
+      - Bill of materials: architecture/bill-of-materials.md
+      - Deployment runbook: architecture/deployment-runbook.md
+      - Scaling & HA: architecture/scaling-and-ha.md
+  - Features:
+      - features/index.md
+      - 1. Campus emergency hotline: features/feature-01.md
+      - 2. ERT emergency queue: features/feature-02.md
+      - 3. Fallback & escalation: features/feature-03.md
+      - 4. Call recording & incident logging: features/feature-04.md
+      - 5. Ready-made SIP client deployment: features/feature-05.md
+      - 6. Announcement & paging: features/feature-06.md
+      - 7. Incident command conference rooms: features/feature-07.md
+      - 8. Responder directory & numbering: features/feature-08.md
+      - 9. Responder status & availability: features/feature-09.md
+      - 10. Voicemail & missed-call recovery: features/feature-10.md
+      - 11. Call transfer & dispatch workflow: features/feature-11.md
+      - 12. LAN-only infrastructure boundary: features/feature-12.md
+      - 13. SIP security & access control: features/feature-13.md
+      - 14. Device provisioning & extensions: features/feature-14.md
+      - 15. Wi-Fi-first infrastructure readiness: features/feature-15.md
+      - 16. Local system health monitoring: features/feature-16.md
+      - 17. Emergency SOP & drill mode: features/feature-17.md
+      - 18. Backup, restore & config export: features/feature-18.md
+      - 19. AI emergency assistant (line 101): features/feature-19.md
+  - How-to guides:
+      - guides/index.md
+      - Student & staff SIP setup: guides/student-sip-setup.md
+      - ERT SIP setup: guides/ert-sip-setup.md
+      - FreePBX build: guides/freepbx-build.md
+      - Dialplan design: guides/dialplan-design.md
+      - Backup & restore: guides/backup-restore.md
+      - Device provisioning: guides/device-provisioning.md
+      - Multi-campus wireless: guides/multi-campus-wireless.md
+      - Mobile van deployment: guides/mobile-van-deployment.md
+      - Security hardening: guides/security-hardening.md
+  - Operations:
+      - operations/index.md
+      - Console runbook: operations/runbook.md
+      - ERT SOP: operations/ert-sop.md
+      - Drill & test SOP: operations/drill-test-sop.md
+      - Master implementation plan: operations/master-implementation-plan.md
+      - Health monitoring: operations/health-monitoring.md
+      - Incident logging schema: operations/incident-logging-schema.md
+      - Recording retention policy: operations/recording-retention.md
+      - Rollout plan: operations/rollout-plan.md
+      - Pilot test plan: operations/pilot-test-plan.md
+      - Risk register & gaps: operations/risk-register.md
+      - Roles, ownership & RACI: operations/roles-ownership-raci.md
+      - ERT roles & shifts: operations/ert-roles-and-shifts.md
+      - Training plan: operations/training-plan.md
+      - Test-evidence sheet: operations/test-evidence-sheet.md
+  - Networking:
+      - Juniper (flat network): networking/juniper.md
+      - Juniper integration plan: networking/juniper-integration-plan.md
+      - Juniper feature catalogue: networking/juniper-feature-catalogue.md
+      - Juniper live discovery: networking/juniper-live-discovery.md
+  - AI-101:
+      - ai-101/index.md
+      - Design: ai-101/design.md
+      - Integration plan: ai-101/integration-plan.md
+      - Deployment: ai-101/deployment.md
+      - TODO: ai-101/todo.md
+  - Reference:
+      - reference/index.md
+      - Numbering plan: reference/numbering-plan.md
+      - SIP account / role matrix: reference/sip-account-role-matrix.md
+      - Local infrastructure diagram: reference/local-infrastructure-diagram.md
+      - Voice-prompt scripts: reference/voice-prompt-scripts.md
+      - Quick cards: reference/quick-cards.md
+      - Mobile-app reliability: reference/mobile-app-reliability.md
+      - Decision questionnaire: reference/decision-questionnaire.md
+      - Q & A: reference/q-and-a.md
+      - Glossary: reference/glossary.md
+  - Project:
+      - project/index.md
+      - Roadmap: project/roadmap.md
+      - Status: project/status.md
+      - Production readiness: project/production-readiness.md
+      - Roadblocks & solutions: project/roadblocks-and-solutions.md
+      - Field-test issues: project/field-test-issues.md
+      - Demo evidence: project/demo-evidence.md
+      - Doc fixes: project/doc-fixes.md

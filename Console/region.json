@@ -1,0 +1,9 @@
+{
+    "schema":  "upes-ecs.region/v1",
+    "language":  "en",
+    "languageName":  "English",
+    "native":  "English",
+    "prompts":  "packed",
+    "source":  "live-toggle",
+    "deployedAt":  "2026-07-10T06:30:34Z"
+}

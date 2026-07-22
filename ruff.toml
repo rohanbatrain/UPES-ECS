@@ -1,0 +1,15 @@
+# Ruff config — lenient on legacy style, strict on real bugs.
+line-length = 120
+target-version = "py311"
+
+[lint]
+# E/F = pycodestyle errors + pyflakes (real problems). W = warnings.
+select = ["E", "F", "W", "I"]
+ignore = [
+  "E501",   # line length handled by formatter, not enforced hard
+  "E402",   # module-level import not at top (common in scripts)
+  "E722",   # bare except (present in some ops scripts)
+]
+
+[lint.per-file-ignores]
+"**/__init__.py" = ["F401"]

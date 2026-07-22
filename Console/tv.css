@@ -1,0 +1,210 @@
+/* ==========================================================================
+   UPES-ECS — Campus LED-TV wallboards (shared design system)
+   Two always-on screens: tv-safety.html (public) and tv-ops.html (control room).
+   Dark, high-contrast, no-scroll, fits 1080p→4K via clamp()/cqmin units.
+   ========================================================================== */
+
+:root {
+  --bg:        #080b11;
+  --bg-2:      #0d121b;
+  --panel:     #121a26;
+  --panel-2:   #0f1620;
+  --border:    #26313f;
+  --border-hi: #35435a;
+
+  --text:      #eef4fb;
+  --text-mut:  #93a1b4;
+  --text-dim:  #5f6e82;
+
+  /* semantic status — chosen for contrast on dark, never color-only (paired with label/icon) */
+  --ok:        #2fd071;   --ok-ink:   #052312;
+  --warn:      #ffb020;   --warn-ink: #241700;
+  --crit:      #ff4d4f;   --crit-ink: #2a0405;
+  --idle:      #64748b;   --idle-ink: #0a0f16;
+  --info:      #3fb6ff;   --info-ink: #04202f;
+  --emerg:     #ff3b30;
+
+  --ring: 0 0 0 2px rgba(255,255,255,.04), 0 10px 30px rgba(0,0,0,.45);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", "Cascadia Mono", ui-monospace, "Consolas", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; width: 100%; overflow: hidden; }
+body {
+  font-family: var(--font);
+  background: radial-gradient(1200px 800px at 80% -10%, #0f1826 0%, var(--bg) 60%) fixed;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  cursor: none;                 /* kiosk: no pointer on a TV */
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .1px;
+}
+/* Fixed 1920x1080 design canvas, scaled to the viewport by JS (fitStage) so the whole
+   board always fits ANY screen — windowed browser, 1366x768 TV, or 4K — with no scroll and
+   no clipping. cqmin units below are relative to THIS container, so they stay stable as it scales. */
+.screen { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; container-type: size; transform-origin: top left; display: flex; flex-direction: column; padding: 22px; gap: 18px; }
+
+/* ---- top bar (shared) --------------------------------------------------- */
+.topbar { display: flex; align-items: center; gap: clamp(12px, 1.6cqw, 28px); flex: 0 0 auto; }
+.brand { display: flex; align-items: baseline; gap: .6em; }
+.brand b { font-size: clamp(18px, 2.1cqmin, 30px); font-weight: 800; letter-spacing: .5px; }
+.brand span { color: var(--text-mut); font-size: clamp(12px, 1.4cqmin, 18px); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+.spacer { flex: 1 1 auto; }
+.clock { text-align: right; line-height: 1.05; }
+.clock .t { font-size: clamp(22px, 3cqmin, 46px); font-weight: 800; }
+.clock .d { color: var(--text-mut); font-size: clamp(11px, 1.3cqmin, 17px); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
+
+/* ---- connection / freshness dot ---------------------------------------- */
+.conn { display: inline-flex; align-items: center; gap: .5em; font-size: clamp(11px,1.25cqmin,16px); font-weight: 700; color: var(--text-mut); }
+.dot { width: .8em; height: .8em; border-radius: 50%; background: var(--idle); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+.dot.live  { background: var(--ok);   animation: pulse 2.4s infinite; }
+.dot.stale { background: var(--warn); }
+.dot.down  { background: var(--crit); animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 currentColor;opacity:1} 70%{box-shadow:0 0 0 .5em transparent;opacity:.75} 100%{box-shadow:0 0 0 0 transparent;opacity:1} }
+
+/* ---- region / language chip (subtle — active deployed language) --------- */
+.region { display: inline-flex; align-items: center; gap: .45em; padding: .25em .7em; border: 1px solid var(--border); border-radius: 999px; background: var(--panel-2); color: var(--text-mut); font-weight: 700; font-size: clamp(11px,1.3cqmin,17px); white-space: nowrap; }
+.region .glb { font-size: 1.05em; line-height: 1; filter: saturate(.85); }
+.region .lab { color: var(--text); letter-spacing: .3px; }
+.region .fb { color: var(--warn); font-weight: 800; font-size: .82em; text-transform: uppercase; letter-spacing: .6px; padding: .06em .5em; border-radius: 6px; background: color-mix(in srgb, var(--warn) 16%, transparent); }
+
+/* ---- status pill -------------------------------------------------------- */
+.pill { display: inline-flex; align-items: center; gap: .5em; padding: .35em .9em; border-radius: 999px; font-weight: 800; font-size: clamp(13px,1.6cqmin,22px); letter-spacing: .5px; }
+.pill .dot { animation: none; }
+.s-ok   { background: color-mix(in srgb, var(--ok) 20%, transparent);   color: var(--ok);   box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 55%, transparent); }
+.s-warn { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent); }
+.s-crit { background: color-mix(in srgb, var(--crit) 22%, transparent); color: var(--crit); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--crit) 60%, transparent); }
+.s-idle { background: color-mix(in srgb, var(--idle) 20%, transparent); color: var(--text-mut); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--idle) 45%, transparent); }
+.s-info { background: color-mix(in srgb, var(--info) 20%, transparent); color: var(--info); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--info) 55%, transparent); }
+
+/* ---- panels / grid ------------------------------------------------------ */
+.grid { flex: 1 1 auto; display: grid; gap: clamp(10px, 1.4cqmin, 22px); min-height: 0; }
+.panel { background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%); border: 1px solid var(--border); border-radius: clamp(10px,1.3cqmin,18px); box-shadow: var(--ring); padding: clamp(12px,1.5cqmin,22px); display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.panel > h2 { font-size: clamp(12px,1.35cqmin,18px); text-transform: uppercase; letter-spacing: 2px; color: var(--text-mut); font-weight: 700; margin-bottom: .7em; display: flex; align-items: center; gap: .5em; flex: 0 0 auto; }
+.panel > h2 .count { margin-left: auto; color: var(--text); background: var(--bg-2); border: 1px solid var(--border); border-radius: 999px; padding: .1em .6em; font-size: .85em; }
+.panel .body { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+
+/* ---- KPI tiles ---------------------------------------------------------- */
+.kpis { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: clamp(8px,1.1cqmin,16px); }
+.kpi { background: var(--panel-2); border: 1px solid var(--border); border-radius: clamp(8px,1cqmin,14px); padding: clamp(8px,1.1cqmin,16px) clamp(10px,1.3cqmin,18px); display: flex; flex-direction: column; gap: .15em; position: relative; overflow: hidden; }
+.kpi .v { font-size: clamp(26px,4.4cqmin,64px); font-weight: 800; line-height: 1; }
+.kpi .l { font-size: clamp(10px,1.15cqmin,15px); text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-mut); font-weight: 700; }
+.kpi .u { font-size: .45em; color: var(--text-mut); font-weight: 700; margin-left: .15em; }
+.kpi::before { content:""; position:absolute; left:0; top:0; bottom:0; width: 4px; background: var(--accent, var(--idle)); }
+.kpi.ok   { --accent: var(--ok); }
+.kpi.warn { --accent: var(--warn); }
+.kpi.crit { --accent: var(--crit); }
+.kpi.info { --accent: var(--info); }
+.kpi .v.ok{color:var(--ok)} .kpi .v.warn{color:var(--warn)} .kpi .v.crit{color:var(--crit)} .kpi .v.info{color:var(--info)}
+
+/* ---- lists / rows ------------------------------------------------------- */
+.rows { display: flex; flex-direction: column; gap: clamp(5px,.7cqmin,10px); height: 100%; }
+.row { display: flex; align-items: center; gap: .7em; padding: clamp(6px,.8cqmin,12px) clamp(8px,1cqmin,14px); background: var(--panel-2); border: 1px solid var(--border); border-radius: clamp(7px,.9cqmin,12px); font-size: clamp(13px,1.55cqmin,22px); }
+.row .name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row .sub { color: var(--text-mut); font-size: .8em; font-weight: 600; }
+.row .ext { font-family: var(--mono); color: var(--text-mut); font-size: .82em; }
+.row .right { margin-left: auto; display: flex; align-items: center; gap: .6em; }
+.tag { font-size: .72em; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; padding: .15em .6em; border-radius: 6px; white-space: nowrap; }
+.tag.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.tag.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.tag.crit{background:color-mix(in srgb,var(--crit) 18%,transparent);color:var(--crit)}
+.tag.info{background:color-mix(in srgb,var(--info) 18%,transparent);color:var(--info)}
+.tag.idle{background:color-mix(in srgb,var(--idle) 18%,transparent);color:var(--text-mut)}
+.led { width:.7em; height:.7em; border-radius:50%; flex:0 0 auto; background: var(--idle); }
+.led.ok{background:var(--ok);box-shadow:0 0 .5em var(--ok)} .led.info{background:var(--info);box-shadow:0 0 .5em var(--info)} .led.warn{background:var(--warn)} .led.crit{background:var(--crit);box-shadow:0 0 .5em var(--crit)}
+.empty { color: var(--text-dim); font-size: clamp(13px,1.5cqmin,20px); font-style: italic; display: grid; place-items: center; height: 100%; }
+
+/* offline / stale full-screen veil for the ops board */
+.veil { position: fixed; inset: 0; background: rgba(8,11,17,.86); backdrop-filter: blur(3px); display: none; place-items: center; z-index: 50; }
+.veil.show { display: grid; }
+.veil .box { text-align: center; }
+.veil .box .big { font-size: clamp(30px,6cqmin,90px); font-weight: 800; color: var(--warn); }
+.veil .box .sm { color: var(--text-mut); font-size: clamp(14px,2cqmin,26px); margin-top: .4em; }
+
+/* ==========================================================================
+   SCREEN 1 — PUBLIC SAFETY
+   ========================================================================== */
+.safety .hero { flex: 1 1 auto; display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(14px,2cqmin,32px); min-height: 0; }
+.dial { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; background: linear-gradient(160deg, #16202e, #0c131d); border: 1px solid var(--border-hi); border-radius: clamp(16px,2cqmin,28px); padding: clamp(20px,3cqmin,60px); box-shadow: var(--ring); position: relative; overflow: hidden; }
+.dial::after { content:""; position:absolute; right:-8%; top:-20%; width:60%; height:140%; background: radial-gradient(circle, color-mix(in srgb,var(--emerg) 22%,transparent), transparent 62%); }
+.dial .eyebrow { font-size: clamp(16px,2.2cqmin,34px); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-mut); }
+.dial .num { font-size: clamp(120px,26cqmin,400px); font-weight: 900; line-height: .9; color: #fff; text-shadow: 0 0 40px color-mix(in srgb,var(--emerg) 55%,transparent); margin: .05em 0; }
+.dial .num small { color: var(--emerg); }
+.dial .cap { font-size: clamp(18px,2.6cqmin,40px); font-weight: 800; }
+.dial .cap b { color: var(--emerg); }
+
+.aside { display: flex; flex-direction: column; gap: clamp(12px,1.6cqmin,24px); min-height: 0; }
+.statuscard { background: var(--panel); border:1px solid var(--border); border-radius: clamp(14px,1.8cqmin,24px); padding: clamp(16px,2.2cqmin,34px); display:flex; flex-direction:column; gap:.5em; }
+.statuscard .lead { display:flex; align-items:center; gap:.5em; font-size: clamp(22px,3.4cqmin,54px); font-weight: 800; }
+.statuscard .lead .led { width: .7em; height:.7em; }
+.statuscard .note { color: var(--text-mut); font-size: clamp(14px,1.9cqmin,28px); font-weight: 600; }
+.readycount { display:flex; align-items:baseline; gap:.35em; margin-top:.1em; }
+.readycount b { font-size: clamp(30px,5cqmin,80px); font-weight:900; color: var(--ok); }
+.readycount span { color: var(--text-mut); font-size: clamp(14px,1.9cqmin,26px); font-weight:700; }
+
+.howto { display:grid; grid-auto-rows: 1fr; gap: clamp(10px,1.3cqmin,18px); flex:1 1 auto; min-height:0; }
+.howto .item { background: var(--panel-2); border:1px solid var(--border); border-radius: clamp(12px,1.5cqmin,20px); padding: clamp(12px,1.7cqmin,26px); display:flex; align-items:center; gap: clamp(12px,1.6cqmin,26px); }
+.howto .k { font-family: var(--mono); font-weight:800; font-size: clamp(24px,3.6cqmin,58px); color:#fff; background:#0a1017; border:1px solid var(--border-hi); border-radius: 12px; padding:.1em .45em; min-width: 2.2em; text-align:center; }
+.howto .k.e { color: var(--emerg); border-color: color-mix(in srgb,var(--emerg) 50%,transparent); }
+.howto .tx b { font-size: clamp(16px,2.1cqmin,32px); font-weight:800; display:block; }
+.howto .tx span { color: var(--text-mut); font-size: clamp(12px,1.6cqmin,22px); font-weight:600; }
+
+/* Evacuation / roll-call takeover */
+.evac { flex:1 1 auto; display:none; grid-template-rows: auto 1fr auto; gap: clamp(14px,2cqmin,30px); min-height:0; }
+.evac.show { display: grid; }
+.safety.evac-on .hero { display:none; }
+.evac .banner { background: linear-gradient(90deg, color-mix(in srgb,var(--crit) 35%,#160607), #160607); border:2px solid var(--crit); border-radius: clamp(14px,1.8cqmin,24px); padding: clamp(16px,2.4cqmin,40px); text-align:center; }
+.evac .banner .big { font-size: clamp(40px,8cqmin,140px); font-weight:900; color:#fff; letter-spacing:2px; }
+.evac .banner .sub { font-size: clamp(18px,2.6cqmin,40px); font-weight:700; color: color-mix(in srgb,#fff 85%,var(--crit)); margin-top:.2em; }
+.evac .counts { display:grid; grid-template-columns: repeat(3,1fr); gap: clamp(12px,1.6cqmin,26px); }
+.evac .cbox { background: var(--panel); border:1px solid var(--border); border-radius: clamp(12px,1.6cqmin,22px); padding: clamp(14px,2cqmin,30px); text-align:center; display:flex; flex-direction:column; align-items:center; min-height:0; overflow:hidden; }
+.evac .cbox .n { font-size: clamp(40px,7cqmin,110px); font-weight:900; line-height:1; }
+.evac .cbox .n.ok{color:var(--ok)} .evac .cbox .n.crit{color:var(--crit)} .evac .cbox .n.info{color:var(--info)}
+.evac .cbox .l { text-transform:uppercase; letter-spacing:2px; color:var(--text-mut); font-weight:700; font-size: clamp(13px,1.7cqmin,24px); margin-top:.3em; margin-bottom:.5em; }
+.evac .names { display:flex; flex-wrap:wrap; gap: clamp(5px,.7cqmin,10px); justify-content:center; align-content:flex-start; overflow:hidden; width:100%; min-height:0; }
+.evac .names span { background: var(--panel-2); border:1px solid var(--border); border-radius:8px; padding:.18em .6em; font-size: clamp(13px,1.55cqmin,22px); font-weight:600; white-space:nowrap; }
+.evac .names span.crit { border-color: color-mix(in srgb,var(--crit) 45%,transparent); color: color-mix(in srgb,#fff 82%,var(--crit)); }
+.evac .names span.ok   { border-color: color-mix(in srgb,var(--ok) 45%,transparent); color: color-mix(in srgb,#fff 82%,var(--ok)); }
+.evac .names span.more { color: var(--text-mut); font-style:italic; border-style:dashed; }
+.evac .instruct { text-align:center; font-size: clamp(16px,2.3cqmin,36px); font-weight:700; color: var(--text); }
+.evac .instruct b { color: var(--ok); }
+
+/* ==========================================================================
+   SCREEN 2 — OPERATIONS layout
+   ========================================================================== */
+/* minmax(0,1fr) — NOT plain 1fr — so wide panel content (queue rows) can't inflate its column
+   and starve the narrow ones. Same for rows, so content can't push a row taller than its share. */
+.ops .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto minmax(0,1fr) minmax(0,1fr); }
+.ops .kpirow { grid-column: 1 / -1; }
+.col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; } .col-5 { grid-column: span 5; } .col-6 { grid-column: span 6; } .col-7 { grid-column: span 7; } .col-8 { grid-column: span 8; } .col-12 { grid-column: 1 / -1; }
+
+/* live call rows */
+.call { display:flex; align-items:center; gap:.7em; }
+.call .flow { display:flex; align-items:center; gap:.4em; font-weight:800; }
+.call .arrow { color: var(--info); }
+.call .dur { margin-left:auto; font-family: var(--mono); color: var(--text-mut); }
+
+/* 14-day volume — vertical column chart (bottom-aligned, fixed height so it never floats) */
+.cols { display:flex; align-items:flex-end; gap: clamp(2px,.35cqmin,5px); height: clamp(26px,4cqmin,54px); }
+.cols .c { flex:1; background: color-mix(in srgb,var(--info) 42%,transparent); border-radius: 2px 2px 0 0; min-height:2px; }
+.cols .c.today { background: var(--info); }
+
+/* calls by type — horizontal labeled bars (legible at TV distance) */
+.hbars { display:flex; flex-direction:column; gap: clamp(4px,.7cqmin,9px); }
+.hbars .hb { display:flex; align-items:center; gap:.6em; font-size: clamp(12px,1.45cqmin,20px); }
+.hbars .hb .lab { flex:0 0 auto; width:5.4em; color:var(--text-mut); font-weight:700; text-transform:capitalize; }
+.hbars .hb .track { flex:1; height:.8em; background: var(--panel-2); border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+.hbars .hb .fill { height:100%; border-radius:5px; background: var(--info); min-width:3px; }
+.hbars .hb .fill.emergency{background:var(--crit)} .hbars .hb .fill.drill{background:var(--warn)}
+.hbars .hb .fill.echo{background:var(--idle)} .hbars .hb .fill.other{background:color-mix(in srgb,var(--info) 45%,var(--idle))}
+.hbars .hb .n { width:2.4em; text-align:right; font-weight:800; }
+
+.mini { display:grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px,.8cqmin,12px); }
+.mini .m { background: var(--panel-2); border:1px solid var(--border); border-radius:10px; padding: clamp(6px,.9cqmin,13px); }
+.mini .m .mv { font-size: clamp(18px,2.7cqmin,40px); font-weight:800; }
+.mini .m .ml { font-size: clamp(9px,1.1cqmin,14px); text-transform:uppercase; letter-spacing:.8px; color:var(--text-mut); font-weight:700; }
+
+.footer { flex:0 0 auto; display:flex; align-items:center; gap:1.4em; color:var(--text-dim); font-size: clamp(11px,1.25cqmin,16px); font-weight:600; }
+.footer .k { display:inline-flex; align-items:center; gap:.4em; }

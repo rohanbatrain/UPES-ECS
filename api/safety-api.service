@@ -1,0 +1,15 @@
+[Unit]
+Description=UPES-ECS Safety & Location API (mobile app ingest, FastAPI/uvicorn on :8091)
+After=network.target asterisk.service
+Wants=asterisk.service
+
+[Service]
+Type=simple
+User=root
+# Run the app directly; it calls uvicorn.run() on 0.0.0.0:8091.
+ExecStart=/usr/bin/python3 /opt/upes-ecs/api/safety_api.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

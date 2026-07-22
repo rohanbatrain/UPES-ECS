@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# mock launchctl: records bootstrap/bootout/load/kickstart calls; `print` returns
+# non-zero (agent "not loaded") so the installer's load_agent takes the load path.
+echo "[mock launchctl] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+case "${1:-}" in
+  print) exit 1 ;;   # pretend the agent is not currently loaded
+  *)     exit 0 ;;
+esac

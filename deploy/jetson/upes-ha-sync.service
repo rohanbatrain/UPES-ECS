@@ -1,0 +1,15 @@
+[Unit]
+Description=UPES-ECS HA config sync (primary -> secondary: accounts, sounds, groups, console)
+After=network-online.target asterisk.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# One-way PUSH from the primary. On the secondary it self-detects role and no-ops.
+ExecStart=/opt/upes-ecs/ha/upes-ha-sync.sh
+# Never let a failed sync (e.g. peer briefly down) mark the unit failed and spam.
+SuccessExitStatus=0 1
+Nice=10
+
+[Install]
+WantedBy=multi-user.target

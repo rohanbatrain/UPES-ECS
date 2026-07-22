@@ -1,0 +1,45 @@
+number,code,name,native
+1,en,English,English
+2,hi,Hindi,हिन्दी
+3,ar,Arabic,العربية
+4,bg,Bulgarian,български
+5,ca,Catalan,Català
+6,cs,Czech,Čeština
+7,cy,Welsh,Cymraeg
+8,da,Danish,Dansk
+9,de,German,Deutsch
+10,el,Greek,Ελληνικά
+11,es,Spanish,Español
+12,eu,Basque,Euskara
+13,fa,Farsi,فارسی
+14,fi,Finnish,Suomi
+15,fr,French,Français
+16,hu,Hungarian,Magyar
+17,id,Indonesian,Bahasa Indonesia
+18,is,Icelandic,íslenska
+19,it,Italian,Italiano
+20,ka,Georgian,ქართული ენა
+21,kk,Kazakh,қазақша
+22,ku,Kurmanji Kurdish,Kurmancî
+23,lb,Luxembourgish,Lëtzebuergesch
+24,lv,Latvian,Latviešu
+25,ml,Malayalam,മലയാളം
+26,ne,Nepali,नेपाली
+27,nl,Dutch,Nederlands
+28,no,Norwegian,Norsk
+29,pl,Polish,Polski
+30,pt,Portuguese,Português
+31,ro,Romanian,Română
+32,ru,Russian,Русский
+33,sk,Slovak,Slovenčina
+34,sl,Slovenian,Slovenščina
+35,sq,Albanian,shqip
+36,sr,Serbian,srpski
+37,sv,Swedish,Svenska
+38,sw,Swahili,Kiswahili
+39,te,Telugu,తెలుగు
+40,tr,Turkish,Türkçe
+41,uk,Ukrainian,украї́нська мо́ва
+42,ur,Urdu,اردو
+43,vi,Vietnamese,Tiếng Việt
+44,zh,Chinese,简体中文

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="UPES-ECS Operations Console — LAN-only control room for the campus emergency PBX.">
+<title>UPES-ECS Operations Console</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23d5202b'/><text x='16' y='22' font-family='monospace' font-size='15' font-weight='bold' text-anchor='middle' fill='white'>111</text></svg>">
+<link rel="stylesheet" href="app.css">
+<script>
+  /* Apply saved theme before first paint to avoid a flash. */
+  (function () {
+    try {
+      var t = localStorage.getItem("upes-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<div class="app">
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+
+  <!-- Sidebar (nav injected by app.js from the feature registry) -->
+  <aside class="sidebar" id="sidebar" aria-label="Sections">
+    <div class="brand">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">ECS</div>
+        <div>
+          <div class="brand-name">UPES-ECS</div>
+          <div class="brand-sub">Operations Console</div>
+        </div>
+      </div>
+      <div class="brand-dial">Campus emergency — dial <b>111</b></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Console sections"><!-- built by app.js --></nav>
+    <div class="sidebar-foot">
+      <button class="nav-collapse" id="nav-collapse" type="button" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg></span>
+        <span class="nc-label">Collapse</span>
+      </button>
+      <div class="muted" style="font-size:11.5px">
+        LAN-only · no internet · data from <code>status.json</code>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">&#9776;</button>
+      <div class="title-wrap">
+        <h1 id="pg-title">Wallboard</h1>
+        <div class="subtitle" id="pg-sub">Live control-room view of the emergency PBX</div>
+      </div>
+      <div class="topbar-actions">
+        <span class="serverchip" id="region-chip" title="Active deployed language">
+          <span aria-hidden="true" style="font-size:14px;line-height:1">&#127760;</span>
+          <span class="ip" id="region-native">EN</span>
+          <span class="sep" id="region-fb-sep" hidden>·</span>
+          <span class="pill warn" id="region-fb" hidden>audio EN</span>
+        </span>
+        <span class="serverchip">
+          <span class="livedot off" id="chip-dot" aria-hidden="true"></span>
+          <span class="roleword muted">PBX</span>
+          <span class="ip" id="chip-ip">—</span>
+          <span class="sep">·</span>
+          <span class="pill neutral" id="chip-state">checking…</span>
+        </span>
+        <button class="iconbtn" id="theme-btn" type="button" aria-label="Toggle theme"></button>
+      </div>
+    </header>
+
+    <main class="view" id="view" tabindex="-1"><!-- feature renders here --></main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="ui-i18n.js"></script>
+</body>
+</html>

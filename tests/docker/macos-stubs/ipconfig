@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# mock ipconfig: `ipconfig getifaddr en0` -> a fake LAN IP; other ifaces empty.
+echo "[mock ipconfig] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+if [ "${1:-}" = "getifaddr" ] && [ "${2:-}" = "en0" ]; then
+  echo "${MOCK_LAN_IP:-192.168.7.42}"
+fi
+exit 0

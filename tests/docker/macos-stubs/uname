@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# mock uname: report Darwin + a controllable arch so the installer runs its
+# macOS branch and its arm64/intel brew-prefix logic. Anything else -> real uname.
+case "${1:-}" in
+  -s) echo "${MOCK_UNAME_S:-Darwin}" ;;
+  -m) echo "${MOCK_UNAME_M:-arm64}" ;;
+  *) exec /bin/uname "$@" ;;
+esac

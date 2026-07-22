@@ -1,0 +1,10 @@
+# it-network.example.csv — EXAMPLE call-out group for scripts/mass_callout.sh
+#
+# Format: ONE extension per line. Blank lines and lines starting with # are ignored.
+# EXAMPLE IT / NETWORK POSITION extensions from the Numbering Plan (4600-4699,
+# see ../../SOP/01-Numbering-Plan.md) — POSITIONS, not people. No PII, no SAP IDs.
+#
+# Copy to it-network.csv for a real group; do NOT commit rosters that identify people.
+4600
+4601
+4602

@@ -1,0 +1,429 @@
+{
+    "schema":  "upes-ecs.prompt-catalog/v1",
+    "description":  "Canonical list of every UPES-ECS voice prompt. Source of truth for text + translation. Generated from scripts/gen-*-prompts.win.ps1 (do not drift).",
+    "base_language":  "en",
+    "audio_layout":  "deploy/asterisk/sounds/lang/\u003clang\u003e/\u003cfile\u003e  (mirrors sounds/en/\u003cfile\u003e)",
+    "count":  42,
+    "prompts":  [
+                    {
+                        "id":  "upes-ecs/coach/intro",
+                        "name":  "intro",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/intro.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  20,
+                        "en":  "You have reached the campus emergency guidance line. No responder is free at this moment, and help has been alerted to call you back. Stay calm. Take a slow breath. I will guide you through what to do. If you are able, also call your national emergency number now."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/intro-test",
+                        "name":  "intro-test",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/intro-test.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  11,
+                        "en":  "This is the campus emergency guidance line, in test mode. No real incident is being logged. I will guide you through what to do in an emergency."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/menu",
+                        "name":  "menu",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/menu.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  29,
+                        "en":  "Choose the situation. Press 1 if someone is not breathing or has no pulse. Press 2 for severe bleeding. Press 3 for choking. Press 4 for fire or smoke. Press 5 for a threat, attacker, or lockdown. Press 6 if someone is unconscious but breathing. Press 7 if you are trapped. Press 9 to try a responder again. Press 8 to leave a message. Press 0 to hear these choices again."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/cpr",
+                        "name":  "cpr",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/cpr.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  33,
+                        "en":  "Put the person on their back on a firm surface and kneel beside them. Place the heel of one hand in the centre of the chest, and your other hand on top. Push down hard and fast, about twice every second, letting the chest rise fully each time. Keep going without stopping. If someone is nearby, send them for the nearest defibrillator, and turn it on to follow its spoken instructions. Do not stop until help arrives or the person wakes."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/bleeding",
+                        "name":  "bleeding",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/bleeding.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  29,
+                        "en":  "Press firmly and directly on the wound with a cloth or your hand. Do not remove the cloth. If blood soaks through, add more on top and keep pressing hard. If it is an arm or a leg and the bleeding will not stop, tie a strong band tightly a few centimetres above the wound, between the wound and the heart, and note the time. Keep the person warm and still."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/choking",
+                        "name":  "choking",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/choking.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  28,
+                        "en":  "Ask if they can speak or cough. If they cannot breathe, stand behind them and give five firm blows between the shoulder blades with the heel of your hand. If that does not work, wrap your arms around their waist and give five quick inward and upward thrusts just above the navel. Keep repeating the back blows and the thrusts until the object comes out or help arrives."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/fire",
+                        "name":  "fire",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/fire.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  25,
+                        "en":  "Get everyone out now, and do not stop for belongings. Stay low under the smoke, where the air is clearer. Before opening any door, feel it with the back of your hand. If it is hot, find another way out. Do not use the lifts. Once you are outside, stay outside, and move to the assembly point. Do not go back in."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/lockdown",
+                        "name":  "lockdown",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/lockdown.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  27,
+                        "en":  "If you can leave the area safely, move away from the danger quietly and quickly. If you cannot, get into a room, lock or block the door, and stay low, away from windows and doors. Turn off the lights and set your phone to silent. Stay quiet and out of sight. Do not open the door until security or the police tell you it is safe."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/recovery",
+                        "name":  "recovery",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/recovery.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  22,
+                        "en":  "If the person is breathing but not awake, gently roll them onto their side. Tilt their head back a little to keep the airway open, and lift their chin. Stay with them and keep watching that they are still breathing. If they stop breathing, begin chest compressions in the centre of the chest."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/trapped",
+                        "name":  "trapped",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/trapped.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  26,
+                        "en":  "Stay as calm and still as you can, to save air and energy. Cover your nose and mouth with cloth against dust. Tap steadily on a pipe, a wall, or any hard surface, so rescuers can hear you. Shout only as a last resort, to avoid breathing in dust. Do not light any flame. Move as little as possible and wait to be found."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/tryagain",
+                        "name":  "tryagain",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/tryagain.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  6,
+                        "en":  "I am trying to reach a responder now. Please stay on the line and hold."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/noresponder",
+                        "name":  "noresponder",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/noresponder.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  6,
+                        "en":  "No responder is free yet. I will stay with you. Returning to the guidance."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/invalid",
+                        "name":  "invalid",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/invalid.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  4,
+                        "en":  "Sorry, I did not understand that."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/nochoice",
+                        "name":  "nochoice",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/nochoice.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  4,
+                        "en":  "I did not hear a choice."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/leavemsg",
+                        "name":  "leavemsg",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/leavemsg.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  10,
+                        "en":  "I will now let you leave a message for the response team. After the tone, say where you are and what is happening."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/pick-language",
+                        "name":  "pick-language",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/pick-language.wav",
+                        "usage":  "Offline panic-coach language chooser: played when the caller presses * to change language mid-call",
+                        "max_seconds":  8,
+                        "en":  "To change the language, press 1 for English, or 2 for Hindi."
+                    },
+                    {
+                        "id":  "upes-ecs/coach/fastpath-intro",
+                        "name":  "fastpath-intro",
+                        "group":  "coach",
+                        "category":  "coach",
+                        "file":  "upes-ecs/coach/fastpath-intro.wav",
+                        "usage":  "Offline panic-coach (102) and 111 press-1 first-aid guidance",
+                        "max_seconds":  8,
+                        "en":  "First aid guidance. A responder is still being alerted and will join if they can. Stay with me."
+                    },
+                    {
+                        "id":  "upes-ecs/emergency-preanswer",
+                        "name":  "emergency-preanswer",
+                        "group":  "root",
+                        "category":  "flow",
+                        "file":  "upes-ecs/emergency-preanswer.wav",
+                        "usage":  "111 emergency front-door: greeting / hold / responder alert",
+                        "max_seconds":  16,
+                        "en":  "You have reached the campus emergency line. Your call is being recorded, and help is being reached now. Stay on the line. If someone needs first aid right now, press 1 at any time, and I will guide you."
+                    },
+                    {
+                        "id":  "upes-ecs/hold-firstaid",
+                        "name":  "hold-firstaid",
+                        "group":  "root",
+                        "category":  "flow",
+                        "file":  "upes-ecs/hold-firstaid.wav",
+                        "usage":  "111 emergency front-door: greeting / hold / responder alert",
+                        "max_seconds":  8,
+                        "en":  "Still connecting you to a responder. If you need first aid now, press 1 for step by step guidance."
+                    },
+                    {
+                        "id":  "upes-ecs/responder-alert",
+                        "name":  "responder-alert",
+                        "group":  "root",
+                        "category":  "flow",
+                        "file":  "upes-ecs/responder-alert.wav",
+                        "usage":  "111 emergency front-door: greeting / hold / responder alert",
+                        "max_seconds":  12,
+                        "en":  "Emergency alert. There is an active call on the campus emergency line and no responder has answered. Please make yourself available now. Press 1 to join the emergency queue."
+                    },
+                    {
+                        "id":  "upes-ecs/shift-on",
+                        "name":  "shift-on",
+                        "group":  "root",
+                        "category":  "flow",
+                        "file":  "upes-ecs/shift-on.wav",
+                        "usage":  "111 emergency front-door: greeting / hold / responder alert",
+                        "max_seconds":  9,
+                        "en":  "You are now on shift. You will receive campus emergency calls until you go off shift by dialling star two three."
+                    },
+                    {
+                        "id":  "upes-ecs/shift-off",
+                        "name":  "shift-off",
+                        "group":  "root",
+                        "category":  "flow",
+                        "file":  "upes-ecs/shift-off.wav",
+                        "usage":  "111 emergency front-door: greeting / hold / responder alert",
+                        "max_seconds":  6,
+                        "en":  "You are now off shift. You will no longer receive campus emergency calls."
+                    },
+                    {
+                        "id":  "custom/upes-evacuate",
+                        "name":  "upes-evacuate",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-evacuate.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  14,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. Evacuate the building now. Leave immediately by the nearest safe exit. Do not use the lifts. Move to your assembly point and await further instructions."
+                    },
+                    {
+                        "id":  "custom/upes-shelter",
+                        "name":  "upes-shelter",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-shelter.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  15,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. Shelter in place now. Move indoors, lock or block your door, stay away from windows, and remain quiet until you are told it is safe. Await further instructions."
+                    },
+                    {
+                        "id":  "custom/upes-allclear",
+                        "name":  "upes-allclear",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-allclear.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  10,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. The emergency is now over. It is safe to resume normal activity. Thank you for your cooperation."
+                    },
+                    {
+                        "id":  "custom/upes-assemble",
+                        "name":  "upes-assemble",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-assemble.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  12,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. Proceed to your designated assembly point now. Move calmly, help others where you can, and wait to be counted. Await further instructions."
+                    },
+                    {
+                        "id":  "custom/upes-rollcall",
+                        "name":  "upes-rollcall",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-rollcall.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  10,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. This is a safety head count. If you are safe and able to respond, press one now."
+                    },
+                    {
+                        "id":  "custom/upes-test",
+                        "name":  "upes-test",
+                        "group":  "custom",
+                        "category":  "eas",
+                        "file":  "custom/upes-test.wav",
+                        "usage":  "Emergency Alert Service mass call-out announcement (Console MESSAGES)",
+                        "max_seconds":  11,
+                        "en":  "This is a test of the UPES Emergency Alert Service. This is only a test. No action is required, and no emergency response will be dispatched."
+                    },
+                    {
+                        "id":  "upes-ecs/rollcall-press1",
+                        "name":  "rollcall-press1",
+                        "group":  "upesecs",
+                        "category":  "rollcall",
+                        "file":  "upes-ecs/rollcall-press1.wav",
+                        "usage":  "Roll-call / head-count control prompt",
+                        "max_seconds":  4,
+                        "en":  "Press one if you are safe."
+                    },
+                    {
+                        "id":  "upes-ecs/rollcall-thanks",
+                        "name":  "rollcall-thanks",
+                        "group":  "upesecs",
+                        "category":  "rollcall",
+                        "file":  "upes-ecs/rollcall-thanks.wav",
+                        "usage":  "Roll-call / head-count control prompt",
+                        "max_seconds":  5,
+                        "en":  "Thank you. You are marked safe. You may now hang up."
+                    },
+                    {
+                        "id":  "upes-ecs/rollcall-noack",
+                        "name":  "rollcall-noack",
+                        "group":  "upesecs",
+                        "category":  "rollcall",
+                        "file":  "upes-ecs/rollcall-noack.wav",
+                        "usage":  "Roll-call / head-count control prompt",
+                        "max_seconds":  6,
+                        "en":  "No response was recorded. Please contact your warden as soon as you are able."
+                    },
+                    {
+                        "id":  "upes-ecs/announce-evacuate",
+                        "name":  "announce-evacuate",
+                        "group":  "upesecs",
+                        "category":  "paging",
+                        "file":  "upes-ecs/announce-evacuate.wav",
+                        "usage":  "All-campus paging announcement (720-723)",
+                        "max_seconds":  14,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. Evacuate the building now. Leave immediately by the nearest safe exit. Do not use the lifts. Move to your assembly point and await further instructions."
+                    },
+                    {
+                        "id":  "upes-ecs/announce-avoid-area",
+                        "name":  "announce-avoid-area",
+                        "group":  "upesecs",
+                        "category":  "paging",
+                        "file":  "upes-ecs/announce-avoid-area.wav",
+                        "usage":  "All-campus paging announcement (720-723)",
+                        "max_seconds":  14,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. There is an incident on campus. Stay away from the affected area, do not approach, and follow the instructions of security staff. Await further instructions."
+                    },
+                    {
+                        "id":  "upes-ecs/announce-all-clear",
+                        "name":  "announce-all-clear",
+                        "group":  "upesecs",
+                        "category":  "paging",
+                        "file":  "upes-ecs/announce-all-clear.wav",
+                        "usage":  "All-campus paging announcement (720-723)",
+                        "max_seconds":  10,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. The emergency is now over. It is safe to resume normal activity. Thank you for your cooperation."
+                    },
+                    {
+                        "id":  "upes-ecs/announce-assemble",
+                        "name":  "announce-assemble",
+                        "group":  "upesecs",
+                        "category":  "paging",
+                        "file":  "upes-ecs/announce-assemble.wav",
+                        "usage":  "All-campus paging announcement (720-723)",
+                        "max_seconds":  12,
+                        "en":  "Attention. This is the UPES Emergency Alert Service. Proceed to your designated assembly point now. Move calmly, help others where you can, and wait to be counted. Await further instructions."
+                    },
+                    {
+                        "id":  "upes-ecs/callout-notify",
+                        "name":  "callout-notify",
+                        "group":  "upesecs",
+                        "category":  "paging",
+                        "file":  "upes-ecs/callout-notify.wav",
+                        "usage":  "All-campus paging announcement (720-723)",
+                        "max_seconds":  8,
+                        "en":  "Attention. This is a notification from the UPES Emergency Alert Service. Please listen carefully and follow the instructions that follow."
+                    },
+                    {
+                        "id":  "upes-ecs/drill-prompt",
+                        "name":  "drill-prompt",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/drill-prompt.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  11,
+                        "en":  "This is a UPES emergency system drill. This is only a test. No real emergency is in progress, and no response will be dispatched. Thank you."
+                    },
+                    {
+                        "id":  "upes-ecs/emergency-voicemail-prompt",
+                        "name":  "emergency-voicemail-prompt",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/emergency-voicemail-prompt.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  14,
+                        "en":  "No responder is available to take your call right now. After the tone, please say your name, where you are, and what is happening. Stay safe. Help will call you back as soon as possible."
+                    },
+                    {
+                        "id":  "upes-ecs/not-authorized",
+                        "name":  "not-authorized",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/not-authorized.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  4,
+                        "en":  "Sorry. You are not authorised to use this feature."
+                    },
+                    {
+                        "id":  "upes-ecs/queue-hold",
+                        "name":  "queue-hold",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/queue-hold.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  6,
+                        "en":  "Please stay on the line. We are connecting you to a responder now."
+                    },
+                    {
+                        "id":  "upes-ecs/queue-paused",
+                        "name":  "queue-paused",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/queue-paused.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  7,
+                        "en":  "You are now paused, and will not receive emergency calls. Dial star four six to resume."
+                    },
+                    {
+                        "id":  "upes-ecs/queue-resumed",
+                        "name":  "queue-resumed",
+                        "group":  "upesecs",
+                        "category":  "system",
+                        "file":  "upes-ecs/queue-resumed.wav",
+                        "usage":  "System prompt (drill / voicemail / access / queue)",
+                        "max_seconds":  4,
+                        "en":  "You are now available, and will receive emergency calls again."
+                    }
+                ]
+}

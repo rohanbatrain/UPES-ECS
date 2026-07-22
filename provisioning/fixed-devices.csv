@@ -1,0 +1,3 @@
+extension,name,secret,tech,context,outbound_cid,location,max_contacts
+4301,Security-Gate-Main,__SET_ON_IMPORT__,pjsip,ctx_fixed_device,"Main Gate Phone",Main Gate,1
+4700,Speaker-Hostel-B,__SET_ON_IMPORT__,pjsip,ctx_fixed_device,"Hostel B Speaker",Hostel B Corridor,1

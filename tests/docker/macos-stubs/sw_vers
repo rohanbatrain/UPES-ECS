@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# mock sw_vers: reports a plausible macOS version.
+echo "[mock sw_vers] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+case "${1:-}" in
+  -productName)    echo "macOS" ;;
+  -productVersion) echo "14.5" ;;
+  -buildVersion)   echo "23F79" ;;
+  *) echo "ProductName:    macOS"; echo "ProductVersion: 14.5"; echo "BuildVersion:   23F79" ;;
+esac
+exit 0

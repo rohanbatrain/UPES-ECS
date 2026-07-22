@@ -1,0 +1,15 @@
+# wardens.example.csv — EXAMPLE call-out group for scripts/mass_callout.sh
+#
+# Format: ONE extension per line. Blank lines and lines starting with # are ignored.
+# These are EXAMPLE WARDEN POSITION extensions from the Numbering Plan (4400-4499,
+# see ../../SOP/01-Numbering-Plan.md) — POSITIONS, not people. No PII, no SAP IDs.
+#
+# To build a real group, copy this file (e.g. wardens.csv, do NOT commit real
+# rosters if they contain PII) and list the actual position/user extensions.
+#
+# Usage:
+#   /opt/upes-ecs/mass_callout.sh provisioning/callout-groups/wardens.csv callout-drill notify
+#   /opt/upes-ecs/mass_callout.sh provisioning/callout-groups/wardens.csv rollcall-msg rollcall
+4400
+4401
+4402

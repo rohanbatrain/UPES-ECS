@@ -1,0 +1,57 @@
+! UPES-ECS keepalived (VRRP) -- ELECTION + HEALTH only, *** NO Virtual IP ***.
+! Rendered by enable-mdns-failover.sh (@PLACEHOLDERS@ are substituted per node).
+!
+! This is the mDNS name-failover variant. keepalived still runs VRRP to elect ONE
+! MASTER and to health-check Asterisk (chk_asterisk), but it does NOT own a floating
+! VIP. Instead, its notify hook publishes/withdraws the mDNS name upes-ecs.local:
+! the MASTER publishes the name -> its OWN IP (via Avahi/upes-mdns.service); BACKUP
+! and FAULT withdraw it. Phones set their SIP server to upes-ecs.local once and
+! re-resolve on their next (short) REGISTER, so they follow the active node.
+!
+! Because keepalived elects exactly one MASTER, exactly one node ever publishes the
+! name -> no split-brain. There is deliberately no virtual_ipaddress block here.
+
+global_defs {
+    router_id UPES_ECS
+    enable_script_security
+    script_user root
+}
+
+! Health of the local Asterisk (SAME script as the VIP kit). Runs every 2s; 3 fails
+! demote us by 'weight'. A big negative weight drops MASTER below the BACKUP so the
+! election flips (and the name moves) even though keepalived itself is still up.
+vrrp_script chk_asterisk {
+    script "/opt/upes-ecs/ha/chk-asterisk.sh"
+    interval 2
+    timeout 3
+    fall 3          ! 3 failed checks -> considered DOWN
+    rise 2          ! 2 good checks   -> considered UP again
+    weight -60      ! subtract 60 from priority while Asterisk is down
+}
+
+vrrp_instance UPES_MDNS {
+    state @STATE@                 ! MASTER on primary, BACKUP on secondary
+    interface @IFACE@             ! voice-VLAN NIC (e.g. eth0)
+    virtual_router_id @VRID@      ! MUST match on both nodes; unique on the L2 segment
+    priority @PRIORITY@           ! higher wins; primary 150, secondary 100
+    advert_int 1                  ! VRRP advertisement every 1s (fast failure detect)
+    nopreempt                     ! once BACKUP has taken over, don't flap back
+                                  ! automatically when the primary returns (manual/observed
+                                  ! failback avoids a second re-registration storm). Remove
+                                  ! this line if you WANT the primary to auto-reclaim.
+
+    authentication {
+        auth_type PASS
+        auth_pass @VRRP_PASS@     ! shared secret; identical on both nodes
+    }
+
+    ! *** NO virtual_ipaddress {} block *** -- this variant moves an mDNS NAME, not an IP.
+
+    track_script {
+        chk_asterisk
+    }
+
+    ! keepalived's generic notify runs this on EVERY transition, passing the new state
+    ! as $3 (MASTER|BACKUP|FAULT). The hook starts/stops upes-mdns.service accordingly.
+    notify "/opt/upes-ecs/upes-mdns-failover.sh"
+}

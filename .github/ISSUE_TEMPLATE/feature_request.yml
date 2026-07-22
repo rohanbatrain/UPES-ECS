@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest an idea or enhancement
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the operational or user need.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - Console / TV wallboards
+        - Asterisk dialplan / PJSIP
+        - Installer / packaging
+        - API
+        - Provisioning / i18n
+        - Docs
+        - Other
+    validations:
+      required: true

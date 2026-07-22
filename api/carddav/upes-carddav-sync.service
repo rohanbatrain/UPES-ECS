@@ -1,0 +1,9 @@
+[Unit]
+Description=UPES-ECS CardDAV directory sync (regenerate vCards from directory.json)
+After=upes-carddav.service
+
+[Service]
+Type=oneshot
+# UPES_HOST pins the SIP hostname baked into every contact (sip:<ext>@<host>).
+Environment=UPES_HOST=upes-ecs.local
+ExecStart=/usr/bin/python3 /opt/upes-ecs/carddav/gen_vcards.py

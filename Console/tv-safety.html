@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>UPES-ECS · Emergency</title>
+  <link rel="stylesheet" href="tv.css">
+</head>
+<body data-screen="safety" class="safety">
+  <div class="screen">
+
+    <div class="topbar">
+      <div class="brand"><b>UPES-ECS</b><span>Campus Emergency</span></div>
+      <div class="spacer"></div>
+      <div class="region" title="Deployed language">
+        <span class="glb" aria-hidden="true">&#127760;</span>
+        <span class="lab">EN</span>
+        <span class="fb" hidden>audio: EN</span>
+      </div>
+      <div class="conn"><span class="dot"></span><span class="lab">…</span></div>
+      <div class="clock"><div class="t">--:--</div><div class="d">—</div></div>
+    </div>
+
+    <!-- normal reassurance hero -->
+    <div class="hero">
+      <div class="dial">
+        <div class="eyebrow">In an emergency</div>
+        <div class="num">111</div>
+        <div class="cap">Dial <b>111</b> — anytime, from any campus phone</div>
+      </div>
+      <div class="aside">
+        <div class="statuscard">
+          <div class="lead"><span class="led ok"></span><span class="txt">Emergency line active</span></div>
+          <div class="note">Dial 111 from any campus phone — 24/7.</div>
+          <div class="readycount"><b>—</b><span>responders ready now</span></div>
+        </div>
+        <div class="howto">
+          <div class="item">
+            <div class="k e">111</div>
+            <div class="tx"><b>Emergency</b><span>Fire · medical · security — then press 1 for live first-aid coaching</span></div>
+          </div>
+          <div class="item">
+            <div class="k">102</div>
+            <div class="tx"><b>Panic coach</b><span>Automatic offline guidance if every responder is busy</span></div>
+          </div>
+          <div class="item">
+            <div class="k">199</div>
+            <div class="tx"><b>Drill line</b><span>Practice only — never a real dispatch</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- evacuation / roll-call takeover (auto-shown while a roll-call has unaccounted people) -->
+    <div class="evac">
+      <div class="banner">
+        <div class="big">EVACUATION IN PROGRESS</div>
+        <div class="sub">Proceed calmly to your nearest assembly point</div>
+      </div>
+      <div class="counts">
+        <div class="cbox"><div class="n ok">0</div><div class="l">Marked safe</div><div class="names" id="ev-safe"></div></div>
+        <div class="cbox"><div class="n info">0</div><div class="l">Responded</div></div>
+        <div class="cbox"><div class="n crit">0</div><div class="l">Unaccounted</div><div class="names" id="ev-unacc"></div></div>
+      </div>
+      <div class="instruct">Answer your phone and <b>press 1</b> to mark yourself safe.</div>
+    </div>
+
+  </div>
+  <script src="tv.js"></script>
+  <script src="ui-i18n.js"></script>
+</body>
+</html>

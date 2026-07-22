@@ -1,0 +1,13 @@
+[Unit]
+Description=Run UPES-ECS HA config sync periodically (primary -> secondary)
+
+[Timer]
+# First run shortly after boot, then every 2 minutes so an Add-UpesUser on the
+# primary reaches the standby quickly. On-demand sync: `systemctl start upes-ha-sync`.
+OnBootSec=90s
+OnUnitActiveSec=2min
+AccuracySec=15s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

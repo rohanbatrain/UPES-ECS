@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# mock defaults: no-op reader/writer for macOS user defaults.
+echo "[mock defaults] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+exit 0

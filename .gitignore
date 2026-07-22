@@ -1,0 +1,79 @@
+# =============================================================================
+# UPES-ECS .gitignore
+# Rule of thumb: never commit secrets, real rosters/PII, captured emergency
+# audio, live runtime state, or build artifacts. Ship *.example templates
+# instead so a fresh clone knows the schema.
+# =============================================================================
+
+# --- Secrets / credential stores -------------------------------------------
+secrets/
+*.secret
+*.secrets
+*.pem
+*.key
+*_key
+**/id_rsa*
+.env
+.env.*
+!.env.example
+
+# --- Real personal data (PII) — keep local, ship *.example instead ----------
+# Rosters, user provisioning, and family links contain real names / SAP IDs.
+provisioning/pilot-users.csv
+provisioning/linphone/users.csv
+provisioning/user-languages.csv
+provisioning/family/families.csv
+*.filled.csv
+provisioning/*.filled.csv
+# Console roster + live runtime state
+Console/directory.json
+Console/status.json
+# Asterisk account file — contains REAL SIP secrets (its own header forbids
+# committing it). Managed via Add-UpesUser.ps1; ship pjsip_accounts.example.conf.
+deploy/asterisk/pjsip_accounts.conf
+# Local working notes (rosters, demo coordination, credentials references)
+Notes/
+
+# --- Captured emergency data (must stay on the server, per retention policy)-
+*.wav
+recordings/
+voicemail/
+Console/recordings/
+Console/logs/
+# Generated Piper TTS voice prompts are NOT committed (keeps clones lightweight,
+# no Git LFS). Regenerate them at setup with scripts/gen-*-prompts.* (see
+# deploy/asterisk/sounds/README.md). The sounds/ folder keeps only its README.
+
+# --- Removed feature: Flutter mobile app (archived in tag mobile-app-archive)
+app/
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# --- Build / packaging artifacts (large; rebuild on demand) -----------------
+dist/
+build/
+*.exe
+*.qcow2
+*.iso
+*.apk
+extensions_custom.conf.bak-*
+
+# --- MkDocs ----------------------------------------------------------------
+site/
+
+# --- Runtime / health output -----------------------------------------------
+health.txt
+*.log
+
+# --- OS / editor noise ------------------------------------------------------
+.DS_Store
+Thumbs.db
+/NUL
+.idea/
+*.swp

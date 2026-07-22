@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# mock brew: prints a Homebrew prefix, no-ops installs. NOT real Homebrew.
+echo "[mock brew] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+case "${1:-}" in
+  --prefix) echo "${MOCK_BREW_PREFIX:-/opt/homebrew}" ;;
+  install)  echo "[mock brew] would 'brew install' ${*:2} (no-op)" ;;
+  shellenv) echo "export PATH=\"${MOCK_BREW_PREFIX:-/opt/homebrew}/bin:\$PATH\"" ;;
+  *) : ;;
+esac
+exit 0
