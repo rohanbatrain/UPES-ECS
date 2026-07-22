@@ -83,6 +83,9 @@ extra:
 
 nav:
   - Home: index.md
+  - Showcase:
+      - Built on HPE Juniper Networking: showcase/hpe-networking.md
+      - Presentation & demo day: showcase/presentation.md
   - Getting started:
       - getting-started/index.md
       - Day-1 quickstart: getting-started/quickstart.md

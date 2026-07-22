@@ -4,9 +4,10 @@
 
 **One number. Every emergency. No internet required.**
 
-[![lint](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/lint.yml/badge.svg)](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/lint.yml)
-[![docs](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/docs.yml/badge.svg)](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/docs.yml)
+[![Release](https://img.shields.io/github/v/release/rohanbatrain/UPES-ECS?color=01A982)](https://github.com/rohanbatrain/UPES-ECS/releases/latest)
 [![Docs site](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://rohanbatrain.github.io/UPES-ECS/docs/)
+[![Languages](https://img.shields.io/badge/languages-44-01A982)](https://rohanbatrain.github.io/UPES-ECS/)
+[![Last commit](https://img.shields.io/github/last-commit/rohanbatrain/UPES-ECS)](https://github.com/rohanbatrain/UPES-ECS/commits/main)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 </div>
@@ -17,6 +18,11 @@ cloud**, so it keeps working when normal networks are down. Deploy it as a fixed
 campus install **or** a self-powered disaster-response van with corner repeaters.
 
 > **In an emergency, dial `111`.** That's the only thing students need to know.
+
+**Powered by HPE Juniper Networking** — `SRX300/320` · `EX2300-C-12P` · `Mist AP32`. On this
+campus, the network *is* the `111` path. See **[Built on HPE Juniper Networking](https://rohanbatrain.github.io/UPES-ECS/docs/showcase/hpe-networking/)**,
+the **[presentation & demo-day script](https://rohanbatrain.github.io/UPES-ECS/docs/showcase/presentation/)**,
+and the **[landing page](https://rohanbatrain.github.io/UPES-ECS/)** (44 languages).
 
 ---
 

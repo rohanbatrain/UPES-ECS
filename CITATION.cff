@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: >-
+  UPES-ECS — LAN-first campus emergency communication system
+message: If you use or reference this project, please cite it.
+type: software
+authors:
+  - given-names: Rohan
+    family-names: Batra
+repository-code: "https://github.com/rohanbatrain/UPES-ECS"
+url: "https://rohanbatrain.github.io/UPES-ECS/"
+abstract: >-
+  A LAN-first campus emergency communication system on Asterisk/PJSIP: a one-number
+  (111) hotline with ERT dispatch and escalation, an offline panic-coach, per-caller
+  multilingual IVR in 44 languages, a live operations console, and always-on LED-TV
+  wallboards. Runs fully air-gapped, powered by HPE Juniper networking infrastructure.
+keywords:
+  - emergency-communications
+  - asterisk
+  - voip
+  - campus-safety
+  - offline-first
+  - hpe
+  - juniper
+license: MIT
+version: 1.0.0
+date-released: "2026-07-22"
