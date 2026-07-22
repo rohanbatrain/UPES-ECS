@@ -1,0 +1,16 @@
+{
+    "500000001":  {
+                      "name":  "Student Example One",
+                      "kind":  "student",
+                      "lang":  "en"
+                  },
+    "500000002":  {
+                      "name":  "Student Example Two",
+                      "kind":  "student"
+                  },
+    "40000001":  {
+                      "name":  "Staff Member One",
+                      "kind":  "staff",
+                      "lang":  "te"
+                  }
+}

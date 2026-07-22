@@ -1,0 +1,51 @@
+name: Bug report
+description: Something isn't working as expected
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. **Do not include real personal data, phone
+        numbers, SAP IDs, or SIP secrets** in this report.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Exact commands, logs, and the extension/host involved (redact PII).
+      placeholder: "Calling 111 from ext 4110 drops after ~32s..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: "v1.0.0 or commit sha"
+    validations:
+      required: false
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - Console / TV wallboards
+        - Asterisk dialplan / PJSIP
+        - Installer / packaging
+        - API
+        - Provisioning / i18n
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Host OS, deployment path (laptop QEMU VM / Jetson), network.
+    validations:
+      required: false

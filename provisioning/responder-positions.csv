@@ -1,0 +1,23 @@
+extension,name,secret,tech,context,outbound_cid,location,max_contacts
+4101,ERT-Lead,__SET_ON_IMPORT__,pjsip,ctx_ert_lead,"ERT Lead",UPES-ERT-ROOM,1
+4110,ERT-Desk-1,__SET_ON_IMPORT__,pjsip,ctx_ert,"ERT Desk 1",UPES-ERT-ROOM,1
+4111,ERT-Desk-2,__SET_ON_IMPORT__,pjsip,ctx_ert,"ERT Desk 2",UPES-ERT-ROOM,1
+4112,ERT-Desk-3,__SET_ON_IMPORT__,pjsip,ctx_ert,"ERT Desk 3",UPES-ERT-ROOM,1
+4113,ERT-Desk-Reserve-1,__SET_ON_IMPORT__,pjsip,ctx_ert,"ERT Desk Reserve 1",UPES-ERT-ROOM,1
+4120,ERT-Control,__SET_ON_IMPORT__,pjsip,ctx_control_room,"ERT Control",UPES-ERT-ROOM,1
+4200,Medical-Dispatch,__SET_ON_IMPORT__,pjsip,ctx_responder,"Medical Dispatch",Medical Room,1
+4201,Medical-1,__SET_ON_IMPORT__,pjsip,ctx_responder,"Medical Responder 1",Medical Room,1
+4202,Medical-2,__SET_ON_IMPORT__,pjsip,ctx_responder,"Medical Responder 2",Medical Room,1
+4300,Security-Dispatch,__SET_ON_IMPORT__,pjsip,ctx_responder,"Security Dispatch",Security Control Room,1
+4301,Security-Lead,__SET_ON_IMPORT__,pjsip,ctx_responder_lead,"Security Lead",Security Control Room,1
+4302,Security-1,__SET_ON_IMPORT__,pjsip,ctx_responder,"Security Responder 1",Security Control Room,1
+4303,Security-2,__SET_ON_IMPORT__,pjsip,ctx_responder,"Security Responder 2",Security Control Room,1
+4400,Warden-Dispatch,__SET_ON_IMPORT__,pjsip,ctx_responder,"Warden Dispatch",Hostel Duty Desk,1
+4401,Warden-1,__SET_ON_IMPORT__,pjsip,ctx_responder,"Warden Responder 1",Hostel Duty Desk,1
+4402,Warden-2,__SET_ON_IMPORT__,pjsip,ctx_responder,"Warden Responder 2",Hostel Duty Desk,1
+4500,Ops-Dispatch,__SET_ON_IMPORT__,pjsip,ctx_responder,"Operations Dispatch",Operations Desk,1
+4501,Ops-1,__SET_ON_IMPORT__,pjsip,ctx_responder,"Operations Responder 1",Operations Desk,1
+4502,Ops-2,__SET_ON_IMPORT__,pjsip,ctx_responder,"Operations Responder 2",Operations Desk,1
+4600,IT-Dispatch,__SET_ON_IMPORT__,pjsip,ctx_responder,"IT / Network Dispatch",IT Room,1
+4601,IT-1,__SET_ON_IMPORT__,pjsip,ctx_responder,"IT / Network Responder 1",IT Room,1
+4602,IT-2,__SET_ON_IMPORT__,pjsip,ctx_responder,"IT / Network Responder 2",IT Room,1

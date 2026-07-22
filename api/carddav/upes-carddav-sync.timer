@@ -1,0 +1,14 @@
+[Unit]
+Description=Regenerate the UPES-ECS CardDAV directory from directory.json every 2 min
+
+[Timer]
+# Fire shortly after boot, then every 2 minutes -- so adding a user (Add-UpesUser.ps1,
+# which refreshes directory.json) shows up on every phone within a couple of minutes
+# with no manual CardDAV step. Cheap: a no-op run just re-reads one JSON file.
+OnBootSec=45s
+OnUnitActiveSec=2min
+AccuracySec=15s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,24 @@
+# Dockerfile.linux-test -- clean base for the UPES-ECS Linux installer airtight test.
+#
+# Deliberately installs NOTHING but curl+ca-certificates+iproute2 (needed only to
+# fetch/apt and read IPs) -- Asterisk, sox, python-venv etc. must be installed by
+# the installer itself, on a genuinely clean box. The repo is bind-mounted
+# read-only at /repo at run time; the driver copies it to a writable /work.
+#
+# Build for either base:
+#   docker build -f Dockerfile.linux-test --build-arg BASE=ubuntu:22.04 -t upes-linux-test:ubuntu .
+#   docker build -f Dockerfile.linux-test --build-arg BASE=debian:12     -t upes-linux-test:debian .
+ARG BASE=ubuntu:22.04
+FROM ${BASE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+# Minimal bootstrap ONLY: the installer must pull Asterisk/python-venv/sox itself.
+RUN apt-get update -y \
+ && apt-get install -y --no-install-recommends ca-certificates curl iproute2 \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY linux-driver.sh /usr/local/bin/linux-driver.sh
+RUN chmod +x /usr/local/bin/linux-driver.sh
+
+# Repo is mounted read-only at /repo; transcript is written to /out.
+ENTRYPOINT ["/usr/local/bin/linux-driver.sh"]

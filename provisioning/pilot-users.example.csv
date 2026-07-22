@@ -1,0 +1,3 @@
+extension,name,secret,tech,context,outbound_cid,voicemail,max_contacts
+40000001,Staff Member One,__SET_ON_IMPORT__,pjsip,ctx_staff,"Staff Member One - 40000001",no,3
+40000002,Staff Member Two,__SET_ON_IMPORT__,pjsip,ctx_staff,"Staff Member Two - 40000002",no,3

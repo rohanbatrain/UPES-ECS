@@ -1,0 +1,8 @@
+# UPES-ECS family links -- one row per parent->child relationship.
+# parent_sap : the SAP ID of a PARENT/guardian account (create it first with Add-UpesUser.ps1)
+# child_sap  : the SAP ID of their student
+# A parent with two kids on campus gets two rows. Managed by Add-UpesFamily.ps1
+# (do not hand-edit the live copy at /opt/upes-ecs/family/families.csv -- edit here + push).
+parent_sap,child_sap
+590000001,500000001
+590000001,500000002

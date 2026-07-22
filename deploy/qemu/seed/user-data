@@ -1,0 +1,22 @@
+#cloud-config
+hostname: upes-ecs-pbx-01
+ssh_pwauth: true
+password: upesecs
+chpasswd:
+  expire: false
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICvK4y8kNDQVkseXRAJ/U38z8hBpowBVCQF1hrCSlchy rohan@Sitar-Asia-India-1W
+package_update: true
+package_upgrade: false
+packages:
+  - asterisk
+  - asterisk-core-sounds-en-gsm
+  - baresip
+  - sox
+runcmd:
+  - mkdir -p /mnt/upesdata
+  - mount LABEL=UPESDATA /mnt/upesdata || mount /dev/sr1 /mnt/upesdata || mount /dev/sr0 /mnt/upesdata
+  - cp /mnt/upesdata/setup-in-vm.sh /tmp/s.sh
+  - sed -i 's/\r$//' /tmp/s.sh
+  - bash /tmp/s.sh > /var/log/upes-setup.log 2>&1
+  - touch /var/lib/cloud/upes-setup-done

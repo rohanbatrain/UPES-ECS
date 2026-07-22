@@ -1,0 +1,6 @@
+{
+  "_comment": "Campus geofence: on-campus vs off-campus for a child's location. Set to UPES Bidholi (Energy Acres), Dehradun-248007. Widen radiusM if you also cover the Kandoli campus.",
+  "lat": 30.4159443,
+  "lon": 77.9668329,
+  "radiusM": 800
+}

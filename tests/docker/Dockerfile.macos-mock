@@ -1,0 +1,24 @@
+# Dockerfile.macos-mock -- Linux base + mock-Darwin stubs for SHELL-LOGIC
+# validation of deploy/macos/install-macos.sh.
+#
+# THIS IS NOT A macOS RUNTIME TEST. Real macOS cannot boot in a Linux container.
+# The stubs (brew/asterisk/launchctl/ipconfig/sw_vers/defaults/uname) let the
+# installer's control flow run so we can catch unbound vars, bad path joins,
+# brew-prefix (arm64 vs Intel) branching, and validate the launchd plists it
+# generates. The repo is bind-mounted read-only at /repo; transcript -> /out.
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+# python3(+venv) so the installer's venv step runs; the rest are normal coreutils.
+RUN apt-get update -y \
+ && apt-get install -y --no-install-recommends \
+      bash ca-certificates python3 python3-venv python3-pip shellcheck \
+ && rm -rf /var/lib/apt/lists/*
+
+# Mock-Darwin stubs land early on PATH via /mockbin (the driver prepends it).
+COPY macos-stubs/ /mockbin/
+RUN chmod +x /mockbin/*
+COPY macos-mock-driver.sh /usr/local/bin/macos-mock-driver.sh
+RUN chmod +x /usr/local/bin/macos-mock-driver.sh
+
+ENTRYPOINT ["/usr/local/bin/macos-mock-driver.sh"]

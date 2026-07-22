@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>UPES-ECS · Operations</title>
+  <link rel="stylesheet" href="tv.css">
+  <style>
+    .metaline { color: var(--text-mut); font-weight: 600; font-size: clamp(11px,1.3vmin,17px); display: flex; gap: 1.1em; align-items: baseline; }
+    .metaline b { color: var(--text); font-weight: 700; }
+    .ops .grid > .panel { min-height: 0; }
+    .anbody { display: flex; flex-direction: column; gap: clamp(6px,.9vmin,14px); height: 100%; }
+    .anbody h2 { font-size: clamp(11px,1.25vmin,16px); text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-mut); font-weight: 700; }
+  </style>
+</head>
+<body data-screen="ops" class="ops">
+  <div class="screen">
+
+    <div class="topbar">
+      <div class="brand"><b>UPES-ECS</b><span>Operations</span></div>
+      <span class="pill s-idle" id="statepill"><span class="dot"></span><span class="txt">—</span></span>
+      <span class="conn"><span class="dot"></span><span class="lab">…</span></span>
+      <div class="spacer"></div>
+      <div class="metaline">
+        <b id="host">upes-ecs-pbx-01</b>
+        <span id="ver">—</span>
+        <span id="uptime"></span>
+        <span>SIP <b id="srvip">—</b></span>
+      </div>
+      <div class="region" title="Deployed language">
+        <span class="glb" aria-hidden="true">&#127760;</span>
+        <span class="lab">EN</span>
+        <span class="fb" hidden>audio: EN</span>
+      </div>
+      <div class="clock"><div class="t">--:--</div><div class="d">—</div></div>
+    </div>
+
+    <div class="grid">
+      <!-- row 1 : KPI strip -->
+      <div id="kpis" class="kpis kpirow"></div>
+
+      <!-- row 2 -->
+      <section class="panel col-5">
+        <h2>ERT queue — answers 111 <span class="count"></span></h2>
+        <div class="body" id="queue"></div>
+      </section>
+      <section class="panel col-4">
+        <h2>Live calls <span class="count"></span></h2>
+        <div class="body" id="calls"></div>
+      </section>
+      <section class="panel col-3">
+        <h2>Follow-ups due <span class="count"></span></h2>
+        <div class="body" id="followups"></div>
+      </section>
+
+      <!-- row 3 -->
+      <section class="panel col-5">
+        <h2>Recent calls <span class="count"></span></h2>
+        <div class="body" id="cdr"></div>
+      </section>
+      <section class="panel col-4">
+        <h2>Analytics — all-time</h2>
+        <div class="body">
+          <div class="anbody">
+            <div class="mini">
+              <div class="m"><div class="mv" id="mv-emans">—</div><div class="ml">111 answered</div></div>
+              <div class="m"><div class="mv" id="mv-drill">—</div><div class="ml">Drill pass rate</div></div>
+              <div class="m"><div class="mv" id="mv-maxw">—</div><div class="ml">Max answer wait</div></div>
+              <div class="m"><div class="mv" id="mv-total">0</div><div class="ml">Total calls</div></div>
+            </div>
+            <h2>14-day call volume</h2>
+            <div class="cols" id="cols"></div>
+            <h2>Calls by type</h2>
+            <div class="hbars" id="hbars"></div>
+          </div>
+        </div>
+      </section>
+      <section class="panel col-3">
+        <h2>Shift log <span class="count"></span></h2>
+        <div class="body" id="shift"></div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <span class="k"><span class="led ok"></span> ready / answered</span>
+      <span class="k"><span class="led info"></span> in use</span>
+      <span class="k"><span class="led warn"></span> busy / paused</span>
+      <span class="k"><span class="led crit"></span> emergency / missed</span>
+      <span class="k"><span class="led idle"></span> offline</span>
+      <span class="spacer"></span>
+      <span>Auto-refresh · realtime from the PBX</span>
+    </div>
+
+  </div>
+
+  <div class="veil">
+    <div class="box">
+      <div class="big">PBX UNREACHABLE</div>
+      <div class="sm">Reconnecting to the emergency system…</div>
+    </div>
+  </div>
+
+  <script src="tv.js"></script>
+  <script src="ui-i18n.js"></script>
+</body>
+</html>

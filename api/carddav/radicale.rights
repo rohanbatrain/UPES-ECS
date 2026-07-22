@@ -1,0 +1,17 @@
+# UPES-ECS CardDAV rights -- installed to /etc/radicale/rights.
+# The campus directory is a SHARED, READ-ONLY book: any authenticated phone may read
+# it, nobody writes over CardDAV (the book is regenerated on-disk from directory.json
+# by the upes-carddav-sync timer, which bypasses HTTP). This keeps a stray phone from
+# ever mutating the emergency directory.
+
+# Let an authenticated client read the principal collection (needed for discovery).
+[principal-read]
+user: .+
+collection: {user}
+permissions: R
+
+# Any authenticated client may READ the shared directory address book.
+[directory-read]
+user: .+
+collection: upes(/directory)?
+permissions: rR

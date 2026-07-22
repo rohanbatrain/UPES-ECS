@@ -1,0 +1,11 @@
+# Default owner for everything in the repo.
+*                       @rohanbatrain
+
+# Domain areas (adjust as the team grows).
+/deploy/asterisk/       @rohanbatrain
+/config/                @rohanbatrain
+/api/                   @rohanbatrain
+/Console/               @rohanbatrain
+/packaging/             @rohanbatrain
+/docs/                  @rohanbatrain
+*.ps1                   @rohanbatrain

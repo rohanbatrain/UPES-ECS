@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# mock asterisk CLI: answers the couple of queries the installer/foreground make.
+# NOT a real PBX -- proves the script's control flow only.
+echo "[mock asterisk] $*" >> "${MOCK_LOG:-/tmp/mock-calls.log}"
+case "$*" in
+  *"core show uptime"*)  echo "System uptime: 00:00:05 (mock asterisk)";;
+  *"core show version"*) echo "Asterisk 20.0.0-mock built on mock-darwin";;
+  *"core stop"*)         : ;;
+  *) : ;;
+esac
+exit 0

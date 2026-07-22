@@ -1,0 +1,20 @@
+[Unit]
+Description=UPES-ECS mDNS name publisher (publishes upes-ecs.local -> this node's IP)
+Documentation=file:///opt/upes-ecs/README-MDNS.md
+# Needs Avahi up to publish; needs the network for the interface IP to exist.
+After=network-online.target avahi-daemon.service
+Wants=network-online.target
+Requires=avahi-daemon.service
+
+[Service]
+Type=simple
+# HOST/IFACE for the publisher (written by enable-mdns-failover.sh).
+EnvironmentFile=/etc/default/upes-mdns
+ExecStart=/opt/upes-ecs/upes-mdns-publish.sh
+Restart=always
+RestartSec=2
+
+# NOTE: intentionally NO [Install]/WantedBy section. This service is NOT enabled at
+# boot -- keepalived's notify hook (upes-mdns-failover.sh) starts it on the node that
+# wins the election (MASTER) and stops it on BACKUP/FAULT. That is what guarantees
+# exactly one publisher of the name at a time.

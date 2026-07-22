@@ -1,0 +1,56 @@
+! UPES-ECS keepalived (VRRP) -- floating Virtual IP for active/standby HA.
+! Rendered by install-jetson.sh (@PLACEHOLDERS@ are substituted per node).
+!
+! The MASTER holds @VIP@; phones REGISTER to @VIP@. A track_script health-checks
+! Asterisk; if it fails, this node's priority drops and the BACKUP takes over the
+! VIP (sending gratuitous ARP so the switches relearn the MAC). Asterisk advertises
+! @VIP@ as external_media_address, so media follows the VIP after failover.
+
+global_defs {
+    router_id UPES_ECS
+    ! Do not treat a transient script failure as fatal to keepalived itself.
+    enable_script_security
+    script_user root
+}
+
+! Health of the local Asterisk. Runs every 2s; 3 consecutive failures demote us
+! by 'weight'. A big negative weight drops MASTER below the BACKUP's priority so
+! the VIP moves even though keepalived itself is still up.
+vrrp_script chk_asterisk {
+    script "/opt/upes-ecs/ha/chk-asterisk.sh"
+    interval 2
+    timeout 3
+    fall 3          ! 3 failed checks -> considered DOWN
+    rise 2          ! 2 good checks   -> considered UP again
+    weight -60      ! subtract 60 from priority while Asterisk is down
+}
+
+vrrp_instance UPES_VIP {
+    state @STATE@                 ! MASTER on primary, BACKUP on secondary
+    interface @IFACE@             ! voice-VLAN NIC (e.g. eth0)
+    virtual_router_id @VRID@      ! MUST match on both nodes; unique on the L2 segment
+    priority @PRIORITY@           ! higher wins; primary 150, secondary 100
+    advert_int 1                  ! VRRP advertisement every 1s (fast failure detect)
+    nopreempt                     ! once BACKUP has taken over, don't flap back
+                                  ! automatically when primary returns (manual/observed
+                                  ! failback avoids a second call-drop). Remove this line
+                                  ! if you WANT the primary to auto-reclaim on recovery.
+
+    authentication {
+        auth_type PASS
+        auth_pass @VRRP_PASS@     ! shared secret; identical on both nodes
+    }
+
+    virtual_ipaddress {
+        @VIP@ dev @IFACE@         ! the floating VIP phones register to
+    }
+
+    track_script {
+        chk_asterisk
+    }
+
+    ! keepalived runs these on state change (see upes-failover-notify.sh):
+    notify_master "/opt/upes-ecs/ha/upes-failover-notify.sh MASTER"
+    notify_backup "/opt/upes-ecs/ha/upes-failover-notify.sh BACKUP"
+    notify_fault  "/opt/upes-ecs/ha/upes-failover-notify.sh FAULT"
+}

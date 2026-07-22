@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://rohanbatrain.github.io/UPES-ECS/docs/
+    about: Read the runbooks and guides first — many operational questions are answered there.
+  - name: Security vulnerability
+    url: https://github.com/rohanbatrain/UPES-ECS/security/advisories/new
+    about: Report security issues privately — never in a public issue.

@@ -1,0 +1,29 @@
+# UPES-ECS local Asterisk (current node). Self-contained: scripts + custom dialplan
+# baked in; state/recording dirs prepared; full emergency flow runs end-to-end.
+#
+#   docker compose up -d --build
+#   docker exec -it upes-ecs-asterisk asterisk -rx "dialplan show ctx_emergency_111"
+#
+# For REAL SIP phone testing, run on the Linux server/van and uncomment `ports`
+# (or use host networking on Linux). Windows Docker NAT is not suitable for RTP audio.
+services:
+  asterisk:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: upes-ecs-asterisk
+    volumes:
+      - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf:ro
+      - ./asterisk/pjsip.conf:/etc/asterisk/pjsip.conf:ro
+      - ./asterisk/queues.conf:/etc/asterisk/queues.conf:ro
+      - ./asterisk/voicemail.conf:/etc/asterisk/voicemail.conf:ro
+      - ../config/extensions_custom.conf:/etc/asterisk/extensions_custom.conf:ro
+      # extensions.conf #includes these — mount them all or the feature contexts
+      # (ctx_callout, departments, intercom, SOS, roll-call…) never load.
+      - ../config/extensions_features.conf:/etc/asterisk/extensions_features.conf:ro
+      - ../config/extensions_features_wiring.conf:/etc/asterisk/extensions_features_wiring.conf:ro
+      - ../config/extensions_aihelpline.conf:/etc/asterisk/extensions_aihelpline.conf:ro
+    # ports:                       # Linux host only — for real SIP/RTP testing
+    #   - "5060:5060/udp"
+    #   - "10000-10100:10000-10100/udp"
+    restart: unless-stopped

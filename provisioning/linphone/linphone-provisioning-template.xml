@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================================
+  UPES-ECS  ·  Linphone remote-provisioning template
+  ============================================================================
+  This is a Linphone *remote-provisioning* config file. It is the XML wrapper
+  around Linphone's native rc-file format: each rc `[section]` becomes a
+  <section name="..."> and each `key=value` line becomes an
+  <entry name="key">value</entry>. When Linphone fetches this file (Settings ->
+  Advanced -> Remote provisioning, or a scanned QR of the URL), it merges these
+  entries straight into its own config and restarts — so every setting below is
+  applied identically on every phone, with nothing typed by hand.
+
+  WHY THIS FILE EXISTS: every registration/audio failure in field testing came
+  from a human picking a setting by hand (wrong Transport=TLS, +91 prefix on
+  SAP IDs, SRTP vs plain-RTP mismatch, a non-G.711 codec). Baking the correct
+  values in here eliminates that entire class of error. See
+  ../../Journal/Field-Test-Issues-and-Mitigations.md (Issues 1, 2, 3, 5).
+
+  PLACEHOLDERS — substitute at provisioning time (see make-profiles.md):
+    __DOMAIN__  = the PBX address (NO :port here; transport is pinned below).
+                  DEFAULT = upes-ecs.local -- the STABLE mDNS hostname published by the
+                  laptop (deploy\qemu\Publish-UpesHostname.ps1). Provision this ONCE and the
+                  phone follows the laptop across every network switch with nothing typed by
+                  hand -- it re-resolves upes-ecs.local -> the current LAN IP on each REGISTER.
+                  This is the fix for "re-point every handset when the IP changes."
+                  Use a raw IP (e.g. 192.168.1.16) ONLY for fixed SIP devices that cannot
+                  resolve mDNS/.local (some gate phones/speakers). Linphone resolves .local.
+    __SAPID__   = the user's SAP ID / extension, e.g. 500120597
+    __SECRET__  = the user's one-time SIP secret. NEVER commit a real secret to
+                  git — the committed template keeps the literal __SECRET__ and
+                  the filled per-user copy is generated at provisioning time and
+                  kept out of git (see make-profiles.md / the *.filled pattern).
+
+  STANDARDIZED SETTINGS ENFORCED HERE (the "correct" UPES-ECS profile):
+    Transport ............ UDP           (server is UDP-only)
+    Media encryption ..... None          (server offers plain RTP, no SRTP)
+    Audio codecs ......... G.711 only    (PCMU / PCMA); all others disabled
+    Register expiry ...... 120 s
+    Dial/escape-plus ..... OFF           (no +91 / country-code prepend)
+  ============================================================================
+-->
+<config xmlns="http://www.linphone.org/xsds/lpconfig.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.linphone.org/xsds/lpconfig.xsd lpconfig.xsd">
+
+  <!-- ========================================================================
+       [sip] — global SIP + media policy
+       ======================================================================== -->
+  <section name="sip">
+    <!-- default_proxy: index of the proxy config used by default. We define one
+         proxy (proxy_0), so this is 0. -->
+    <entry name="default_proxy">0</entry>
+
+    <!-- media_encryption: none | srtp | zrtp | dtls.
+         MUST be "none" — the UPES-ECS PBX offers plain RTP only. Setting SRTP/ZRTP
+         here causes "Connected but no audio" (Field-Test Issue 5). -->
+    <entry name="media_encryption">none</entry>
+
+    <!-- media_encryption_mandatory: 0 = never require encryption (accept plain RTP).
+         Keep 0 so a mismatched offer can never kill the media stream. -->
+    <entry name="media_encryption_mandatory">0</entry>
+
+    <!-- Do not roam onto IPv6; the LAN is IPv4. -->
+    <entry name="use_ipv6">0</entry>
+
+    <!-- Only (re)register while the network is actually up. -->
+    <entry name="register_only_when_network_is_up">1</entry>
+
+    <!-- SIP keepalive (ms). ~30 s keeps the Wi-Fi/NAT path warm between REGISTERs. -->
+    <entry name="keepalive_period">30000</entry>
+  </section>
+
+  <!-- ========================================================================
+       [auth_info_0] — credentials for proxy_0
+       Linphone matches auth_info to a proxy by realm/username.
+       ======================================================================== -->
+  <section name="auth_info_0">
+    <!-- username: the SIP auth username = the SAP ID / extension. -->
+    <entry name="username">__SAPID__</entry>
+
+    <!-- userid: the authorization user id. For Asterisk PJSIP this equals the
+         username unless a distinct auth id is configured — keep them the same. -->
+    <entry name="userid">__SAPID__</entry>
+
+    <!-- passwd: the cleartext SIP secret. Use passwd OR ha1 (below), not both.
+         NEVER store a real secret in the committed template. -->
+    <entry name="passwd">__SECRET__</entry>
+
+    <!-- ha1 (alternative to passwd): the MD5 digest of username:realm:password.
+         If you provision hashed secrets instead of cleartext, delete <passwd>
+         above, uncomment this, and set the 32-hex-char digest.
+    <entry name="ha1">__SECRET__</entry>
+    -->
+
+    <!-- realm: the SIP authentication realm the server challenges with. Asterisk's
+         default realm is "asterisk"; if your PBX presents the domain as the realm,
+         set this to __DOMAIN__ instead. Leaving it matching the server avoids a
+         second 401 round-trip. -->
+    <entry name="realm">asterisk</entry>
+  </section>
+
+  <!-- ========================================================================
+       [proxy_0] — the registrar / proxy (the account itself)
+       ======================================================================== -->
+  <section name="proxy_0">
+    <!-- reg_proxy: the outbound proxy / registrar URI. transport=udp PINS UDP so
+         the phone can never default to TLS/TCP (Field-Test Issue 1). No port =
+         default 5060. -->
+    <entry name="reg_proxy">&lt;sip:__DOMAIN__;transport=udp&gt;</entry>
+
+    <!-- reg_route: route requests through the same proxy (loose-route). Keeps all
+         SIP going to the PBX on UDP. -->
+    <entry name="reg_route">&lt;sip:__DOMAIN__;transport=udp;lr&gt;</entry>
+
+    <!-- reg_identity: this account's AOR / "from" identity = sip:<SAPID>@<DOMAIN>. -->
+    <entry name="reg_identity">sip:__SAPID__@__DOMAIN__</entry>
+
+    <!-- reg_expires: registration lifetime in seconds. 120 s = fast drop detection
+         without REGISTER thrash (Field-Test Issue 6). -->
+    <entry name="reg_expires">120</entry>
+
+    <!-- reg_sendregister: 1 = actually REGISTER (enable the account). -->
+    <entry name="reg_sendregister">1</entry>
+
+    <!-- publish: 0 = do not PUBLISH presence (not used on this LAN system). -->
+    <entry name="publish">0</entry>
+
+    <!-- dial_escape_plus: 0 = DO NOT rewrite a leading + / add a country code.
+         This is the client half of the "+91 prepended to SAP IDs" fix
+         (Field-Test Issue 2). SAP IDs are identifiers, not phone numbers. -->
+    <entry name="dial_escape_plus">0</entry>
+
+    <!-- No international/country dial prefix: leave empty so nothing is prepended. -->
+    <entry name="dial_prefix"></entry>
+  </section>
+
+  <!-- ========================================================================
+       Audio codecs — pin G.711 only (PCMU + PCMA), disable everything else.
+       Linphone rc codec sections are [audio_codec_N] with mime/rate/channels/
+       enabled. The server allows ulaw/alaw only (disallow=all; allow=ulaw,alaw),
+       so offering anything else risks a no-common-codec call (Field-Test Issue 5).
+       mime PCMU == G.711 u-law (ulaw); mime PCMA == G.711 A-law (alaw).
+       ======================================================================== -->
+  <section name="audio_codec_0">
+    <entry name="mime">PCMU</entry>       <!-- G.711 u-law -->
+    <entry name="rate">8000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">1</entry>        <!-- ENABLED -->
+  </section>
+  <section name="audio_codec_1">
+    <entry name="mime">PCMA</entry>       <!-- G.711 A-law -->
+    <entry name="rate">8000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">1</entry>        <!-- ENABLED -->
+  </section>
+  <!-- Explicitly disable the common wideband/other codecs Linphone ships with,
+       so a device default can't re-introduce a non-G.711 offer. -->
+  <section name="audio_codec_2">
+    <entry name="mime">opus</entry>
+    <entry name="rate">48000</entry>
+    <entry name="channels">2</entry>
+    <entry name="enabled">0</entry>        <!-- disabled -->
+  </section>
+  <section name="audio_codec_3">
+    <entry name="mime">speex</entry>
+    <entry name="rate">16000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">0</entry>        <!-- disabled -->
+  </section>
+  <section name="audio_codec_4">
+    <entry name="mime">speex</entry>
+    <entry name="rate">8000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">0</entry>        <!-- disabled -->
+  </section>
+  <section name="audio_codec_5">
+    <entry name="mime">G722</entry>
+    <entry name="rate">8000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">0</entry>        <!-- disabled -->
+  </section>
+  <section name="audio_codec_6">
+    <entry name="mime">GSM</entry>
+    <entry name="rate">8000</entry>
+    <entry name="channels">1</entry>
+    <entry name="enabled">0</entry>        <!-- disabled -->
+  </section>
+
+  <!-- ========================================================================
+       [video] — disable video entirely (audio-only emergency system).
+       ======================================================================== -->
+  <section name="video">
+    <entry name="enabled">0</entry>
+    <entry name="capture">0</entry>
+    <entry name="display">0</entry>
+    <entry name="automatically_initiate">0</entry>
+    <entry name="automatically_accept">0</entry>
+  </section>
+
+  <!-- ========================================================================
+       [rtp] — let the OS pick the local RTP port; drop dead calls quickly.
+       (The PBX-side forwarded RTP range 10000-10019 is a server concern, not set
+       on the phone.)
+       ======================================================================== -->
+  <section name="rtp">
+    <entry name="audio_rtp_port">-1</entry>   <!-- -1 = auto/random local port -->
+    <entry name="nortp_timeout">30</entry>    <!-- hang up after 30 s of no media -->
+  </section>
+
+  <!-- ========================================================================
+       [friends_list_0] — shared campus directory over CardDAV (Radicale on the PBX).
+       Auto-populates the phone's address book with the ERT / responder / staff
+       positions so responders dial by NAME, not by memorised extension. Contacts
+       carry sip:<ext>@upes-ecs.local, so they survive IP changes exactly like the
+       account above. The server regenerates the book from directory.json (add a user
+       once via Add-UpesUser.ps1 and it appears on every phone). See api/carddav/README.md.
+
+       NOTE (version-sensitive): CardDAV friends-list rc keys differ across Linphone
+       releases. These are the common Linphone-Android keys; if the book does not sync,
+       remove this section and add the account by hand (Contacts -> CardDAV) using the
+       same URL — the manual path is documented in api/carddav/README.md.
+       __CARDDAV_USER__ / __CARDDAV_PASS__ are the read-only directory creds (not a SIP
+       secret); leave the defaults for the shared read-only account.
+       ======================================================================== -->
+  <section name="friends_list_0">
+    <entry name="display_name">UPES Campus Directory</entry>
+    <entry name="type">1</entry>                                          <!-- 1 = CardDAV -->
+    <entry name="uri">http://upes-ecs.local:5232/upes/directory/</entry>
+    <entry name="carddav_username">__CARDDAV_USER__</entry>
+    <entry name="carddav_password">__CARDDAV_PASS__</entry>
+    <entry name="carddav_realm">upes-ecs</entry>
+  </section>
+
+</config>

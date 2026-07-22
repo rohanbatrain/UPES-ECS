@@ -1,0 +1,45 @@
+# =============================================================================
+# UPES-ECS .gitattributes
+# Line-ending discipline for a mixed Windows + Linux repo, binary markers,
+# Git LFS for large generated assets, and linguist hints.
+# =============================================================================
+
+# Default: normalize to LF in the repo, auto-detect text.
+* text=auto eol=lf
+
+# --- Windows-native scripts must stay CRLF ---------------------------------
+*.ps1  text eol=crlf
+*.psm1 text eol=crlf
+*.psd1 text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# --- Unix scripts & service config must stay LF ----------------------------
+*.sh   text eol=lf
+*.py   text eol=lf
+*.conf text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# --- Binary (never diff) ---------------------------------------------------
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.bmp  binary
+*.pdf  binary
+*.qcow2 binary
+*.exe  binary
+*.apk  binary
+*.pyc  binary
+
+# Note: the ~1 GB of generated Piper TTS voice prompts (deploy/asterisk/sounds/**/*.wav)
+# are NOT committed — they are regenerated at setup (see scripts/gen-*-prompts.*).
+# The repo has no Git LFS dependency, so it clones lightweight.
+
+# --- Linguist: keep docs/vendored/generated out of language stats ----------
+docs/**   linguist-documentation
+*.min.js  linguist-generated
+i18n/translations/**  linguist-generated

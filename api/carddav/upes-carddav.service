@@ -1,0 +1,21 @@
+[Unit]
+Description=UPES-ECS CardDAV directory (Radicale on :5232 -- shared campus phonebook)
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=radicale
+Group=radicale
+ExecStart=/usr/bin/python3 -m radicale --config /etc/radicale/config
+Restart=always
+RestartSec=3
+# Hardening: the server only needs to read/serve its own storage tree.
+ReadWritePaths=/var/lib/radicale
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
