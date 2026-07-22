@@ -6,6 +6,7 @@
 
 **One number. Every emergency. No internet required.**
 
+[![CI](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/lint.yml/badge.svg)](https://github.com/rohanbatrain/UPES-ECS/actions/workflows/lint.yml)
 [![Release](https://img.shields.io/github/v/release/rohanbatrain/UPES-ECS?color=01A982)](https://github.com/rohanbatrain/UPES-ECS/releases/latest)
 [![Docs site](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://rohanbatrain.github.io/UPES-ECS/docs/)
 [![Languages](https://img.shields.io/badge/languages-44-01A982)](https://rohanbatrain.github.io/UPES-ECS/)
