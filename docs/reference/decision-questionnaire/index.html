@@ -1,0 +1,6781 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="UPES-ECS — a LAN-first campus emergency communication system: one-number hotline, ERT dispatch, multilingual IVR, and live wallboards.">
+      
+      
+        <meta name="author" content="Rohan Batra">
+      
+      
+        <link rel="canonical" href="https://rohanbatrain.github.io/UPES-ECS/docs/reference/decision-questionnaire/">
+      
+      
+        <link rel="prev" href="../mobile-app-reliability/">
+      
+      
+        <link rel="next" href="../q-and-a/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Decision questionnaire - UPES-ECS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#upes-ecs-filled-decision-questionnaire" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="UPES-ECS" class="md-header__button md-logo" aria-label="UPES-ECS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25 1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4c0-.56.45-1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.01zM17 12v-2h2v2zm0-4V2h2v6z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UPES-ECS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Decision questionnaire
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rohanbatrain/UPES-ECS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rohanbatrain/UPES-ECS
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../features/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  How-to guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../operations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../networking/juniper/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Networking
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ai-101/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI-101
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../project/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Project
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="UPES-ECS" class="md-nav__button md-logo" aria-label="UPES-ECS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25 1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4c0-.56.45-1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.01zM17 12v-2h2v2zm0-4V2h2v6z"/></svg>
+
+    </a>
+    UPES-ECS
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rohanbatrain/UPES-ECS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rohanbatrain/UPES-ECS
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day-1 quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/go-live-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go-live checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/regional-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional / multilingual deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../architecture/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/bare-minimum-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare-minimum checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/system-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/call-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Call flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/network-and-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network & deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/numbering-and-data-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numbering & data map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/responder-department-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responder / department architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/bill-of-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bill of materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/deployment-runbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment runbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/scaling-and-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scaling & HA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../features/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Campus emergency hotline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. ERT emergency queue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Fallback & escalation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Call recording & incident logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Ready-made SIP client deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Announcement & paging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Incident command conference rooms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Responder directory & numbering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Responder status & availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Voicemail & missed-call recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Call transfer & dispatch workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. LAN-only infrastructure boundary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. SIP security & access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Device provisioning & extensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Wi-Fi-first infrastructure readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-16/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Local system health monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-17/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Emergency SOP & drill mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-18/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Backup, restore & config export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-19/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. AI emergency assistant (line 101)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/student-sip-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Student & staff SIP setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/ert-sip-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT SIP setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/freepbx-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FreePBX build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/dialplan-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialplan design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/backup-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup & restore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/device-provisioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device provisioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/multi-campus-wireless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-campus wireless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/mobile-van-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile van deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/security-hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security hardening
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../operations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/runbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Console runbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/ert-sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT SOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/drill-test-sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drill & test SOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/master-implementation-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master implementation plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/health-monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/incident-logging-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incident logging schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/recording-retention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recording retention policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/rollout-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rollout plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/pilot-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot test plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/risk-register/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Risk register & gaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/roles-ownership-raci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roles, ownership & RACI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/ert-roles-and-shifts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT roles & shifts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/training-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/test-evidence-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test-evidence sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/juniper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper (flat network)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/juniper-integration-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper integration plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/juniper-feature-catalogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper feature catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/juniper-live-discovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper live discovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ai-101/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI-101
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI-101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/integration-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/todo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TODO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numbering-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numbering plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sip-account-role-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SIP account / role matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-infrastructure-diagram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local infrastructure diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../voice-prompt-scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice-prompt scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick cards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mobile-app-reliability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile-app reliability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decision questionnaire
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decision questionnaire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-locked-baseline-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Locked Baseline Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q-and-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q & A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../project/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/production-readiness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadblocks-and-solutions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadblocks & solutions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/field-test-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field-test issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/demo-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demo evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/doc-fixes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doc fixes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-locked-baseline-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Locked Baseline Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/rohanbatrain/UPES-ECS/edit/main/docs/reference/decision-questionnaire.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="upes-ecs-filled-decision-questionnaire">UPES-ECS — Filled Decision Questionnaire<a class="headerlink" href="#upes-ecs-filled-decision-questionnaire" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>THIS IS JUST FOR DIRECTION NOT A RULESET or Locked decisions. we are looking for improvements. </p>
+</blockquote>
+<p><strong>Document status:</strong> Recommended Phase 1 answer set<br />
+<strong>System name:</strong> UPES-ECS<br />
+<strong>System type:</strong> LAN-only university emergency and internal SIP communication system<br />
+<strong>Primary user device:</strong> Mobile phone on campus Wi-Fi using SIP app<br />
+<strong>Secondary devices:</strong> ERT desk phones, control-room IP phones, medical/security/warden fixed SIP phones, optional paging devices<br />
+<strong>Primary identity model:</strong> SAP ID as SIP extension and SIP username for every human user  </p>
+<hr />
+<h2 id="0-locked-baseline-assumptions">0. Locked Baseline Assumptions<a class="headerlink" href="#0-locked-baseline-assumptions" title="Permanent link">&para;</a></h2>
+<ol>
+<li>The system is <strong>LAN-only</strong> in Phase 1.</li>
+<li>There is <strong>no public SIP exposure</strong>, no SIP trunk, no PSTN, no cloud PBX, and no dependency on internet for emergency calling.</li>
+<li>Asterisk runs on one local server connected to the campus LAN.</li>
+<li>Router, switch, access point, and power are available.</li>
+<li>The primary client is the mobile phone using campus Wi-Fi and a SIP app.</li>
+<li>IP phones and fixed SIP devices are still required for ERT, control room, medical, security, wardens, and critical locations.</li>
+<li>SAP ID uniquely identifies every university user and will be used as the SIP extension and SIP username.</li>
+<li>Students are allowed to call other students directly by SAP ID.</li>
+<li>Emergency number <code>111</code> is the primary campus emergency number.</li>
+<li>Test/drill number <code>199</code> is used for safe testing.</li>
+</ol>
+<hr />
+<h1 id="global-system-decisions">Global System Decisions<a class="headerlink" href="#global-system-decisions" title="Permanent link">&para;</a></h1>
+<h2 id="a-project-naming">A. Project Naming<a class="headerlink" href="#a-project-naming" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Filled Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final system name</td>
+<td><strong>UPES-ECS</strong></td>
+</tr>
+<tr>
+<td>Naming tone</td>
+<td>Official and university-branded</td>
+</tr>
+<tr>
+<td>Internal acronym</td>
+<td><strong>UPES-ECS</strong></td>
+</tr>
+<tr>
+<td>Name in SOP documents</td>
+<td><strong>UPES-ECS</strong></td>
+</tr>
+<tr>
+<td>Name in student instructions</td>
+<td><strong>UPES-ECS</strong></td>
+</tr>
+<tr>
+<td>Name on SIP guides/caller ID</td>
+<td><strong>UPES-ECS</strong></td>
+</tr>
+<tr>
+<td>Branding model</td>
+<td>University-branded emergency communication system</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="b-core-terminology">B. Core Terminology<a class="headerlink" href="#b-core-terminology" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Final Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Emergency response team</td>
+<td><strong>Emergency Response Team</strong></td>
+</tr>
+<tr>
+<td>Short form</td>
+<td><strong>ERT</strong></td>
+</tr>
+<tr>
+<td>Control room</td>
+<td><strong>UPES-ERT-ROOM</strong></td>
+</tr>
+<tr>
+<td>Main emergency operator role</td>
+<td><strong>ERT Operator</strong></td>
+</tr>
+<tr>
+<td>Emergency lead role</td>
+<td><strong>ERT Lead / Incident Commander</strong></td>
+</tr>
+<tr>
+<td>Student users</td>
+<td><strong>Student SIP Users</strong></td>
+</tr>
+<tr>
+<td>Staff/faculty users</td>
+<td><strong>Staff SIP Users</strong></td>
+</tr>
+<tr>
+<td>Fixed phones/devices</td>
+<td><strong>Fixed Campus SIP Devices</strong></td>
+</tr>
+<tr>
+<td>Internal SIP accounts</td>
+<td><strong>UPES-ECS SIP Accounts</strong></td>
+</tr>
+<tr>
+<td>Missed emergency records</td>
+<td><strong>Missed Emergency Incidents</strong></td>
+</tr>
+<tr>
+<td>Test/drill calls</td>
+<td><strong>Drill Calls</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-network-naming">C. Network Naming<a class="headerlink" href="#c-network-naming" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Filled Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local domain for SIP clients</td>
+<td><strong><code>pbx.upes.lan</code></strong> preferred; direct IP documented as fallback</td>
+</tr>
+<tr>
+<td>Asterisk server hostname</td>
+<td><strong><code>upes-ecs-pbx-01</code></strong></td>
+</tr>
+<tr>
+<td>SIP realm/domain</td>
+<td><strong><code>sip.upes.lan</code></strong></td>
+</tr>
+<tr>
+<td>Local monitoring dashboard</td>
+<td><strong>UPES-ECS Health Dashboard</strong></td>
+</tr>
+<tr>
+<td>Local admin panel</td>
+<td><strong>UPES-ECS Admin Console</strong></td>
+</tr>
+<tr>
+<td>Wi-Fi SSID</td>
+<td><strong>TBD: campus Wi-Fi SSID to be confirmed by UPES IT</strong></td>
+</tr>
+<tr>
+<td>Wi-Fi model</td>
+<td>Normal campus Wi-Fi for students, emergency/voice-enabled SSID or VLAN later if available</td>
+</tr>
+<tr>
+<td>Client isolation</td>
+<td>Must be checked before pilot</td>
+</tr>
+<tr>
+<td>Client isolation action</td>
+<td>If enabled, allow SIP/RTP access from Wi-Fi clients to Asterisk or move clients to a voice-enabled SSID/VLAN</td>
+</tr>
+<tr>
+<td>Asterisk LAN subnet</td>
+<td><strong>TBD: assign static IP and subnet during deployment</strong></td>
+</tr>
+<tr>
+<td>Allowed subnets</td>
+<td>Student Wi-Fi, staff Wi-Fi, ERT/control-room LAN, fixed-device LAN; guest Wi-Fi blocked</td>
+</tr>
+</tbody>
+</table>
+<h2 id="d-identity-model">D. Identity Model<a class="headerlink" href="#d-identity-model" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Filled Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAP ID as SIP extension</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>SAP ID as SIP username</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>Display name includes name and SAP ID</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>Caller ID format</td>
+<td><strong><code>Name - SAP ID</code></strong></td>
+</tr>
+<tr>
+<td>Student directory/search</td>
+<td>Phase 1: manual SAP ID dialing; Phase 1.5/2: searchable directory/contact export</td>
+</tr>
+<tr>
+<td>Fixed devices separate extensions</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>Fixed-device extension range</td>
+<td><strong>4000–4999</strong></td>
+</tr>
+<tr>
+<td>Service-code ranges</td>
+<td><code>111</code> emergency, <code>199</code> drill, <code>700–799</code> paging, <code>9000–9099</code> conference, <code>*45/*46</code> queue status</td>
+</tr>
+<tr>
+<td>Staff/faculty identity</td>
+<td>Use SAP ID if available; otherwise use official employee/staff ID mapped to SIP extension</td>
+</tr>
+<tr>
+<td>ERT member identity</td>
+<td>Personal SAP ID for person-to-person calls; dedicated ERT/fixed extensions for role/device responsibility</td>
+</tr>
+<tr>
+<td>ERT desk phones</td>
+<td><strong>Yes</strong>, fixed ERT extensions in addition to personal SAP IDs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-1-campus-emergency-hotline">Feature 1: Campus Emergency Hotline<a class="headerlink" href="#feature-1-campus-emergency-hotline" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Official feature name</td>
+<td><strong>Campus Emergency Hotline</strong></td>
+</tr>
+<tr>
+<td>Student-facing wording</td>
+<td><strong>Campus Emergency: Dial 111</strong></td>
+</tr>
+<tr>
+<td>SOP name</td>
+<td><strong>UPES Emergency Line 111</strong></td>
+</tr>
+<tr>
+<td>Dialplan context/label</td>
+<td><strong><code>ctx_emergency_111</code></strong></td>
+</tr>
+<tr>
+<td>Incident log label</td>
+<td><strong><code>EMERGENCY_111_CALL</code></strong></td>
+</tr>
+<tr>
+<td>Primary emergency number</td>
+<td><strong>111</strong></td>
+</tr>
+<tr>
+<td>Alias numbers</td>
+<td>Enable 112 only if approved by UPES administration. Do not use 101 as an alias to 111. Reserve 101 for the AI Emergency Assistant Line.</td>
+</tr>
+<tr>
+<td>Who can call 111</td>
+<td>All authenticated SIP users: students, staff, ERT, fixed devices, system devices</td>
+</tr>
+<tr>
+<td>Guest access</td>
+<td>Guest Wi-Fi/SIP devices blocked in Phase 1</td>
+</tr>
+<tr>
+<td>Role restrictions</td>
+<td>111 reachable from all authenticated role contexts and bypasses normal restrictions</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>Emergency calls prioritized over normal internal calls</td>
+</tr>
+<tr>
+<td>Posters/stickers</td>
+<td>Yes: “Campus Emergency: Dial 111 on UPES-ECS”</td>
+</tr>
+<tr>
+<td>Caller audio</td>
+<td>Short announcement, then queue ringback/hold message</td>
+</tr>
+<tr>
+<td>Pre-answer prompt</td>
+<td>“You have reached UPES Emergency Response. Your emergency call may be recorded. Please stay on the line.”</td>
+</tr>
+<tr>
+<td>Drill prompt</td>
+<td>Separate prompt: “This is a UPES-ECS drill call. No real emergency response will be dispatched.”</td>
+</tr>
+<tr>
+<td>Recording notice</td>
+<td>Yes, only for emergency/drill flows</td>
+</tr>
+<tr>
+<td>Multiple calls</td>
+<td>Supported using ERT queue</td>
+</tr>
+<tr>
+<td>Multiple callers behavior</td>
+<td>Calls enter emergency queue; ERT answers in order while available responders ring</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-2-ert-emergency-queue">Feature 2: ERT Emergency Queue<a class="headerlink" href="#feature-2-ert-emergency-queue" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_1">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Queue name</td>
+<td><strong><code>ert_emergency_queue</code></strong></td>
+</tr>
+<tr>
+<td>ERT agents called</td>
+<td><strong>ERT Responders</strong></td>
+</tr>
+<tr>
+<td>Queue display name</td>
+<td><strong>UPES ERT Emergency Queue</strong></td>
+</tr>
+<tr>
+<td>Caller ID label on ERT device</td>
+<td><strong><code>EMERGENCY 111 - Name - SAP ID</code></strong></td>
+</tr>
+<tr>
+<td>Queue log name</td>
+<td><strong><code>ERT_EMERGENCY_QUEUE</code></strong></td>
+</tr>
+<tr>
+<td>Initial members</td>
+<td>ERT control-room phone, ERT desk phones, ERT mobile SIP apps</td>
+</tr>
+<tr>
+<td>Member type</td>
+<td>Both fixed desk phones and human SAP ID users</td>
+</tr>
+<tr>
+<td>ERT desk phones in queue</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ERT personal mobile SIP apps in queue</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ERT Lead role</td>
+<td>Escalation-first; may also be primary member during low-staff pilot</td>
+</tr>
+<tr>
+<td>Medical/Security</td>
+<td>Dispatch targets by default; direct queue members only if assigned ERT duty</td>
+</tr>
+<tr>
+<td>Time-of-day membership</td>
+<td>Keep static for Phase 1; shift-based membership later</td>
+</tr>
+<tr>
+<td>Active/inactive shifts</td>
+<td>Later enhancement; not mandatory for first pilot</td>
+</tr>
+<tr>
+<td>Healthy queue threshold</td>
+<td>Minimum 2 available responders</td>
+</tr>
+<tr>
+<td>Minimum go-live agents</td>
+<td>Minimum 2, recommended 3+</td>
+</tr>
+<tr>
+<td>Queue strategy</td>
+<td><strong>Ring all available</strong></td>
+</tr>
+<tr>
+<td>Ring all devices</td>
+<td>Yes for emergency queue</td>
+</tr>
+<tr>
+<td>Avoid busy responders</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Skip paused/offline</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Escalation timeout</td>
+<td>20 seconds recommended</td>
+</tr>
+<tr>
+<td>Caller waiting audio</td>
+<td>Emergency hold message, no music</td>
+</tr>
+<tr>
+<td>Hold music</td>
+<td>Disabled for emergency calls</td>
+</tr>
+<tr>
+<td>Recording</td>
+<td>Start recording from the beginning of the emergency call flow</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-3-emergency-fallback-escalation-path">Feature 3: Emergency Fallback &amp; Escalation Path<a class="headerlink" href="#feature-3-emergency-fallback-escalation-path" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_2">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature name</td>
+<td><strong>Emergency Escalation Path</strong></td>
+</tr>
+<tr>
+<td>ERT Lead escalation group</td>
+<td><strong>ERT Lead Escalation</strong></td>
+</tr>
+<tr>
+<td>Backup authority group</td>
+<td><strong>Backup Emergency Authority Group</strong></td>
+</tr>
+<tr>
+<td>Missed escalation logs</td>
+<td><strong>Missed Escalation Records</strong></td>
+</tr>
+<tr>
+<td>Final unanswered status</td>
+<td><strong>Unanswered Critical Emergency</strong></td>
+</tr>
+<tr>
+<td>First escalation target</td>
+<td>ERT Lead role extension/fixed device</td>
+</tr>
+<tr>
+<td>ERT Lead type</td>
+<td>Role extension mapped to person/device</td>
+</tr>
+<tr>
+<td>ERT Lead extension</td>
+<td><strong>4101</strong> recommended; final owner TBD</td>
+</tr>
+<tr>
+<td>Timeout before ERT Lead</td>
+<td>20 seconds after primary queue timeout</td>
+</tr>
+<tr>
+<td>Backup group members</td>
+<td>Security Control Room, Medical Room, Warden/Admin Duty Officer</td>
+</tr>
+<tr>
+<td>Backup group behavior</td>
+<td>Ring all at once in Phase 1</td>
+</tr>
+<tr>
+<td>Backup timeout</td>
+<td>20 seconds</td>
+</tr>
+<tr>
+<td>Drill escalation</td>
+<td>Drill uses safe simulated escalation only; no real dispatch unless approved</td>
+</tr>
+<tr>
+<td>Off-hours escalation</td>
+<td>Same path in Phase 1; time-based routing later</td>
+</tr>
+<tr>
+<td>Stop after answer</td>
+<td>Yes, stop escalation once a responder answers</td>
+</tr>
+<tr>
+<td>Unanswered destination</td>
+<td>Emergency voicemail and critical dashboard alert</td>
+</tr>
+<tr>
+<td>Disconnect without voicemail</td>
+<td>No, unless caller hangs up before voicemail starts</td>
+</tr>
+<tr>
+<td>Voicemail prompt</td>
+<td>“No responder is currently available. Please state your name, location, and emergency clearly. Stay near your phone for a callback.”</td>
+</tr>
+<tr>
+<td>Critical by default</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Review owner</td>
+<td>ERT Lead / Control Room Duty Officer</td>
+</tr>
+<tr>
+<td>Required review time</td>
+<td>Within 5 minutes during active hours; immediate during drills/pilot</td>
+</tr>
+<tr>
+<td>Dashboard alert</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Failed escalation log</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Repeated caller grouping</td>
+<td>Yes, group by SAP ID and time window</td>
+</tr>
+<tr>
+<td>Hangup before prompt</td>
+<td>Create missed emergency record even without voicemail</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-4-emergency-call-recording-incident-logging">Feature 4: Emergency Call Recording &amp; Incident Logging<a class="headerlink" href="#feature-4-emergency-call-recording-incident-logging" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_3">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recording name</td>
+<td><strong>Emergency Call Recordings</strong></td>
+</tr>
+<tr>
+<td>Log name</td>
+<td><strong>Emergency Incident Logs</strong></td>
+</tr>
+<tr>
+<td>Incident ID format</td>
+<td><strong><code>ERT-YYYYMMDD-0001</code></strong></td>
+</tr>
+<tr>
+<td>Recording file format</td>
+<td><strong><code>ERT-YYYYMMDD-0001_CALLER-SAPID_YYYYMMDD-HHMMSS.wav</code></strong></td>
+</tr>
+<tr>
+<td>111 call log label</td>
+<td><strong><code>EMERGENCY_111_CALL</code></strong></td>
+</tr>
+<tr>
+<td>Missed record name</td>
+<td><strong>Missed Emergency Incident</strong></td>
+</tr>
+<tr>
+<td>Calls recorded by default</td>
+<td>Only 111 and 199 emergency/drill flows</td>
+</tr>
+<tr>
+<td>Student-to-student recording</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Conference 9000 recording</td>
+<td>Yes for activated incidents</td>
+</tr>
+<tr>
+<td>Side-room recording</td>
+<td>No by default; enable only if incident requires</td>
+</tr>
+<tr>
+<td>Paging recording</td>
+<td>Log paging; record audio only for real emergency broadcast if technically simple</td>
+</tr>
+<tr>
+<td>Recording start</td>
+<td>Immediately when 111 is dialed</td>
+</tr>
+<tr>
+<td>Recording through transfer</td>
+<td>Yes, continue through transfer/bridge where possible</td>
+</tr>
+<tr>
+<td>Include hold time</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Voicemail link</td>
+<td>Same incident ID</td>
+</tr>
+<tr>
+<td>Caller informed</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Mandatory log fields</td>
+<td>Incident ID, date/time, caller SAP ID, caller name, caller IP/device, caller role, answered by, queue wait, answer time, escalation attempts, transfer/bridge actions, final status, notes, recording path</td>
+</tr>
+<tr>
+<td>Caller SAP ID/name</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Device/IP</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Fixed device location</td>
+<td>Yes when fixed device calls</td>
+</tr>
+<tr>
+<td>ERT responder identity</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Answer/wait/escalation times</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Transfer/bridge actions</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Final status mandatory</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Every 111 creates incident</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>False alarms logged</td>
+<td>Yes, close as false alarm</td>
+</tr>
+<tr>
+<td>Incident note editors</td>
+<td>ERT Operator, ERT Lead, authorized Admin</td>
+</tr>
+<tr>
+<td>Incident closer</td>
+<td>ERT Lead or authorized Duty Officer</td>
+</tr>
+<tr>
+<td>Recording retention</td>
+<td>90 days recommended; university may extend</td>
+</tr>
+<tr>
+<td>Who can listen</td>
+<td>ERT Lead, authorized Control Room Admin, approved university authority</td>
+</tr>
+<tr>
+<td>Who can download</td>
+<td>Restricted to authorized Admin/ERT Lead only</td>
+</tr>
+<tr>
+<td>Access logging</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Encryption at rest</td>
+<td>Yes for recordings and backups</td>
+</tr>
+<tr>
+<td>Backup recordings</td>
+<td>Yes, under same retention/security policy</td>
+</tr>
+<tr>
+<td>Deletion approval</td>
+<td>ERT Lead + authorized university IT/admin approval</td>
+</tr>
+<tr>
+<td>Auto deletion</td>
+<td>Yes after retention, unless incident is flagged for preservation</td>
+</tr>
+<tr>
+<td>Logs longer than audio</td>
+<td>Yes, keep logs for 1 year recommended</td>
+</tr>
+<tr>
+<td>University policy</td>
+<td>Final retention/legal policy to be approved by UPES administration</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-5-ready-made-sip-client-deployment">Feature 5: Ready-made SIP Client Deployment<a class="headerlink" href="#feature-5-ready-made-sip-client-deployment" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_4">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup guide name</td>
+<td><strong>UPES-ECS SIP App Setup Guide</strong></td>
+</tr>
+<tr>
+<td>Recommended first SIP client</td>
+<td><strong>Linphone</strong> for Android/iOS; MicroSIP for Windows fixed/desktop testing</td>
+</tr>
+<tr>
+<td>Student setup profile</td>
+<td><strong>UPES-ECS Student Profile</strong></td>
+</tr>
+<tr>
+<td>ERT setup profile</td>
+<td><strong>UPES-ECS ERT Profile</strong></td>
+</tr>
+<tr>
+<td>Fixed-device profile</td>
+<td><strong>UPES-ECS Fixed Device Profile</strong></td>
+</tr>
+<tr>
+<td>Android app</td>
+<td>Linphone</td>
+</tr>
+<tr>
+<td>iOS app</td>
+<td>Linphone</td>
+</tr>
+<tr>
+<td>Windows app</td>
+<td>MicroSIP</td>
+</tr>
+<tr>
+<td>macOS/Linux app</td>
+<td>Linphone desktop or Jami/SIP client if tested; Linphone preferred for consistency</td>
+</tr>
+<tr>
+<td>Same app where possible</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ERT client</td>
+<td>ERT may use controlled Linphone setup plus fixed IP phone</td>
+</tr>
+<tr>
+<td>Physical IP phones for ERT/control room</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Student self-install</td>
+<td>Yes, guided self-install</td>
+</tr>
+<tr>
+<td>Admin-assisted setup</td>
+<td>Only for ERT/fixed devices and support cases</td>
+</tr>
+<tr>
+<td>QR provisioning</td>
+<td>Later enhancement</td>
+</tr>
+<tr>
+<td>Server address</td>
+<td><code>pbx.upes.lan</code> preferred; static IP fallback TBD</td>
+</tr>
+<tr>
+<td>Username</td>
+<td>SAP ID</td>
+</tr>
+<tr>
+<td>Password delivery</td>
+<td>One-time secure delivery by portal, helpdesk, or sealed onboarding sheet</td>
+</tr>
+<tr>
+<td>Password visibility</td>
+<td>Visible once or resettable by authorized admin</td>
+</tr>
+<tr>
+<td>User password changes</td>
+<td>Allowed later through controlled reset flow; not direct Asterisk editing by users</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td>Yes, per app/platform</td>
+</tr>
+<tr>
+<td>Test number</td>
+<td><code>199</code> drill/test line plus optional echo test <code>198</code></td>
+</tr>
+<tr>
+<td>SAP ID dialing training</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Directory/search</td>
+<td>Later enhancement; CSV/contact list for pilot if needed</td>
+</tr>
+<tr>
+<td>Setup support</td>
+<td>UPES-ECS support/helpdesk runbook</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-6-emergency-announcement-paging">Feature 6: Emergency Announcement &amp; Paging<a class="headerlink" href="#feature-6-emergency-announcement-paging" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_5">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature name</td>
+<td><strong>Emergency Announcement &amp; Paging</strong></td>
+</tr>
+<tr>
+<td>All-campus broadcast</td>
+<td><strong>All-Campus Emergency Broadcast</strong></td>
+</tr>
+<tr>
+<td>Paging zones</td>
+<td>Campus-wide, Academic Blocks, Hostels, Security Gates, Medical/ERT, Admin/Operations</td>
+</tr>
+<tr>
+<td>Paging range</td>
+<td><strong>700–799</strong></td>
+</tr>
+<tr>
+<td>Paging log name</td>
+<td><strong>Emergency Paging Attempt</strong></td>
+</tr>
+<tr>
+<td>700</td>
+<td>All-campus emergency broadcast</td>
+</tr>
+<tr>
+<td>701</td>
+<td>Academic blocks</td>
+</tr>
+<tr>
+<td>702</td>
+<td>Hostels</td>
+</tr>
+<tr>
+<td>703</td>
+<td>Security gates</td>
+</tr>
+<tr>
+<td>704</td>
+<td>Medical/ERT zone</td>
+</tr>
+<tr>
+<td>705</td>
+<td>Admin/operations zone</td>
+</tr>
+<tr>
+<td>Missing zones</td>
+<td>Finalize after campus role/location drill</td>
+</tr>
+<tr>
+<td>Zone finalization</td>
+<td>Finalize now as placeholder, validate after drill</td>
+</tr>
+<tr>
+<td>Zone mapping</td>
+<td>Functional areas first; buildings later</td>
+</tr>
+<tr>
+<td>Who can page all campus</td>
+<td>ERT Lead / Incident Commander only</td>
+</tr>
+<tr>
+<td>Who can page hostels</td>
+<td>ERT Lead, Warden-authorized role</td>
+</tr>
+<tr>
+<td>Who can page academic blocks</td>
+<td>ERT Lead / Control Room</td>
+</tr>
+<tr>
+<td>Who can page security gates</td>
+<td>ERT Lead / Security Control Room</td>
+</tr>
+<tr>
+<td>Direct ERT paging</td>
+<td>ERT members can request; ERT Lead/control room approves campus-wide paging</td>
+</tr>
+<tr>
+<td>Students</td>
+<td>Blocked from all paging</td>
+</tr>
+<tr>
+<td>General staff</td>
+<td>Blocked unless assigned emergency role</td>
+</tr>
+<tr>
+<td>PIN requirement</td>
+<td>Yes for high-risk paging codes, especially 700</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Yes, context-based + PIN for critical zones</td>
+</tr>
+<tr>
+<td>Log attempts</td>
+<td>Yes, successful and denied attempts</td>
+</tr>
+<tr>
+<td>Live/pre-recorded</td>
+<td>Live only in Phase 1; pre-recorded later</td>
+</tr>
+<tr>
+<td>Multilingual</td>
+<td>Later enhancement</td>
+</tr>
+<tr>
+<td>Paging recording</td>
+<td>Log all; record real emergency paging if possible</td>
+</tr>
+<tr>
+<td>Test frequency</td>
+<td>Monthly paging test, with prior notice</td>
+</tr>
+<tr>
+<td>Start phrase</td>
+<td>“Attention. This is UPES Emergency Response.”</td>
+</tr>
+<tr>
+<td>Approval</td>
+<td>ERT Lead / Incident Commander</td>
+</tr>
+<tr>
+<td>Drill prefix</td>
+<td>Yes: “Drill, drill, drill.”</td>
+</tr>
+<tr>
+<td>Unauthorized attempts</td>
+<td>Logged as security/health warning</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-7-incident-command-conference-rooms">Feature 7: Incident Command Conference Rooms<a class="headerlink" href="#feature-7-incident-command-conference-rooms" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_6">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main room name</td>
+<td><strong>Main Incident Command Room</strong></td>
+</tr>
+<tr>
+<td>9000 name</td>
+<td><strong>Main Incident Command Room</strong></td>
+</tr>
+<tr>
+<td>9001</td>
+<td>Security Coordination Room</td>
+</tr>
+<tr>
+<td>9002</td>
+<td>Medical Coordination Room</td>
+</tr>
+<tr>
+<td>9003</td>
+<td>Warden/Hostel Coordination Room</td>
+</tr>
+<tr>
+<td>9004</td>
+<td>Operations/Admin Coordination Room</td>
+</tr>
+<tr>
+<td>9000 range</td>
+<td>Reserved for emergency conferences</td>
+</tr>
+<tr>
+<td>Conference logs</td>
+<td><strong>Incident Conference Logs</strong></td>
+</tr>
+<tr>
+<td>9000 as main room</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Phase 1 rooms</td>
+<td>9000 mandatory; 9001–9004 staged but reserved</td>
+</tr>
+<tr>
+<td>Side rooms</td>
+<td>Enabled later or pilot-only if needed</td>
+</tr>
+<tr>
+<td>PINs</td>
+<td>9000 and all side rooms should have PINs</td>
+</tr>
+<tr>
+<td>Moderator</td>
+<td>ERT Lead / Incident Commander</td>
+</tr>
+<tr>
+<td>Join/leave tones</td>
+<td>Enabled for awareness; disable if disruptive later</td>
+</tr>
+<tr>
+<td>Participant limits</td>
+<td>Yes, recommended 20 for 9000, 10 for side rooms</td>
+</tr>
+<tr>
+<td>9000 recording</td>
+<td>Yes when activated for real incident</td>
+</tr>
+<tr>
+<td>Side room recording</td>
+<td>No by default</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>Always reachable to authorized roles; activation linked to incident in SOP</td>
+</tr>
+<tr>
+<td>Link to incident IDs</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>9000 access</td>
+<td>ERT Lead, ERT Operators, Security, Medical, Warden/Admin emergency roles</td>
+</tr>
+<tr>
+<td>Security room access</td>
+<td>Security + ERT Lead/control room</td>
+</tr>
+<tr>
+<td>Medical room access</td>
+<td>Medical + ERT Lead/control room</td>
+</tr>
+<tr>
+<td>Warden room access</td>
+<td>Wardens + ERT Lead/control room</td>
+</tr>
+<tr>
+<td>Operations room access</td>
+<td>Admin/Operations + ERT Lead/control room</td>
+</tr>
+<tr>
+<td>Students</td>
+<td>No conference access</td>
+</tr>
+<tr>
+<td>General staff</td>
+<td>No, unless assigned emergency role</td>
+</tr>
+<tr>
+<td>Unauthorized rejection</td>
+<td>Yes, clear rejection tone/message</td>
+</tr>
+<tr>
+<td>Failed joins logged</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Control method</td>
+<td>Context-based access + PIN</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-8-emergency-responder-directory-numbering-plan">Feature 8: Emergency Responder Directory &amp; Numbering Plan<a class="headerlink" href="#feature-8-emergency-responder-directory-numbering-plan" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_7">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Directory name</td>
+<td><strong>UPES-ECS Emergency Responder Directory</strong></td>
+</tr>
+<tr>
+<td>Numbering document</td>
+<td><strong>UPES-ECS Numbering Plan</strong></td>
+</tr>
+<tr>
+<td>Fixed extensions</td>
+<td><strong>Fixed Campus Extensions</strong></td>
+</tr>
+<tr>
+<td>Service numbers</td>
+<td><strong>Emergency Service Codes</strong></td>
+</tr>
+<tr>
+<td>SAP ID extensions</td>
+<td><strong>SAP ID Extensions</strong></td>
+</tr>
+<tr>
+<td>Role-design drill</td>
+<td><strong>Emergency Role Mapping Drill</strong></td>
+</tr>
+<tr>
+<td>Roles in emergency directory</td>
+<td>ERT Lead, ERT Operator, Security Control, Medical Room, Warden Duty, Admin/Operations, IT Support</td>
+</tr>
+<tr>
+<td>Fixed locations</td>
+<td>ERT room, security gates/control, medical room, hostel/warden desks, admin office, server/IT support</td>
+</tr>
+<tr>
+<td>Service codes</td>
+<td>111, 112/911 aliases, 199, 700–705, 9000–9004, <em>45, </em>46</td>
+</tr>
+<tr>
+<td>All students in general directory</td>
+<td>Yes eventually; Phase 1 can use SAP ID manual dialing/import</td>
+</tr>
+<tr>
+<td>All staff in directory</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Emergency vs student directory</td>
+<td>Separate emergency directory and general user directory</td>
+</tr>
+<tr>
+<td>Personal mobile numbers</td>
+<td>No in SIP directory; keep external contact list separately under admin control</td>
+</tr>
+<tr>
+<td>SIP-only directory</td>
+<td>Yes for UPES-ECS user-facing directory</td>
+</tr>
+<tr>
+<td>Room/location phones marked</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Directory fields</td>
+<td>Role, extension, location, permissions, owner, status</td>
+</tr>
+<tr>
+<td>Fixed-device range</td>
+<td>4000–4999</td>
+</tr>
+<tr>
+<td>Emergency/service codes</td>
+<td>111, 112, 911, 199, <em>45, </em>46</td>
+</tr>
+<tr>
+<td>Paging range</td>
+<td>700–799</td>
+</tr>
+<tr>
+<td>Conference range</td>
+<td>9000–9099</td>
+</tr>
+<tr>
+<td>SAP IDs long?</td>
+<td>Acceptable because SAP ID is official; support directory/search later</td>
+</tr>
+<tr>
+<td>Short aliases</td>
+<td>Yes for critical fixed devices</td>
+</tr>
+<tr>
+<td>ERT desk short numbers</td>
+<td>4100–4199</td>
+</tr>
+<tr>
+<td>Medical room</td>
+<td>4200</td>
+</tr>
+<tr>
+<td>Security control room</td>
+<td>4300</td>
+</tr>
+<tr>
+<td>Student dialing</td>
+<td>Direct SAP ID dialing enabled; contact search later</td>
+</tr>
+<tr>
+<td>Role-design participants</td>
+<td>ERT, Security, Medical, Wardens, Admin, IT/Network team</td>
+</tr>
+<tr>
+<td>Approval owner</td>
+<td>UPES administration + ERT Lead + IT owner</td>
+</tr>
+<tr>
+<td>Directory maintainer</td>
+<td>UPES-ECS Admin / IT support</td>
+</tr>
+<tr>
+<td>Review cycle</td>
+<td>Monthly in pilot; quarterly after stable rollout</td>
+</tr>
+<tr>
+<td>Add/remove process</td>
+<td>Change request approved by ERT Lead/IT Admin</td>
+</tr>
+<tr>
+<td>Fixed-device ownership changes</td>
+<td>Logged change request with location/owner update</td>
+</tr>
+<tr>
+<td>Outdated entry detection</td>
+<td>Monthly test calls + registration health checks</td>
+</tr>
+<tr>
+<td>Published location</td>
+<td>Local admin panel and controlled PDF/CSV for responders</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-9-responder-status-availability">Feature 9: Responder Status &amp; Availability<a class="headerlink" href="#feature-9-responder-status-availability" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_8">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_8" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature name</td>
+<td><strong>Responder Availability Status</strong></td>
+</tr>
+<tr>
+<td>Status labels</td>
+<td>Available, Busy, Offline, Paused, On Incident later</td>
+</tr>
+<tr>
+<td>Pause/unpause codes</td>
+<td><strong>Queue Pause / Queue Resume</strong></td>
+</tr>
+<tr>
+<td>Dashboard name</td>
+<td><strong>ERT Availability Dashboard</strong></td>
+</tr>
+<tr>
+<td>SOP meaning of unavailable</td>
+<td>Not currently eligible to receive emergency queue calls</td>
+</tr>
+<tr>
+<td>Phase 1 statuses</td>
+<td>Available, Busy, Offline, Paused</td>
+</tr>
+<tr>
+<td>On Incident</td>
+<td>Later enhancement</td>
+</tr>
+<tr>
+<td>Field Responding</td>
+<td>Later enhancement</td>
+</tr>
+<tr>
+<td>Source of status</td>
+<td>Asterisk status only in Phase 1</td>
+</tr>
+<tr>
+<td>Manual updates</td>
+<td>Avoid in Phase 1 except pause/unpause</td>
+</tr>
+<tr>
+<td>Self pause</td>
+<td>Yes for ERT members</td>
+</tr>
+<tr>
+<td>ERT Lead pause others</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Pause reason</td>
+<td>Optional in Phase 1; mandatory later through admin UI</td>
+</tr>
+<tr>
+<td>Offline critical devices</td>
+<td>Trigger health warning</td>
+</tr>
+<tr>
+<td>Queue with zero responders</td>
+<td>Still accept calls, immediately escalate and create alert</td>
+</tr>
+<tr>
+<td>Pause code</td>
+<td><code>*45</code></td>
+</tr>
+<tr>
+<td>Unpause code</td>
+<td><code>*46</code></td>
+</tr>
+<tr>
+<td>Restrict codes</td>
+<td>ERT users only</td>
+</tr>
+<tr>
+<td>Log actions</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Prevent accidental pause</td>
+<td>Confirmation prompt recommended</td>
+</tr>
+<tr>
+<td>Auto-unpause</td>
+<td>Later enhancement; Phase 1 no auto-unpause unless agreed</td>
+</tr>
+<tr>
+<td>Lead visibility</td>
+<td>ERT Lead can see all paused/offline users</td>
+</tr>
+<tr>
+<td>Direct calls while paused</td>
+<td>Yes, pause only affects queue</td>
+</tr>
+<tr>
+<td>Conferences while paused</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-10-emergency-voicemail-missed-call-recovery">Feature 10: Emergency Voicemail &amp; Missed-call Recovery<a class="headerlink" href="#feature-10-emergency-voicemail-missed-call-recovery" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_9">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_9" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voicemail name</td>
+<td><strong>Emergency Voicemail</strong></td>
+</tr>
+<tr>
+<td>Missed incident name</td>
+<td><strong>Missed Emergency Incident</strong></td>
+</tr>
+<tr>
+<td>Missed list</td>
+<td><strong>Missed Emergency Review Queue</strong></td>
+</tr>
+<tr>
+<td>Status labels</td>
+<td>Pending Review, Reviewed, Callback Attempted, Converted to Active Incident, Closed as Duplicate, Closed as False Alarm</td>
+</tr>
+<tr>
+<td>Prompt file</td>
+<td><strong><code>prompt_emergency_voicemail.wav</code></strong></td>
+</tr>
+<tr>
+<td>Unanswered calls to voicemail</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Exact prompt</td>
+<td>“No UPES Emergency Response member is available at this moment. Please state your name, SAP ID, location, and emergency clearly. Stay near your phone for a callback.”</td>
+</tr>
+<tr>
+<td>Prompt mentions name/location/emergency</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Ask caller to stay near phone</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Max duration</td>
+<td>60 seconds</td>
+</tr>
+<tr>
+<td>Caller says nothing</td>
+<td>Save silent voicemail and mark Pending Review</td>
+</tr>
+<tr>
+<td>Caller hangs up early</td>
+<td>Create missed emergency record without voicemail</td>
+</tr>
+<tr>
+<td>Link to incident ID</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Critical by default</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Restricted access</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Review owner</td>
+<td>ERT Lead / Control Room Duty Officer</td>
+</tr>
+<tr>
+<td>Required review time</td>
+<td>Within 5 minutes</td>
+</tr>
+<tr>
+<td>Pending until reviewed</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Callback mandatory</td>
+<td>Yes when caller identity is known</td>
+</tr>
+<tr>
+<td>Callback attempts logged</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Closer</td>
+<td>ERT Lead / authorized Duty Officer</td>
+</tr>
+<tr>
+<td>Dashboard visibility</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Repeated missed calls</td>
+<td>Group by SAP ID/time window</td>
+</tr>
+<tr>
+<td>Drill testing</td>
+<td>Yes, drill voicemail records labelled drill only</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-11-emergency-call-transfer-dispatch-workflow">Feature 11: Emergency Call Transfer &amp; Dispatch Workflow<a class="headerlink" href="#feature-11-emergency-call-transfer-dispatch-workflow" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_10">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_10" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOP feature name</td>
+<td><strong>Emergency Dispatch and Handoff Workflow</strong></td>
+</tr>
+<tr>
+<td>Dispatch modes</td>
+<td>Dispatch Without Transfer, Warm Transfer, Three-Way Bridge</td>
+</tr>
+<tr>
+<td>Dispatch logs</td>
+<td><strong>Emergency Dispatch Logs</strong></td>
+</tr>
+<tr>
+<td>Handoff statuses</td>
+<td>Pending, Accepted, Failed, Completed, Escalated</td>
+</tr>
+<tr>
+<td>Incident ownership</td>
+<td><strong>Incident Owner</strong></td>
+</tr>
+<tr>
+<td>Supported modes</td>
+<td>Dispatch without transfer, warm transfer, three-way bridge</td>
+</tr>
+<tr>
+<td>Default mode</td>
+<td>Dispatch without transfer</td>
+</tr>
+<tr>
+<td>Preferred transfer</td>
+<td>Warm transfer</td>
+</tr>
+<tr>
+<td>Serious/unclear cases</td>
+<td>Three-way bridge</td>
+</tr>
+<tr>
+<td>Blind transfer</td>
+<td>Disabled or strongly restricted</td>
+</tr>
+<tr>
+<td>Warm transfer users</td>
+<td>ERT Operators, ERT Lead</td>
+</tr>
+<tr>
+<td>Three-way bridge users</td>
+<td>ERT Lead and trained ERT Operators</td>
+</tr>
+<tr>
+<td>Students transfer</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Staff transfer</td>
+<td>No by default; only emergency roles</td>
+</tr>
+<tr>
+<td>Owner after answer</td>
+<td>Answering ERT Operator becomes initial Incident Owner</td>
+</tr>
+<tr>
+<td>Reassignment</td>
+<td>Allowed after handoff confirmation</td>
+</tr>
+<tr>
+<td>Reassign authority</td>
+<td>ERT Lead / Incident Commander</td>
+</tr>
+<tr>
+<td>Handoff confirmation</td>
+<td>Logged note/status in incident timeline</td>
+</tr>
+<tr>
+<td>Target no-answer</td>
+<td>Return to ERT operator and escalate if needed</td>
+</tr>
+<tr>
+<td>ERT stays on critical handoff</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dispatch logging</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>Direct transfer without explanation</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Drill testing</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Required fields</td>
+<td>Incident ID, source responder, target extension/team, target answer status, transfer type, bridge participants, timestamp, notes</td>
+</tr>
+<tr>
+<td>Failed transfers</td>
+<td>Logged as incident timeline events</td>
+</tr>
+<tr>
+<td>Dispatch notes</td>
+<td>Mandatory for real emergency dispatch</td>
+</tr>
+<tr>
+<td>Recording timestamps</td>
+<td>Link when technically available</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>All dispatch events appear in incident timeline</td>
+</tr>
+<tr>
+<td>Edit permission</td>
+<td>ERT Lead / authorized Admin</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-12-lan-only-infrastructure-boundary">Feature 12: LAN-only Infrastructure Boundary<a class="headerlink" href="#feature-12-lan-only-infrastructure-boundary" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_11">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_11" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boundary name</td>
+<td><strong>UPES-ECS LAN Boundary</strong></td>
+</tr>
+<tr>
+<td>Internal network</td>
+<td><strong>UPES-ECS Campus LAN</strong></td>
+</tr>
+<tr>
+<td>Local server name</td>
+<td><strong>UPES-ECS PBX Server</strong></td>
+</tr>
+<tr>
+<td>SIP domain</td>
+<td><strong><code>sip.upes.lan</code></strong></td>
+</tr>
+<tr>
+<td>Diagram title</td>
+<td><strong>UPES-ECS LAN-only System Boundary</strong></td>
+</tr>
+<tr>
+<td>LAN-only</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Public internet dependency</td>
+<td>No</td>
+</tr>
+<tr>
+<td>External SIP trunk</td>
+<td>No</td>
+</tr>
+<tr>
+<td>PSTN calling</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SMS/WhatsApp/email alerts</td>
+<td>No in Phase 1</td>
+</tr>
+<tr>
+<td>Remote users</td>
+<td>No outside-campus users in Phase 1</td>
+</tr>
+<tr>
+<td>Cloud PBX</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Public SIP/RTP exposure</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Core records stored locally</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>DNS/IP</td>
+<td>Local DNS preferred; direct IP fallback documented</td>
+</tr>
+<tr>
+<td>Allowed networks</td>
+<td>Student Wi-Fi, staff Wi-Fi, ERT/control-room LAN, fixed-device LAN</td>
+</tr>
+<tr>
+<td>Allowed SIP subnets</td>
+<td>TBD from UPES IT network plan</td>
+</tr>
+<tr>
+<td>Admin/monitoring subnet</td>
+<td>Management/admin subnet only; not student Wi-Fi</td>
+</tr>
+<tr>
+<td>Fixed device subnet</td>
+<td>Fixed-device LAN/VLAN if available; otherwise static IP list</td>
+</tr>
+<tr>
+<td>Student Wi-Fi access to Asterisk</td>
+<td>Yes for SIP/RTP only</td>
+</tr>
+<tr>
+<td>Guest Wi-Fi</td>
+<td>Blocked</td>
+</tr>
+<tr>
+<td>Management separation</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Static IP for Asterisk</td>
+<td>Yes, mandatory</td>
+</tr>
+<tr>
+<td>DNS fallback</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>VLAN segmentation</td>
+<td>Add later or immediately if UPES IT supports it</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-13-sip-security-access-control">Feature 13: SIP Security &amp; Access Control<a class="headerlink" href="#feature-13-sip-security-access-control" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_12">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_12" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Role/context names</td>
+<td><code>ctx_student</code>, <code>ctx_staff</code>, <code>ctx_ert</code>, <code>ctx_ert_lead</code>, <code>ctx_control_room</code>, <code>ctx_fixed_device</code>, <code>ctx_admin</code></td>
+</tr>
+<tr>
+<td>Restricted attempts log</td>
+<td><strong>Access Denied Event</strong></td>
+</tr>
+<tr>
+<td>Students call 111</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Students call students</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Students call staff/faculty</td>
+<td>Yes only if approved; otherwise Phase 1 restrict to student-student + emergency</td>
+</tr>
+<tr>
+<td>Students call fixed public campus phones</td>
+<td>Yes for approved public/helpdesk/fixed devices</td>
+</tr>
+<tr>
+<td>Students call ERT directly</td>
+<td>No, use 111; direct ERT short numbers restricted</td>
+</tr>
+<tr>
+<td>Students receive from ERT</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Students join conferences</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Students use paging</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Students transfer calls</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Students access recordings/voicemail</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Staff call students</td>
+<td>Yes if approved by university policy</td>
+</tr>
+<tr>
+<td>Staff call staff</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Staff call 111</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Staff call ERT directly</td>
+<td>Restricted; emergency roles only</td>
+</tr>
+<tr>
+<td>Staff use paging</td>
+<td>No unless emergency role</td>
+</tr>
+<tr>
+<td>Staff join conferences</td>
+<td>Emergency roles only</td>
+</tr>
+<tr>
+<td>Staff access recordings</td>
+<td>No unless authorized</td>
+</tr>
+<tr>
+<td>Special staff roles</td>
+<td>Wardens, medical staff, security, admin duty officer, IT support</td>
+</tr>
+<tr>
+<td>Staff default access</td>
+<td>Similar to students plus staff-staff calling; special permissions by role</td>
+</tr>
+<tr>
+<td>Receive 111 queue calls</td>
+<td>ERT Operators, ERT desk phones, approved responders</td>
+</tr>
+<tr>
+<td>Paging permission</td>
+<td>ERT Lead/control room/security/warden as zone-appropriate</td>
+</tr>
+<tr>
+<td>9000 access</td>
+<td>ERT Lead, ERT Operators, approved emergency roles</td>
+</tr>
+<tr>
+<td>Voicemail review</td>
+<td>ERT Lead/control room only</td>
+</tr>
+<tr>
+<td>Recording access</td>
+<td>ERT Lead/authorized admin only</td>
+</tr>
+<tr>
+<td>Warm transfer</td>
+<td>ERT Operators/ERT Lead</td>
+</tr>
+<tr>
+<td>Three-way bridge</td>
+<td>ERT Lead/trained ERT Operators</td>
+</tr>
+<tr>
+<td>Pause/unpause queue</td>
+<td>ERT members for self; ERT Lead for others</td>
+</tr>
+<tr>
+<td>SIP account management</td>
+<td>UPES-ECS Admin / IT admin</td>
+</tr>
+<tr>
+<td>Health monitoring</td>
+<td>ERT Lead, control room, IT admin</td>
+</tr>
+<tr>
+<td>Anonymous SIP</td>
+<td>Disabled</td>
+</tr>
+<tr>
+<td>Unique credentials</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Shared credentials</td>
+<td>Banned except fixed devices</td>
+</tr>
+<tr>
+<td>Password strength</td>
+<td>Minimum 12 characters random; unique per account/device</td>
+</tr>
+<tr>
+<td>Password delivery</td>
+<td>One-time secure delivery/reset workflow</td>
+</tr>
+<tr>
+<td>Lost devices</td>
+<td>Immediately revoke/reset SIP credential</td>
+</tr>
+<tr>
+<td>Failed registrations</td>
+<td>Logged</td>
+</tr>
+<tr>
+<td>Unknown devices</td>
+<td>Block if possible; monitor initially</td>
+</tr>
+<tr>
+<td>Abuse</td>
+<td>Suspend account after review</td>
+</tr>
+<tr>
+<td>Role elevation approval</td>
+<td>ERT Lead + IT Admin/university authority</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-14-device-provisioning-extension-management">Feature 14: Device Provisioning &amp; Extension Management<a class="headerlink" href="#feature-14-device-provisioning-extension-management" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_13">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_13" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provisioning process</td>
+<td><strong>UPES-ECS SIP Provisioning</strong></td>
+</tr>
+<tr>
+<td>Human accounts</td>
+<td><strong>SAP ID SIP Accounts</strong></td>
+</tr>
+<tr>
+<td>Fixed device accounts</td>
+<td><strong>Fixed Device SIP Accounts</strong></td>
+</tr>
+<tr>
+<td>Service codes</td>
+<td><strong>UPES-ECS Service Codes</strong></td>
+</tr>
+<tr>
+<td>Onboarding guide</td>
+<td><strong>UPES-ECS User Onboarding Guide</strong></td>
+</tr>
+<tr>
+<td>Password reset</td>
+<td><strong>SIP Credential Reset Process</strong></td>
+</tr>
+<tr>
+<td>SAP ID as extension</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP ID as username</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP ID in caller ID</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Full name in display</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP ID changes</td>
+<td>Old mapping archived; new SIP account created/migrated with history preserved</td>
+</tr>
+<tr>
+<td>Student leaves</td>
+<td>Disable account; keep logs/history</td>
+</tr>
+<tr>
+<td>Staff leaves</td>
+<td>Disable account; remove role permissions</td>
+</tr>
+<tr>
+<td>Multiple devices per SAP ID</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Max devices</td>
+<td>2 for students, 3 for ERT/staff; adjust after pilot</td>
+</tr>
+<tr>
+<td>Monitor device count</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Fixed range</td>
+<td>4000–4999</td>
+</tr>
+<tr>
+<td>Fixed naming</td>
+<td><code>Location-Role-Extension</code>, e.g., <code>Security-Control-4300</code></td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td>Assigned to department/role, not individual only</td>
+</tr>
+<tr>
+<td>Physical location</td>
+<td>Mandatory field</td>
+</tr>
+<tr>
+<td>Request new extension</td>
+<td>Department owner through IT/UPES-ECS Admin</td>
+</tr>
+<tr>
+<td>Disable fixed device</td>
+<td>IT Admin / ERT Lead approval</td>
+</tr>
+<tr>
+<td>Static IPs</td>
+<td>Yes for fixed phones where possible</td>
+</tr>
+<tr>
+<td>Restricted dialing</td>
+<td>Yes by role/context</td>
+</tr>
+<tr>
+<td>Fixed caller ID location</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Directory inclusion</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Manual provisioning first</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP import</td>
+<td>CSV-based Phase 1</td>
+</tr>
+<tr>
+<td>Automation later</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Password generation</td>
+<td>Random generated secrets</td>
+</tr>
+<tr>
+<td>Secure delivery</td>
+<td>One-time reveal/reset process</td>
+</tr>
+<tr>
+<td>QR setup</td>
+<td>Later</td>
+</tr>
+<tr>
+<td>OS/app guides</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>User support</td>
+<td>UPES-ECS support/helpdesk</td>
+</tr>
+<tr>
+<td>Password resets</td>
+<td>IT Admin/helpdesk with authorization</td>
+</tr>
+<tr>
+<td>Lost device revocation</td>
+<td>IT Admin/helpdesk immediately resets SIP password</td>
+</tr>
+<tr>
+<td>Account states</td>
+<td>Pending Setup, Active, Disabled, Password Reset Required, Lost Device, Archived</td>
+</tr>
+<tr>
+<td>State transitions</td>
+<td>IT Admin/helpdesk; ERT Lead for emergency-role accounts</td>
+</tr>
+<tr>
+<td>Disabled users retain logs</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Extension reuse</td>
+<td>Human SAP IDs not reused; fixed extensions reusable only after history archived</td>
+</tr>
+<tr>
+<td>Ownership history</td>
+<td>Preserved</td>
+</tr>
+<tr>
+<td>Offboarding</td>
+<td>Disable account, remove roles, preserve logs</td>
+</tr>
+<tr>
+<td>Lost-device process</td>
+<td>Reset password, force re-provision, log event</td>
+</tr>
+<tr>
+<td>Abuse process</td>
+<td>Temporarily disable, review, reinstate or keep suspended</td>
+</tr>
+<tr>
+<td>Bulk import</td>
+<td>CSV import with validation and backup</td>
+</tr>
+<tr>
+<td>Audit/export</td>
+<td>Monthly export of accounts, roles, fixed devices, service codes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-15-local-wi-fi-first-infrastructure-readiness">Feature 15: Local Wi-Fi-first Infrastructure Readiness<a class="headerlink" href="#feature-15-local-wi-fi-first-infrastructure-readiness" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_14">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_14" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature name</td>
+<td><strong>Local Wi-Fi-first Infrastructure Readiness</strong></td>
+</tr>
+<tr>
+<td>Mobile-first path</td>
+<td><strong>Mobile SIP over Campus Wi-Fi</strong></td>
+</tr>
+<tr>
+<td>ERT fixed-device path</td>
+<td><strong>ERT Fixed Response Path</strong></td>
+</tr>
+<tr>
+<td>Diagram title</td>
+<td><strong>UPES-ECS Local Infrastructure Diagram</strong></td>
+</tr>
+<tr>
+<td>Pilot environment</td>
+<td><strong>UPES-ECS Pilot LAN</strong></td>
+</tr>
+<tr>
+<td>Router</td>
+<td>TBD: record model/name during deployment</td>
+</tr>
+<tr>
+<td>Switch</td>
+<td>TBD: record model/name during deployment</td>
+</tr>
+<tr>
+<td>Access point</td>
+<td>TBD: record model/name during deployment</td>
+</tr>
+<tr>
+<td>Asterisk server</td>
+<td>Existing dedicated server; hostname <code>upes-ecs-pbx-01</code></td>
+</tr>
+<tr>
+<td>Server OS</td>
+<td>Ubuntu Server LTS or Debian stable recommended</td>
+</tr>
+<tr>
+<td>Server IP</td>
+<td>TBD static IP</td>
+</tr>
+<tr>
+<td>Static IP</td>
+<td>Mandatory before pilot</td>
+</tr>
+<tr>
+<td>Wi-Fi SSID</td>
+<td>TBD by UPES IT</td>
+</tr>
+<tr>
+<td>Client isolation</td>
+<td>Must be checked and disabled/bypassed for SIP access to PBX</td>
+</tr>
+<tr>
+<td>SIP/RTP LAN ports</td>
+<td>Allow SIP signaling and RTP inside LAN only</td>
+</tr>
+<tr>
+<td>Primary mobile app</td>
+<td>Linphone</td>
+</tr>
+<tr>
+<td>Pilot phones</td>
+<td>Android first; iOS if available</td>
+</tr>
+<tr>
+<td>Pilot user count</td>
+<td>10–25 users initial pilot</td>
+</tr>
+<tr>
+<td>Simultaneous calls test</td>
+<td>Minimum 5 normal calls + 2 emergency calls; increase after successful baseline</td>
+</tr>
+<tr>
+<td>Student-to-student pilot</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP ID login</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Screen lock behavior</td>
+<td>Must be tested; document battery/background restrictions</td>
+</tr>
+<tr>
+<td>Background running</td>
+<td>Users trained to keep SIP app registered/running</td>
+</tr>
+<tr>
+<td>Mobile support</td>
+<td>Setup guide + helpdesk support</td>
+</tr>
+<tr>
+<td>Call quality evaluation</td>
+<td>Registration success, call setup time, audio clarity, drop rate, jitter/latency</td>
+</tr>
+<tr>
+<td>Fixed IP phones at launch</td>
+<td>ERT room, security control, medical room recommended minimum</td>
+</tr>
+<tr>
+<td>ERT answering location</td>
+<td>UPES-ERT-ROOM / control room</td>
+</tr>
+<tr>
+<td>ERT devices</td>
+<td>Both IP phone and mobile SIP app</td>
+</tr>
+<tr>
+<td>Medical fixed phone</td>
+<td>Yes, extension 4200</td>
+</tr>
+<tr>
+<td>Security fixed phone</td>
+<td>Yes, extension 4300</td>
+</tr>
+<tr>
+<td>Warden/admin fixed phones</td>
+<td>Recommended if in pilot area</td>
+</tr>
+<tr>
+<td>IP speakers</td>
+<td>Later unless hardware already exists</td>
+</tr>
+<tr>
+<td>Paging devices</td>
+<td>Later or pilot-only</td>
+</tr>
+<tr>
+<td>Mandatory go-live devices</td>
+<td>PBX server, ERT answering device, at least 2 ERT SIP clients, security/medical fixed devices if included</td>
+</tr>
+<tr>
+<td>Later devices</td>
+<td>IP speakers, extra building phones, wardens/admin phones, QR provisioning kiosk</td>
+</tr>
+<tr>
+<td>Registered users target</td>
+<td>Pilot 25; scalable to all users after test</td>
+</tr>
+<tr>
+<td>Simultaneous student calls</td>
+<td>Pilot target 10; scale after LAN capacity testing</td>
+</tr>
+<tr>
+<td>Simultaneous emergency calls</td>
+<td>Pilot target 2–5</td>
+</tr>
+<tr>
+<td>ERT online devices</td>
+<td>Minimum 2, recommended 3+</td>
+</tr>
+<tr>
+<td>Call quality</td>
+<td>Clear two-way audio without frequent drops</td>
+</tr>
+<tr>
+<td>Latency/jitter</td>
+<td>Target under 150 ms one-way latency; low jitter; packet loss under 1%</td>
+</tr>
+<tr>
+<td>Weak Wi-Fi</td>
+<td>Move caller, use fixed phone, or ERT callback from nearest fixed device</td>
+</tr>
+<tr>
+<td>AP overloaded</td>
+<td>Escalate to IT; reduce pilot load; add AP/voice VLAN later</td>
+</tr>
+<tr>
+<td>Emergency priority</td>
+<td>Yes at dialplan/queue level; network QoS later if supported</td>
+</tr>
+<tr>
+<td>Minimum rollout tests</td>
+<td>Registration, SAP-ID calling, 111 queue, escalation, voicemail, recording, fixed devices, health check, backup/restore</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-16-local-system-health-monitoring">Feature 16: Local System Health Monitoring<a class="headerlink" href="#feature-16-local-system-health-monitoring" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_15">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_15" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dashboard name</td>
+<td><strong>UPES-ECS Health Dashboard</strong></td>
+</tr>
+<tr>
+<td>Health statuses</td>
+<td>OK, Warning, Critical, Offline</td>
+</tr>
+<tr>
+<td>Daily readiness check</td>
+<td><strong>Daily ECS Readiness Check</strong></td>
+</tr>
+<tr>
+<td>Weekly drill report</td>
+<td><strong>Weekly ECS Drill Health Report</strong></td>
+</tr>
+<tr>
+<td>Failed check name</td>
+<td><strong>Health Check Failure</strong></td>
+</tr>
+<tr>
+<td>Local dashboard</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>CLI/script MVP</td>
+<td>Acceptable for MVP if dashboard is not ready</td>
+</tr>
+<tr>
+<td>Daily checker</td>
+<td>IT/Admin duty owner or ERT control room assignee</td>
+</tr>
+<tr>
+<td>Pre-drill checker</td>
+<td>ERT Lead + IT owner</td>
+</tr>
+<tr>
+<td>Critical devices</td>
+<td>PBX server, ERT desk phone, ERT mobile clients, security phone, medical phone, AP/switch/router</td>
+</tr>
+<tr>
+<td>Always-online registrations</td>
+<td>ERT desk, ERT Lead, security control, medical room</td>
+</tr>
+<tr>
+<td>Unhealthy system</td>
+<td>PBX down, emergency queue unavailable, zero ERT devices, recording path failed, 111 test failed</td>
+</tr>
+<tr>
+<td>Degraded system</td>
+<td>Low ERT count, high failed registrations, high packet loss, one critical fixed phone offline</td>
+</tr>
+<tr>
+<td>Ready system</td>
+<td>PBX running, required registrations online, test 111/199 passes, recording/voicemail OK, backup recent</td>
+</tr>
+<tr>
+<td>View health</td>
+<td>ERT Lead, control room, IT admin</td>
+</tr>
+<tr>
+<td>Check Asterisk</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check SIP registrations</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check queue availability</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check mobile registration</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check fixed phones</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check recording path</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check voicemail</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check disk usage</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check paging</td>
+<td>Yes if enabled</td>
+</tr>
+<tr>
+<td>Check conference rooms</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check access violations</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Check test call</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Disk warning</td>
+<td>75% usage</td>
+</tr>
+<tr>
+<td>Disk critical</td>
+<td>90% usage</td>
+</tr>
+<tr>
+<td>Min available ERT agents</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Max queue wait</td>
+<td>20 seconds before escalation</td>
+</tr>
+<tr>
+<td>Failed registrations threshold</td>
+<td>Warning after repeated failures from same account/IP; Critical if ERT/fixed devices fail</td>
+</tr>
+<tr>
+<td>AP/user load</td>
+<td>TBD after AP model capacity; warning if pilot call quality degrades</td>
+</tr>
+<tr>
+<td>Packet loss</td>
+<td>Warning above 1%; critical above 3–5% during calls</td>
+</tr>
+<tr>
+<td>Call setup time</td>
+<td>Target under 3 seconds internal; warning over 5 seconds</td>
+</tr>
+<tr>
+<td>Recording fails</td>
+<td>Mark system degraded/critical and alert IT/ERT Lead</td>
+</tr>
+<tr>
+<td>111 test fails</td>
+<td>Critical; do not go live until fixed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-17-emergency-sop-drill-mode">Feature 17: Emergency SOP &amp; Drill Mode<a class="headerlink" href="#feature-17-emergency-sop-drill-mode" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_16">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_16" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOP name</td>
+<td><strong>UPES-ECS Emergency Response SOP</strong></td>
+</tr>
+<tr>
+<td>Drill Mode name</td>
+<td><strong>UPES-ECS Drill Mode</strong></td>
+</tr>
+<tr>
+<td>Test line name</td>
+<td><strong>UPES-ECS Test Emergency Line</strong></td>
+</tr>
+<tr>
+<td>Drill label</td>
+<td><strong>DRILL-ONLY</strong></td>
+</tr>
+<tr>
+<td>Post-drill review</td>
+<td><strong>UPES-ECS Post-Drill Review Report</strong></td>
+</tr>
+<tr>
+<td>ERT answer sentence</td>
+<td>“UPES Emergency Response, this is [Name]. What is your emergency and where are you located?”</td>
+</tr>
+<tr>
+<td>Mandatory questions</td>
+<td>What happened? Exact location? Is anyone injured/in danger? Caller name/SAP ID? Callback extension? Is the situation ongoing?</td>
+</tr>
+<tr>
+<td>Optional questions</td>
+<td>Number of people involved, visible hazards, security/medical/fire need, nearest landmark, whether caller can stay on line</td>
+</tr>
+<tr>
+<td>Incident categories</td>
+<td>Medical, Security, Fire/Smoke, Accident/Injury, Violence/Threat, Infrastructure, Hostel/Warden, Other</td>
+</tr>
+<tr>
+<td>Dispatch decision tree</td>
+<td>Life/safety risk → dispatch immediately + bridge/9000 if needed; unclear → keep caller on line + three-way bridge; non-critical → dispatch without transfer + log</td>
+</tr>
+<tr>
+<td>Paging allowed</td>
+<td>Only when public safety announcement is needed</td>
+</tr>
+<tr>
+<td>Paging approval</td>
+<td>ERT Lead / Incident Commander</td>
+</tr>
+<tr>
+<td>9000 activation</td>
+<td>Major incident, multi-team coordination, serious/unclear emergency</td>
+</tr>
+<tr>
+<td>9000 participants</td>
+<td>ERT Lead, ERT Operator, Security, Medical, Warden/Admin as needed</td>
+</tr>
+<tr>
+<td>Missed voicemail review</td>
+<td>Check dashboard, listen, callback, convert/close, log result</td>
+</tr>
+<tr>
+<td>Incident closure</td>
+<td>ERT Lead/Duty Officer reviews notes and status before closure</td>
+</tr>
+<tr>
+<td>Incident notes</td>
+<td>ERT Operator writes initial notes; ERT Lead finalizes</td>
+</tr>
+<tr>
+<td>Post-incident review</td>
+<td>ERT Lead + relevant departments + IT if system issue</td>
+</tr>
+<tr>
+<td>Response-time expectations</td>
+<td>Answer within 20 seconds if possible; escalation after 20 seconds; missed callback within 5 minutes</td>
+</tr>
+<tr>
+<td>If ERT unsure</td>
+<td>Escalate to ERT Lead and keep caller on line</td>
+</tr>
+<tr>
+<td>Test number</td>
+<td>199</td>
+</tr>
+<tr>
+<td>199 simulates 111</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>199 avoids real escalation</td>
+<td>Yes by default</td>
+</tr>
+<tr>
+<td>199 drill logs only</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>199 recording</td>
+<td>Yes, labelled drill</td>
+</tr>
+<tr>
+<td>Who can call 199</td>
+<td>All authenticated users for setup testing; drill mode controlled by ERT</td>
+</tr>
+<tr>
+<td>Drill frequency</td>
+<td>Monthly basic drill; quarterly full scenario drill</td>
+</tr>
+<tr>
+<td>Real 111 during drills</td>
+<td>Only planned and announced; prefer 199 for routine testing</td>
+</tr>
+<tr>
+<td>Paging drill notice</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Full drill approval</td>
+<td>ERT Lead + university authority</td>
+</tr>
+<tr>
+<td>Drill records</td>
+<td>Kept</td>
+</tr>
+<tr>
+<td>Drill failures</td>
+<td>Create action items</td>
+</tr>
+<tr>
+<td>Action item owner</td>
+<td>ERT Lead for SOP issues, IT Admin for technical issues</td>
+</tr>
+<tr>
+<td>Post-drill format</td>
+<td>Scenario, participants, timings, pass/fail, issues, action items, owner, due date</td>
+</tr>
+<tr>
+<td>Responder training</td>
+<td>Setup training + SOP walk-through + periodic drills</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="feature-18-backup-restore-configuration-export">Feature 18: Backup, Restore &amp; Configuration Export<a class="headerlink" href="#feature-18-backup-restore-configuration-export" title="Permanent link">&para;</a></h1>
+<h2 id="final-filled-decisions_17">Final Filled Decisions<a class="headerlink" href="#final-filled-decisions_17" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backup process name</td>
+<td><strong>UPES-ECS Backup Procedure</strong></td>
+</tr>
+<tr>
+<td>Backup snapshots</td>
+<td><strong>ECS Snapshot YYYYMMDD-HHMM</strong></td>
+</tr>
+<tr>
+<td>Config versions</td>
+<td><strong>ECS Config Version</strong></td>
+</tr>
+<tr>
+<td>Restore checklist</td>
+<td><strong>UPES-ECS Restore Checklist</strong></td>
+</tr>
+<tr>
+<td>Export files</td>
+<td><strong><code>upes-ecs-export-YYYYMMDD.zip</code></strong></td>
+</tr>
+<tr>
+<td>Local Git repo</td>
+<td><strong><code>upes-ecs-config</code></strong></td>
+</tr>
+<tr>
+<td>Back up Asterisk config</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SIP account data</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SAP mappings</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Fixed device mappings</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dialplan</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Queue config</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Voicemail config</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Prompts</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Recordings</td>
+<td>Yes, under retention policy</td>
+</tr>
+<tr>
+<td>Logs</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Health monitoring config</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SOP/drill docs</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Backup before config change</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Daily config backup</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Weekly logs export</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Weekly directory export</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Recording retention</td>
+<td>Separate 90-day retention unless extended</td>
+</tr>
+<tr>
+<td>Automatic rotation</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Versions kept</td>
+<td>Minimum 30 daily config backups + 12 weekly exports</td>
+</tr>
+<tr>
+<td>Primary backup</td>
+<td>Local server backup directory or NAS/TBD</td>
+</tr>
+<tr>
+<td>Secondary backup</td>
+<td>Encrypted offline USB/NAS/TBD</td>
+</tr>
+<tr>
+<td>Encrypted offline copy</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Who can restore</td>
+<td>IT Admin + approved UPES-ECS owner</td>
+</tr>
+<tr>
+<td>Restore instructions</td>
+<td>Local admin docs + printed/offline copy</td>
+</tr>
+<tr>
+<td>Acceptable restore time</td>
+<td>MVP target under 1 hour for config-only restore</td>
+</tr>
+<tr>
+<td>Restore order</td>
+<td>OS/network → Asterisk config → SIP accounts → dialplan/queues → prompts/voicemail → logs/recordings as needed</td>
+</tr>
+<tr>
+<td>Verification checklist</td>
+<td>Service running, SIP registrations, test 199, test 111, recording, voicemail, queue, fixed phones, backup status</td>
+</tr>
+<tr>
+<td>Restore after major changes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Restore test frequency</td>
+<td>Quarterly recommended; monthly during pilot</td>
+</tr>
+<tr>
+<td>Sign-off</td>
+<td>IT Admin + ERT Lead</td>
+</tr>
+<tr>
+<td>Backup failure</td>
+<td>Critical alert; fix before config changes/go-live</td>
+</tr>
+<tr>
+<td>Restore failure</td>
+<td>Escalate to IT lead, use previous snapshot/manual rebuild plan</td>
+</tr>
+<tr>
+<td>Backup encryption</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Encrypted backup scope</td>
+<td>Recordings, logs, SIP account data, SAP mapping, full exports</td>
+</tr>
+<tr>
+<td>Backup access</td>
+<td>IT Admin and approved university authority only</td>
+</tr>
+<tr>
+<td>Credential storage</td>
+<td>Secrets manager/offline sealed credential store; not plain text in docs</td>
+</tr>
+<tr>
+<td>Recordings in backup</td>
+<td>Yes, encrypted</td>
+</tr>
+<tr>
+<td>SIP passwords</td>
+<td>Stored as secrets/hashes/config backups with restricted access</td>
+</tr>
+<tr>
+<td>Backup access logging</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Offline media security</td>
+<td>Physically locked</td>
+</tr>
+<tr>
+<td>Deletion approval</td>
+<td>IT Admin + university authority/ERT Lead</td>
+</tr>
+<tr>
+<td>Retention policy</td>
+<td>Config 30 daily + 12 weekly; logs 1 year; recordings 90 days unless preserved</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="final-cross-feature-decisions">Final Cross-feature Decisions<a class="headerlink" href="#final-cross-feature-decisions" title="Permanent link">&para;</a></h1>
+<h2 id="go-live-decisions">Go-live Decisions<a class="headerlink" href="#go-live-decisions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Filled Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimum feature set before pilot</td>
+<td>SIP registration, SAP ID dialing, 111 queue, ERT answering, escalation, voicemail, recording, basic logs, fixed ERT/security/medical devices, health check, backup</td>
+</tr>
+<tr>
+<td>Must be fully tested</td>
+<td>111, 199, queue, escalation, voicemail, recording, access restrictions, fixed devices, backup/restore</td>
+</tr>
+<tr>
+<td>Staged later</td>
+<td>QR provisioning, full directory UI, multilingual prompts, IP speakers, VLAN/QoS, shift automation, advanced dashboard</td>
+</tr>
+<tr>
+<td>Pilot users</td>
+<td>10–25 users</td>
+</tr>
+<tr>
+<td>ERT pilot members</td>
+<td>Minimum 2, recommended 3+</td>
+</tr>
+<tr>
+<td>Mandatory fixed devices</td>
+<td>ERT room phone, security phone, medical phone if those teams are part of pilot</td>
+</tr>
+<tr>
+<td>Pilot buildings/areas</td>
+<td>Start with ERT room + one academic area + one hostel/security/medical path if possible; final locations TBD</td>
+</tr>
+<tr>
+<td>Go-live date</td>
+<td>TBD after successful pilot</td>
+</tr>
+<tr>
+<td>Go-live approval</td>
+<td>UPES administration + ERT Lead + IT owner</td>
+</tr>
+<tr>
+<td>Rollback conditions</td>
+<td>111 fails, queue unavailable, recording fails, PBX unstable, Wi-Fi unable to support calls, unauthorized access risk, no available ERT coverage</td>
+</tr>
+</tbody>
+</table>
+<h2 id="phase-1-success-criteria">Phase 1 Success Criteria<a class="headerlink" href="#phase-1-success-criteria" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Success Criterion</th>
+<th>Target Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mobile SIP registration over Wi-Fi</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>SAP ID to SAP ID calling</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Any authenticated user can call 111</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>111 reaches ERT queue</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Escalation works</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Emergency voicemail works</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Recording for 111 works</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Student calls not recorded by default</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Paging restricted</td>
+<td>Must pass if paging enabled</td>
+</tr>
+<tr>
+<td>Conference rooms restricted</td>
+<td>Must pass</td>
+</tr>
+<tr>
+<td>Dispatch transfer/bridge works</td>
+<td>Must pass for ERT pilot</td>
+</tr>
+<tr>
+<td>Health checks work</td>
+<td>Must pass at least script/CLI level</td>
+</tr>
+<tr>
+<td>Backup/restore works</td>
+<td>Must pass config restore test</td>
+</tr>
+<tr>
+<td>Drill mode safe</td>
+<td>Must pass using 199</td>
+</tr>
+<tr>
+<td>SOP understood</td>
+<td>Must pass responder drill/training</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="documents-to-create-after-this-decision-set">Documents to Create After This Decision Set<a class="headerlink" href="#documents-to-create-after-this-decision-set" title="Permanent link">&para;</a></h1>
+<ol>
+<li>Final Feature Specification</li>
+<li>Asterisk Dialplan Design</li>
+<li>SIP Account and Role Matrix</li>
+<li>Numbering Plan</li>
+<li>ERT SOP</li>
+<li>Drill/Test SOP</li>
+<li>Student SIP Setup Guide</li>
+<li>ERT SIP Setup Guide</li>
+<li>Local Infrastructure Diagram</li>
+<li>Health Monitoring Checklist</li>
+<li>Backup and Restore Procedure</li>
+<li>Rollout Plan</li>
+<li>Pilot Test Plan</li>
+<li>Security and Access Control Matrix</li>
+<li>Incident Logging Schema</li>
+<li>Emergency Recording and Retention Policy</li>
+<li>Device Provisioning Sheet</li>
+<li>Final Go-live Checklist</li>
+</ol>
+<hr />
+<h1 id="open-tbd-items-you-must-collect-from-upesit">Open TBD Items You Must Collect From UPES/IT<a class="headerlink" href="#open-tbd-items-you-must-collect-from-upesit" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Why Needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Router model/name</td>
+<td>Capacity, firewall, VLAN/QoS support</td>
+</tr>
+<tr>
+<td>Switch model/name</td>
+<td>PoE/IP phone/VLAN support</td>
+</tr>
+<tr>
+<td>Access point model/name</td>
+<td>SIP over Wi-Fi capacity and client isolation behavior</td>
+</tr>
+<tr>
+<td>Asterisk server specs</td>
+<td>Capacity and backup planning</td>
+</tr>
+<tr>
+<td>Asterisk server OS</td>
+<td>Installation and support plan</td>
+</tr>
+<tr>
+<td>Static server IP/subnet/gateway</td>
+<td>SIP client configuration</td>
+</tr>
+<tr>
+<td>Campus Wi-Fi SSID</td>
+<td>Student setup guide</td>
+</tr>
+<tr>
+<td>Whether client isolation is enabled</td>
+<td>SIP/RTP connectivity requirement</td>
+</tr>
+<tr>
+<td>Allowed subnets</td>
+<td>Firewall/access-control rules</td>
+</tr>
+<tr>
+<td>Final ERT member list</td>
+<td>Queue membership</td>
+</tr>
+<tr>
+<td>Final fixed-phone locations</td>
+<td>Numbering and device provisioning</td>
+</tr>
+<tr>
+<td>University recording retention policy</td>
+<td>Legal/admin compliance</td>
+</tr>
+<tr>
+<td>Go-live approval authority</td>
+<td>Operational sign-off</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../mobile-app-reliability/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Mobile-app reliability">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Mobile-app reliability
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../q-and-a/" class="md-footer__link md-footer__link--next" aria-label="Next: Q &amp; A">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Q & A
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Rohan Batra
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rohanbatrain/UPES-ECS" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

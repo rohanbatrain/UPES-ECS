@@ -1,0 +1,5639 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="UPES-ECS — a LAN-first campus emergency communication system: one-number hotline, ERT dispatch, multilingual IVR, and live wallboards.">
+      
+      
+        <meta name="author" content="Rohan Batra">
+      
+      
+        <link rel="canonical" href="https://rohanbatrain.github.io/UPES-ECS/docs/networking/juniper-integration-plan/">
+      
+      
+        <link rel="prev" href="../juniper/">
+      
+      
+        <link rel="next" href="../juniper-feature-catalogue/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Juniper integration plan - UPES-ECS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#upes-ecs-juniper-integration-plan-idea-catalogue" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="UPES-ECS" class="md-header__button md-logo" aria-label="UPES-ECS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25 1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4c0-.56.45-1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.01zM17 12v-2h2v2zm0-4V2h2v6z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UPES-ECS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Juniper integration plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rohanbatrain/UPES-ECS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rohanbatrain/UPES-ECS
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../features/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  How-to guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../operations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../juniper/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Networking
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ai-101/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI-101
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../project/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Project
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="UPES-ECS" class="md-nav__button md-logo" aria-label="UPES-ECS" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.25 1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4c0-.56.45-1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.01zM17 12v-2h2v2zm0-4V2h2v6z"/></svg>
+
+    </a>
+    UPES-ECS
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rohanbatrain/UPES-ECS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rohanbatrain/UPES-ECS
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day-1 quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/go-live-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go-live checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/regional-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional / multilingual deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../architecture/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/bare-minimum-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare-minimum checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/system-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/call-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Call flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/network-and-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network & deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/numbering-and-data-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numbering & data map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/responder-department-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responder / department architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/bill-of-materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bill of materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/deployment-runbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment runbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/scaling-and-ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scaling & HA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../features/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Campus emergency hotline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. ERT emergency queue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Fallback & escalation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Call recording & incident logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Ready-made SIP client deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Announcement & paging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Incident command conference rooms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Responder directory & numbering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Responder status & availability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Voicemail & missed-call recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Call transfer & dispatch workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. LAN-only infrastructure boundary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. SIP security & access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Device provisioning & extensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Wi-Fi-first infrastructure readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-16/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Local system health monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-17/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Emergency SOP & drill mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-18/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Backup, restore & config export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/feature-19/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. AI emergency assistant (line 101)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/student-sip-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Student & staff SIP setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/ert-sip-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT SIP setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/freepbx-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FreePBX build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/dialplan-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialplan design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/backup-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup & restore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/device-provisioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device provisioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/multi-campus-wireless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-campus wireless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/mobile-van-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile van deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/security-hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security hardening
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../operations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/runbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Console runbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/ert-sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT SOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/drill-test-sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drill & test SOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/master-implementation-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master implementation plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/health-monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/incident-logging-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incident logging schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/recording-retention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recording retention policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/rollout-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rollout plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/pilot-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pilot test plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/risk-register/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Risk register & gaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/roles-ownership-raci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roles, ownership & RACI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/ert-roles-and-shifts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ERT roles & shifts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/training-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/test-evidence-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test-evidence sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../juniper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper (flat network)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper integration plan
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper integration plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0-tldr-the-shape-of-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. TL;DR — the shape of it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-hardware-you-actually-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The hardware you actually have
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-one-big-constraint-air-gapped-a-cloud-managed-ap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The one big constraint: air-gapped + a cloud-managed AP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-target-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Target architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-design-decisions-decide-these-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key design decisions (decide these first)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-integration-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The integration catalogue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The integration catalogue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-0-foundational-correctness-voice-just-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 0 — Foundational correctness (voice just works)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 0 — Foundational correctness (voice just works)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t01-virtual-chassis-two-ex2300-c-as-one-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T0.1 — Virtual Chassis (two EX2300-C as one switch)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t02-lldp-med-zero-touch-voice-vlan-poe-dscp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T0.2 — LLDP-MED zero-touch (voice VLAN + PoE + DSCP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-resilience-self-healing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1 — Resilience &amp; self-healing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 1 — Resilience &amp; self-healing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t13-self-healing-poe-junos-event-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T1.3 — Self-healing PoE (Junos event-options)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-security-access-control-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2 — Security &amp; access control at the edge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 2 — Security &amp; access control at the edge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t21-8021x-mac-radius-with-a-local-server-fail-open-for-111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T2.1 — 802.1X + MAC-RADIUS, with a local server, fail-open for 111
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t22-protect-the-failover-dhcp-snooping-dai-ip-source-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T2.2 — Protect the failover (DHCP-snooping + DAI + IP source guard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-app-juniper-integration-the-differentiators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3 — App ⇄ Juniper integration (the differentiators)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 3 — App ⇄ Juniper integration (the differentiators)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t31-network-health-on-the-console-tv-board-via-netconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.1 — Network Health on the Console / TV board (via NETCONF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t32-offline-caller-location-by-switch-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.2 — Offline caller location by switch port ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t33-evacuation-network-mode-asterisk-junos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.3 — Evacuation network mode (Asterisk → Junos) ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-4-wi-fi-mist-ap32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 4 — Wi-Fi / Mist AP32
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 4 — Wi-Fi / Mist AP32">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t41-dscpwmm-so-voice-wins-the-air" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T4.1 — DSCP↔WMM so voice wins the air
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-5-location-ble-safety-asset-visibility-cloud-dependent-be-honest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 5 — Location, BLE &amp; safety-asset visibility (cloud-dependent — be honest)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-6-van-mesh-multi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 6 — Van, mesh &amp; multi-site
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-7-lifecycle-config-as-code-ztp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 7 — Lifecycle, config-as-code &amp; ZTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-poe-budget-worksheet-real-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. PoE budget worksheet (real numbers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-air-gapped-mist-commissioning-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Air-gapped Mist commissioning workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-this-hardware-cant-do-honest-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. What this hardware can't do — honest limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-phased-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Phased roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-proposed-repo-additions-deployjuniper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Proposed repo additions (deploy/juniper/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-legend-cross-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Legend &amp; cross-references
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../juniper-feature-catalogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper feature catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../juniper-live-discovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Juniper live discovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ai-101/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI-101
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI-101
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/integration-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai-101/todo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TODO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/numbering-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numbering plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sip-account-role-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SIP account / role matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/local-infrastructure-diagram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local infrastructure diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/voice-prompt-scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice-prompt scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/quick-cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick cards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/mobile-app-reliability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile-app reliability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/decision-questionnaire/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decision questionnaire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/q-and-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q & A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../project/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/production-readiness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadblocks-and-solutions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadblocks & solutions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/field-test-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field-test issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/demo-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demo evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/doc-fixes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doc fixes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0-tldr-the-shape-of-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. TL;DR — the shape of it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-hardware-you-actually-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The hardware you actually have
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-one-big-constraint-air-gapped-a-cloud-managed-ap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The one big constraint: air-gapped + a cloud-managed AP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-target-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Target architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-design-decisions-decide-these-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key design decisions (decide these first)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-integration-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The integration catalogue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The integration catalogue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-0-foundational-correctness-voice-just-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 0 — Foundational correctness (voice just works)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 0 — Foundational correctness (voice just works)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t01-virtual-chassis-two-ex2300-c-as-one-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T0.1 — Virtual Chassis (two EX2300-C as one switch)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t02-lldp-med-zero-touch-voice-vlan-poe-dscp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T0.2 — LLDP-MED zero-touch (voice VLAN + PoE + DSCP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-resilience-self-healing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1 — Resilience &amp; self-healing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 1 — Resilience &amp; self-healing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t13-self-healing-poe-junos-event-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T1.3 — Self-healing PoE (Junos event-options)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-security-access-control-at-the-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2 — Security &amp; access control at the edge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 2 — Security &amp; access control at the edge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t21-8021x-mac-radius-with-a-local-server-fail-open-for-111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T2.1 — 802.1X + MAC-RADIUS, with a local server, fail-open for 111
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t22-protect-the-failover-dhcp-snooping-dai-ip-source-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T2.2 — Protect the failover (DHCP-snooping + DAI + IP source guard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-app-juniper-integration-the-differentiators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3 — App ⇄ Juniper integration (the differentiators)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 3 — App ⇄ Juniper integration (the differentiators)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t31-network-health-on-the-console-tv-board-via-netconf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.1 — Network Health on the Console / TV board (via NETCONF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t32-offline-caller-location-by-switch-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.2 — Offline caller location by switch port ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t33-evacuation-network-mode-asterisk-junos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T3.3 — Evacuation network mode (Asterisk → Junos) ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-4-wi-fi-mist-ap32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 4 — Wi-Fi / Mist AP32
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tier 4 — Wi-Fi / Mist AP32">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#t41-dscpwmm-so-voice-wins-the-air" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T4.1 — DSCP↔WMM so voice wins the air
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-5-location-ble-safety-asset-visibility-cloud-dependent-be-honest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 5 — Location, BLE &amp; safety-asset visibility (cloud-dependent — be honest)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-6-van-mesh-multi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 6 — Van, mesh &amp; multi-site
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-7-lifecycle-config-as-code-ztp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 7 — Lifecycle, config-as-code &amp; ZTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-poe-budget-worksheet-real-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. PoE budget worksheet (real numbers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-air-gapped-mist-commissioning-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Air-gapped Mist commissioning workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-this-hardware-cant-do-honest-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. What this hardware can't do — honest limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-phased-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Phased roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-proposed-repo-additions-deployjuniper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Proposed repo additions (deploy/juniper/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-legend-cross-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Legend &amp; cross-references
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/rohanbatrain/UPES-ECS/edit/main/docs/networking/juniper-integration-plan.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="upes-ecs-juniper-integration-plan-idea-catalogue">UPES-ECS × Juniper — Integration Plan &amp; Idea Catalogue<a class="headerlink" href="#upes-ecs-juniper-integration-plan-idea-catalogue" title="Permanent link">&para;</a></h1>
+<p><strong>What this is.</strong> An exhaustive, <em>Juniper-specific</em> plan for how to fold the actual gear you
+have — <strong>1× SRX (300/320), 2× EX2300-C-12P, 2× Mist AP32</strong> — into the UPES Emergency
+Communication System so the network stops being "just cabling" and starts being an active,
+resilient, <em>sense-making</em> part of the emergency platform.</p>
+<p>It is deliberately <strong>not generic</strong>. Every idea below names a real Junos/Mist feature, says
+whether it works <strong>on your air-gapped LAN with no cloud</strong>, ties back to a real file in this
+repo, and is graded by impact/effort so you can pick.</p>
+<blockquote>
+<p><strong>Scope note.</strong> This is a <em>planning + ideas</em> document — the catalogue, the architecture, the
+decisions, and config <em>sketches</em>. It complements (does not replace) the three existing
+hands-on Juniper guides:
+- <a href="Juniper.md">Docs/Juniper.md</a> — the flat, no-VLAN pilot (current QEMU-on-laptop deployment).
+- <a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — voice VLAN + CoS + PoE + firewall for the <strong>VIP</strong> HA cluster.
+- <a href="../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — same, for the <strong>name-failover</strong> (no-VIP) cluster.</p>
+<p>Where those already carry a full <code>set</code>-command block (CoS, the SRX zone policy), this plan
+<em>references</em> them rather than repeating them, and spends its length on <strong>new</strong> ideas.</p>
+<p><strong>Want the complete menu, not just the curated picks?</strong> See the companion
+<a href="Juniper-Feature-Catalogue.md">Docs/Juniper-Feature-Catalogue.md</a> — <em>every</em> addable Juniper
+feature on your exact hardware, each graded for the air-gap (🟢 offline / 🟡 persisted / 🔴 cloud).</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#0-tldr--the-shape-of-it">0. TL;DR — the shape of it</a></li>
+<li><a href="#1-the-hardware-you-actually-have">1. The hardware you actually have</a></li>
+<li><a href="#2-the-one-big-constraint-air-gapped--a-cloud-managed-ap">2. The one big constraint: air-gapped + a cloud-managed AP</a></li>
+<li><a href="#3-target-architecture">3. Target architecture</a></li>
+<li><a href="#4-key-design-decisions-decide-these-first">4. Key design decisions (decide these first)</a></li>
+<li><a href="#5-the-integration-catalogue">5. The integration catalogue (7 tiers)</a></li>
+<li><a href="#tier-0--foundational-correctness-voice-just-works">Tier 0 — Foundational correctness</a></li>
+<li><a href="#tier-1--resilience--self-healing">Tier 1 — Resilience &amp; self-healing</a></li>
+<li><a href="#tier-2--security--access-control-at-the-edge">Tier 2 — Security &amp; access control at the edge</a></li>
+<li><a href="#tier-3--app--juniper-integration-the-differentiators">Tier 3 — App ⇄ Juniper integration (the differentiators)</a></li>
+<li><a href="#tier-4--wi-fi--mist-ap32">Tier 4 — Wi-Fi / Mist AP32</a></li>
+<li><a href="#tier-5--location-ble--safety-asset-visibility-cloud-dependent-be-honest">Tier 5 — Location, BLE &amp; safety-asset visibility</a></li>
+<li><a href="#tier-6--van-mesh--multi-site">Tier 6 — Van, mesh &amp; multi-site</a></li>
+<li><a href="#tier-7--lifecycle-config-as-code--ztp">Tier 7 — Lifecycle, config-as-code &amp; ZTP</a></li>
+<li><a href="#6-poe-budget-worksheet-real-numbers">6. PoE budget worksheet (real numbers)</a></li>
+<li><a href="#7-air-gapped-mist-commissioning-workflow">7. Air-gapped Mist commissioning workflow</a></li>
+<li><a href="#8-what-this-hardware-cant-do--honest-limits">8. What this hardware can't do — honest limits</a></li>
+<li><a href="#9-phased-roadmap">9. Phased roadmap</a></li>
+<li><a href="#10-proposed-repo-additions-deployjuniper">10. Proposed repo additions (<code>deploy/juniper/</code>)</a></li>
+<li><a href="#11-legend--cross-references">11. Legend &amp; cross-references</a></li>
+</ul>
+<hr />
+<h2 id="0-tldr-the-shape-of-it">0. TL;DR — the shape of it<a class="headerlink" href="#0-tldr-the-shape-of-it" title="Permanent link">&para;</a></h2>
+<p><strong>The thesis:</strong> on this campus the network <em>is</em> the 111 path. Two AP32s carry the softphones,
+two EX2300-Cs power and switch everything, and one SRX guards the edge. Making that "senseful
+and impactful" means three moves:</p>
+<ol>
+<li><strong>Make the voice fabric bulletproof and zero-touch</strong> — Virtual-Chassis the two EX's into one
+   logical switch, auto-onboard phones with <strong>LLDP-MED</strong>, protect the ARP/mDNS failover with
+   <strong>DHCP-snooping + Dynamic ARP Inspection</strong>, and give RTP a strict-priority queue everywhere.</li>
+<li><strong>Make the network <em>self-heal and self-report</em> with zero cloud</strong> — Junos <code>event-options</code>
+   power-cycles a hung AP/phone by itself; NETCONF/PyEZ feeds a live <strong>Network Health</strong> panel to
+   the Ops Console and TV board; syslog and sFlow land in the VM next to the call data.</li>
+<li><strong>Wire the app to the network both ways</strong> — the single most impactful, <em>fully-offline</em> idea in
+   this doc: <strong>locate a 111 caller by the switch port they're plugged into</strong> (IP→MAC→port→room),
+   and let an <strong>evacuation</strong> on the PBX flip the network into an "evacuation mode" that frees
+   Wi-Fi airtime and prioritises emergency phones.</li>
+</ol>
+<p>Top picks by impact (detail in the tiers):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Idea</th>
+<th>Tier</th>
+<th style="text-align: center;">Offline?</th>
+<th style="text-align: center;">Impact</th>
+<th style="text-align: center;">Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⭐⭐</td>
+<td><strong>Caller location by switch port</strong> (IP→MAC→port→room)</td>
+<td><a href="#t32--offline-caller-location-by-switch-port-">T3.2</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">Very high</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>Network Health panel</strong> on Console/TV via NETCONF</td>
+<td><a href="#t31--network-health-on-the-console--tv-board-via-netconf-">T3.1</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>Evacuation network mode</strong> (PBX → Junos op script)</td>
+<td><a href="#t33--evacuation-network-mode-asterisk--junos-">T3.3</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>EX Virtual Chassis</strong> (2 → 1 logical switch)</td>
+<td><a href="#t01--virtual-chassis-two-ex2300-c-as-one-switch">T0.1</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>LLDP-MED zero-touch phone onboarding</strong></td>
+<td><a href="#t02--lldp-med-zero-touch-voice-vlan--poe--dscp">T0.2</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>Self-healing PoE</strong> (<code>event-options</code> bounces a dead AP)</td>
+<td><a href="#t13--self-healing-poe-junos-event-options">T1.3</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>DHCP-snooping + DAI + IP source guard</strong> (protect failover)</td>
+<td><a href="#t22--protect-the-failover-dhcp-snooping--dai--ip-source-guard">T2.2</a></td>
+<td style="text-align: center;">🟢</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td><strong>Mist wireless mesh</strong> = the van's "corner repeaters"</td>
+<td><a href="#t61--wireless-mesh--the-corner-repeaters-you-already-planned">T6.1</a></td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Low</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: 🟢 works on the air-gapped LAN with <strong>no cloud</strong> · 🟡 needs a <strong>brief maintenance
+uplink</strong> (commission/update) then persists · 🔴 needs <strong>live cloud</strong>. Full legend at the
+<a href="#11-legend--cross-references">bottom</a>.</p>
+<hr />
+<h2 id="1-the-hardware-you-actually-have">1. The hardware you actually have<a class="headerlink" href="#1-the-hardware-you-actually-have" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th style="text-align: center;">Qty</th>
+<th>What it is (model-specific)</th>
+<th>Its job in UPES-ECS</th>
+<th>Watch-outs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SRX300 / SRX320</strong></td>
+<td style="text-align: center;">1</td>
+<td>Branch services gateway. 8× GE; SRX320 adds a MPIM slot. ~1 Gbps FW / low-hundreds Mbps IPS. Zones, DHCP, NAT, NTP, screens, no HA (single unit).</td>
+<td>Edge firewall + DHCP + <strong>LAN-only enforcement</strong> + local NTP master + (optional) Internet during maintenance.</td>
+<td>Single unit = no chassis-cluster HA. <strong>SIP ALG must be OFF.</strong> Keep it <em>out of the 111 audio path</em> (see §2).</td>
+</tr>
+<tr>
+<td><strong>EX2300-C-12P</strong></td>
+<td style="text-align: center;">2</td>
+<td>Compact <strong>fanless</strong> L3 switch: 12× 1GbE <strong>PoE+/PoE</strong> (802.3af/at), <strong>124 W</strong> PoE budget each, 2× <strong>SFP+</strong> (10 G) uplinks, single internal PSU. Supports <strong>Virtual Chassis (up to 4), LLDP-MED, 802.1X, DHCP-snooping/DAI, sFlow, CoS (8 queues), RSTP</strong>.</td>
+<td>The voice fabric: powers + switches phones, APs and the PBX; carries the voice VLAN; enforces QoS and edge security.</td>
+<td><strong>124 W is not huge</strong> — budget it (§6). Fanless = silent but no PSU redundancy → put it on a UPS. No streaming-telemetry/gNMI on EX2300 — use <strong>sFlow + NETCONF + syslog</strong>.</td>
+</tr>
+<tr>
+<td><strong>Mist AP32</strong></td>
+<td style="text-align: center;">2</td>
+<td>Wi-Fi 6 (802.11ax), <strong>4×4:4</strong> @5 GHz (2.4 Gbps) + 2×2 @2.4 GHz, a <strong>dedicated 3rd scanning radio</strong> (security/location/synthetic-test), and <strong>BLE</strong> (asset/location). <strong>Cloud-managed only.</strong> Wants <strong>802.3at (19.5 W)</strong>; on 802.3af it drops 5 GHz to 2×2.</td>
+<td>Carries the Android/Linphone softphones that dial <strong>111</strong> over campus Wi-Fi. BLE + 3rd radio unlock location/WIDS <em>when cloud-connected</em>.</td>
+<td><strong>Managed from the Mist cloud.</strong> Air-gapped, it runs on <strong>configuration persistence</strong> but you lose Marvis/Location/webhooks at runtime (see §2).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Roles in one line:</strong> <em>AP = how students reach 111 over Wi-Fi; EX = powers/switches/prioritises
+everything and is your programmable integration surface; SRX = the guard that keeps it
+LAN-only and the clock that keeps it honest.</em></p>
+<hr />
+<h2 id="2-the-one-big-constraint-air-gapped-a-cloud-managed-ap">2. The one big constraint: air-gapped + a cloud-managed AP<a class="headerlink" href="#2-the-one-big-constraint-air-gapped-a-cloud-managed-ap" title="Permanent link">&para;</a></h2>
+<p>You chose <strong>fully offline / air-gapped</strong>, and the golden rule of this project is <em>"111 never
+depends on AI, internet, or cellular"</em> (<a href="../README.md#golden-rules">README</a>). That is exactly
+right — <strong>and it collides head-on with the AP32 being a cloud-managed access point.</strong> Facing
+that squarely is what keeps this plan honest.</p>
+<p><strong>What actually happens to an AP32 with no Internet:</strong></p>
+<ul>
+<li><strong>It keeps serving Wi-Fi.</strong> With <strong>configuration persistence</strong> enabled, the AP stores its full
+  config on-board and, even if it can never reach the Mist cloud, it boots and forwards on that
+  stored config. Your 111-over-Wi-Fi path <em>survives</em> an air-gap. This is the linchpin — <strong>it must
+  be turned on during commissioning</strong> (§7).</li>
+<li><strong>You lose the cloud brain at runtime.</strong> No <strong>Marvis</strong> (AI troubleshooting), no <strong>Location</strong>
+  live-view / wayfinding, no <strong>webhooks</strong>, no config changes, no firmware pushes, no SLE metrics.
+  The AP marks itself "disconnected" after ~90 s without cloud and just… keeps working, blind.</li>
+<li><strong>Initial claim/config <em>requires</em> the cloud once.</strong> A Mist AP cannot be configured with no
+  cloud ever. It must be <strong>commissioned through Mist at least once</strong> (a bench with temporary
+  Internet), then deployed offline (§7).</li>
+</ul>
+<p><strong>The consequence for this plan:</strong> ideas that need the cloud (Tier 5 location, Mist webhooks) are
+graded 🔴/🟡 and treated as <em>"if you ever grant a maintenance uplink"</em> bonuses — <strong>never</strong> as
+things 111 relies on. The <strong>weight of the plan is on Junos features on the EX/SRX that need no
+cloud at all</strong> (Tiers 0–3, 6–7), plus one offline substitute for the headline cloud feature:
+<strong><a href="#t32--offline-caller-location-by-switch-port-">T3.2 caller-location by switch port</a></strong> replaces
+"Mist located the caller" with "the switch knows which room the call is plugged into."</p>
+<p><strong>Two honest options to widen what you get</strong> (pick per your security posture):</p>
+<ul>
+<li><strong>Option A — pure air-gap (what you chose).</strong> Commission APs on a bench, enable persistence,
+  deploy. Runtime = zero cloud. Everything 🟢/🟡-<em>persisted</em> in this doc works; everything 🔴 does
+  not. <em>This is a perfectly defensible emergency-grade choice.</em></li>
+<li><strong>Option B — occasional maintenance window.</strong> A <strong>firewalled, scheduled</strong> SRX egress (NTP/DNS +
+  Mist's IPs only, closed the rest of the time) lets you pull Marvis insights, firmware and
+  Location during a maintenance slot, then close it. Voice/111 stays LAN-only the whole time.
+  This unlocks the 🔴 tier without weakening the emergency guarantee. <em>Recommend considering this
+  later; not required for go-live.</em></li>
+</ul>
+<blockquote>
+<p><strong>Design honesty:</strong> if the site is <em>truly, permanently</em> air-gapped and you want zero cloud
+dependency <strong>even for commissioning</strong>, a cloud-managed AP is an awkward fit and a controller-
+based/autonomous AP would be philosophically cleaner. But since you already own AP32s, the
+<strong>commission-once + persistence</strong> path is the correct, supported way to make them behave as
+offline emergency Wi-Fi. Just know the trade you're making.</p>
+</blockquote>
+<hr />
+<h2 id="3-target-architecture">3. Target architecture<a class="headerlink" href="#3-target-architecture" title="Permanent link">&para;</a></h2>
+<p>One voice fabric, two Wi-Fi cells, one guarded edge. Works for <strong>both</strong> current deployment
+shapes: the single <strong>QEMU-PBX-on-a-laptop</strong> (flat, <a href="Juniper.md">Docs/Juniper.md</a>) <em>and</em> the
+<strong>2-Jetson HA cluster</strong> (<a href="../deploy/jetson/README.md">deploy/jetson</a>).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>              Internet  (absent by default; maintenance-window only — Option B)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>             ┌────┴─────┐  ge-0/0/0 = untrust/WAN
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>             │  SRX300  │  zones: UNTRUST | VOICE | MGMT | GUEST
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>             │  / 320   │  DHCP · NTP master · LAN-only voice policy · SIP ALG OFF · screens
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>             └────┬─────┘  ge-0/0/1 → EX (1G copper uplink)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                  │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>     ┌────────────┴─────────────────────────────────┐
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>     │        EX2300-C-12P   VIRTUAL CHASSIS         │   member0 + member1 = ONE logical switch
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>     │   ┌───────────┐            ┌───────────┐      │   VCP = SFP+ DAC between the two members
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>     │   │  member0  │═══ VCP ════│  member1  │      │   irb.30 = voice-VLAN gateway (10.20.30.254)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>     │   │  124 W PoE│  (10G DAC) │  124 W PoE│      │   CoS: RTP=EF strict-priority everywhere
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>     │   └─┬───┬───┬─┘            └─┬───┬───┬─┘      │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>     └─────┼───┼───┼────────────────┼───┼───┼────────┘
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        AP32-A │   │             AP32-B │   │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>       (PoE+)  │   └── PBX/Jetson ──────┘   └── wired fixed emergency phones (4xxx)
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>               │        (LAG ae0 across BOTH members — link + member resilient)
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        wired IP phones ── LLDP-MED auto → voice VLAN + PoE class + DSCP  → dial 111
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>   Wi-Fi:  AP32-A/B  →  SSID &quot;upes-voice&quot; (client isolation OFF, WMM=voice)  → Linphone → 111
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                        SSID &quot;upes-guest&quot; (isolated, GUEST VLAN, blocked from voice)
+</code></pre></div>
+<p><strong>VLAN / IP plan</strong> (reuse the existing convention so nothing else changes):</p>
+<table>
+<thead>
+<tr>
+<th>VLAN</th>
+<th style="text-align: center;">ID</th>
+<th>Subnet</th>
+<th>Purpose</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>voice</code></td>
+<td style="text-align: center;">30</td>
+<td><code>10.20.30.0/24</code></td>
+<td>Phones, APs' voice SSID, PBX/Jetsons, VIP</td>
+<td>GW <code>.254</code> (irb.30). VIP <code>.1</code> / Jetsons <code>.11/.12</code> <strong>outside</strong> DHCP. Matches the jetson guides.</td>
+</tr>
+<tr>
+<td><code>mgmt</code></td>
+<td style="text-align: center;">99</td>
+<td><code>10.20.99.0/24</code></td>
+<td>EX VC mgmt, SRX mgmt, AP mgmt IP</td>
+<td>SSH-only, RE-protect filter, no user traffic.</td>
+</tr>
+<tr>
+<td><code>guest</code></td>
+<td style="text-align: center;">40</td>
+<td><code>10.20.40.0/24</code></td>
+<td>Guest/student Wi-Fi (non-responders)</td>
+<td><strong>Blocked from voice</strong>, internet-only (or nothing, air-gapped). Isolated SSID.</td>
+</tr>
+</tbody>
+</table>
+<p>The RTP range (<code>10000–10019/udp</code>), SIP (<code>5060/udp</code>), CardDAV (<code>5232/tcp</code>), status API (<code>:8090</code>),
+Console (<code>:8080</code>) all come from this repo — keep the firewall/QoS ranges pinned to
+<a href="../deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> and
+<a href="../deploy/asterisk/pjsip.conf">deploy/asterisk/pjsip.conf</a>.</p>
+<hr />
+<h2 id="4-key-design-decisions-decide-these-first">4. Key design decisions (decide these first)<a class="headerlink" href="#4-key-design-decisions-decide-these-first" title="Permanent link">&para;</a></h2>
+<p>These four choices shape everything downstream. Recommendations given; each is reversible.</p>
+<p><strong>D1 — Virtual Chassis vs. two independent switches.</strong>
+<em>Recommend: </em><em>Virtual Chassis</em><em>.</em> One config, one management IP, the voice VLAN spans both members
+by definition (no manual trunk to get wrong), and the PBX can LAG across members. Trade-off: a VC
+is one control-plane failure domain and one upgrade domain. For a 2-switch emergency edge the
+operational simplicity wins, <em>provided</em> you keep <code>commit confirmed</code> discipline and dual VCP links.
+(If you prefer hard failure-isolation, run them independent + RSTP + trunk the voice VLAN as the
+jetson guides already describe — both are documented paths.)</p>
+<p><strong>D2 — Where does Layer 3 / the default gateway live?</strong>
+<em>Recommend: </em><em>gateway on the EX VC</em><em> (<code>irb.30</code>), SRX as pure edge.</em> Because the EX VC is your most
+available element (two members, on a UPS) and the SRX is a single unit, hosting the voice-subnet
+gateway on the EX keeps intra-campus routing alive even if the SRX is down. The SRX then only does
+untrust/edge + DHCP-relay/NTP. On the flat pilot there's no inter-VLAN at all, so this only matters
+once you split voice/guest/mgmt.</p>
+<p><strong>D3 — 802.1X now, or later?</strong>
+<em>Recommend: </em><em>structure for it, enable it after go-live</em><em>, and always fail-open to voice for
+emergency phones.</em> A campus swims in unknown devices; port access control is genuinely valuable
+(Tier 2). But an emergency system must <strong>never</strong> let a RADIUS outage block 111. So: emergency
+phones get <strong>MAC-bypass static allow</strong>, and the port's <strong>server-fail action = permit to voice</strong>.
+Needs a <strong>local</strong> RADIUS (FreeRADIUS in the VM/Jetson) since there's no cloud. See <a href="#t21--8021x--mac-radius-with-a-local-server-fail-open-for-111">T2.1</a>.</p>
+<p><strong>D4 — DHCP + NTP location.</strong>
+<em>Recommend: </em><em>DHCP on the EX VC IRB or the SRX; NTP master on the SRX</em><em> (fallback: a Jetson).</em>
+Air-gapped means <strong>there is no internet clock</strong> — call records, fail2ban, TLS and logs all drift
+without a local time source. Make the SRX the stratum-1-ish local NTP master and point every
+device (EX, APs, PBX, phones) at it. This is a small change with outsized correctness value.</p>
+<hr />
+<h2 id="5-the-integration-catalogue">5. The integration catalogue<a class="headerlink" href="#5-the-integration-catalogue" title="Permanent link">&para;</a></h2>
+<p>Seven tiers, roughly in dependency order. Each idea: <strong>what it is (Juniper feature)</strong> → <strong>why it
+matters for <em>this</em> system</strong> → <strong>offline grade</strong> → pointer/sketch. ⭐ = spotlight (config sketch
+below the table).</p>
+<h3 id="tier-0-foundational-correctness-voice-just-works">Tier 0 — Foundational correctness (voice just works)<a class="headerlink" href="#tier-0-foundational-correctness-voice-just-works" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Juniper feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T0.1</strong> ⭐</td>
+<td>Virtual Chassis: 2 EX → 1 switch</td>
+<td><code>virtual-chassis</code>, VCP on SFP+</td>
+<td>Voice VLAN spans both members automatically; one config; PBX can LAG across members (<a href="#tier-1--resilience--self-healing">T1.2</a>).</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.2</strong> ⭐</td>
+<td>Zero-touch phone onboarding</td>
+<td><strong>LLDP-MED</strong> + voice VLAN</td>
+<td>Plug an IP phone in → it's auto-placed in VLAN 30, gets its PoE class and DSCP. No per-port hand-config for 4xxx phones.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.3</strong></td>
+<td>RTP strict-priority end-to-end</td>
+<td><strong>CoS</strong> (EF/queue 5, CS3 sig)</td>
+<td>Voice never drops under load. Full block already written — reuse it.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.4</strong></td>
+<td>PoE with emergency priority</td>
+<td><code>poe interface … priority high</code>, <code>guard-band</code></td>
+<td>If the 124 W budget is tight, emergency phones + APs win contention, best-effort loads get cut first.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.5</strong></td>
+<td>Loop/rogue safety on access ports</td>
+<td><strong>RSTP edge + <code>bpdu-block-on-edge</code></strong>, <strong>root-guard</strong>, <strong>storm-control</strong>, <strong>mac-limiting</strong></td>
+<td>A student plugging a cheap switch/loop into a wall port could take down the emergency LAN. These make the edge tamper-tolerant.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.6</strong></td>
+<td>LAN-only edge + no SIP ALG + DHCP + NTP</td>
+<td>SRX <strong>zones/policies</strong>, <code>security alg sip disable</code>, DHCP, <code>system ntp</code></td>
+<td>Keeps SIP/RTP inside the campus, off the internet; the ALG-off rule is the classic Juniper voice landmine. Full SRX block already written.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T0.7</strong></td>
+<td>Voice SSID reachability</td>
+<td>Mist WLAN <strong>isolation = None</strong></td>
+<td>The #1 Wi-Fi gotcha: client isolation ON = phones can't reach the PBX. Off on responder SSID; guest stays isolated.</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table>
+<p>For T0.3 / T0.6 config, use the ready blocks in
+<a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md §5 &amp; §9</a>. New spotlights:</p>
+<h4 id="t01-virtual-chassis-two-ex2300-c-as-one-switch">T0.1 — Virtual Chassis (two EX2300-C as one switch)<a class="headerlink" href="#t01-virtual-chassis-two-ex2300-c-as-one-switch" title="Permanent link">&para;</a></h4>
+<p>Cable the two members with a <strong>DAC on the SFP+ ports</strong> and make those ports VCPs. Result: one
+logical switch, <code>member0</code>/<code>member1</code>, single config, voice VLAN present on both by nature.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>## On each member&#39;s SFP+ ports, convert to Virtual-Chassis ports (run once):
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>request virtual-chassis vc-port set pic-slot 1 port 0        ## the two SFP+ become VCPs
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>## Preprovision so member IDs/roles are deterministic:
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>set virtual-chassis preprovisioned
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>set virtual-chassis member 0 role routing-engine serial-number &lt;SW1-serial&gt;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>set virtual-chassis member 1 role routing-engine serial-number &lt;SW2-serial&gt;
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>set virtual-chassis no-split-detection            ## 2-member VC: avoid split-brain lockout
+</code></pre></div>
+<blockquote>
+<p>With <strong>both</strong> SFP+ used as VCP, uplink to the SRX over a <strong>1 G copper</strong> port — fine, VoIP is
+tiny. If you'd rather keep a 10 G uplink, use <em>one</em> SFP+ as VCP (less-resilient single VC link)
+and one as uplink. <strong>Validate exact <code>vc-port</code>/PIC syntax on your Junos version.</strong></p>
+</blockquote>
+<h4 id="t02-lldp-med-zero-touch-voice-vlan-poe-dscp">T0.2 — LLDP-MED zero-touch (voice VLAN + PoE + DSCP)<a class="headerlink" href="#t02-lldp-med-zero-touch-voice-vlan-poe-dscp" title="Permanent link">&para;</a></h4>
+<p>The EX auto-detects a VoIP phone via LLDP-MED and drops it in the voice VLAN with the right power
+and marking — so a fixed 4xxx phone is truly plug-and-play, and a data-PC behind the phone lands
+on a separate VLAN.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>set vlans voice vlan-id 30
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>set vlans data  vlan-id 20
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>set switch-options voip interface ge-0/0/0.0 vlan voice
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>set switch-options voip interface ge-0/0/0.0 forwarding-class VOICE-RTP
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>set protocols lldp interface all
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>set protocols lldp-med interface all
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>## data VLAN carries the phone&#39;s pass-through PC port:
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>set interfaces ge-0/0/0 unit 0 family ethernet-switching interface-mode access
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members data
+</code></pre></div>
+<hr />
+<h3 id="tier-1-resilience-self-healing">Tier 1 — Resilience &amp; self-healing<a class="headerlink" href="#tier-1-resilience-self-healing" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Juniper feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T1.1</strong></td>
+<td>Gateway redundancy</td>
+<td><strong>IRB on EX VC</strong> (+ optional VRRP if you keep 2 L3 boxes)</td>
+<td>Voice-subnet gateway survives an SRX outage (D2). VRRP only if you add a second L3 device.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T1.2</strong></td>
+<td>PBX/Jetson dual-homed LAG</td>
+<td><strong>aggregated-ethernet <code>ae0</code> + LACP</strong> across VC members</td>
+<td>The PBX keeps a link if one VC member or one cable dies — the thing 111 depends on most gets the most link resilience.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T1.3</strong> ⭐</td>
+<td>Self-healing PoE</td>
+<td><strong><code>event-options</code></strong> policy + op script</td>
+<td>An AP/phone that hangs gets its PoE power-cycled automatically — no human, no cloud.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T1.4</strong></td>
+<td>Local telemetry that survives air-gap</td>
+<td><strong>syslog</strong> + <strong>sFlow</strong> to the VM; <strong>NTP</strong> master</td>
+<td>With no cloud, on-LAN syslog/sFlow/NTP are your <em>only</em> observability + a correct clock.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T1.5</strong></td>
+<td>Wi-Fi cell survivability</td>
+<td>One AP32 <strong>per</strong> VC member + overlapping coverage</td>
+<td>Lose a member or an AP and the other still lights the area; put each AP's PoE on a different member.</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td><strong>T1.6</strong></td>
+<td>Safe change control</td>
+<td><strong><code>commit confirmed</code></strong>, <strong>rescue config</strong>, <code>commit</code> archival</td>
+<td>Auto-rollback if a change breaks the emergency LAN — already the house style in the jetson guides.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T1.7</strong></td>
+<td>Power continuity</td>
+<td>EX2300-C single PSU → <strong>UPS</strong>; PoE priority (<a href="#tier-0--foundational-correctness-voice-just-works">T0.4</a>)</td>
+<td>Fanless/compact means no PSU redundancy; a UPS on each EX keeps 111 up through a blip.</td>
+<td style="text-align: center;">🟢 (ops)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t13-self-healing-poe-junos-event-options">T1.3 — Self-healing PoE (Junos <code>event-options</code>)<a class="headerlink" href="#t13-self-healing-poe-junos-event-options" title="Permanent link">&para;</a></h4>
+<p>When the switch sees an LLDP neighbour drop on an AP/phone port (device hung), run a script that
+bounces PoE on just that port. Turns a "walk to the closet and re-plug the AP" incident into a
+self-heal — and it needs <strong>no cloud and no Mist</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>## Sketch — validate script/action syntax for your Junos version.
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>set event-options policy heal-poe events [ SNMP_TRAP_LINK_DOWN lldpd_neighbor_down ]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>set event-options policy heal-poe within 60 trigger on 1
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>set event-options policy heal-poe then event-script bounce-poe.py arguments interface &quot;{$interface}&quot;
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>set event-options event-script file bounce-poe.py
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>## bounce-poe.py: deactivate then reactivate `poe interface &lt;if&gt;` (or set/delete `poe interface &lt;if&gt; disable`),
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>## with a guard so it only fires for known AP/phone ports and rate-limits itself.
+</code></pre></div>
+<blockquote>
+<p>Ship <code>bounce-poe.py</code> in the proposed <a href="#10-proposed-repo-additions-deployjuniper"><code>deploy/juniper/scripts/</code></a>.
+Pair with a syslog line so the Console shows <em>"auto-recovered AP-B PoE at 14:03"</em> (<a href="#tier-3--app--juniper-integration-the-differentiators">T3.4</a>).</p>
+</blockquote>
+<hr />
+<h3 id="tier-2-security-access-control-at-the-edge">Tier 2 — Security &amp; access control at the edge<a class="headerlink" href="#tier-2-security-access-control-at-the-edge" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Juniper feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T2.1</strong> ⭐</td>
+<td>Port access control, fail-open for 111</td>
+<td><strong>802.1X + MAC-RADIUS</strong>, <code>server-fail permit</code>, MAC-bypass</td>
+<td>Only known phones/APs onto the voice VLAN; unknown devices → guest/deny. But emergency phones are <strong>never</strong> blocked by a RADIUS outage.</td>
+<td style="text-align: center;">🟢¹</td>
+</tr>
+<tr>
+<td><strong>T2.2</strong> ⭐</td>
+<td>Protect the failover itself</td>
+<td><strong>DHCP-snooping + Dynamic ARP Inspection + IP source guard</strong></td>
+<td>Your whole HA rests on gratuitous-ARP / mDNS. DAI stops an attacker (or a misbehaving host) ARP-spoofing the VIP or the PBX. Directly hardens the mechanism the jetson guides depend on.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T2.3</strong></td>
+<td>Rogue-port containment</td>
+<td><strong>persistent-MAC</strong>, <code>mac-limit … action drop</code>, port-error-disable + auto-recovery</td>
+<td>A hijacked wall port can't impersonate 10 phones or flood the segment.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T2.4</strong></td>
+<td>Edge hygiene</td>
+<td>SRX <strong>screens</strong> (SYN/ICMP/spoof), guest-zone policy</td>
+<td>Blunt the untrust/guest zone; anti-spoof so nothing forges voice-subnet source IPs.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T2.5</strong></td>
+<td>Guest ≠ responders</td>
+<td>Guest SSID → GUEST VLAN → SRX, <strong>denied to voice</strong></td>
+<td>Students on Wi-Fi can never reach the PBX/VIP; only responder SSID/phones can.</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+<tr>
+<td><strong>T2.6</strong></td>
+<td>Encrypt the trunk (optional)</td>
+<td><strong>MACsec</strong> on VCP/uplink</td>
+<td>If switch-to-switch cabling crosses an untrusted riser, encrypt it. Usually overkill for a pilot — note and skip.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T2.7</strong></td>
+<td>Management-plane lockdown</td>
+<td>mgmt VLAN 99, <strong>RE-protect firewall filter</strong>, SSH-only, no telnet</td>
+<td>The EX/SRX/AP mgmt never shares a broadcast domain with users; the RE only accepts mgmt from known hosts.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table>
+<p>¹ RADIUS runs <strong>locally</strong> (FreeRADIUS in the VM/Jetson) — no cloud. If that server is down,
+server-fail keeps 111 working.</p>
+<h4 id="t21-8021x-mac-radius-with-a-local-server-fail-open-for-111">T2.1 — 802.1X + MAC-RADIUS, with a local server, fail-open for 111<a class="headerlink" href="#t21-8021x-mac-radius-with-a-local-server-fail-open-for-111" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>set access radius-server 10.20.30.11 secret &quot;&lt;shared&gt;&quot;        ## FreeRADIUS on the PBX/Jetson (LAN)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>set access profile UPES-DOT1X authentication-order [ dot1x mac-radius ]
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>set protocols dot1x authenticator authentication-profile-name UPES-DOT1X
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>set protocols dot1x authenticator interface ge-0/0/0.0 supplicant multiple
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>set protocols dot1x authenticator interface ge-0/0/0.0 mac-radius            ## phones that can&#39;t do .1X
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>## SAFETY: if RADIUS is unreachable, DON&#39;T lock the port — permit to voice so 111 still works:
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>set protocols dot1x authenticator interface ge-0/0/0.0 server-fail permit
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>## Emergency fixed phones: static MAC allow / bypass so auth can never block them at all.
+</code></pre></div>
+<blockquote>
+<p><strong>Rule:</strong> emergency phones must be reachable even with the auth server dead. Model this as
+"structure now, switch on after go-live," per <a href="#4-key-design-decisions-decide-these-first">D3</a>.</p>
+</blockquote>
+<h4 id="t22-protect-the-failover-dhcp-snooping-dai-ip-source-guard">T2.2 — Protect the failover (DHCP-snooping + DAI + IP source guard)<a class="headerlink" href="#t22-protect-the-failover-dhcp-snooping-dai-ip-source-guard" title="Permanent link">&para;</a></h4>
+<p>The VIP move (keepalived gratuitous-ARP) and <code>upes-ecs.local</code> (mDNS) are <em>trust-the-LAN</em>
+mechanisms. DAI makes the switch verify ARP against the DHCP-snooping table, so nothing can
+poison the segment and steal the VIP or the PBX identity.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>set vlans voice forwarding-options dhcp-security                      ## enable DHCP snooping on voice
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>set vlans voice forwarding-options dhcp-security arp-inspection       ## Dynamic ARP Inspection
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>set ethernet-switching-options secure-access-port interface ge-0/0/46 dhcp-trusted   ## PBX/Jetson &amp; uplink = trusted
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>set ethernet-switching-options secure-access-port interface ge-0/0/0 ip-source-guard  ## phones = source-guarded
+</code></pre></div>
+<blockquote>
+<p><strong>Caveat worth field-testing:</strong> the Jetsons/VIP use <strong>static</strong> IPs, and DAI/IP-source-guard key
+off DHCP leases. Add <strong>static bindings</strong> for the VIP/Jetson/PBX addresses (or mark those ports
+<code>dhcp-trusted</code>) so DAI never drops the very traffic it's meant to protect. Test failover with
+DAI on <em>before</em> relying on it. <strong>Validate exact <code>dhcp-security</code> syntax for your EX/Junos.</strong></p>
+</blockquote>
+<hr />
+<h3 id="tier-3-app-juniper-integration-the-differentiators">Tier 3 — App ⇄ Juniper integration (the differentiators)<a class="headerlink" href="#tier-3-app-juniper-integration-the-differentiators" title="Permanent link">&para;</a></h3>
+<p>This is where "senseful and impactful" actually lives: the network and the emergency app talking
+to each other. All of the ⭐ ideas here are <strong>fully offline</strong> and <strong>unique to having programmable
+Junos on the LAN</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Mechanism</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T3.1</strong> ⭐</td>
+<td>Network Health on the Console/TV</td>
+<td><strong>NETCONF/PyEZ</strong> poll → new <code>/network</code> route in <a href="../Console/README.md">Console/Serve.ps1</a> → panel on <code>tv-ops.html</code></td>
+<td>Ops board shows which APs/phones are up, PoE draw vs 124 W budget, LLDP neighbours, CoS queue drops — beside the call KPIs. One glass.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T3.2</strong> ⭐⭐</td>
+<td><strong>Caller location by switch port</strong></td>
+<td>Asterisk caller IP → EX ARP/MAC table (NETCONF) → port → room map</td>
+<td>Replaces the cloud "locate the caller" with an <strong>offline</strong> room-level fix for wired 4xxx phones. Enormous for dispatch.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T3.3</strong> ⭐</td>
+<td><strong>Evacuation network mode</strong></td>
+<td>PBX roll-call/evac → NETCONF op script on EX</td>
+<td>On evacuation the <em>network itself</em> reconfigures: free Wi-Fi airtime, raise emergency-phone PoE/CoS, quiet the guest SSID.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T3.4</strong></td>
+<td>Network events beside call events</td>
+<td>EX/SRX <strong>syslog → rsyslog in the VM</strong></td>
+<td>Correlate <em>"AP-B down 14:03"</em> with <em>"3 missed 111 from Block C 14:04"</em> in one timeline.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T3.5</strong></td>
+<td>Congestion visibility</td>
+<td><strong>sFlow</strong> → collector in VM → Ops board</td>
+<td>See a link saturating before it hurts a call; top-talkers on the voice path.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T3.6</strong></td>
+<td>Mist events into the Console</td>
+<td><strong>Mist webhooks</strong> (AP up/down, client count, location) → <code>/mist</code> route</td>
+<td>Real-time Wi-Fi health/location on the board — <em>only when a maintenance uplink exists</em>.</td>
+<td style="text-align: center;">🔴/🟡</td>
+</tr>
+<tr>
+<td><strong>T3.7</strong></td>
+<td>Config-as-code for APs</td>
+<td><strong>Mist API</strong> org/site templates; commissioning automation</td>
+<td>Reproducible AP builds; scripted claim/provision at staging.</td>
+<td style="text-align: center;">🟡</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t31-network-health-on-the-console-tv-board-via-netconf">T3.1 — Network Health on the Console / TV board (via NETCONF)<a class="headerlink" href="#t31-network-health-on-the-console-tv-board-via-netconf" title="Permanent link">&para;</a></h4>
+<p>The Console already runs a PowerShell proxy with a runspace pool and a <code>/status</code> cache, and shells
+to the VM over SSH. Add a <strong><code>/network</code></strong> route that runs a tiny PyEZ/NETCONF collector against the
+EX VC + SRX and returns JSON the existing <code>tv-ops.html</code> can render as a "Network" tile.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># deploy/juniper/collectors/net_health.py  (runs on the PBX/Jetson, LAN-only, no cloud)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">jnpr.junos</span><span class="w"> </span><span class="kn">import</span> <span class="n">Device</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">with</span> <span class="n">Device</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;10.20.99.10&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;upes-ro&quot;</span><span class="p">,</span> <span class="n">ssh_private_key_file</span><span class="o">=</span><span class="s2">&quot;…&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">poe</span>   <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">rpc</span><span class="o">.</span><span class="n">get_poe_interface_information</span><span class="p">()</span>      <span class="c1"># draw vs 124 W budget, per-port priority</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">lldp</span>  <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">rpc</span><span class="o">.</span><span class="n">get_lldp_neighbors_information</span><span class="p">()</span>     <span class="c1"># which phones/APs are actually present</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">intf</span>  <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">rpc</span><span class="o">.</span><span class="n">get_interface_information</span><span class="p">(</span><span class="n">terse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1"># up/down</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">cos</span>   <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">rpc</span><span class="o">.</span><span class="n">get_cos_queue_statistics</span><span class="p">()</span>           <span class="c1"># RTP queue drops = voice pain</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># → emit {aps_up, phones_up, poe_watts, poe_budget:124, queue_drops, member_status} as JSON</span>
+</code></pre></div>
+<blockquote>
+<p>Read-only user, mgmt VLAN, cached like <code>/status</code>. This turns the EX into a first-class data
+source for the Ops board — no SNMP server, no cloud.</p>
+</blockquote>
+<h4 id="t32-offline-caller-location-by-switch-port">T3.2 — Offline caller location by switch port ⭐⭐<a class="headerlink" href="#t32-offline-caller-location-by-switch-port" title="Permanent link">&para;</a></h4>
+<p><strong>The headline offline idea.</strong> When a phone dials 111, Asterisk knows its <strong>contact IP</strong>. The EX
+knows <strong>IP → MAC</strong> (ARP on <code>irb.30</code>) and <strong>MAC → port</strong> (<code>show ethernet-switching table</code>). A port
+maps to a <strong>room</strong> — and this repo <em>already carries a <code>location</code> column</em> in
+<a href="../provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> (<code>Main Gate</code>, <code>Hostel B
+Corridor</code>, …). Chain them and the responder sees <strong>"111 from ge-0/0/7 → Hostel B Corridor"</strong> with
+<strong>zero cloud</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Asterisk 111 event ──▶ caller IP (e.g. 10.20.30.63)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        │
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        ▼  NETCONF to EX VC
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  get-arp-table-information         → 10.20.30.63  = MAC aa:bb:cc:dd:ee:ff
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  get-ethernet-switching-table-info → MAC          = interface ge-0/0/7.0
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        │
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        ▼  join to a port→room map (extend fixed-devices.csv / a new port-map.csv)
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  ge-0/0/7  = &quot;Hostel B Corridor, Floor 2&quot;
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        │
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        ▼  push onto the Ops Console + the TV evacuation board next to the live call
+</code></pre></div>
+<ul>
+<li><strong>Wired fixed phones (4xxx):</strong> exact <strong>port-level → room-level</strong> location, fully offline. This is
+  precisely why the plan says put real IP phones at fixed emergency points.</li>
+<li><strong>Wi-Fi softphones:</strong> the EX only sees "behind AP-A's trunk port," i.e. <strong>which AP / zone</strong>, not
+  which room. AP-level zone is still useful ("caller is on the Hostel-B AP"). <em>Room-level for
+  Wi-Fi</em> needs Mist Location (🔴, Tier 5) — an honest gap, and a good reason to keep fixed wired
+  phones at critical points.</li>
+<li><strong>Build:</strong> a <code>port-map.csv</code> (port ↔ room) + a collector that the Console calls when a 111 rings;
+  surface it on <code>tv-safety.html</code>'s evacuation view and the responder's Console.</li>
+</ul>
+<h4 id="t33-evacuation-network-mode-asterisk-junos">T3.3 — Evacuation network mode (Asterisk → Junos) ⭐<a class="headerlink" href="#t33-evacuation-network-mode-asterisk-junos" title="Permanent link">&para;</a></h4>
+<p>The system already flips the safety TV board into an <strong>evacuation</strong> view during a roll-call. Extend
+that trigger to the <em>network</em>: a NETCONF op script that, for the duration of the incident, makes the
+LAN prioritise life-safety traffic and stops non-essential load.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>PBX roll-call/evac starts ──▶ /exec action &quot;evac-network-on&quot; ──▶ NETCONF op script on EX VC:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>   • raise PoE priority = high on all emergency-phone + AP ports (nothing gets power-starved)
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>   • ensure RTP EF scheduler at strict-high (it already is; assert it)
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>   • rate-limit / disable the GUEST SSID&#39;s VLAN uplink to free Wi-Fi airtime + backhaul
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>   • (optional) shorten phone DHCP/registration timers so re-homing is fast
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>&quot;all-clear&quot; ──▶ &quot;evac-network-off&quot; ──▶ op script restores the saved baseline (commit rollback N)
+</code></pre></div>
+<blockquote>
+<p>Implement as two op scripts (<code>evac-on.slax/py</code>, <code>evac-off</code>) invoked from the same place the TV
+board is toggled (Console <code>/exec</code>). Guard with <code>commit confirmed</code> so it always self-restores.
+<em>This is the kind of cross-domain move you can only make because the switch is programmable and
+on the same LAN as the PBX.</em></p>
+</blockquote>
+<hr />
+<h3 id="tier-4-wi-fi-mist-ap32">Tier 4 — Wi-Fi / Mist AP32<a class="headerlink" href="#tier-4-wi-fi-mist-ap32" title="Permanent link">&para;</a></h3>
+<p>Wireless is how most students reach 111. These make the softphone path solid. Grades reflect the
+air-gap: the AP config is authored in Mist (🟡) but <strong>persists and runs offline</strong> once pushed.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Mist/Wi-Fi feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T4.1</strong> ⭐</td>
+<td>Wireless voice priority</td>
+<td><strong>WMM</strong>, DSCP↔WMM map: RTP→<strong>AC_VO</strong>, SIP→AC_VI</td>
+<td>The airtime equivalent of wired CoS — without it, one video stream starves a 111 call over Wi-Fi.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T4.2</strong></td>
+<td>Seamless roaming mid-call</td>
+<td><strong>802.11r / OKC</strong>, band-steering, <strong>min-RSSI</strong></td>
+<td>A caller walking across campus (or the van moving) shouldn't drop the call at a cell edge.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T4.3</strong></td>
+<td>Survive the air-gap</td>
+<td><strong>Configuration persistence ON</strong></td>
+<td>The single setting that makes 111-over-Wi-Fi keep working with no cloud (see §2, §7).</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T4.4</strong></td>
+<td>Responder vs guest separation</td>
+<td>Two WLANs → VLAN 30 / VLAN 40, isolation policy</td>
+<td>Responder SSID reaches PBX (isolation off); guest can't (isolation on). Ties to <a href="#tier-2--security--access-control-at-the-edge">T2.5</a>.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T4.5</strong></td>
+<td>Rogue-AP / WIDS</td>
+<td>AP32 <strong>3rd radio</strong> as security sensor</td>
+<td>Detects an evil-twin "upes-voice" trying to harvest responders. <strong>But alerting is cloud</strong> → limited offline.</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td><strong>T4.6</strong></td>
+<td>Density at muster points</td>
+<td>Airtime fairness, 2.4/5 GHz steering, channel plan</td>
+<td>When everyone crowds a muster point during an incident, the AP must not collapse. Plan the RF for the crowd, not the average.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+</tbody>
+</table>
+<h4 id="t41-dscpwmm-so-voice-wins-the-air">T4.1 — DSCP↔WMM so voice wins the air<a class="headerlink" href="#t41-dscpwmm-so-voice-wins-the-air" title="Permanent link">&para;</a></h4>
+<p>Mark RTP as <strong>EF/DSCP 46</strong> on the PBX (Asterisk already can) and configure the WLAN's QoS map so
+EF → <strong>WMM AC_VO</strong> and SIP → AC_VI. Now the AP schedules the 111 call's packets ahead of best-effort
+in the RF, matching the wired EF queue. Set this in the Mist WLAN (persists offline). Verify the
+2× SFP+/1 G backhaul is never the bottleneck by keeping guest traffic off the voice backhaul
+(<a href="#t33--evacuation-network-mode-asterisk--junos-">T3.3</a>).</p>
+<hr />
+<h3 id="tier-5-location-ble-safety-asset-visibility-cloud-dependent-be-honest">Tier 5 — Location, BLE &amp; safety-asset visibility (cloud-dependent — be honest)<a class="headerlink" href="#tier-5-location-ble-safety-asset-visibility-cloud-dependent-be-honest" title="Permanent link">&para;</a></h3>
+<p>The AP32's BLE + 3rd radio are genuinely special, and this is where a vendor deck would over-promise.
+<strong>On a permanent air-gap these do not run at runtime</strong> (🔴). They become real under <strong>Option B</strong>
+(maintenance uplink) or a future Mist-connected phase. Listed so you know the ceiling — and so the
+offline substitute (<a href="#t32--offline-caller-location-by-switch-port-">T3.2</a>) is understood as the
+<em>air-gapped answer</em> to most of it.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Mist feature</th>
+<th>The emergency win</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T5.1</strong></td>
+<td>Wayfinding to nearest AED/exit/muster</td>
+<td><strong>vBLE virtual beacons + Mist SDK</strong> in the UPES-Safe app</td>
+<td>"Guide me to the nearest AED / exit" on a phone during a fire.</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td><strong>T5.2</strong></td>
+<td>Safety-asset tracking</td>
+<td><strong>BLE tags</strong> on AEDs, extinguishers, first-aid kits, the response van, wheelchairs → Live View + <code>asset-raw</code> webhook</td>
+<td>Always know where the AED is; get alerted if it leaves its zone.</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td><strong>T5.3</strong></td>
+<td>Locate a Wi-Fi 111 caller</td>
+<td><strong>Wi-Fi/BLE client location</strong> → x,y → responder map</td>
+<td>Room-level fix for a <em>Wi-Fi</em> caller (the gap <a href="#t32--offline-caller-location-by-switch-port-">T3.2</a> can't close offline).</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+<tr>
+<td><strong>T5.4</strong></td>
+<td>Proximity messaging</td>
+<td>vBLE proximity</td>
+<td>Push "you are in a muster zone — check in" as people arrive.</td>
+<td style="text-align: center;">🔴</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Straight talk:</strong> if location matters to you <em>and</em> you want it offline, the realistic answer is
+<strong>wired fixed phones + <a href="#t32--offline-caller-location-by-switch-port-">T3.2</a></strong> for room-level,
+and treat Mist Location as a Phase-2 upgrade gated on Option B. Don't design 111 around it.</p>
+</blockquote>
+<hr />
+<h3 id="tier-6-van-mesh-multi-site">Tier 6 — Van, mesh &amp; multi-site<a class="headerlink" href="#tier-6-van-mesh-multi-site" title="Permanent link">&para;</a></h3>
+<p>The project ships a <strong>disaster-response van with "corner repeaters"</strong> and a future
+<strong>Bidholi↔Kandoli</strong> link (<a href="../SOP/23-Mobile-Van-Deployment.md">SOP/23</a>, SOP/20). Juniper fits the
+van cleanly; the long-range link honestly does not fit <em>this</em> hardware.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Juniper feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T6.1</strong> ⭐</td>
+<td>The "corner repeaters," done right</td>
+<td><strong>Mist wireless mesh</strong> (AP-to-AP)</td>
+<td>Extend the emergency SSID to a courtyard/van with no cable run — exactly the "corner repeater" the van plan describes. Mesh config persists offline.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T6.2</strong></td>
+<td>Van as a self-contained cell</td>
+<td>SRX + one EX + one AP32 as a mobile kit</td>
+<td>The van becomes a portable UPES-ECS: its own voice VLAN, DHCP, PoE, Wi-Fi bubble — same configs, different chassis.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T6.3</strong></td>
+<td>Roam between van and campus</td>
+<td>Same SSID + 802.11r across both</td>
+<td>A responder keeps their call as they move from building Wi-Fi to the van's.</td>
+<td style="text-align: center;">🟡→🟢</td>
+</tr>
+<tr>
+<td><strong>T6.4</strong></td>
+<td>Bidholi↔Kandoli rooftop link</td>
+<td><em>(not AP32)</em></td>
+<td><strong>Honest:</strong> AP32 is an indoor omni AP, <strong>not</strong> a point-to-point bridge. A rooftop campus link needs outdoor/directional radios — out of scope for this kit. See <a href="#8-what-this-hardware-cant-do--honest-limits">§8</a>.</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="tier-7-lifecycle-config-as-code-ztp">Tier 7 — Lifecycle, config-as-code &amp; ZTP<a class="headerlink" href="#tier-7-lifecycle-config-as-code-ztp" title="Permanent link">&para;</a></h3>
+<p>Make the Juniper layer as reproducible and backed-up as the rest of this repo already is.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Idea</th>
+<th>Juniper feature</th>
+<th>Why it matters here</th>
+<th style="text-align: center;">Offline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T7.1</strong></td>
+<td>Config-as-code</td>
+<td>Per-device <code>.conf</code> in <code>deploy/juniper/</code> + NETCONF apply/rollback</td>
+<td>The switch/router/AP builds live in git next to the Asterisk config; reviewable, diffable, restorable.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T7.2</strong></td>
+<td>Fast switch replacement</td>
+<td><strong>ZTP</strong> (DHCP option 43/66 → local config server on the VM)</td>
+<td>Swap a dead EX and it self-configures from a LAN file server — no console jockey, minutes not hours.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T7.3</strong></td>
+<td>Junos config in the nightly backup</td>
+<td>NETCONF <code>get-config</code> → the existing nightly backup set</td>
+<td>The project already backs up nightly; add the switch/router configs so a rebuild is total.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T7.4</strong></td>
+<td>Safe-by-default changes</td>
+<td><code>commit confirmed</code>, <code>rescue</code>, <code>system commit archive</code></td>
+<td>Every network change auto-rolls-back if it breaks 111. Already the documented discipline.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+<tr>
+<td><strong>T7.5</strong></td>
+<td>Fold into existing health/admin</td>
+<td>Extend <a href="../scripts/">scripts/</a> health check + Console <strong>Admin</strong> views (Serve.ps1)</td>
+<td>One place to see PBX <strong>and</strong> network health; one place to trigger a rebind or a PoE bounce.</td>
+<td style="text-align: center;">🟢</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-poe-budget-worksheet-real-numbers">6. PoE budget worksheet (real numbers)<a class="headerlink" href="#6-poe-budget-worksheet-real-numbers" title="Permanent link">&para;</a></h2>
+<p><strong>124 W per EX2300-C-12P</strong>, and each member powers its own ports. Plan <strong>one AP per member</strong> so the
+Wi-Fi survives a member loss, and spread phones.</p>
+<table>
+<thead>
+<tr>
+<th>Load</th>
+<th>Class / draw</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AP32 (full 4×4)</td>
+<td><strong>802.3at, 19.5 W</strong></td>
+<td>On 802.3af it <em>works</em> but 5 GHz drops to 2×2 — <strong>give APs PoE+</strong>.</td>
+</tr>
+<tr>
+<td>Basic IP desk phone</td>
+<td>Class 1–2, ~4–7 W</td>
+<td>Fixed 4xxx emergency phones.</td>
+</tr>
+<tr>
+<td>Video/PoE+ endpoint</td>
+<td>up to 30 W</td>
+<td>Only if you add door stations / PoE cameras later.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Per-member example (member0):</strong> 1× AP32 (19.5 W) + 6× IP phones (~7 W) ≈ <strong>~62 W</strong> → comfortably
+inside 124 W. Even both APs on one member (39 W) + 8 phones (56 W) = 95 W fits. <strong>Constraint to
+respect:</strong> the EX2300-C-12P can serve full <strong>30 W PoE+ to at most 4 ports</strong> or 15.4 W to at most 8 —
+so keep 30 W devices to ≤4/member. Set:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>set poe interface all
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>set poe management class          ## allocate by detected PoE class
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>set poe guard-band 5              ## reserve 5 W headroom
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>set poe interface ge-0/0/46 priority high    ## AP + emergency phones win contention
+</code></pre></div>
+Verify after everything's up: <code>show poe controller</code>, <code>show poe interface</code>.</p>
+<hr />
+<h2 id="7-air-gapped-mist-commissioning-workflow">7. Air-gapped Mist commissioning workflow<a class="headerlink" href="#7-air-gapped-mist-commissioning-workflow" title="Permanent link">&para;</a></h2>
+<p>Because AP32 needs the cloud <strong>once</strong>, do this on a bench with temporary Internet, then deploy
+offline. This is the procedure that makes cloud APs behave as offline emergency Wi-Fi.</p>
+<ol>
+<li><strong>Bench + temporary uplink.</strong> Put both AP32s on a switch with Internet. Claim them into the Mist
+   org (claim code / activation code).</li>
+<li><strong>Author the full WLAN config in Mist:</strong> SSID <code>upes-voice</code> (isolation <strong>None</strong>), SSID
+   <code>upes-guest</code> (isolated → VLAN 40), VLAN mapping (voice=30), <strong>WMM/QoS map</strong> (RTP→AC_VO, T4.1),
+   <strong>band-steering + 802.11r + min-RSSI</strong> (T4.2), channel/power plan (T4.6), and <strong>mesh</strong> if the van
+   uses it (T6.1).</li>
+<li><strong>Enable Configuration Persistence</strong> (the critical step — T4.3). Confirm each AP has stored its
+   full config on-board.</li>
+<li><strong>Update firmware</strong> while you have the uplink (you won't get another chance offline).</li>
+<li><strong>Set a static mgmt IP</strong> (VLAN 99) or a DHCP reservation so the AP is addressable offline.</li>
+<li><strong>Prove offline behaviour on the bench:</strong> pull the Internet, reboot each AP, confirm it comes
+   back on stored config and still bridges <code>upes-voice</code> to the PBX. Only then deploy.</li>
+<li><strong>Deploy to campus</strong>, power over PoE+ from the EX, one AP per VC member.</li>
+<li><strong>(Option B, optional)</strong> If you later allow a maintenance window, the same APs will re-sync to
+   Mist, and Marvis/Location/webhooks (Tier 5, T3.6) light up for that window.</li>
+</ol>
+<blockquote>
+<p>Record this as <code>deploy/juniper/AP32-COMMISSIONING.md</code> so it's repeatable for a replacement AP.</p>
+</blockquote>
+<hr />
+<h2 id="8-what-this-hardware-cant-do-honest-limits">8. What this hardware can't do — honest limits<a class="headerlink" href="#8-what-this-hardware-cant-do-honest-limits" title="Permanent link">&para;</a></h2>
+<p>Naming the ceiling is part of a <em>senseful</em> plan.</p>
+<ul>
+<li><strong>No runtime cloud features on a permanent air-gap.</strong> Marvis, Location/wayfinding (T5.x), Mist
+  webhooks (T3.6), dynamic PCAP, SLE dashboards — all need the cloud. They are commissioning-time or
+  Option-B only. 111 must not depend on them (it doesn't, by design).</li>
+<li><strong>AP32 is not a point-to-point bridge.</strong> The Bidholi↔Kandoli rooftop link (T6.4) needs outdoor
+  directional radios; this kit can't do a multi-km campus bridge. Mesh (T6.1) extends <em>local</em>
+  coverage only.</li>
+<li><strong>Single SRX = no firewall HA.</strong> Acceptable <strong>only because</strong> the flat/L2 voice design keeps the
+  SRX out of the 111 audio path — losing the SRX loses Internet/maintenance, not emergencies. If you
+  later route voice <em>through</em> the SRX, that assumption breaks; keep the gateway on the EX VC (D2).</li>
+<li><strong>124 W PoE per switch is modest.</strong> Fine for 2 APs + a couple dozen basic phones (§6), but don't
+  hang PoE+ cameras/door-stations off these without re-budgeting or adding injectors.</li>
+<li><strong>EX2300 has only a thin streaming-telemetry sliver, no gNMI.</strong> It <em>does</em> support limited <strong>JTI</strong>
+  (gRPC dial-out + native-UDP sensors, Junos 20.2R1+: PFE CPU/mem/filter stats, physical-interface
+  traffic, RE LACP/chassis-env/LLDP/ARP) but <strong>not gNMI</strong>; <strong>SRX300/320 have no streaming telemetry
+  at all</strong>. So lean on <strong>SNMP/RMON + RPM + sFlow(EX)/J-Flow(SRX) + structured syslog</strong> (T1.4, T3.x),
+  not model-driven telemetry. Full detail in the <a href="Juniper-Feature-Catalogue.md">Feature Catalogue</a>.</li>
+<li><strong>Virtual Chassis = one upgrade/control-plane domain.</strong> The convenience (D1) costs you failure
+  isolation; mitigate with <code>commit confirmed</code>, dual VCP, and staged upgrades — or run independent
+  switches if you value isolation more than simplicity.</li>
+</ul>
+<hr />
+<h2 id="9-phased-roadmap">9. Phased roadmap<a class="headerlink" href="#9-phased-roadmap" title="Permanent link">&para;</a></h2>
+<p>Map the catalogue onto delivery. Each phase is independently shippable and leaves 111 working.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Goal</th>
+<th>Includes</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0 — Fabric</strong></td>
+<td>Voice just works, zero-touch</td>
+<td>T0.1 VC · T0.2 LLDP-MED · T0.3 CoS · T0.4/§6 PoE · T0.5 loop-safety · T0.6 SRX/NTP · T0.7 SSID</td>
+<td>Phones auto-onboard; RTP protected; edge is LAN-only; clock is right.</td>
+</tr>
+<tr>
+<td><strong>P1 — Resilience</strong></td>
+<td>Survive failures unattended</td>
+<td>T1.2 LAG · T1.3 self-heal PoE · T1.4 syslog/sFlow · T1.6 commit-confirmed · T1.7 UPS</td>
+<td>A dead AP self-recovers; a cut cable doesn't drop the PBX; changes auto-roll-back.</td>
+</tr>
+<tr>
+<td><strong>P2 — App integration</strong></td>
+<td>The differentiators</td>
+<td><strong>T3.1 Network panel · T3.2 caller-location · T3.3 evac-mode · T3.4 syslog-correlation</strong></td>
+<td>The Ops board shows the network; a 111 call shows its room; evacuation reshapes the LAN.</td>
+</tr>
+<tr>
+<td><strong>P3 — Access control</strong></td>
+<td>Lock the edge without risking 111</td>
+<td>T2.2 DAI/snooping (do early — cheap, high value) · T2.1 802.1X fail-open · T2.5/2.7 segmentation</td>
+<td>Rogues can't spoof the VIP; only known devices on voice; 111 still fails-open.</td>
+</tr>
+<tr>
+<td><strong>P4 — Wi-Fi polish + van</strong></td>
+<td>Roaming, density, mobility</td>
+<td>T4.1 WMM · T4.2 roaming · T4.6 density · T6.1 mesh · T6.2 van kit</td>
+<td>Solid softphone calls on the move; van becomes a portable cell.</td>
+</tr>
+<tr>
+<td><strong>P5 — Cloud bonus (opt.)</strong></td>
+<td>If Option B is approved</td>
+<td>T3.6 webhooks · T3.7 API-as-code · T5.x location/BLE</td>
+<td>Marvis + Location during maintenance windows; asset tracking.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Do <strong>T2.2 (DAI/snooping)</strong> in P1/P3-early regardless — it's low-effort and directly protects the
+failover mechanism the whole HA story depends on.</p>
+</blockquote>
+<hr />
+<h2 id="10-proposed-repo-additions-deployjuniper">10. Proposed repo additions (<code>deploy/juniper/</code>)<a class="headerlink" href="#10-proposed-repo-additions-deployjuniper" title="Permanent link">&para;</a></h2>
+<p>Give the Juniper layer the same config-as-code home the rest of the system has. Suggested layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>deploy/juniper/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── README.md                     # index + apply/rollback runbook (commit confirmed discipline)
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>├── ex-vc/
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   ├── 00-virtual-chassis.conf   # T0.1
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   ├── 10-vlans-irb.conf         # voice/mgmt/guest + irb.30 gateway
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│   ├── 20-lldp-med-voip.conf     # T0.2 zero-touch phones
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│   ├── 30-cos.conf               # T0.3 (or reuse jetson block)
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│   ├── 40-poe.conf               # §6 budget + priorities
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│   ├── 50-port-security.conf     # T0.5 + T2.2 DAI/snooping/IP-source-guard
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│   └── 60-dot1x.conf             # T2.1 (staged; server-fail permit)
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>├── srx/
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>│   ├── 00-zones-policies.conf    # T0.6 LAN-only + screens (reuse jetson block)
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>│   ├── 10-dhcp.conf              # DHCP/relay
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>│   └── 20-ntp.conf               # D4 local NTP master
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>├── mist/
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>│   ├── AP32-COMMISSIONING.md     # §7 offline commissioning
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>│   └── wlan-templates.md         # SSID/QoS/roaming/mesh settings (authored in Mist)
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>├── scripts/
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>│   ├── bounce-poe.py             # T1.3 self-heal
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>│   ├── evac-on.py / evac-off.py  # T3.3 evacuation network mode
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>│   └── ztp/                      # T7.2 zero-touch replacement config server bits
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>├── collectors/
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>│   ├── net_health.py             # T3.1 → Console /network
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>│   ├── caller_locate.py          # T3.2 IP→MAC→port→room
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>│   └── port-map.csv              # port ↔ room (pairs with provisioning/fixed-devices.csv)
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>└── backup/
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>    └── pull-configs.sh           # T7.3 NETCONF get-config into the nightly backup set
+</code></pre></div>
+<p>Console/API touch-points (small, additive):
+- <strong><code>Console/Serve.ps1</code></strong> → add read-only <strong><code>/network</code></strong> (calls <code>collectors/net_health.py</code>) and a
+  <strong><code>/locate?ip=</code></strong> route (calls <code>caller_locate.py</code>); render a <strong>Network</strong> tile on <code>tv-ops.html</code>
+  and a location line on <code>tv-safety.html</code>'s evacuation view. Mirror the existing runspace-pool +
+  <code>/status</code> TTL-cache pattern so it stays snappy.
+- <strong><code>/exec</code></strong> → add <code>evac-network-on/off</code> actions wired to the same trigger as the TV evacuation
+  board.
+- <strong><code>scripts/</code> health check</strong> → include EX/SRX reachability + PoE headroom + AP-up count.</p>
+<hr />
+<h2 id="11-legend-cross-references">11. Legend &amp; cross-references<a class="headerlink" href="#11-legend-cross-references" title="Permanent link">&para;</a></h2>
+<p><strong>Offline grades:</strong>
+- 🟢 <strong>Works on the air-gapped LAN with no cloud</strong> — Junos/EX/SRX features; the backbone of this plan.
+- 🟡 <strong>Needs a brief maintenance uplink to configure, then persists</strong> — Mist WLAN settings authored
+  once, run offline (config persistence).
+- 🔴 <strong>Needs live cloud</strong> — Mist Marvis/Location/webhooks; commissioning-time or Option-B only; 111
+  never depends on these.</p>
+<p><strong>Existing docs this plan builds on:</strong>
+- <a href="Juniper.md">Docs/Juniper.md</a> — flat no-VLAN pilot (current QEMU-on-laptop deployment).
+- <a href="../deploy/jetson/NETWORK-JUNIPER.md">deploy/jetson/NETWORK-JUNIPER.md</a> — VIP-HA VLAN/CoS/PoE/firewall (reuse the CoS + SRX blocks).
+- <a href="../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md">deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md</a> — name-failover variant + the multicast/mDNS notes.
+- <a href="../deploy/qemu/Test-UpesNetwork.ps1">deploy/qemu/Test-UpesNetwork.ps1</a> — the readiness check to extend with switch/AP checks.
+- <a href="../deploy/asterisk/rtp.conf">deploy/asterisk/rtp.conf</a> · <a href="../deploy/asterisk/pjsip.conf">pjsip.conf</a> — the RTP/SIP ranges that pin the QoS/firewall values.
+- <a href="../provisioning/fixed-devices.csv">provisioning/fixed-devices.csv</a> — the <code>location</code> column <a href="#t32--offline-caller-location-by-switch-port-">T3.2</a> joins against.</p>
+<p><strong>Blanket disclaimer (same as the jetson guides):</strong> every <code>set</code>/RPC block here is a <em>sketch</em> in
+standard Junos/Mist patterns. <strong>Syntax varies by platform and Junos version (EX2300-C ELS, SRX300/
+320, AP32 firmware).</strong> Validate on the real gear, apply with <code>commit confirmed 5</code>, and test <strong>199
+(drill)</strong> before trusting <strong>111</strong>.</p>
+<hr />
+<p><em>Authored as a planning companion to the UPES-ECS Juniper guides. Hardware in scope: 1× SRX300/320,
+2× EX2300-C-12P, 2× Mist AP32, deployed fully air-gapped.</em></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:21:05 UTC">July 22, 2026</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../juniper/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Juniper (flat network)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Juniper (flat network)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../juniper-feature-catalogue/" class="md-footer__link md-footer__link--next" aria-label="Next: Juniper feature catalogue">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Juniper feature catalogue
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Rohan Batra
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rohanbatrain/UPES-ECS" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
