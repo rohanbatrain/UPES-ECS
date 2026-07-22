@@ -219,6 +219,10 @@
   .topo svg{display:block;min-width:680px;width:100%;height:auto}
   .topo .box{fill:var(--surface);stroke:var(--border)}
   .topo .box.b{fill:var(--brand-soft);stroke:var(--brand)}
+  /* brand boxes need a dark fill in dark mode so the light title text stays legible */
+  @media (prefers-color-scheme:dark){.topo .box.b{fill:rgba(1,169,130,.16)}}
+  :root[data-theme="dark"] .topo .box.b{fill:rgba(1,169,130,.16)}
+  :root[data-theme="light"] .topo .box.b{fill:var(--brand-soft)}
   .topo .lg{font:700 14px/1 var(--font);fill:var(--text)}
   .topo .sm{font:500 11px/1 var(--font);fill:var(--text-muted)}
   .topo .ln{stroke:var(--brand);stroke-width:2;fill:none}
