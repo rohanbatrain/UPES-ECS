@@ -5,10 +5,15 @@ ready-to-run artifacts are distributed **out of band**:
 
 - **[GitHub Releases](https://github.com/rohanbatrain/UPES-ECS/releases/latest)** — for
   files up to 2 GB (installers, prompt packs).
-- **Cloud mirror** — for anything larger (the golden VM image, full offline bundle):
-  <!-- CLOUD_FOLDER_START -->
-  _link coming soon — will be added here._
-  <!-- CLOUD_FOLDER_END -->
+- **Cloud mirror** — for anything larger (the golden VM image, full offline bundle). The
+  current mirror link is listed on the
+  [latest release](https://github.com/rohanbatrain/UPES-ECS/releases/latest).
+  <!-- CLOUD_FOLDER_START --><!-- CLOUD_FOLDER_END -->
+  <!-- Paste the cloud folder URL between the markers above as a bullet, e.g.:
+       - Cloud folder: https://drive.google.com/... -->
+
+  Meanwhile, everything can be **built from source** — no downloads required (`git clone`
+  + `Install-UpesEcs.ps1`).
 
 ## Artifacts
 

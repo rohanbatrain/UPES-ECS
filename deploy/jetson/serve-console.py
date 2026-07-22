@@ -26,6 +26,7 @@ import time
 import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
 try:
     from http.server import ThreadingHTTPServer
 except ImportError:  # Python 3.6 (JetPack 4.x / Ubuntu 18.04) has no ThreadingHTTPServer

@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Merge landing/_i18n/*.json into landing/index.html at the /*__I18N_DATA__*/ marker.
 Produces a single self-contained, local landing/index.html (no external deps)."""
-import json, glob, os, re, sys
+import glob
+import json
+import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 i18n_dir = os.path.join(HERE, "_i18n")

@@ -25,10 +25,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-
-import uvicorn
 
 # --------------------------------------------------------------------------- #
 # Constants / paths

@@ -9,6 +9,9 @@ ignore = [
   "E501",   # line length handled by formatter, not enforced hard
   "E402",   # module-level import not at top (common in scripts)
   "E722",   # bare except (present in some ops scripts)
+  "E701",   # multiple statements on one line (compact one-liner ifs — house style)
+  "E702",   # multiple statements on one line (semicolon)
+  "E741",   # ambiguous single-char name (present in an existing API handler)
 ]
 
 [lint.per-file-ignores]
