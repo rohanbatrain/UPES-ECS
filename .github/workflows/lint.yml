@@ -1,0 +1,49 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pre-commit:
+    name: pre-commit (ruff, shellcheck, gitleaks, markdownlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # gitleaks scans full history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - uses: pre-commit/action@v3.0.1
+
+  powershell:
+    name: PSScriptAnalyzer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze PowerShell
+        shell: pwsh
+        run: |
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser -SkipPublisherCheck
+          $issues = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error,Warning
+          $issues | Format-Table -AutoSize
+          if ($issues | Where-Object Severity -eq 'Error') {
+            Write-Error "PSScriptAnalyzer found errors."
+            exit 1
+          }
+
+  docs-build:
+    name: mkdocs build (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # git-revision-date-localized needs full history
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -r docs/requirements.txt
+      - run: mkdocs build --strict

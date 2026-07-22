@@ -1,0 +1,35 @@
+name: pages
+
+# Publishes the GitHub Pages site to the gh-pages branch:
+#   /        -> the UPES-ECS landing page (landing/index.html, self-contained)
+#   /docs/   -> the MkDocs Material documentation site
+# Requires the `workflow` scope to be pushed. Pages source = gh-pages branch.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # git-revision-date-localized needs full history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -r docs/requirements.txt
+      - name: Build docs into /docs and place landing at root
+        run: |
+          mkdocs build --site-dir _site/docs
+          cp landing/index.html _site/index.html
+          touch _site/.nojekyll
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
+          publish_branch: gh-pages
