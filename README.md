@@ -49,6 +49,21 @@ Windows user — not just the machine it was authored on.
 
 ---
 
+## Downloads
+
+Prefer a prebuilt installer over building from source? Large artifacts (offline installer,
+prompt packs, VM image) are distributed via **[GitHub Releases](https://github.com/rohanbatrain/UPES-ECS/releases/latest)**
+(and a cloud mirror for files over 2 GB) — the repo itself has no Git LFS and clones light.
+See **[DOWNLOADS.md](DOWNLOADS.md)** for the full manifest.
+
+| Asset | What it is |
+|---|---|
+| `UPES-ECS-Setup.exe` | Self-contained offline installer (QEMU + golden VM + app) |
+| `voice-prompts.zip` | Pre-generated Piper TTS prompts, 44 languages (optional) |
+| `golden-vm.qcow2.zip` | Prebuilt Asterisk PBX VM image |
+
+---
+
 ## Features
 
 - **One-number hotline (`111`)** — the whole campus dials a single number; calls land in
