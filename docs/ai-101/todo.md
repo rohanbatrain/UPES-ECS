@@ -1,7 +1,7 @@
 # AI-101 Build Checklist — working 101 prototype
 
 Ordered path to a working AVA + **local-LLM** extension **101** that obeys
-[SOP 19](../SOP/19-AI-101-Design.md). **No cloud AI** — STT, LLM and TTS all run on-prem.
+[SOP 19](design.md). **No cloud AI** — STT, LLM and TTS all run on-prem.
 Do these in order; **do not** enable 101 for students until Phase 2 gates pass.
 🔒 = SOP-locked, non-negotiable.
 
@@ -12,8 +12,8 @@ Legend: `[ ]` todo · ✅ verified fact · ⚠️ must verify on our stack.
 ## 0. Prerequisites
 
 - [ ] Confirm the QEMU VM is up and **111 works today** (baseline): call 111 → ANSWERED
-      (already proven ✅ in [../deploy/qemu/README.md](../deploy/qemu/README.md)).
-- [ ] Read [Integration-Plan.md](Integration-Plan.md) and [deployment.md](deployment.md).
+      (already proven ✅ in [../deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md)).
+- [ ] Read [Integration-Plan.md](integration-plan.md) and [deployment.md](deployment.md).
 - [ ] No cloud sign-off needed (nothing leaves campus). Instead, confirm budget/availability
       of a **dedicated AI host** (see §1). Internal 196 only until quality is proven.
 
@@ -60,7 +60,7 @@ Legend: `[ ]` todo · ✅ verified fact · ⚠️ must verify on our stack.
 - [ ] In `config/ai-agent.local.yaml`: agent slug **`upes-ecs-101`**, pipeline =
       **fully local** (faster-whisper + Ollama/llama.cpp + Piper) ✅.
 - [ ] Paste the **SOP 19 system prompt** (opening / collect / escalation / hard limits)
-      from [Integration-Plan §3.2](Integration-Plan.md#32-triage-system-prompt-lives-in-the-ava-agent-config).
+      from [Integration-Plan §3.2](integration-plan.md#32-triage-system-prompt-lives-in-the-ava-agent-config).
 - [ ] Enable **only** the `transfer` tool (→ ext `111`) + a post-call HTTP hook.
       🔒 **Do NOT** enable close / false-alarm / page / voicemail-instead-of-escalate.
 - [ ] `agent config validate` passes ✅.
@@ -68,10 +68,10 @@ Legend: `[ ]` todo · ✅ verified fact · ⚠️ must verify on our stack.
 ## 5. Add the dialplan (196 + 101 + fallback)
 
 - [ ] Add `ctx_ai_196`, `ctx_ai_101`, `ctx_ai_fallback` to
-      [../config/extensions_custom.conf](../config/extensions_custom.conf)
-      ([Integration-Plan §4](Integration-Plan.md#4-upes-ecs-dialplan-wiring)).
+      [../config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf)
+      ([Integration-Plan §4](integration-plan.md#4-upes-ecs-dialplan-wiring)).
 - [ ] Record prompt `upes-ecs/ai-unavailable` (SOP 19 failure line) into the sounds dir
-      ([SOP 28](../SOP/28-Voice-Prompt-Scripts.md)).
+      ([SOP 28](../reference/voice-prompt-scripts.md)).
 - [ ] `include => ctx_ai_196` in **ctx_staff / ctx_ert only** (NOT ctx_student). Leave
       `ctx_ai_101` **out** of student contexts for now.
 - [ ] Reload dialplan; **test order 198 → 196 → 101 → 111**.
@@ -98,7 +98,7 @@ Legend: `[ ]` todo · ✅ verified fact · ⚠️ must verify on our stack.
 - [ ] Build the small post-call endpoint / `ai_incident.sh` that writes `ai_summary`,
       `ai_detected_category`, `ai_detected_location`, `ai_urgency_hint`,
       `ai_questions_completed` keyed by `INCIDENT_ID`
-      ([Integration-Plan §5](Integration-Plan.md#5-incident-logging-ai_-fields)).
+      ([Integration-Plan §5](integration-plan.md#5-incident-logging-ai_-fields)).
 - [ ] Verify a 101 incident shows `source_number=101`, `ai_triage_enabled=true`,
       `transferred_to_111`, `transfer_time`, and is **ERT-editable** (SOP 12 §5).
 - [ ] Confirm **AI cannot close** an incident (no such tool; only ERT Lead closes) 🔒.
@@ -117,7 +117,7 @@ Legend: `[ ]` todo · ✅ verified fact · ⚠️ must verify on our stack.
       approves prompt/routing.
 - [ ] **Before Phase 2 (students):** 🔒 confirm the **dedicated AI host** meets the latency
       budget, record the (already-local) privacy decision
-      ([Integration-Plan §3.3](Integration-Plan.md#33-privacy-decision-fully-local-audio-stays-on-campus)),
+      ([Integration-Plan §3.3](integration-plan.md#33-privacy-decision-fully-local-audio-stays-on-campus)),
       then add `include => ctx_ai_101` to student/staff contexts. No cloud approval needed.
 - [ ] Document the **kill switch** (remove include / stop AVA → callers get 111) in the
       ERT runbook.

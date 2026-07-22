@@ -17,7 +17,7 @@ yet decided. **Min/Rec:** `M` = minimum to go live · `R` = recommended for a re
 ## (a) Campus fixed deployment — Mode A
 
 The everyday emergency line: one server, the campus network, and dedicated ERT answer
-points. Ties to [02 §5–6](02-System-Architecture.md) and [SOP 15](../SOP/15-Local-Infrastructure-Diagram.md).
+points. Ties to [02 §5–6](system-architecture.md) and [SOP 15](../reference/local-infrastructure-diagram.md).
 
 ### a.1 Server (the PBX)
 
@@ -46,7 +46,7 @@ points. Ties to [02 §5–6](02-System-Architecture.md) and [SOP 15](../SOP/15-L
 
 Fixed answer points are **dedicated Android phones running Linphone**, logged in as a
 **responder position** (not a person). IP phones come later on the **same extension**
-([SOP 14 §3](../SOP/14-Device-Provisioning-Sheet.md)).
+([SOP 14 §3](../guides/device-provisioning.md)).
 
 | Item | Qty | Spec / Notes | Purpose | Min/Rec | Status | Cost |
 |---|---|---|---|---|---|---|
@@ -76,7 +76,7 @@ Fixed answer points are **dedicated Android phones running Linphone**, logged in
 ## (b) Van / mobile deployment — Mode B
 
 Self-powered PBX-in-a-van + corner repeaters — disaster operation **and** failover for
-the campus PBX. Same config, numbers, SOP. Ties to [SOP 23](../SOP/23-Mobile-Van-Deployment.md).
+the campus PBX. Same config, numbers, SOP. Ties to [SOP 23](../guides/mobile-van-deployment.md).
 
 ### b.1 Van core
 
@@ -98,7 +98,7 @@ the campus PBX. Same config, numbers, SOP. Ties to [SOP 23](../SOP/23-Mobile-Van
 
 > **TBD to confirm:** van **power sizing** — battery Ah + generator kW + fuel reserve —
 > sized to the disaster window UPES must cover. Do the load math before deploying
-> ([SOP 23 §4](../SOP/23-Mobile-Van-Deployment.md)).
+> ([SOP 23 §4](../guides/mobile-van-deployment.md)).
 
 ### b.3 Mast / antenna + corner repeaters
 
@@ -111,7 +111,7 @@ the campus PBX. Same config, numbers, SOP. Ties to [SOP 23](../SOP/23-Mobile-Van
 
 > **TBD to confirm:** repeater **model / backhaul radio**, **number + placement** for
 > full campus coverage, and target van setup time. Multi-campus Bidholi↔Kandoli rooftop
-> wireless is a later phase ([SOP 20](../SOP/20-Multi-Campus-Wireless.md)).
+> wireless is a later phase ([SOP 20](../guides/multi-campus-wireless.md)).
 
 ### b.4 Van spare kit
 
@@ -135,7 +135,7 @@ Nothing here costs money; it is the whole software stack.
 | MicroSIP | per Windows desk | Free; Windows only | Softphone for any Windows desk / control room | R | have | free |
 | This repo (config + scripts) | 1 | `config/`, `scripts/`, `provisioning/`, `setup.sh`, `deploy/` | Dialplan, helper scripts, CSVs, bootstrap, validation harness | M | have | free |
 
-Reference: [config/README.md](../config/README.md) · [provisioning/README.md](../provisioning/README.md) · [deploy/README.md](../deploy/README.md).
+Reference: [config/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md) · [provisioning/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/README.md) · [deploy/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md).
 
 ---
 
@@ -147,8 +147,8 @@ Reference: [config/README.md](../config/README.md) · [provisioning/README.md](.
 | Device labels | 1 set | Label each answer point by **position** (`ERT-Lead-4101`, `Medical-4200`) | Traceability; right person answers the right line | M | need | TBD |
 | Headsets | per answer point | Wired, hands-free | Talk + log at once | R | need | TBD |
 | Wall mounts / stands | per answer point | Fixed, visible, on-charger | Answer points don't wander or die | R | need | TBD |
-| Printed desk references | per position | [ERT SOP](../SOP/02-ERT-SOP.md) + [Quick-Cards](../SOP/25-Quick-Cards.md) | Answer script + dispatch at the desk | M | need | TBD |
-| Sealed credential sheets | per account | For one-time secret delivery | Deliver SIP secrets once, securely ([SOP 14 §5](../SOP/14-Device-Provisioning-Sheet.md)) | R | need | TBD |
+| Printed desk references | per position | [ERT SOP](../operations/ert-sop.md) + [Quick-Cards](../reference/quick-cards.md) | Answer script + dispatch at the desk | M | need | TBD |
+| Sealed credential sheets | per account | For one-time secret delivery | Deliver SIP secrets once, securely ([SOP 14 §5](../guides/device-provisioning.md)) | R | need | TBD |
 
 ---
 
@@ -156,7 +156,7 @@ Reference: [config/README.md](../config/README.md) · [provisioning/README.md](.
 
 The confirmed roster is real people only — **no fabricated names**. They are normal
 staff/student accounts **and** trained officers who occupy a **position** on their shift
-([SOP 30](../SOP/30-ERT-Roles-and-Shifts.md), [provisioning/pilot-users.csv](../provisioning/pilot-users.csv)):
+([SOP 30](../operations/ert-roles-and-shifts.md), [provisioning/pilot-users.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/pilot-users.csv)):
 
 | SAP ID | Name | Account context (by ID length) |
 |---|---|---|
@@ -186,4 +186,4 @@ everything else in this BOM is resilience (van, repeaters, extra answer points) 
 
 > **Prices deferred:** every Cost cell is **TBD** until quotes are gathered. This BOM
 > commits to quantity, spec, and purpose only. See the minimum-viable view in
-> [01-Bare-Minimum-Checklist.md](01-Bare-Minimum-Checklist.md).
+> [01-Bare-Minimum-Checklist.md](bare-minimum-checklist.md).

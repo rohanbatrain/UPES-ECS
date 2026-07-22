@@ -221,4 +221,4 @@ Any restricted number reached from a context that doesn't allow it →
 `extensions_custom.conf` · `extensions_aihelpline.conf` (102 offline coach) · `pjsip.conf` (FreePBX-managed + custom) · `queues.conf` ·
 `confbridge.conf` · `voicemail.conf` · `features.conf` · custom prompts under
 `upes-ecs/` · helper scripts in `/opt/upes-ecs/`. All go in the `upes-ecs-config`
-git repo — see [11-Backup-Restore-Procedure.md](11-Backup-Restore-Procedure.md).
+git repo — see [11-Backup-Restore-Procedure.md](backup-restore.md).

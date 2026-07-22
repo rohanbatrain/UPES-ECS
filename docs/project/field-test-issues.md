@@ -18,17 +18,17 @@ recurring at scale.
 > **How to read this doc.** Each issue is written as **Symptom → Root cause → Immediate
 > fix (what we did in the field) → Production mitigation (how to prevent it entirely at
 > scale)**. The build-time roadblocks that pre-date this test live in
-> [Roadblocks-and-Solutions.md](Roadblocks-and-Solutions.md); this doc is the *field-test*
+> [Roadblocks-and-Solutions.md](roadblocks-and-solutions.md); this doc is the *field-test*
 > companion and cross-references it where the same root cause recurs.
 
 Related documents:
-[SOP 05 – Student SIP Setup Guide](../SOP/05-Student-SIP-Setup-Guide.md) ·
-[SOP 14 – Device Provisioning Sheet](../SOP/14-Device-Provisioning-Sheet.md) ·
-[SOP 24 – Mobile App Reliability & Battery](../SOP/24-Mobile-App-Reliability-and-Battery.md) ·
-[QEMU deployment README](../deploy/qemu/README.md) ·
-[config/extensions_custom.conf](../config/extensions_custom.conf) ·
-[deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf) ·
-[Roadblocks-and-Solutions.md](Roadblocks-and-Solutions.md)
+[SOP 05 – Student SIP Setup Guide](../guides/student-sip-setup.md) ·
+[SOP 14 – Device Provisioning Sheet](../guides/device-provisioning.md) ·
+[SOP 24 – Mobile App Reliability & Battery](../reference/mobile-app-reliability.md) ·
+[QEMU deployment README](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md) ·
+[config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf) ·
+[deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf) ·
+[Roadblocks-and-Solutions.md](roadblocks-and-solutions.md)
 
 ---
 
@@ -40,7 +40,7 @@ timeout, just a hang. On the server there was **zero trace** of the phone.
 
 **Root cause.** Linphone defaulted the account **Transport** to **TLS** (or TCP). The
 UPES-ECS test server is **UDP-only** (`transport-udp`, `bind=0.0.0.0:5060`, protocol
-`udp` — see [deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf)). The phone's
+`udp` — see [deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf)). The phone's
 `REGISTER` was sent over a transport the server never listens on, so it got **no reply**
 and the client just kept "in progress." Because nothing UDP left the phone for 5060, **not
 a single SIP packet reached the PBX** — from the server's point of view the phone did not
@@ -68,7 +68,7 @@ The phone registered within a second and went green.
    site PBX IP) from the phone's network tools — prove L3 reachability *before* debugging
    SIP. See the runbook.
 
-Related: [SOP 05 – Student SIP Setup Guide](../SOP/05-Student-SIP-Setup-Guide.md) (the
+Related: [SOP 05 – Student SIP Setup Guide](../guides/student-sip-setup.md) (the
 Transport line there must read **UDP**, not "unless IT tells you otherwise").
 
 ---
@@ -88,7 +88,7 @@ extension pattern (`_5XXXXXXXX` expects exactly the 9 digits), so the dialplan r
 
 - **Server** — added a strip rule to `ctx_student` so a mis-dialed `+91…` is normalized
   back to the bare extension (now committed in
-  [config/extensions_custom.conf](../config/extensions_custom.conf)):
+  [config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf)):
 
   ```asterisk
   ; strip the +91 country code some softphones auto-prepend, then re-enter
@@ -132,12 +132,12 @@ each other**, taking the PBX out of the media path. Behind SLIRP that fails:
   (which it told the phones to send peer-to-peer) goes into a black hole.**
 
 This is the same class of problem as build-time roadblock **1.6** (SLIRP hides real client
-IPs) in [Roadblocks-and-Solutions.md](Roadblocks-and-Solutions.md#16-hosting-a-sip-server-behind-qemu-user-mode-nat-slirp)
+IPs) in [Roadblocks-and-Solutions.md](roadblocks-and-solutions.md#16-hosting-a-sip-server-behind-qemu-user-mode-nat-slirp)
 and **1.1** (container NAT mangles RTP).
 
 **Immediate fix (field).** Force the PBX to **relay** the RTP (stay in the media path) and
 tell it its real reachable address. On the endpoint template in
-[deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf):
+[deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf):
 
 ```ini
 [endpoint-tpl](!)
@@ -169,7 +169,7 @@ is ever attempted. Audio came up both ways immediately.
    **own DHCP LAN address** and sits on the LAN as a first-class host. That **removes SLIRP
    entirely** and with it this entire class of NAT-media failures — no `external_*_address`,
    no port-forward, no fixed-range juggling. This is already flagged as the "truly
-   zero-touch" target in the [QEMU deployment README](../deploy/qemu/README.md).
+   zero-touch" target in the [QEMU deployment README](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md).
 2. **On native/bridged, `direct_media` can even be re-enabled** (phones on the same flat LAN
    can legitimately talk peer-to-peer), reducing PBX CPU/bandwidth — but keep
    `direct_media=no` unless you have a specific reason and have tested it, because relaying
@@ -203,7 +203,7 @@ one.
 1. **Profile / QR provisioning removes per-phone manual error.** If SAP ID, password,
    domain, and transport come from a **scanned config**, there is nothing to typo. See
    [Section A](#a-production-phone-provisioning-do-it-once-right) and
-   [SOP 14 – Device Provisioning Sheet](../SOP/14-Device-Provisioning-Sheet.md).
+   [SOP 14 – Device Provisioning Sheet](../guides/device-provisioning.md).
 2. **A reachability + registration self-test is the onboarding gate.** Before a device is
    marked **Active**, it must pass: `ping PBX` → **Registered (green)** → **dial 198**
    (echo) → **dial 199** (drill) → **dial 111** (or a directory SAP ID). No green + no echo
@@ -251,7 +251,7 @@ ERT callbacks never rang.**
 **Root cause.** Android **battery optimization / background app suspension** froze or killed
 the SIP app, which **dropped its SIP registration**. With no live registration the PBX has
 no contact to ring — so inbound calls (exactly the ERT-callback path) silently fail. This
-is **Risk R2** and the whole reason [SOP 24](../SOP/24-Mobile-App-Reliability-and-Battery.md)
+is **Risk R2** and the whole reason [SOP 24](../reference/mobile-app-reliability.md)
 exists.
 
 **Immediate fix (field).** Applied the per-OS battery/background exceptions (Unrestricted,
@@ -260,12 +260,12 @@ allow background, allow auto-start, don't swipe-kill) and re-registered the app.
 **Production mitigation.**
 
 1. **Follow the per-OS steps in
-   [SOP 24 – Mobile App Reliability & Battery](../SOP/24-Mobile-App-Reliability-and-Battery.md)**
+   [SOP 24 – Mobile App Reliability & Battery](../reference/mobile-app-reliability.md)**
    — summarized in [Section B](#b-keep-the-phone-registered-battery--background).
 2. **Dedicated always-on-charger answer points.** Critical inbound roles (ERT, control
    room, medical, security) run on **fixed dedicated Android devices on the charger**, not
    personal phones — treat them like appliances (SOP 24 §6, and
-   [SOP 14 §3](../SOP/14-Device-Provisioning-Sheet.md)).
+   [SOP 14 §3](../guides/device-provisioning.md)).
 3. **Tune keepalive / register expiry server-side** so drops are detected fast and the
    registration path stays warm:
 
@@ -298,7 +298,7 @@ Deliver one of these instead of a written setup sheet:
 The artifact **must** set: **Domain** = site PBX IP (`192.168.1.16` in this test),
 **Transport = UDP**, **Media encryption = None**, **codecs = G.711 (ulaw/alaw)**,
 **international/dial-assistant prefix OFF**. Credentials (SAP ID + one-time secret) come
-from [SOP 14](../SOP/14-Device-Provisioning-Sheet.md); secrets are per-account, never a
+from [SOP 14](../guides/device-provisioning.md); secrets are per-account, never a
 shared password.
 
 ### A.2 Onboarding self-test (the gate to "Active")
@@ -314,7 +314,7 @@ A device is not **Active** until it passes, in order:
 ```
 
 Record the result per device model (some Android brands need the SOP 24 battery steps
-before step 2 will *stay* green). This mirrors [SOP 05 Step 4](../SOP/05-Student-SIP-Setup-Guide.md).
+before step 2 will *stay* green). This mirrors [SOP 05 Step 4](../guides/student-sip-setup.md).
 
 ### A.3 The exact correct Linphone settings
 
@@ -338,7 +338,7 @@ before step 2 will *stay* green). This mirrors [SOP 05 Step 4](../SOP/05-Student
 ## B. Keep the phone registered (battery & background)
 
 Full detail lives in
-**[SOP 24 – Mobile App Reliability & Battery](../SOP/24-Mobile-App-Reliability-and-Battery.md)**
+**[SOP 24 – Mobile App Reliability & Battery](../reference/mobile-app-reliability.md)**
 (Risk **R2**). This is a pointer + the essentials — **do not treat this as the source of
 truth; SOP 24 is.**
 
@@ -362,7 +362,7 @@ truth; SOP 24 is.**
 
 > **Inbound is never 100% guaranteed on a personal phone.** Critical answer points (ERT,
 > control room, medical, security) run on **dedicated always-on-charger devices** —
-> SOP 24 §6 and [SOP 14 §3](../SOP/14-Device-Provisioning-Sheet.md). See SOP 24 for iOS
+> SOP 24 §6 and [SOP 14 §3](../guides/device-provisioning.md). See SOP 24 for iOS
 > guidance and the per-phone pilot checklist.
 
 ---
@@ -385,7 +385,7 @@ NAT-media, or battery.
 
 *This log covers the SIP/registration/audio issues that actually occurred during the live
 multi-phone field test, with production mitigations. It is the field-test companion to
-[Roadblocks-and-Solutions.md](Roadblocks-and-Solutions.md) and is maintained alongside the
+[Roadblocks-and-Solutions.md](roadblocks-and-solutions.md) and is maintained alongside the
 config it references —
-[deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf),
-[config/extensions_custom.conf](../config/extensions_custom.conf).*
+[deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf),
+[config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf).*

@@ -14,11 +14,11 @@ each step links to the full doc. Do them in order; test after each block.
 - [ ] Router, switch, access point powered; **Wi-Fi client isolation OFF** (or voice VLAN)
 - [ ] 3–4 **dedicated Android phones** (ERT answer points) + chargers
 - [ ] A couple of test phones for "callers"
-- [ ] The confirmed roster ([Notes/Confirmed Details.md](../Notes/Confirmed%20Details.md))
+- [ ] The confirmed roster (Notes/Confirmed Details.md)
 
 ---
 
-## Block A — Server & FreePBX  ([SOP 08 §0](08-FreePBX-Build-Guide.md))
+## Block A — Server & FreePBX  ([SOP 08 §0](../guides/freepbx-build.md))
 
 1. Install FreePBX (distro or on Asterisk 18+/20+); apply module updates.
 2. Set static IP; resolve `pbx.upes.lan` / `sip.upes.lan` (or note the IP).
@@ -29,12 +29,12 @@ each step links to the full doc. Do them in order; test after each block.
 
 ---
 
-## Block B — Emergency core  ([SOP 08 §1](08-FreePBX-Build-Guide.md), [config/](../config/))
+## Block B — Emergency core  ([SOP 08 §1](../guides/freepbx-build.md), [config/](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/))
 
 1. Merge `config/extensions_custom.conf` into `/etc/asterisk/`, then `dialplan reload`.
-2. Record the prompts into `/var/lib/asterisk/sounds/en/upes-ecs/`  ([SOP 28](28-Voice-Prompt-Scripts.md)).
+2. Record the prompts into `/var/lib/asterisk/sounds/en/upes-ecs/`  ([SOP 28](../reference/voice-prompt-scripts.md)).
 3. **Queue:** create `ert_emergency_queue` — ringall, 20s, skip-busy, no MoH.
-4. **Fixed answer points:** import [fixed-devices.csv](../provisioning/fixed-devices.csv) → put Linphone on the dedicated Androids as `4101` (ERT Lead), `4200` (Medical), `4300` (Security). Keep them **on charger, battery-unrestricted** ([SOP 24](24-Mobile-App-Reliability-and-Battery.md)).
+4. **Fixed answer points:** import [fixed-devices.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv) → put Linphone on the dedicated Androids as `4101` (ERT Lead), `4200` (Medical), `4300` (Security). Keep them **on charger, battery-unrestricted** ([SOP 24](../reference/mobile-app-reliability.md)).
 5. Add those ERT devices as queue agents.
 6. **Route 111 + 199** (FreePBX Custom Destinations) → `ctx_emergency_111` / `ctx_drill_199`.
 
@@ -42,7 +42,7 @@ each step links to the full doc. Do them in order; test after each block.
 
 ---
 
-## Block C — Users & access  ([SOP 04](04-SIP-Account-Role-Matrix.md), [provisioning/](../provisioning/))
+## Block C — Users & access  ([SOP 04](../reference/sip-account-role-matrix.md), [provisioning/](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/))
 
 1. Fill secrets into a throwaway file and import the roster:
    ```bash
@@ -59,9 +59,9 @@ each step links to the full doc. Do them in order; test after each block.
 
 ## Block D — Prove it & back it up
 
-1. Run the [Health Check](10-Health-Monitoring-Checklist.md): `sudo /opt/upes-ecs/upes-ecs-healthcheck.sh`
-2. Walk the [Pilot Test Plan](17-Pilot-Test-Plan.md) — the 19 tests.
-3. Take a config backup + commit custom config to the `upes-ecs-config` git repo ([SOP 11](11-Backup-Restore-Procedure.md)).
+1. Run the [Health Check](../operations/health-monitoring.md): `sudo /opt/upes-ecs/upes-ecs-healthcheck.sh`
+2. Walk the [Pilot Test Plan](../operations/pilot-test-plan.md) — the 19 tests.
+3. Take a config backup + commit custom config to the `upes-ecs-config` git repo ([SOP 11](../guides/backup-restore.md)).
 
 ---
 
@@ -74,7 +74,7 @@ each step links to the full doc. Do them in order; test after each block.
 - [ ] Health check reports READY
 
 **Then** move to Phase 2/3 (roles, paging, conference, van drill) via the
-[Master Plan](07-Master-Implementation-Plan.md), and toward the [Go-Live Checklist](18-Go-Live-Checklist.md).
+[Master Plan](../operations/master-implementation-plan.md), and toward the [Go-Live Checklist](go-live-checklist.md).
 
 ---
 
@@ -85,5 +85,5 @@ each step links to the full doc. Do them in order; test after each block.
 | Android won't register | Wi-Fi client isolation; SAP ID/password/domain; firewall |
 | 111 rings nobody | Queue has ≥1 available agent; Androids registered + on charger |
 | No recording | `${REC_DIR}` writable by `asterisk`; MixMonitor before Answer |
-| Android misses calls when idle | Battery optimization OFF, on charger, screen stay-awake ([SOP 24](24-Mobile-App-Reliability-and-Battery.md)) |
-| Incident ID blank | `func_shell` not loaded — see [config/README.md](../config/README.md) |
+| Android misses calls when idle | Battery optimization OFF, on charger, screen stay-awake ([SOP 24](../reference/mobile-app-reliability.md)) |
+| Incident ID blank | `func_shell` not loaded — see [config/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md) |

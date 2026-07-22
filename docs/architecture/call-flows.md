@@ -1,8 +1,8 @@
 # UPES-ECS — Call Flows
 
 Every call type on UPES-ECS, as sequence and flow diagrams with short narration.
-This is the *runtime* companion to [02-System-Architecture.md](02-System-Architecture.md)
-(the static build) and the operational [ERT SOP](../SOP/02-ERT-SOP.md). Diagrams are
+This is the *runtime* companion to [02-System-Architecture.md](system-architecture.md)
+(the static build) and the operational [ERT SOP](../operations/ert-sop.md). Diagrams are
 Mermaid with an ASCII fallback for the primary flow.
 
 > **Golden rules that shape every flow below.** 111 is **human-first** — no AI,
@@ -21,7 +21,7 @@ Mermaid with an ASCII fallback for the primary flow.
 
 ## 0. Number → route map
 
-Every dialable number and what it does. Authoritative source: [Numbering Plan](../SOP/01-Numbering-Plan.md).
+Every dialable number and what it does. Authoritative source: [Numbering Plan](../reference/numbering-plan.md).
 
 | Dialed | Name | Route / behaviour | Recorded? | Who may dial |
 |---|---|---|---|---|
@@ -89,8 +89,8 @@ Caller ─dial 111─► Asterisk ─► [record + incident ID assigned FIRST]
 ```
 
 - Recording covers the **whole call**, not just the bridged segment (MixMonitor).
-- "Healthy" queue = **≥ 2 available** positions ([Drill SOP §4](../SOP/03-Drill-Test-SOP.md)).
-- Six mandatory facts and the opening line: [ERT SOP Part A](../SOP/02-ERT-SOP.md).
+- "Healthy" queue = **≥ 2 available** positions ([Drill SOP §4](../operations/drill-test-sop.md)).
+- Six mandatory facts and the opening line: [ERT SOP Part A](../operations/ert-sop.md).
 
 ---
 
@@ -149,11 +149,11 @@ flowchart LR
     A -.->|"responder joins"| Q
 ```
 
-- The coach + prompts: [`../config/extensions_aihelpline.conf`](../config/extensions_aihelpline.conf),
-  [`../scripts/gen-coach-prompts.sh`](../scripts/gen-coach-prompts.sh) (offline TTS).
-- Background responder alert: [`../scripts/alert_responders.sh`](../scripts/alert_responders.sh).
-- Review workflow (listen → identify → **call back** → dispatch/close): [ERT SOP Part F](../SOP/02-ERT-SOP.md).
-- EMD grounding (stay-on-line pre-arrival instructions; no redial loops): see [Journal/Feature-Roadmap.md](../Journal/Feature-Roadmap.md) and the SOP 19 fallback matrix.
+- The coach + prompts: [`../config/extensions_aihelpline.conf`](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_aihelpline.conf),
+  [`../scripts/gen-coach-prompts.sh`](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/gen-coach-prompts.sh) (offline TTS).
+- Background responder alert: [`../scripts/alert_responders.sh`](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/alert_responders.sh).
+- Review workflow (listen → identify → **call back** → dispatch/close): [ERT SOP Part F](../operations/ert-sop.md).
+- EMD grounding (stay-on-line pre-arrival instructions; no redial loops): see [Journal/Feature-Roadmap.md](../project/roadmap.md) and the SOP 19 fallback matrix.
 
 ---
 
@@ -180,8 +180,8 @@ sequenceDiagram
     O->>A: drill log written (DRILL-ONLY)
 ```
 
-- Any authenticated user may self-test with 199; whether it exercises escalation/paging/conference is **ERT-Lead-controlled drill mode** ([Drill SOP §1](../SOP/03-Drill-Test-SOP.md)).
-- Guardrails (never casually use 111, never surprise-page, never leave a simulated miss unreviewed): [Drill SOP §7](../SOP/03-Drill-Test-SOP.md).
+- Any authenticated user may self-test with 199; whether it exercises escalation/paging/conference is **ERT-Lead-controlled drill mode** ([Drill SOP §1](../operations/drill-test-sop.md)).
+- Guardrails (never casually use 111, never surprise-page, never leave a simulated miss unreviewed): [Drill SOP §7](../operations/drill-test-sop.md).
 
 ---
 
@@ -230,7 +230,7 @@ sequenceDiagram
 | **Three-way bridge** | Serious / unclear / location vague | Operator stays & owns |
 | ~~Blind transfer~~ | — | **Discouraged** (drops ownership) |
 
-Full dispatch decision tree and quick-guide: [ERT SOP Part C](../SOP/02-ERT-SOP.md).
+Full dispatch decision tree and quick-guide: [ERT SOP Part C](../operations/ert-sop.md).
 
 ---
 
@@ -252,7 +252,7 @@ flowchart TD
 ```
 
 - One number by design: someone hiding from a threat only has to remember **111** — there is deliberately no separate silent line to choose under pressure.
-- Full protocol: [ERT SOP Part I](../SOP/02-ERT-SOP.md).
+- Full protocol: [ERT SOP Part I](../operations/ert-sop.md).
 
 ---
 
@@ -284,9 +284,9 @@ sequenceDiagram
     end
 ```
 
-- Zones: 700 all-campus, 701 academic, 702 hostels, 703 security gates, 704 medical/ERT, 705 admin/ops ([Numbering Plan §4](../SOP/01-Numbering-Plan.md)).
+- Zones: 700 all-campus, 701 academic, 702 hostels, 703 security gates, 704 medical/ERT, 705 admin/ops ([Numbering Plan §4](../reference/numbering-plan.md)).
 - Students/general staff are **blocked** from all paging codes; drill pages are prefixed *"Drill, drill, drill."* with prior notice.
-- Message template and "use with care" rules: [ERT SOP Part D](../SOP/02-ERT-SOP.md).
+- Message template and "use with care" rules: [ERT SOP Part D](../operations/ert-sop.md).
 
 ---
 
@@ -312,7 +312,7 @@ sequenceDiagram
 ```
 
 - Side rooms 9001–9004 (Security / Medical / Warden / Ops) are **not recorded** by default.
-- "Do not open 9000 for every call": [ERT SOP Part E](../SOP/02-ERT-SOP.md). Surge posture (broadcast first, pull coordination into 9000): [ERT SOP Part J](../SOP/02-ERT-SOP.md).
+- "Do not open 9000 for every call": [ERT SOP Part E](../operations/ert-sop.md). Surge posture (broadcast first, pull coordination into 9000): [ERT SOP Part J](../operations/ert-sop.md).
 
 ---
 
@@ -335,7 +335,7 @@ sequenceDiagram
     B-->>A: talk (no recording · no incident)
 ```
 
-- Privacy by design: student calls stay private; only emergency traffic is recorded ([Architecture §7](02-System-Architecture.md)).
+- Privacy by design: student calls stay private; only emergency traffic is recorded ([Architecture §7](system-architecture.md)).
 
 ---
 
@@ -372,14 +372,14 @@ sequenceDiagram
     Note over AI,H: 111 never depends on AI; AI never blocks 111
 ```
 
-- **Do not** alias 101 to 111 — 101 is reserved for the AI ([Numbering Plan §1](../SOP/01-Numbering-Plan.md)).
-- Design principle: 111 is human-first and AI always falls back to it ([Architecture §7](02-System-Architecture.md)).
+- **Do not** alias 101 to 111 — 101 is reserved for the AI ([Numbering Plan §1](../reference/numbering-plan.md)).
+- Design principle: 111 is human-first and AI always falls back to it ([Architecture §7](system-architecture.md)).
 
 ---
 
 ## Cross-references
 
-- Static architecture behind these flows → [02-System-Architecture.md](02-System-Architecture.md)
-- Where recordings/incidents/logs live → [06-Numbering-and-Data-Map.md](06-Numbering-and-Data-Map.md)
-- Network paths these calls traverse → [04-Network-and-Deployment.md](04-Network-and-Deployment.md)
-- Operate the flows → [ERT SOP](../SOP/02-ERT-SOP.md) · [Drill SOP](../SOP/03-Drill-Test-SOP.md)
+- Static architecture behind these flows → [02-System-Architecture.md](system-architecture.md)
+- Where recordings/incidents/logs live → [06-Numbering-and-Data-Map.md](numbering-and-data-map.md)
+- Network paths these calls traverse → [04-Network-and-Deployment.md](network-and-deployment.md)
+- Operate the flows → [ERT SOP](../operations/ert-sop.md) · [Drill SOP](../operations/drill-test-sop.md)

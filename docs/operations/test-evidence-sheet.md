@@ -1,9 +1,9 @@
 # UPES-ECS Test Evidence & Sign-off Sheet
 
 **Purpose:** a fill-in **record** proving each pilot test actually **passed** — the
-evidence companion to the [Pilot Test Plan](17-Pilot-Test-Plan.md). Print it, run the
+evidence companion to the [Pilot Test Plan](pilot-test-plan.md). Print it, run the
 tests, fill every Result cell, attach evidence, then use it for go-live sign-off
-([Go-Live Checklist](18-Go-Live-Checklist.md)).
+([Go-Live Checklist](../getting-started/go-live-checklist.md)).
 
 > Every functional row is a **Must pass**. A failed **111 / 199** test or a
 > **recording failure** is a **critical, do-not-go-live** condition (see §6).
@@ -26,7 +26,7 @@ tests, fill every Result cell, attach evidence, then use it for go-live sign-off
 
 ## 1. Functional tests (all 19 must pass)
 
-From [Pilot Test Plan §2](17-Pilot-Test-Plan.md). Record evidence for each: recording
+From [Pilot Test Plan §2](pilot-test-plan.md). Record evidence for each: recording
 filename, incident ID, or log line.
 
 | # | Test | Expected result | Result (PASS/FAIL) | Evidence / notes | Tester | Date |
@@ -55,7 +55,7 @@ filename, incident ID, or log line.
 
 ## 2. Capacity / quality checks
 
-From [Pilot Test Plan §3](17-Pilot-Test-Plan.md).
+From [Pilot Test Plan §3](pilot-test-plan.md).
 
 | Test | Target | Result (PASS/FAIL) | Evidence / measured value | Tester | Date |
 |---|---|---|---|---|---|
@@ -73,7 +73,7 @@ From [Pilot Test Plan §3](17-Pilot-Test-Plan.md).
 
 ## 3. Security / access checks
 
-From [Pilot Test Plan §5](17-Pilot-Test-Plan.md).
+From [Pilot Test Plan §5](pilot-test-plan.md).
 
 | Check | Expected | Result (PASS/FAIL) | Evidence / log line | Tester | Date |
 |---|---|---|---|---|---|
@@ -88,7 +88,7 @@ From [Pilot Test Plan §5](17-Pilot-Test-Plan.md).
 
 ## 4. Edge cases
 
-From [Pilot Test Plan §6](17-Pilot-Test-Plan.md).
+From [Pilot Test Plan §6](pilot-test-plan.md).
 
 | Case | Expected | Result (PASS/FAIL) | Evidence / incident ID | Tester | Date |
 |---|---|---|---|---|---|
@@ -103,7 +103,7 @@ From [Pilot Test Plan §6](17-Pilot-Test-Plan.md).
 
 ## 5. Mobile-specific checks (optional per-device record)
 
-From [Pilot Test Plan §4](17-Pilot-Test-Plan.md) · [SOP 24](24-Mobile-App-Reliability-and-Battery.md).
+From [Pilot Test Plan §4](pilot-test-plan.md) · [SOP 24](../reference/mobile-app-reliability.md).
 
 | Check | Result (PASS/FAIL) | Phone model / notes | Tester | Date |
 |---|---|---|---|---|
@@ -131,8 +131,8 @@ From [Pilot Test Plan §4](17-Pilot-Test-Plan.md) · [SOP 24](24-Mobile-App-Reli
 
 Testing complete, all 19 functional tests **PASS**, capacity/security/edge checks
 recorded, and ERT drill completed. Sign-off order: **IT Admin + ERT Lead**, then
-**University**. See [Pilot Test Plan §7](17-Pilot-Test-Plan.md) and
-[Go-Live Checklist](18-Go-Live-Checklist.md).
+**University**. See [Pilot Test Plan §7](pilot-test-plan.md) and
+[Go-Live Checklist](../getting-started/go-live-checklist.md).
 
 | Role | Name | Date | Signature |
 |---|---|---|---|

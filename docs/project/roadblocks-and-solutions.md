@@ -6,10 +6,10 @@ got past it. Grouped by area. Each entry: **Symptom → Cause → Fix**, plus a 
 where it earns one.
 
 Key files referenced throughout:
-[config/extensions_custom.conf](../config/extensions_custom.conf),
-[deploy/qemu/README.md](../deploy/qemu/README.md),
-[deploy/README.md](../deploy/README.md),
-[SOP 09 – Dialplan Design](../SOP/09-Dialplan-Design.md).
+[config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf),
+[deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md),
+[deploy/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md),
+[SOP 09 – Dialplan Design](../guides/dialplan-design.md).
 
 ---
 
@@ -24,7 +24,7 @@ Key files referenced throughout:
   advertises addresses the NAT then breaks.
 - **Fix:** Moved the **live-audio** test off Docker. Docker is kept **only** for fast
   dialplan/config validation, not for anything that has to move real media. See
-  [deploy/README.md](../deploy/README.md).
+  [deploy/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md).
 - **Lesson:** Container NAT is fine for signalling smoke-tests, wrong for RTP. Prove
   audio on a network path you actually control.
 
@@ -38,7 +38,7 @@ Key files referenced throughout:
   [weilnetz](https://qemu.weilnetz.de/) Windows build and extracted it with 7-Zip, no
   installer, no admin. The one-time firewall rule is documented as an elevated command to
   run when an admin is available; acceleration falls back to software (see 1.3). See
-  [deploy/qemu/README.md](../deploy/qemu/README.md).
+  [deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md).
 - **Lesson:** "No admin" is a design constraint, not a blocker — portable binaries +
   software emulation get you a working PBX with zero privileges.
 
@@ -66,7 +66,7 @@ Key files referenced throughout:
 - **Cause:** Debian 12 no longer ships an `asterisk` package in the base repos.
 - **Fix:** Switched the VM base image to **Ubuntu 22.04**, where `asterisk` is in the
   `universe` repo. Bonus: it matches the WSL distro we test on, so behaviour is
-  consistent. See [deploy/qemu/README.md](../deploy/qemu/README.md).
+  consistent. See [deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md).
 - **Lesson:** Pin the base image to one that actually packages your core dependency —
   verify `apt-cache policy` before committing to a distro.
 
@@ -78,8 +78,8 @@ Key files referenced throughout:
 - **Fix:** Built ISO9660+Joliet images (`CIDATA` and `UPESDATA` volume labels) using the
   **native Windows IMAPI2 COM API** from PowerShell, driving it with an inline C# `ISOFile`
   writer. No external tools, no admin. See
-  [deploy/qemu/build-vm.ps1](../deploy/qemu/build-vm.ps1) and
-  [deploy/qemu/README.md](../deploy/qemu/README.md).
+  [deploy/qemu/build-vm.ps1](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/build-vm.ps1) and
+  [deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md).
 - **Lesson:** Windows already ships an ISO burner (IMAPI2) — reach for the OS API before
   assuming you need to install a Unix utility.
 
@@ -96,8 +96,8 @@ Key files referenced throughout:
 
   Proven: a softphone registering to the laptop's real LAN IP (`192.168.1.16`)
   registered and exchanged live RTP. See
-  [deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf),
-  [deploy/asterisk/rtp.conf](../deploy/asterisk/rtp.conf).
+  [deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf),
+  [deploy/asterisk/rtp.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/rtp.conf).
 - **Lesson:** A NAT'd PBX must be told its own public-facing address and a *fixed*,
   small RTP range you can forward — never let it advertise the private guest IP.
 
@@ -106,7 +106,7 @@ Key files referenced throughout:
 - **Symptom:** Every time the van laptop joins a new network, its LAN IP changes, and the
   behind-NAT config from 1.6 points at the old address.
 - **Cause:** The advertised LAN IP is the one piece of config that is environment-dependent.
-- **Fix:** [deploy/qemu/Set-UpesLanIp.ps1](../deploy/qemu/Set-UpesLanIp.ps1) auto-detects
+- **Fix:** [deploy/qemu/Set-UpesLanIp.ps1](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/Set-UpesLanIp.ps1) auto-detects
   the current LAN IP and rebinds Asterisk on every boot (and on demand). Documented that
   bridged networking / native Linux is the zero-touch production alternative.
 - **Lesson:** Isolate the one value that changes per-site and automate it; don't hand-edit
@@ -126,7 +126,7 @@ Key files referenced throughout:
     -Protocol UDP -LocalPort 5060,10000-10019 -Action Allow
   ```
 
-  See [deploy/qemu/README.md](../deploy/qemu/README.md).
+  See [deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md).
 - **Lesson:** Inbound reachability is a hard prerequisite — call it out as a one-time admin
   step in the runbook so it isn't discovered during a live drill.
 
@@ -149,8 +149,8 @@ Key files referenced throughout:
   - `pjsip show channelstats` RTP counters (~48 packets/s ≈ the G.711 20 ms frame rate)
   - the **server-side MixMonitor recording** as the audio artefact
 
-  See [deploy/wsl-rtp-proof.sh](../deploy/wsl-rtp-proof.sh),
-  [deploy/wsl-call-test.sh](../deploy/wsl-call-test.sh).
+  See [deploy/wsl-rtp-proof.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/wsl-rtp-proof.sh),
+  [deploy/wsl-call-test.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/wsl-call-test.sh).
 - **Lesson:** On headless VMs, don't fight for a fake mic — measure RTP at the PBX and let
   the recording be your proof of audio.
 
@@ -164,9 +164,9 @@ Key files referenced throughout:
   which requires recording hold + voicemail too.
 - **Fix:** Changed to `MixMonitor(${FILE})` — records the **whole call**. Verified: the
   same scenario went from **44 bytes → ~185 KB / 9.98 s** of real audio. Fixed in both
-  [config/extensions_custom.conf](../config/extensions_custom.conf) and
-  [SOP 09 – Dialplan Design](../SOP/09-Dialplan-Design.md); see also
-  [Feature 4](../Docs/Feature-4.md).
+  [config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf) and
+  [SOP 09 – Dialplan Design](../guides/dialplan-design.md); see also
+  [Feature 4](../features/feature-04.md).
 
   ```asterisk
   ; before (bug): only records the bridged segment
@@ -183,9 +183,9 @@ Key files referenced throughout:
 - **Cause:** Asterisk gates `SHELL()` (and other risky functions) behind
   `live_dangerously`, which is off by default.
 - **Fix:** Enabled `live_dangerously = yes` in `asterisk.conf` (applied by the VM setup
-  script, [deploy/qemu/seed/setup-in-vm.sh](../deploy/qemu/seed/setup-in-vm.sh)). Incident
+  script, [deploy/qemu/seed/setup-in-vm.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/seed/setup-in-vm.sh)). Incident
   IDs in the form `ERT-YYYYMMDD-NNNN` then generated correctly via
-  [scripts/incident_id.sh](../scripts/incident_id.sh).
+  [scripts/incident_id.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/incident_id.sh).
 - **Lesson:** If a dialplan function silently does nothing, check whether Asterisk has
   gated it behind `live_dangerously` before debugging your script.
 
@@ -210,7 +210,7 @@ Key files referenced throughout:
 - **Cause:** `$pid` is a **read-only automatic variable** in PowerShell (the current
   process ID). Assigning to it fails, leaving the variable holding the shell's own PID.
 - **Fix:** Renamed the variable to `$vmpid`. See
-  [deploy/qemu/stop-vm.ps1](../deploy/qemu/stop-vm.ps1).
+  [deploy/qemu/stop-vm.ps1](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/stop-vm.ps1).
 - **Lesson:** Never reuse PowerShell automatic-variable names (`$pid`, `$input`, `$host`,
   `$error`, …). A shadowed automatic can turn a bug into a process-kill.
 
@@ -272,8 +272,8 @@ Key files referenced throughout:
   early pattern assumed one length.
 - **Fix:** The dialplan matches **both** (`_5XXXXXXXX` for students, `_4XXXXXXX` for staff).
   Confirmed the 4-**digit** fixed-device range (`4xxx`) does not collide — it's a different
-  length. See [config/extensions_custom.conf](../config/extensions_custom.conf) and
-  [SOP 09 – Dialplan Design](../SOP/09-Dialplan-Design.md).
+  length. See [config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf) and
+  [SOP 09 – Dialplan Design](../guides/dialplan-design.md).
 - **Lesson:** Enumerate the *real* identifier formats before writing match patterns; one
   assumed length can exclude an entire user population.
 
@@ -286,9 +286,9 @@ Key files referenced throughout:
 - **Fix:** Introduced a dedicated **`ctx_responder`** context for Medical/Security/Warden/
   Ops/IT: they receive handoffs and join coordination rooms, but do **not** answer the ERT
   queue, page all-campus, or control the queue. See
-  [config/extensions_custom.conf](../config/extensions_custom.conf),
-  [provisioning/responder-positions.csv](../provisioning/responder-positions.csv), and
-  [SOP 30 – ERT Roles & Shifts](../SOP/30-ERT-Roles-and-Shifts.md).
+  [config/extensions_custom.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf),
+  [provisioning/responder-positions.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv), and
+  [SOP 30 – ERT Roles & Shifts](../operations/ert-roles-and-shifts.md).
 - **Lesson:** Distinguish "answers the emergency queue" from "gets dispatched to" — they
   need different contexts and different permissions.
 
@@ -303,11 +303,11 @@ Key files referenced throughout:
 - **Cause:** Placeholder/example data written before the real roster was confirmed, never
   cleaned out.
 - **Fix:** Removed all of it. The system now uses **only** the confirmed roster in
-  [../Notes/Confirmed Details.md](../Notes/Confirmed%20Details.md) (the real SAP ID example
+  ../Notes/Confirmed Details.md (the real SAP ID example
   is `500120597`). Secrets ship as `__SET_ON_IMPORT__`, are generated with `openssl`, and
-  are **never committed**. See [provisioning/pilot-users.csv](../provisioning/pilot-users.csv)
-  and [provisioning/README.md](../provisioning/README.md). The stale `500123456` in the docs
-  was corrected — logged in [Doc-Fixes.md](./Doc-Fixes.md).
+  are **never committed**. See [provisioning/pilot-users.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/pilot-users.csv)
+  and [provisioning/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/README.md). The stale `500123456` in the docs
+  was corrected — logged in [Doc-Fixes.md](doc-fixes.md).
 - **Lesson:** Placeholder identities are a data-integrity risk. Keep a single source of
   truth for the roster and purge invented values before anything ships.
 
@@ -322,7 +322,7 @@ Key files referenced throughout:
     empty, so the count parsed as `null`.
 - **Fix:** Query the **root filesystem** for disk usage instead of the locked-down
   recordings path, and count `Contact:` lines directly rather than trusting the summary
-  string. See [scripts/upes-ecs-healthcheck.sh](../scripts/upes-ecs-healthcheck.sh).
+  string. See [scripts/upes-ecs-healthcheck.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/upes-ecs-healthcheck.sh).
 - **Lesson:** A monitor that silently reports empty/null is worse than one that errors —
   validate parsers against the *empty* and *permission-denied* cases, not just the happy one.
 

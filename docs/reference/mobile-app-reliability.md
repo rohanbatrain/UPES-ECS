@@ -12,7 +12,7 @@ How to keep the SIP app **registered and reachable** so emergency calls — espe
 > errors (wrong transport, `+91` prefix, SRTP mismatch) are best eliminated with a
 > **pre-built Linphone profile / QR / `.rc` config** — standardize **Transport = UDP**,
 > **Media encryption = None**, and **G.711** once, so no user picks them wrong. See
-> [Field-Test Issues & Mitigations](../Journal/Field-Test-Issues-and-Mitigations.md).
+> [Field-Test Issues & Mitigations](../project/field-test-issues.md).
 
 ---
 
@@ -102,7 +102,7 @@ Tuning that helps mobiles stay registered and detects drops fast:
 | `qualify_timeout` | tuned to Wi-Fi latency | Avoid false "unreachable" on slow Wi-Fi |
 | NAT/keepalive | enabled | Keeps the registration path alive on Wi-Fi |
 
-Monitor registration health on the [Health Dashboard](10-Health-Monitoring-Checklist.md);
+Monitor registration health on the [Health Dashboard](../operations/health-monitoring.md);
 repeated drops from a device → apply the battery steps above or move that role to a fixed phone.
 
 ---
@@ -118,7 +118,7 @@ Because mobile inbound can never be 100% guaranteed on every phone:
     treat it like an appliance, not a personal phone.
   - **Later:** wired **IP phones** on the same extensions remove the battery problem entirely.
 - **Mobiles are the primary path for reaching 111 outbound** — which is the common case and works reliably.
-- Missed-call recovery ([ERT SOP Part F](02-ERT-SOP.md)) exists precisely because a
+- Missed-call recovery ([ERT SOP Part F](../operations/ert-sop.md)) exists precisely because a
   callback might not connect first try — the incident stays open until reviewed.
 
 ---
@@ -132,6 +132,6 @@ Because mobile inbound can never be 100% guaranteed on every phone:
 - [ ] Test **inbound**: have ERT call the phone **while locked** → does it ring? Record result per device model.
 - [ ] Document any brand quirks for the support runbook.
 
-The **future UPES VoIP app** (see [Risk Register R2/R5](21-Risk-Register-and-Gaps.md))
+The **future UPES VoIP app** (see [Risk Register R2/R5](../operations/risk-register.md))
 can solve inbound properly with app-level wake + coordinate broadcast — until then,
 these practices + fixed-phone answer points are the mitigation.

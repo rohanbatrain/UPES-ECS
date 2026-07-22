@@ -2,8 +2,8 @@
 
 Two things in one place: **every number** the system uses, and **where every byte of
 data lives** — its path, retention, and who may touch it. The authoritative source for
-numbers is [SOP 01 Numbering Plan](../SOP/01-Numbering-Plan.md); the data model comes
-from [SOP 12](../SOP/12-Incident-Logging-Schema.md) and [SOP 13](../SOP/13-Recording-Retention-Policy.md).
+numbers is [SOP 01 Numbering Plan](../reference/numbering-plan.md); the data model comes
+from [SOP 12](../operations/incident-logging-schema.md) and [SOP 13](../operations/recording-retention.md).
 This document consolidates them for the engineer.
 
 ---
@@ -27,7 +27,7 @@ This document consolidates them for the engineer.
 ### 1.2 Responder positions & fixed devices (4000–4999)
 
 Positions are generic roles **staffed by shift**, never personal accounts
-([SOP 30](../SOP/30-ERT-Roles-and-Shifts.md)). Confirmed positions in bold.
+([SOP 30](../operations/ert-roles-and-shifts.md)). Confirmed positions in bold.
 
 | Ext / Range | Role | Context | Answers 111 queue? |
 |---|---|---|---|
@@ -150,8 +150,8 @@ Dial 111/199 ─► Asterisk/FreePBX (upes-ecs-pbx-01)
 ```
 
 Helper scripts live in `/opt/upes-ecs/` and run as the `asterisk` user so the dialplan's
-`System()`/`${SHELL()}` can write ([config/README.md](../config/README.md),
-[setup.sh](../setup.sh)).
+`System()`/`${SHELL()}` can write ([config/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md),
+[setup.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/setup.sh)).
 
 ---
 
@@ -180,7 +180,7 @@ incident**. Deletion requires ERT Lead + authorized university IT/admin approval
 
 > **TBD:** final **university retention policy** — the legal retention period (may extend
 > beyond 90 days) and preservation/legal-hold process are for UPES administration to
-> confirm ([SOP 13 §8](../SOP/13-Recording-Retention-Policy.md)).
+> confirm ([SOP 13 §8](../operations/recording-retention.md)).
 
 ---
 
@@ -188,7 +188,7 @@ incident**. Deletion requires ERT Lead + authorized university IT/admin approval
 
 Every 111 call creates an incident — including false alarms (closed as such). Asterisk
 produces the raw telephony events; the **incident record** is what the ERT works from
-([SOP 12](../SOP/12-Incident-Logging-Schema.md)).
+([SOP 12](../operations/incident-logging-schema.md)).
 
 ### 4.1 IDs & filename convention
 
@@ -264,6 +264,6 @@ When `source_number = 101` and `ai_triage_enabled = true`, the record gains:
 
 **Never allowed:** students, general staff, normal SIP users, unauthenticated users,
 non-emergency roles. **All recording/voicemail access is itself logged** — least
-privilege, time-limited by retention ([SOP 13 §4](../SOP/13-Recording-Retention-Policy.md),
-[SOP 12 §6](../SOP/12-Incident-Logging-Schema.md)). Full capability grid:
-[SOP 04](../SOP/04-SIP-Account-Role-Matrix.md).
+privilege, time-limited by retention ([SOP 13 §4](../operations/recording-retention.md),
+[SOP 12 §6](../operations/incident-logging-schema.md)). Full capability grid:
+[SOP 04](../reference/sip-account-role-matrix.md).

@@ -70,7 +70,7 @@ one person, and every task has a clear owner and backup.
 - **Two people** can do every critical task (primary + backup trained).
 - **Credentials** in a shared secrets store the backup can reach (not one person's head/laptop).
 - **Config in git** (`upes-ecs-config`) — anyone with access can see history and restore.
-- **Onboarding note:** a new admin should be able to stand up the system from the [Master Plan](07-Master-Implementation-Plan.md) + [FreePBX Build Guide](08-FreePBX-Build-Guide.md) + this repo alone.
+- **Onboarding note:** a new admin should be able to stand up the system from the [Master Plan](master-implementation-plan.md) + [FreePBX Build Guide](../guides/freepbx-build.md) + this repo alone.
 
 ---
 
@@ -88,7 +88,7 @@ Go-live / rollback decision → University Approver + ERT Lead + IT Admin (all t
 
 ## 6. Decisions still needing an owner + date
 
-From the [Risk Register](21-Risk-Register-and-Gaps.md) — assign each an accountable person and a due date:
+From the [Risk Register](risk-register.md) — assign each an accountable person and a due date:
 
 - **R10 DPDP / recording compliance** → University Approver
 - **R9 security hardening sign-off** → IT Admin

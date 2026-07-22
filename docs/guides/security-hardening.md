@@ -16,7 +16,7 @@ Closes Risk **R9** (SIP abuse / DoS) and **R14** (prank / false alarms). LAN-onl
 | **fail2ban** | Enable the Asterisk jail — ban IPs after repeated failed registrations/auth |
 | Registration rate-limit | Throttle repeated REGISTER from one IP/account |
 | Registration source | LAN/campus Wi-Fi subnets only; **guest Wi-Fi excluded** |
-| Failed-reg logging | On → feeds [Health Monitoring](10-Health-Monitoring-Checklist.md) as an Access/registration event |
+| Failed-reg logging | On → feeds [Health Monitoring](../operations/health-monitoring.md) as an Access/registration event |
 
 ---
 
@@ -45,7 +45,7 @@ Closes Risk **R9** (SIP abuse / DoS) and **R14** (prank / false alarms). LAN-onl
 Plain UDP RTP is sniffable on shared Wi-Fi. **Future security enhancement:**
 - **TLS** for SIP signaling + **SRTP** for media, at least on ERT/fixed devices (Linphone/MicroSIP support it).
 - Certificate management on the PBX.
-- Marked deferred in the [Risk Register](21-Risk-Register-and-Gaps.md#r7); revisit before wide student rollout.
+- Marked deferred in the [Risk Register](../operations/risk-register.md#r7); revisit before wide student rollout.
 
 ---
 
@@ -83,7 +83,7 @@ The emergency line must not be drownable by junk:
 - Force re-provision; block the old credential; log the event.
 - Preserve the account's history/logs (identity is never reused).
 
-(Full lifecycle in [Device Provisioning](14-Device-Provisioning-Sheet.md).)
+(Full lifecycle in [Device Provisioning](device-provisioning.md).)
 
 ---
 
@@ -93,7 +93,7 @@ Successful + failed registration · unknown-device attempts · Access Denied Eve
 paging attempts (allowed + denied) · conference joins · transfer/dispatch · voicemail
 & recording access · config changes · account disable/revoke · fail2ban bans.
 
-Review these in the [Health Dashboard](10-Health-Monitoring-Checklist.md) and the weekly drill report.
+Review these in the [Health Dashboard](../operations/health-monitoring.md) and the weekly drill report.
 
 ---
 
@@ -125,7 +125,7 @@ Availability *is* a security property for an emergency line. The following are i
 - **Boot autostart** of the VM and the Console (Windows Startup-folder launchers, **no admin
   required**) so the whole stack comes back after a host reboot.
 - **Nightly backups** — `upes-ecs-backup.sh` + cron → `/var/backups/upes-ecs/` (per
-  [SOP 11](11-Backup-Restore-Procedure.md)); restore has been test-verified.
+  [SOP 11](backup-restore.md)); restore has been test-verified.
 - **Real all-campus paging PIN** provisioned (no placeholder/default).
 - **SSH hardened for speed + surface:** `UseDNS`/GSSAPI off, `motd-news` disabled.
 

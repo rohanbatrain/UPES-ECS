@@ -115,4 +115,4 @@ production enhancement, not a Phase-1 gate.
 Public internet · cellular fallback · PSTN · cloud PBX · external SIP trunk ·
 SMS/WhatsApp/email alerts · remote off-campus users · multi-campus routing ·
 HA cluster · satellite/anycast. (Multi-campus wireless is a **later** phase — see
-[20-Multi-Campus-Wireless.md](20-Multi-Campus-Wireless.md).)
+[20-Multi-Campus-Wireless.md](../guides/multi-campus-wireless.md).)

@@ -67,7 +67,7 @@ graph LR
 | # | Item | Minimum | Recommended |
 |---|---|---|---|
 | 4.1 | Responder positions | `4101`, `4110`, `4111` provisioned + registered | + `4112`, `4113`, `4120`, `4200`, `4300` |
-| 4.2 | Pilot user accounts | ~10 SAP-ID accounts ([pilot-users.csv](../provisioning/pilot-users.csv)) | 10–25 |
+| 4.2 | Pilot user accounts | ~10 SAP-ID accounts ([pilot-users.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/pilot-users.csv)) | 10–25 |
 | 4.3 | Secrets | Unique, ≥12-char random per account | + delivered once, securely; stored in secrets store |
 | 4.4 | Roles/contexts | ERT positions in `ctx_ert`/`ctx_ert_lead`; users in `ctx_student`/`ctx_staff` | + `ctx_responder` for Medical/Security |
 | 4.5 | Anonymous SIP | **Disabled**; guest Wi-Fi blocked | + fail2ban |
@@ -79,10 +79,10 @@ graph LR
 | # | Item | Minimum | Recommended |
 |---|---|---|---|
 | 5.1 | ERT on shift | **2 operators available** + 1 Lead reachable | 3+ operators, Lead + reserves |
-| 5.2 | Shift roster | Who holds each position, per shift ([SOP 30](../SOP/30-ERT-Roles-and-Shifts.md)) | + handover log signed |
+| 5.2 | Shift roster | Who holds each position, per shift ([SOP 30](../operations/ert-roles-and-shifts.md)) | + handover log signed |
 | 5.3 | IT admin | 1 who can run the PBX | 1 + a trained **backup** (bus factor) |
-| 5.4 | Training | ERT know the answer script + dispatch ([SOP 02](../SOP/02-ERT-SOP.md)) | Full [Training Plan](../SOP/31-Training-Plan.md) + a drill |
-| 5.5 | Desk references | [ERT SOP](../SOP/02-ERT-SOP.md) + [Quick-Cards](../SOP/25-Quick-Cards.md) printed | + numbering + drill SOP |
+| 5.4 | Training | ERT know the answer script + dispatch ([SOP 02](../operations/ert-sop.md)) | Full [Training Plan](../operations/training-plan.md) + a drill |
+| 5.5 | Desk references | [ERT SOP](../operations/ert-sop.md) + [Quick-Cards](../reference/quick-cards.md) printed | + numbering + drill SOP |
 
 ---
 
@@ -90,17 +90,17 @@ graph LR
 
 | # | Item | Minimum | Recommended |
 |---|---|---|---|
-| 6.1 | Emergency dialplan | 111 → queue → coach-in-parallel + background alert → voicemail live ([config](../config/)) | + paging/conference/dispatch |
-| 6.2 | Recording | 111 recorded whole-call; files land + link to incident | + retention cron ([SOP 13](../SOP/13-Recording-Retention-Policy.md)) |
-| 6.3 | Incident logging | Missed 111 → Missed Emergency Incident | + full incident schema ([SOP 12](../SOP/12-Incident-Logging-Schema.md)) |
-| 6.4 | Prompts | `emergency-preanswer`, `emergency-voicemail-prompt`, `drill-prompt` recorded | all prompts ([SOP 28](../SOP/28-Voice-Prompt-Scripts.md)) |
+| 6.1 | Emergency dialplan | 111 → queue → coach-in-parallel + background alert → voicemail live ([config](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/)) | + paging/conference/dispatch |
+| 6.2 | Recording | 111 recorded whole-call; files land + link to incident | + retention cron ([SOP 13](../operations/recording-retention.md)) |
+| 6.3 | Incident logging | Missed 111 → Missed Emergency Incident | + full incident schema ([SOP 12](../operations/incident-logging-schema.md)) |
+| 6.4 | Prompts | `emergency-preanswer`, `emergency-voicemail-prompt`, `drill-prompt` recorded | all prompts ([SOP 28](../reference/voice-prompt-scripts.md)) |
 | 6.5 | Health check | `upes-ecs-healthcheck.sh` runs, reports READY | + local dashboard |
-| 6.6 | Backup | One tested config backup taken | daily + pre-change + tested restore ([SOP 11](../SOP/11-Backup-Restore-Procedure.md)) |
+| 6.6 | Backup | One tested config backup taken | daily + pre-change + tested restore ([SOP 11](../guides/backup-restore.md)) |
 | 6.7 | Drill line | **199** works, no real dispatch | + drill schedule |
 
 ---
 
-## Go-live gate — these MUST pass ([SOP 17](../SOP/17-Pilot-Test-Plan.md) / [32](../SOP/32-Test-Evidence-Sheet.md))
+## Go-live gate — these MUST pass ([SOP 17](../operations/pilot-test-plan.md) / [32](../operations/test-evidence-sheet.md))
 
 - [ ] A registered softphone **dials 111 → an ERT Android rings → answered**.
 - [ ] The call produces a **recording** linked to an incident ID.
@@ -124,7 +124,7 @@ Free software: Asterisk/FreePBX, Linphone, this repo's config/scripts
 People: 2 trained ERT operators + 1 Lead + 1 IT admin (per shift)
 ```
 
-That, plus the config in [../config/](../config/) and the [runbook](07-Deployment-Runbook.md),
+That, plus the config in [../config/](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/) and the [runbook](deployment-runbook.md),
 is enough to answer real emergencies on 111. Everything else is resilience and reach.
 
-Full itemized kit (campus + van, minimum + recommended): [05-Bill-of-Materials.md](05-Bill-of-Materials.md).
+Full itemized kit (campus + van, minimum + recommended): [05-Bill-of-Materials.md](bill-of-materials.md).

@@ -13,7 +13,7 @@ it works 100%.
 
 > The PBX is a QEMU VM on the laptop; phones reach it at the **laptop's LAN IP** (SIP `5060/udp`,
 > RTP `10000–10019/udp`, CardDAV `5232/tcp`). The stable name `upes-ecs.local` follows that IP
-> automatically — see [../deploy/qemu/HOSTNAME-mDNS.md](../deploy/qemu/HOSTNAME-mDNS.md).
+> automatically — see [../deploy/qemu/HOSTNAME-mDNS.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/HOSTNAME-mDNS.md).
 
 ---
 
@@ -95,7 +95,7 @@ Then, on a **phone on the responder Wi-Fi**:
 4. Reboot the phone → it re-registers on its own (proves the edge-port + isolation settings).
 
 Quality targets (latency < 150 ms, loss < 1 %, call setup < 3 s) and the full pre-rollout test
-list are in [../Blueprint/04-Network-and-Deployment.md](../Blueprint/04-Network-and-Deployment.md).
+list are in [../Blueprint/04-Network-and-Deployment.md](../architecture/network-and-deployment.md).
 
 ---
 
@@ -113,7 +113,7 @@ New-NetFirewallRule -DisplayName 'UPES-ECS CardDAV' -Direction Inbound -Protocol
 ## Growing later (optional, not needed now)
 A dedicated **voice VLAN** and QoS become worthwhile once the network carries a lot of other
 traffic — see the campus topology and VLAN notes in
-[../Blueprint/04-Network-and-Deployment.md](../Blueprint/04-Network-and-Deployment.md). Not
+[../Blueprint/04-Network-and-Deployment.md](../architecture/network-and-deployment.md). Not
 required for the flat pilot.
 
 ## Future — multi-campus link

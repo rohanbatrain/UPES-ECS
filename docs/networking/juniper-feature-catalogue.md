@@ -1,6 +1,6 @@
 # UPES-ECS × Juniper — Complete Feature Catalogue (the full menu)
 
-**Volume II — the exhaustive enumeration.** Where [Docs/Juniper-Integration-Plan.md](Juniper-Integration-Plan.md)
+**Volume II — the exhaustive enumeration.** Where [Docs/Juniper-Integration-Plan.md](juniper-integration-plan.md)
 is the *curated* plan (top ideas, tiered by impact), **this** document is the *complete menu*: every
 Juniper feature on your three device types that could plausibly be switched on, graded for the
 **air-gap**, and mapped to the emergency-calling system. Use it to pick — nothing here is
@@ -441,7 +441,7 @@ the Console `/network`, `/locate`, `/exec:evac-network-*` routes.
 
 ## Corrections to the Integration Plan
 
-Research updated one claim in [Docs/Juniper-Integration-Plan.md](Juniper-Integration-Plan.md): the
+Research updated one claim in [Docs/Juniper-Integration-Plan.md](juniper-integration-plan.md): the
 EX2300 **does** support limited **JTI streaming telemetry** (gRPC dial-in + native-UDP sensors,
 Junos 20.2R1+; PFE CPU/mem/filter stats, physical-interface traffic, RE LACP/chassis-env/LLDP/ARP) —
 it only lacks **gNMI**. **SRX300/320 have no streaming telemetry at all** (lowest is SRX1500). So the

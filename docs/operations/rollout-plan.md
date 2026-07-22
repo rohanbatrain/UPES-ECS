@@ -106,4 +106,4 @@ IP speakers everywhere · VLAN/QoS · shift-based queue automation · advanced d
 ## Approvals
 
 Go-live requires **UPES administration + ERT Lead + IT owner** sign-off after a
-successful pilot. Go-live date is **TBD** — set only after the [Pilot Test Plan](17-Pilot-Test-Plan.md) passes.
+successful pilot. Go-live date is **TBD** — set only after the [Pilot Test Plan](pilot-test-plan.md) passes.

@@ -1,7 +1,7 @@
 # UPES-ECS Pilot Test Plan
 
 The concrete test matrix that must pass before go-live. Every row is a **Must pass**.
-Run these during the pilot ([Rollout Plan](16-Rollout-Plan.md) stages 1–5).
+Run these during the pilot ([Rollout Plan](rollout-plan.md) stages 1–5).
 
 ---
 
@@ -100,4 +100,4 @@ Run these during the pilot ([Rollout Plan](16-Rollout-Plan.md) stages 1–5).
 
 Pilot passes when the functional matrix (all 19), capacity targets, and security
 checks pass, and ERT completes a drill. Sign-off: **IT Admin + ERT Lead**, then the
-[Go-Live Checklist](18-Go-Live-Checklist.md) for **UPES administration** approval.
+[Go-Live Checklist](../getting-started/go-live-checklist.md) for **UPES administration** approval.

@@ -30,7 +30,7 @@ flowchart LR
 ## Validate on a spare node FIRST (optional but proven)
 
 The whole flow has already been **run and validated** off-server — do the same before
-touching the production box ([deploy/README.md](../deploy/README.md)).
+touching the production box ([deploy/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/README.md)).
 
 - [ ] **Docker (config/dialplan validation)** — real Asterisk 18 on the current node:
   ```bash
@@ -56,7 +56,7 @@ touching the production box ([deploy/README.md](../deploy/README.md)).
 
 ---
 
-## Phase 0 — Server & network  ([SOP 08 §0](../SOP/08-FreePBX-Build-Guide.md), [SOP 15](../SOP/15-Local-Infrastructure-Diagram.md))
+## Phase 0 — Server & network  ([SOP 08 §0](../guides/freepbx-build.md), [SOP 15](../reference/local-infrastructure-diagram.md))
 
 - [ ] Provision the server: Ubuntu Server LTS / Debian stable, hostname **`upes-ecs-pbx-01`**.
 - [ ] Assign a **static IP** (record IP / subnet / gateway — **TBD**, collect from UPES IT).
@@ -70,7 +70,7 @@ touching the production box ([deploy/README.md](../deploy/README.md)).
 
 ---
 
-## Phase 1 — Install FreePBX  ([SOP 08 §0.1–0.3](../SOP/08-FreePBX-Build-Guide.md))
+## Phase 1 — Install FreePBX  ([SOP 08 §0.1–0.3](../guides/freepbx-build.md))
 
 - [ ] Install FreePBX (official distro, or `freepbx` on Asterisk 18+/20+).
 - [ ] Apply all updates in **Admin → Module Admin**.
@@ -83,7 +83,7 @@ other, and dial **198** (echo). ✅ when both work.
 
 ---
 
-## Phase 2 — Bootstrap with setup.sh  ([setup.sh](../setup.sh))
+## Phase 2 — Bootstrap with setup.sh  ([setup.sh](https://github.com/rohanbatrain/UPES-ECS/blob/main/setup.sh))
 
 From the repo root on the server, as root:
 
@@ -98,11 +98,11 @@ and the recordings dir; installs the helper scripts; sets `asterisk:asterisk` ow
 
 - [ ] `setup.sh` completes without errors.
 - [ ] Helper scripts present + executable in `/opt/upes-ecs/`.
-- [ ] `func_shell` reported present (needed for `${SHELL()}` incident IDs) — else enable it or replace the `incident_id.sh` call ([config/README.md](../config/README.md)).
+- [ ] `func_shell` reported present (needed for `${SHELL()}` incident IDs) — else enable it or replace the `incident_id.sh` call ([config/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md)).
 
 ---
 
-## Phase 3 — Config + scripts  ([config/README.md](../config/README.md), [SOP 09](../SOP/09-Dialplan-Design.md))
+## Phase 3 — Config + scripts  ([config/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/README.md), [SOP 09](../guides/dialplan-design.md))
 
 - [ ] Review/merge `config/extensions_custom.conf` into `/etc/asterisk/` (setup.sh does **not** auto-overwrite an existing file — diff and merge):
   ```bash
@@ -114,7 +114,7 @@ and the recordings dir; installs the helper scripts; sets `asterisk:asterisk` ow
 
 ---
 
-## Phase 4 — Record the prompts  ([SOP 28](../SOP/28-Voice-Prompt-Scripts.md))
+## Phase 4 — Record the prompts  ([SOP 28](../reference/voice-prompt-scripts.md))
 
 Drop recorded WAVs into `/var/lib/asterisk/sounds/en/upes-ecs/`:
 
@@ -125,7 +125,7 @@ Drop recorded WAVs into `/var/lib/asterisk/sounds/en/upes-ecs/`:
 
 ---
 
-## Phase 5 — Provision accounts from CSVs  ([provisioning/README.md](../provisioning/README.md), [SOP 14](../SOP/14-Device-Provisioning-Sheet.md))
+## Phase 5 — Provision accounts from CSVs  ([provisioning/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/README.md), [SOP 14](../guides/device-provisioning.md))
 
 Committed CSVs carry `__SET_ON_IMPORT__` in the secret column — **never** real secrets in
 git. Fill secrets into a **throwaway** file, import, then **delete** it.
@@ -143,22 +143,22 @@ git. Fill secrets into a **throwaway** file, import, then **delete** it.
 - [ ] **Confirm each person's account context** (9-digit → `ctx_student`, 8-digit → `ctx_staff`) — do **not** put a person's SAP ID into a responder context; positions are staffed by shift.
 
 Confirmed people (real roster only): `40000001` Staff Member One, `40000002` Staff Member Two,
-`40000003` Staff Member Three, `500120597` Rohan Batra ([SOP 30](../SOP/30-ERT-Roles-and-Shifts.md)).
+`40000003` Staff Member Three, `500120597` Rohan Batra ([SOP 30](../operations/ert-roles-and-shifts.md)).
 
 ---
 
-## Phase 6 — Queue + responder answer points  ([SOP 08 §1.4–1.6](../SOP/08-FreePBX-Build-Guide.md))
+## Phase 6 — Queue + responder answer points  ([SOP 08 §1.4–1.6](../guides/freepbx-build.md))
 
 - [ ] **Create `ert_emergency_queue`** — ring strategy `ringall`, agent timeout 20s, skip-busy Yes, **no MoH** (emergency hold announcement instead); allow a queued caller to **press 1** → offline first-aid (`ctx_111_fastpath`); fail-over → coach-in-parallel flow (below).
 - [ ] **Unanswered-call flow (coach-in-parallel, replaces the old serial ring-out):** when no answer point is free, the caller goes **straight to the offline panic-coach** (102, `ctx_ai_helpline`) with **no dead-air**, **while** call-files alert **ERT Lead 4101 + backup** (Security 4300 + Medical 4200 + Warden/Admin) in the **background** ("press 1 to join the queue"). In the coach, **9 = retry a responder**, **8 = leave a message** → **Emergency Voicemail** (60s) → **Missed Emergency Incident** (Critical, Pending Review).
-- [ ] **Provision the dedicated Androids** per position: Linphone as `4101` (ERT Lead), `4110`/`4111`/`4112` (Operators), reserve `4113`; on charger, **battery-optimization OFF**, screen-lock off, labelled per position ([SOP 24](../SOP/24-Mobile-App-Reliability-and-Battery.md)).
+- [ ] **Provision the dedicated Androids** per position: Linphone as `4101` (ERT Lead), `4110`/`4111`/`4112` (Operators), reserve `4113`; on charger, **battery-optimization OFF**, screen-lock off, labelled per position ([SOP 24](../reference/mobile-app-reliability.md)).
 - [ ] Add the ERT operator positions + reserve `4113` as **queue agents**.
 - [ ] Route **111** (Custom Destination → `ctx_emergency_111`): MixMonitor starts → pre-answer prompt → `ert_emergency_queue`. Ensure 111 is reachable from **every** context.
 - [ ] Clone to **199** (`ctx_drill_199`): drill prompt, test target only, tag `DRILL-ONLY` — **no** real escalation/dispatch.
 
 ---
 
-## Phase 7 — Test 199 then 111  ([SOP 17](../SOP/17-Pilot-Test-Plan.md), [SOP 32](../SOP/32-Test-Evidence-Sheet.md))
+## Phase 7 — Test 199 then 111  ([SOP 17](../operations/pilot-test-plan.md), [SOP 32](../operations/test-evidence-sheet.md))
 
 Always test the **drill line first**.
 
@@ -170,7 +170,7 @@ Always test the **drill line first**.
 
 ---
 
-## Phase 8 — Health check + backup  ([SOP 10](../SOP/10-Health-Monitoring-Checklist.md), [SOP 11](../SOP/11-Backup-Restore-Procedure.md))
+## Phase 8 — Health check + backup  ([SOP 10](../operations/health-monitoring.md), [SOP 11](../guides/backup-restore.md))
 
 - [ ] Run the health check:
   ```bash
@@ -183,7 +183,7 @@ Always test the **drill line first**.
 
 ---
 
-## Go-live gate — these MUST pass  ([SOP 17](../SOP/17-Pilot-Test-Plan.md) / [SOP 32](../SOP/32-Test-Evidence-Sheet.md) / [SOP 18](../SOP/18-Go-Live-Checklist.md))
+## Go-live gate — these MUST pass  ([SOP 17](../operations/pilot-test-plan.md) / [SOP 32](../operations/test-evidence-sheet.md) / [SOP 18](../getting-started/go-live-checklist.md))
 
 - [ ] Registered softphone **dials 111 → an ERT Android rings → answered**.
 - [ ] The call produces a **recording** linked to an incident ID.
@@ -201,13 +201,13 @@ Always test the **drill line first**.
 
 - **Layer on later:** responder Androids (`4200`/`4300`), paging (700–705), conference
   (9000–9004), the AI 101 path, and the van drill — via the
-  [Master Plan](../SOP/07-Master-Implementation-Plan.md).
+  [Master Plan](../operations/master-implementation-plan.md).
 - **Mode B (van):** the same config runs on the van PBX for disaster ops **and** as
-  campus-PBX failover — pre-stage it synced with campus ([SOP 23](../SOP/23-Mobile-Van-Deployment.md)).
+  campus-PBX failover — pre-stage it synced with campus ([SOP 23](../guides/mobile-van-deployment.md)).
 - **Ongoing:** health check on cron, retention cleanup daily 03:30, the **`upes-api`**
   service on **`:8090`** (LAN-only incident/health API), and backups 30 daily + 12
-  weekly. Full itemized kit: [05-Bill-of-Materials.md](05-Bill-of-Materials.md); every
-  number + data location: [06-Numbering-and-Data-Map.md](06-Numbering-and-Data-Map.md).
+  weekly. Full itemized kit: [05-Bill-of-Materials.md](bill-of-materials.md); every
+  number + data location: [06-Numbering-and-Data-Map.md](numbering-and-data-map.md).
 
 > **TBD before scale-out:** server IP/subnet, Wi-Fi SSID + client-isolation status,
 > router/switch/AP models, final roster/locations, van power sizing, and the university's

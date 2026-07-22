@@ -16,76 +16,76 @@
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 29 | [Day-1 Quickstart](29-Quickstart-Day1.md) | IT / builders | Shortest path: bare server → working "Dial 111". |
-| 07 | [Master Implementation Plan](07-Master-Implementation-Plan.md) | Everyone | The phased roadmap (Phase 0 → later). Start here. |
-| 08 | [FreePBX Build Guide](08-FreePBX-Build-Guide.md) | IT / Admin | Hands-on Phase 0 + Phase 1 server steps. |
-| 09 | [Dialplan Design](09-Dialplan-Design.md) | IT / Admin | Reference dialplan for the custom emergency logic. |
-| 15 | [Local Infrastructure Diagram](15-Local-Infrastructure-Diagram.md) | IT | Network layout, server, segmentation, quality targets. |
+| 29 | [Day-1 Quickstart](../getting-started/quickstart.md) | IT / builders | Shortest path: bare server → working "Dial 111". |
+| 07 | [Master Implementation Plan](master-implementation-plan.md) | Everyone | The phased roadmap (Phase 0 → later). Start here. |
+| 08 | [FreePBX Build Guide](../guides/freepbx-build.md) | IT / Admin | Hands-on Phase 0 + Phase 1 server steps. |
+| 09 | [Dialplan Design](../guides/dialplan-design.md) | IT / Admin | Reference dialplan for the custom emergency logic. |
+| 15 | [Local Infrastructure Diagram](../reference/local-infrastructure-diagram.md) | IT | Network layout, server, segmentation, quality targets. |
 
 **Operate**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 01 | [Numbering Plan](01-Numbering-Plan.md) | IT / ERT / Admin | The master number map. Everything references this. |
-| 02 | [ERT SOP](02-ERT-SOP.md) | ERT Operators & Lead | How to answer 111, classify, dispatch, log, close. |
-| 03 | [Drill & Test SOP](03-Drill-Test-SOP.md) | ERT Lead / IT | How to test the system safely without causing panic. |
-| 04 | [SIP Account & Role Matrix](04-SIP-Account-Role-Matrix.md) | IT / Admin | Who can do what. The access-control source of truth. |
-| 30 | [Responder Roles & Shifts](30-ERT-Roles-and-Shifts.md) | ERT Lead / IT | Generic positions (ERT + Medical/Security/…) staffed by shift, not named people. |
-| 31 | [Training Plan](31-Training-Plan.md) | All roles | Train every role before go-live; refreshers + reserves for surge. |
-| 10 | [Health Monitoring Checklist](10-Health-Monitoring-Checklist.md) | IT / ERT Lead | Is the system actually ready right now? |
-| 12 | [Incident Logging Schema](12-Incident-Logging-Schema.md) | IT / ERT | Structured record for every emergency call. |
-| 13 | [Recording & Retention Policy](13-Recording-Retention-Policy.md) | Admin / IT | What's recorded, for how long, who can access. |
-| 14 | [Device Provisioning Sheet](14-Device-Provisioning-Sheet.md) | IT / Admin | Create / assign / revoke SIP accounts + devices. |
+| 01 | [Numbering Plan](../reference/numbering-plan.md) | IT / ERT / Admin | The master number map. Everything references this. |
+| 02 | [ERT SOP](ert-sop.md) | ERT Operators & Lead | How to answer 111, classify, dispatch, log, close. |
+| 03 | [Drill & Test SOP](drill-test-sop.md) | ERT Lead / IT | How to test the system safely without causing panic. |
+| 04 | [SIP Account & Role Matrix](../reference/sip-account-role-matrix.md) | IT / Admin | Who can do what. The access-control source of truth. |
+| 30 | [Responder Roles & Shifts](ert-roles-and-shifts.md) | ERT Lead / IT | Generic positions (ERT + Medical/Security/…) staffed by shift, not named people. |
+| 31 | [Training Plan](training-plan.md) | All roles | Train every role before go-live; refreshers + reserves for surge. |
+| 10 | [Health Monitoring Checklist](health-monitoring.md) | IT / ERT Lead | Is the system actually ready right now? |
+| 12 | [Incident Logging Schema](incident-logging-schema.md) | IT / ERT | Structured record for every emergency call. |
+| 13 | [Recording & Retention Policy](recording-retention.md) | Admin / IT | What's recorded, for how long, who can access. |
+| 14 | [Device Provisioning Sheet](../guides/device-provisioning.md) | IT / Admin | Create / assign / revoke SIP accounts + devices. |
 
 **Users**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 05 | [Student SIP Setup Guide](05-Student-SIP-Setup-Guide.md) | Students / Staff | Install app, log in with SAP ID, dial 111. |
-| 06 | [ERT SIP Setup Guide](06-ERT-SIP-Setup-Guide.md) | ERT / Fixed devices | ERT phone + desk device setup and answering. |
+| 05 | [Student SIP Setup Guide](../guides/student-sip-setup.md) | Students / Staff | Install app, log in with SAP ID, dial 111. |
+| 06 | [ERT SIP Setup Guide](../guides/ert-sip-setup.md) | ERT / Fixed devices | ERT phone + desk device setup and answering. |
 
 **Roll out & prove**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 16 | [Rollout Plan](16-Rollout-Plan.md) | All | Staged deployment (lab → ERT → devices → users → paging). |
-| 17 | [Pilot Test Plan](17-Pilot-Test-Plan.md) | IT / ERT Lead | The 19-test matrix that must pass. |
-| 32 | [Test Evidence & Sign-off Sheet](32-Test-Evidence-Sheet.md) | IT / ERT Lead / University | Fill-in record proving each pilot test passed; go-live evidence. |
-| 11 | [Backup & Restore Procedure](11-Backup-Restore-Procedure.md) | IT / Admin | Local-first backups + tested restore. |
-| 18 | [Go-Live Checklist](18-Go-Live-Checklist.md) | Approvers | Final gate + sign-off before production. |
+| 16 | [Rollout Plan](rollout-plan.md) | All | Staged deployment (lab → ERT → devices → users → paging). |
+| 17 | [Pilot Test Plan](pilot-test-plan.md) | IT / ERT Lead | The 19-test matrix that must pass. |
+| 32 | [Test Evidence & Sign-off Sheet](test-evidence-sheet.md) | IT / ERT Lead / University | Fill-in record proving each pilot test passed; go-live evidence. |
+| 11 | [Backup & Restore Procedure](../guides/backup-restore.md) | IT / Admin | Local-first backups + tested restore. |
+| 18 | [Go-Live Checklist](../getting-started/go-live-checklist.md) | Approvers | Final gate + sign-off before production. |
 
 **Later phases**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 19 | [AI Assistant Line 101](19-AI-101-Design.md) | IT / ERT Lead | Local-first AI triage (no cloud) that always falls back to 111. |
-| 20 | [Multi-Campus Wireless](20-Multi-Campus-Wireless.md) | IT | Bidholi ↔ Kandoli rooftop wireless bridge. |
-| 23 | [Mobile Van & Repeater Deployment](23-Mobile-Van-Deployment.md) | IT / ERT Lead | Self-powered PBX-in-a-van + corner repeaters for disaster mode. |
-| 24 | [Mobile App Reliability & Battery](24-Mobile-App-Reliability-and-Battery.md) | Users / IT | Keep the SIP app registered so callbacks work. |
+| 19 | [AI Assistant Line 101](../ai-101/design.md) | IT / ERT Lead | Local-first AI triage (no cloud) that always falls back to 111. |
+| 20 | [Multi-Campus Wireless](../guides/multi-campus-wireless.md) | IT | Bidholi ↔ Kandoli rooftop wireless bridge. |
+| 23 | [Mobile Van & Repeater Deployment](../guides/mobile-van-deployment.md) | IT / ERT Lead | Self-powered PBX-in-a-van + corner repeaters for disaster mode. |
+| 24 | [Mobile App Reliability & Battery](../reference/mobile-app-reliability.md) | Users / IT | Keep the SIP app registered so callbacks work. |
 
 **Harden & own**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 26 | [Security Hardening & Abuse](26-Security-Hardening.md) | IT | SIP hardening, firewall, prank/DoS handling. |
-| 27 | [Ownership & RACI](27-Roles-Ownership-RACI.md) | IT / ERT Lead / University | Who owns what; no single point of failure. |
+| 26 | [Security Hardening & Abuse](../guides/security-hardening.md) | IT | SIP hardening, firewall, prank/DoS handling. |
+| 27 | [Ownership & RACI](roles-ownership-raci.md) | IT / ERT Lead / University | Who owns what; no single point of failure. |
 
 **Review & reference**
 
 | # | Document | Audience | Purpose |
 |---|---|---|---|
-| 21 | [Risk Register & Known Gaps](21-Risk-Register-and-Gaps.md) | IT / ERT Lead / University | Honest list of what can fail + fixes. **Read before go-live.** |
-| 22 | [Glossary](22-Glossary.md) | Everyone | Plain-language key to terms, acronyms, and numbers. |
-| 25 | [Quick-Reference Cards](25-Quick-Cards.md) | ERT / Van / Students | Print-and-post one-pagers + "Dial 111" poster. |
-| 28 | [Voice Prompt Scripts](28-Voice-Prompt-Scripts.md) | Whoever records audio | Exact wording for every recorded prompt. |
+| 21 | [Risk Register & Known Gaps](risk-register.md) | IT / ERT Lead / University | Honest list of what can fail + fixes. **Read before go-live.** |
+| 22 | [Glossary](../reference/glossary.md) | Everyone | Plain-language key to terms, acronyms, and numbers. |
+| 25 | [Quick-Reference Cards](../reference/quick-cards.md) | ERT / Van / Students | Print-and-post one-pagers + "Dial 111" poster. |
+| 28 | [Voice Prompt Scripts](../reference/voice-prompt-scripts.md) | Whoever records audio | Exact wording for every recorded prompt. |
 
 **Config, scripts & provisioning** (outside this folder)
 
 | Path | Purpose |
 |---|---|
-| [../config/](../config/) | `extensions_custom.conf` + install/wiring README |
-| [../scripts/](../scripts/) | Helper scripts: incident ID, missed-incident, health check, retention, logging |
-| [../provisioning/](../provisioning/) | CSVs: `pilot-users` (people), `responder-positions` (shift roles), `fixed-devices` |
+| [../config/](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/) | `extensions_custom.conf` + install/wiring README |
+| [../scripts/](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/) | Helper scripts: incident ID, missed-incident, health check, retention, logging |
+| [../provisioning/](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/) | CSVs: `pilot-users` (people), `responder-positions` (shift roles), `fixed-devices` |
 
 ---
 

@@ -15,14 +15,14 @@ bill of materials, network maps, data model, and the deployment runbook.
 
 | # | Document | Answers |
 |---|---|---|
-| 01 | [Bare-Minimum Operational Checklist](01-Bare-Minimum-Checklist.md) | *What is the least I need to be live?* |
-| 02 | [System Architecture](02-System-Architecture.md) | *How is it built? What are the parts?* |
-| 03 | [Call Flows](03-Call-Flows.md) | *What happens on every call type?* |
-| 04 | [Network & Deployment Topology](04-Network-and-Deployment.md) | *How is the network wired? Campus vs van?* |
-| 05 | [Bill of Materials](05-Bill-of-Materials.md) | *Exactly what hardware/software do I buy/use?* |
-| 06 | [Numbering & Data Map](06-Numbering-and-Data-Map.md) | *Every number, and where every byte of data lives.* |
-| 07 | [Deployment Runbook](07-Deployment-Runbook.md) | *Step-by-step from bare metal to a live 111.* |
-| 08 | [Responder Department Architecture & Live Map](08-Responder-Department-Architecture.md) | *How the departments wire together, and how the Console maps them live.* |
+| 01 | [Bare-Minimum Operational Checklist](bare-minimum-checklist.md) | *What is the least I need to be live?* |
+| 02 | [System Architecture](system-architecture.md) | *How is it built? What are the parts?* |
+| 03 | [Call Flows](call-flows.md) | *What happens on every call type?* |
+| 04 | [Network & Deployment Topology](network-and-deployment.md) | *How is the network wired? Campus vs van?* |
+| 05 | [Bill of Materials](bill-of-materials.md) | *Exactly what hardware/software do I buy/use?* |
+| 06 | [Numbering & Data Map](numbering-and-data-map.md) | *Every number, and where every byte of data lives.* |
+| 07 | [Deployment Runbook](deployment-runbook.md) | *Step-by-step from bare metal to a live 111.* |
+| 08 | [Responder Department Architecture & Live Map](responder-department-architecture.md) | *How the departments wire together, and how the Console maps them live.* |
 
 ---
 
@@ -43,7 +43,7 @@ is down.
 
 ## Proven, not just designed
 
-The emergency core has been **run and validated** (see [../deploy/](../deploy/)):
+The emergency core has been **run and validated** (see [../deploy/](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/)):
 Docker (config/dialplan/flow) and **WSL2 with live SIP registration + RTP audio + a real
 11.56s recording**. This Blueprint documents the validated system.
 
@@ -52,7 +52,7 @@ Docker (config/dialplan/flow) and **WSL2 with live SIP registration + RTP audio 
 ## Status of what's here
 
 - **Architecture, diagrams, minimum-viable list, BOM, data map, runbook:** complete.
-- **Real data only:** roster from [../Notes/](../Notes/); numbers from the
-  [Numbering Plan](../SOP/01-Numbering-Plan.md). No fabricated names/IDs.
+- **Real data only:** roster from ../Notes/; numbers from the
+  [Numbering Plan](../reference/numbering-plan.md). No fabricated names/IDs.
 - **TBD items** (collect from UPES IT) are flagged where they occur: server IP/subnet,
   Wi-Fi SSID, client-isolation status, final roster/locations, van power sizing.

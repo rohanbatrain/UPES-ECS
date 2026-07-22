@@ -43,7 +43,7 @@ Caller ID     = "Name - SAP ID"   e.g.  "Rohan Batra - 500120597"
 ## 3. Responder positions & fixed devices — 4000–4999
 
 **Responder positions** are generic roles **staffed by shift** (not named people) —
-see [Responder Roles & Shifts](30-ERT-Roles-and-Shifts.md). **Fixed devices** are
+see [Responder Roles & Shifts](../operations/ert-roles-and-shifts.md). **Fixed devices** are
 location-bound and unstaffed (speakers, gate phones).
 
 | Range / Ext | Role | Staffed? | Context | Answers 111 queue? |
@@ -69,8 +69,8 @@ coordinates others.
 `Medical-1`, `Security-Control`); fixed devices use `Location-Role-Extension`
 (`Security-Gate-Main-4301`).
 
-Provision positions from [../provisioning/responder-positions.csv](../provisioning/responder-positions.csv),
-fixed devices from [../provisioning/fixed-devices.csv](../provisioning/fixed-devices.csv).
+Provision positions from [../provisioning/responder-positions.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv),
+fixed devices from [../provisioning/fixed-devices.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv).
 Final roster/locations are **TBD** — collect from UPES IT before provisioning.
 
 ---
@@ -189,7 +189,7 @@ Offline Panic-Coach (102)  ── straight to the coach, NO dead-air. Determinis
 | `ctx_fixed_device` | Fixed campus SIP devices (speakers, gate phones) |
 | `ctx_admin` | UPES-ECS / IT admins |
 
-Full permission detail is in [04-SIP-Account-Role-Matrix.md](04-SIP-Account-Role-Matrix.md).
+Full permission detail is in [04-SIP-Account-Role-Matrix.md](sip-account-role-matrix.md).
 
 ---
 

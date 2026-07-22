@@ -1,8 +1,8 @@
 # UPES-ECS — Network & Deployment Topology
 
 How UPES-ECS is wired and where it can run. This is the network companion to
-[02-System-Architecture.md](02-System-Architecture.md) and the deep version of the
-[Local Infrastructure Diagram](../SOP/15-Local-Infrastructure-Diagram.md). Everything
+[02-System-Architecture.md](system-architecture.md) and the deep version of the
+[Local Infrastructure Diagram](../reference/local-infrastructure-diagram.md). Everything
 here is **LAN-only** — no internet, cellular, cloud, PSTN, or SIP trunk anywhere in the
 path. Diagrams are Mermaid with an ASCII fallback for the primary topology.
 
@@ -78,7 +78,7 @@ flowchart TB
 
 VLAN/QoS is optional for the first pilot and recommended later; a dedicated **voice
 VLAN** for ERT/fixed devices is the clean way to satisfy client-isolation (§5) and
-prioritise emergency media. See [Security Hardening §2](../SOP/26-Security-Hardening.md).
+prioritise emergency media. See [Security Hardening §2](../guides/security-hardening.md).
 
 ---
 
@@ -121,7 +121,7 @@ flowchart TB
 - Single SSID across all repeaters → phones roam seamlessly toward the van; overlapping coverage so one dead repeater degrades, not kills, coverage.
 - Uplink stays **LAN-only** — the van hosts its own local network; 111 works with no internet.
 - Each repeater + backhaul link is a **critical device** on the Health Dashboard.
-- Full deployment SOP, readiness checklist, and power math: [Mobile Van Deployment](../SOP/23-Mobile-Van-Deployment.md).
+- Full deployment SOP, readiness checklist, and power math: [Mobile Van Deployment](../guides/mobile-van-deployment.md).
 
 ---
 
@@ -145,7 +145,7 @@ flowchart LR
     KR --- KL
 ```
 
-Detail and design: [Multi-Campus Wireless](../SOP/20-Multi-Campus-Wireless.md).
+Detail and design: [Multi-Campus Wireless](../guides/multi-campus-wireless.md).
 
 ---
 
@@ -162,8 +162,8 @@ Minimal surface, LAN-only, default-deny. No rule permits the public internet any
 | SSH (admin) | 22 | TCP | Management subnet only | Public · student Wi-Fi |
 | Everything else | — | — | — | **Denied (default)** |
 
-- `allowguest=no`, no anonymous endpoint; **fail2ban** Asterisk jail bans repeated failed auth; per-account concurrent-call limits protect the 111 queue. See [Security Hardening §1–5](../SOP/26-Security-Hardening.md).
-- Media confidentiality (TLS/SIP + SRTP) is a **planned** hardening item, not yet enabled — [Security Hardening §4](../SOP/26-Security-Hardening.md).
+- `allowguest=no`, no anonymous endpoint; **fail2ban** Asterisk jail bans repeated failed auth; per-account concurrent-call limits protect the 111 queue. See [Security Hardening §1–5](../guides/security-hardening.md).
+- Media confidentiality (TLS/SIP + SRTP) is a **planned** hardening item, not yet enabled — [Security Hardening §4](../guides/security-hardening.md).
 
 ---
 
@@ -190,7 +190,7 @@ flowchart LR
 3. Move voice devices to a **dedicated voice SSID/VLAN** with isolation off.
 
 **Always** keep guest Wi-Fi isolated *and* blocked from the PBX. Verify with a real SIP
-registration + a 199 call over Wi-Fi before relying on the system ([Drill SOP §4](../SOP/03-Drill-Test-SOP.md)).
+registration + a 199 call over Wi-Fi before relying on the system ([Drill SOP §4](../operations/drill-test-sop.md)).
 
 ---
 
@@ -223,7 +223,7 @@ one more thing that can fail in a disaster and the emergency line must not depen
 
 Test before rollout: Wi-Fi registration, 111/199 calling, SAP-ID calling, two-way
 audio, screen-lock behaviour, recording, simultaneous calls, and that emergency calls
-stay priority under load ([Local Infra §6](../SOP/15-Local-Infrastructure-Diagram.md)).
+stay priority under load ([Local Infra §6](../reference/local-infrastructure-diagram.md)).
 
 ---
 
@@ -240,7 +240,7 @@ stay priority under load ([Local Infra §6](../SOP/15-Local-Infrastructure-Diagr
 | Phase | 1 | 1 (van) | Later |
 
 Same numbers and SOP everywhere means an operator never re-learns the system when the
-deployment changes — only the wires and power do. Architecture-level view: [Architecture §6](02-System-Architecture.md).
+deployment changes — only the wires and power do. Architecture-level view: [Architecture §6](system-architecture.md).
 
 ---
 
@@ -252,14 +252,14 @@ These are unknowns that block final wiring, flagged per the README:
 - [ ] **Wi-Fi SSID(s)** — student / staff / voice SSID names.
 - [ ] **Client-isolation status** — is it on? which fix (§5) applies?
 - [ ] **Router / switch / AP models** — for ACL/VLAN/QoS capability.
-- [ ] **Van power sizing** — battery Ah + generator kW + fuel reserve + repeater count/placement ([Van SOP §9](../SOP/23-Mobile-Van-Deployment.md)).
+- [ ] **Van power sizing** — battery Ah + generator kW + fuel reserve + repeater count/placement ([Van SOP §9](../guides/mobile-van-deployment.md)).
 
 ---
 
 ## Cross-references
 
-- Static architecture & components → [02-System-Architecture.md](02-System-Architecture.md)
-- What travels these paths (call flows) → [03-Call-Flows.md](03-Call-Flows.md)
-- On-the-ground infra & quality → [Local Infrastructure Diagram](../SOP/15-Local-Infrastructure-Diagram.md)
-- Van & repeaters → [Mobile Van Deployment](../SOP/23-Mobile-Van-Deployment.md)
-- Firewall / hardening → [Security Hardening](../SOP/26-Security-Hardening.md)
+- Static architecture & components → [02-System-Architecture.md](system-architecture.md)
+- What travels these paths (call flows) → [03-Call-Flows.md](call-flows.md)
+- On-the-ground infra & quality → [Local Infrastructure Diagram](../reference/local-infrastructure-diagram.md)
+- Van & repeaters → [Mobile Van Deployment](../guides/mobile-van-deployment.md)
+- Firewall / hardening → [Security Hardening](../guides/security-hardening.md)

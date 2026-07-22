@@ -4,9 +4,9 @@ How the responder departments are wired together, and how the Operations Console
 renders them as a **real-time department map** during an emergency — a student calls,
 a department position receives, and the map updates live as state changes.
 
-Numbering authority: [SOP 01 Numbering Plan](../SOP/01-Numbering-Plan.md) ·
-Roles/shifts: [SOP 30](../SOP/30-ERT-Roles-and-Shifts.md) ·
-Permissions: [SOP 04 Role Matrix](../SOP/04-SIP-Account-Role-Matrix.md).
+Numbering authority: [SOP 01 Numbering Plan](../reference/numbering-plan.md) ·
+Roles/shifts: [SOP 30](../operations/ert-roles-and-shifts.md) ·
+Permissions: [SOP 04 Role Matrix](../reference/sip-account-role-matrix.md).
 
 ---
 
@@ -70,8 +70,8 @@ flowchart LR
 
 Spare seats live in each hundred-block (e.g. `4203–4299`); add them only when a shift
 actually staffs them. Source of truth for accounts:
-[`deploy/asterisk/pjsip_accounts.conf`](../deploy/asterisk/pjsip_accounts.conf) and
-[`provisioning/responder-positions.csv`](../provisioning/responder-positions.csv).
+[`deploy/asterisk/pjsip_accounts.conf`](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip_accounts.conf) and
+[`provisioning/responder-positions.csv`](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv).
 
 ---
 
@@ -91,8 +91,8 @@ extra service, no cloud.
 | Queue answer points | `queueMembers[]` | ERT hub readiness |
 
 `liveCalls[]` is parsed from `asterisk -rx "core show channels concise"` — see
-[`api/upes_api.py`](../api/upes_api.py) `get_live_calls()` (live path) and
-[`Console/Update-Status.ps1`](../Console/Update-Status.ps1) (static-snapshot fallback).
+[`api/upes_api.py`](https://github.com/rohanbatrain/UPES-ECS/blob/main/api/upes_api.py) `get_live_calls()` (live path) and
+[`Console/Update-Status.ps1`](https://github.com/rohanbatrain/UPES-ECS/blob/main/Console/Update-Status.ps1) (static-snapshot fallback).
 Two legs sharing a non-empty **bridge id** are talking to each other; the Console pairs
 them into an edge. An unbridged leg dialing 111 is a caller still in the queue.
 
@@ -134,11 +134,11 @@ the steady-state staffing (who is on shift in each department) so it is never bl
   is doing.
 - **Positions, not people.** Nodes are extensions (positions); the person on the seat
   comes from the shift log. A node lighting up means *that seat* is engaged, whoever is
-  in it — exactly the accountability model in [SOP 30](../SOP/30-ERT-Roles-and-Shifts.md).
+  in it — exactly the accountability model in [SOP 30](../operations/ert-roles-and-shifts.md).
 - **Department-shaped.** Grouping by department (with dispatch + seats + Security lead)
   means an incident commander sees at a glance which *team* is saturated, not just which
   extension is busy.
 
-Related: [Blueprint 02 System Architecture](02-System-Architecture.md) ·
-[Blueprint 03 Call Flows](03-Call-Flows.md) ·
-[Blueprint 06 Numbering & Data Map](06-Numbering-and-Data-Map.md).
+Related: [Blueprint 02 System Architecture](system-architecture.md) ·
+[Blueprint 03 Call Flows](call-flows.md) ·
+[Blueprint 06 Numbering & Data Map](numbering-and-data-map.md).

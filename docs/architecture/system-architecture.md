@@ -126,10 +126,10 @@ graph LR
 
 - **Humans use SAP ID** as extension + username. Same person, different job = same SAP ID, different context.
 - **Responder roles are POSITIONS** (`4101`, `4110`, `4200`, …) staffed by trained
-  officers per shift — never a personal account ([SOP 30](../SOP/30-ERT-Roles-and-Shifts.md)).
+  officers per shift — never a personal account ([SOP 30](../operations/ert-roles-and-shifts.md)).
 - **ERT positions answer the 111 queue**; `ctx_responder` (Medical/Security/…) are
   **dispatch targets**, not queue answerers.
-- Full capability grid: [SOP 04](../SOP/04-SIP-Account-Role-Matrix.md).
+- Full capability grid: [SOP 04](../reference/sip-account-role-matrix.md).
 
 ---
 
@@ -149,7 +149,7 @@ flowchart TD
   ANS --> CL["Incident logged + recording linked"]
 ```
 
-Detailed sequence diagrams for every call type: [03-Call-Flows.md](03-Call-Flows.md).
+Detailed sequence diagrams for every call type: [03-Call-Flows.md](call-flows.md).
 
 ---
 
@@ -165,7 +165,7 @@ Detailed sequence diagrams for every call type: [03-Call-Flows.md](03-Call-Flows
 | Health status | `/var/lib/upes-ecs/health.txt` | live |
 | Config (versioned) | git `upes-ecs-config` + FreePBX backup | 30 daily + 12 weekly |
 
-Full data map + incident schema: [06-Numbering-and-Data-Map.md](06-Numbering-and-Data-Map.md).
+Full data map + incident schema: [06-Numbering-and-Data-Map.md](numbering-and-data-map.md).
 
 ---
 
@@ -185,11 +185,11 @@ graph TB
 
 - **Mode A** — normal operation on the campus server.
 - **Mode B** — self-powered van + rooftop repeaters for disasters or as **failover** for
-  the campus PBX ([SOP 23](../SOP/23-Mobile-Van-Deployment.md)). Same config and numbers.
+  the campus PBX ([SOP 23](../guides/mobile-van-deployment.md)). Same config and numbers.
 - Both are **LAN-only**. Multi-campus (Bidholi↔Kandoli) uses a rooftop wireless bridge
-  ([SOP 20](../SOP/20-Multi-Campus-Wireless.md)).
+  ([SOP 20](../guides/multi-campus-wireless.md)).
 
-Network topology detail: [04-Network-and-Deployment.md](04-Network-and-Deployment.md).
+Network topology detail: [04-Network-and-Deployment.md](network-and-deployment.md).
 
 ---
 

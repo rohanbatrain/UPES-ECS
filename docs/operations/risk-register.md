@@ -12,14 +12,14 @@ severity, impact, and a recommended fix. Some items require a **university decis
 
 | Risk | Decision | Result |
 |---|---|---|
-| **R1 Power** | System deploys via a **self-powered disaster-response van + corner repeaters** ([doc 23](23-Mobile-Van-Deployment.md)) | ✅ **Resolved** for field mode (van power autonomy). UPS still recommended for fixed campus mode. |
-| **R2 Mobile inbound** | **Battery best-practices** documented ([doc 24](24-Mobile-App-Reliability-and-Battery.md)); fixed phones for critical answer points | ✅ **Mitigated.** Future app solves fully. |
+| **R1 Power** | System deploys via a **self-powered disaster-response van + corner repeaters** ([doc 23](../guides/mobile-van-deployment.md)) | ✅ **Resolved** for field mode (van power autonomy). UPS still recommended for fixed campus mode. |
+| **R2 Mobile inbound** | **Battery best-practices** documented ([doc 24](../reference/mobile-app-reliability.md)); fixed phones for critical answer points | ✅ **Mitigated.** Future app solves fully. |
 | **R3 After-hours** | "Whoever is available"; staffing handled off-system | ✅ **Out of scope / accepted** by university. |
-| **R4 Surge** | **Surge / Declared Incident posture** added to [ERT SOP Part J](02-ERT-SOP.md) | ✅ **Documented.** |
+| **R4 Surge** | **Surge / Declared Incident posture** added to [ERT SOP Part J](ert-sop.md) | ✅ **Documented.** |
 | **R5 Location** | Out of scope now; **future UPES VoIP app broadcasts coordinates** to the aggregated workflow | 🔵 **Deferred** with a plan. |
-| **R6 Silent calls** | **Keep on 111** + silent-call protocol ([ERT SOP Part I](02-ERT-SOP.md)); future app panic button | ✅ **Decided.** No separate line. |
+| **R6 Silent calls** | **Keep on 111** + silent-call protocol ([ERT SOP Part I](ert-sop.md)); future app panic button | ✅ **Decided.** No separate line. |
 | **R7 Cleartext media** | **Future security enhancement** — not a current concern | 🔵 **Deferred.** |
-| **R8 Single PBX** | Fine for now; **van doubles as mobile failover** ([doc 23 §7](23-Mobile-Van-Deployment.md)) | ✅ **Mitigated** + plan noted. |
+| **R8 Single PBX** | Fine for now; **van doubles as mobile failover** ([doc 23 §7](../guides/mobile-van-deployment.md)) | ✅ **Mitigated** + plan noted. |
 
 The entries below keep the full detail; the table above is the current status.
 
@@ -72,7 +72,7 @@ The entries below keep the full detail; the table above is the current status.
 ### R8 🟠 Single PBX = single point of failure
 - **Gap:** One server; restore target 1 hour = up to an hour with no emergency line.
 - **Impact:** Hardware/disk/corruption outage removes 111 entirely.
-- **Fix:** Keep a **pre-imaged spare/warm-standby server** ready to swap; later, a second PBX (see [Multi-Campus](20-Multi-Campus-Wireless.md) Model B). Test the swap.
+- **Fix:** Keep a **pre-imaged spare/warm-standby server** ready to swap; later, a second PBX (see [Multi-Campus](../guides/multi-campus-wireless.md) Model B). Test the swap.
 - **Owner:** IT.
 
 ---
@@ -110,7 +110,7 @@ The entries below keep the full detail; the table above is the current status.
 - **Owner:** ERT Lead + IT.
 
 ### R15 ⚪ Documentation aids missing
-- **Fix:** [Glossary](22-Glossary.md) (done); one-page **ERT desk quick-card** and **student quick-card**; a RACI table.
+- **Fix:** [Glossary](../reference/glossary.md) (done); one-page **ERT desk quick-card** and **student quick-card**; a RACI table.
 - **Owner:** IT (docs).
 
 ---

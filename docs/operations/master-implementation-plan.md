@@ -58,7 +58,7 @@ Each phase is independently usable — you can stop after Phase 1 and already ha
 ## Phase 2 — Roles & access
 
 **Do:**
-1. Create the 7 contexts (`ctx_student … ctx_admin`) per the [Role Matrix](04-SIP-Account-Role-Matrix.md).
+1. Create the 7 contexts (`ctx_student … ctx_admin`) per the [Role Matrix](../reference/sip-account-role-matrix.md).
 2. Enable student-to-student / internal calling (not recorded).
 3. Provision fixed devices in **4000–4999** (Medical 4200, Security 4300, ERT desks 41xx).
 4. Lock paging, conference, recordings, voicemail review to emergency roles.
@@ -83,8 +83,8 @@ Each phase is independently usable — you can stop after Phase 1 and already ha
 ## Phase 4 — Operational hardening
 
 **Do:**
-1. Health checks (script/CLI first, dashboard later) — see [Health Checklist](10-Health-Monitoring-Checklist.md).
-2. Backups: git repo `upes-ecs-config`, daily config + pre-change snapshots, encrypted sensitive data — see [Backup & Restore](11-Backup-Restore-Procedure.md).
+1. Health checks (script/CLI first, dashboard later) — see [Health Checklist](health-monitoring.md).
+2. Backups: git repo `upes-ecs-config`, daily config + pre-change snapshots, encrypted sensitive data — see [Backup & Restore](../guides/backup-restore.md).
 3. **Tested restore** (config restore under 1 hour target).
 4. Train ERT on the SOP; run the **first drill**; capture a post-drill review.
 
@@ -94,8 +94,8 @@ Each phase is independently usable — you can stop after Phase 1 and already ha
 
 ## Later phases
 
-- **AI line 101** ([19-AI-101-Design.md](19-AI-101-Design.md)) — AI-first triage on its own number, **always** escalates/falls back to 111. 111 never depends on AI.
-- **Multi-campus** ([20-Multi-Campus-Wireless.md](20-Multi-Campus-Wireless.md)) — rooftop point-to-point wireless links Bidholi ↔ Kandoli while staying "LAN-only."
+- **AI line 101** ([19-AI-101-Design.md](../ai-101/design.md)) — AI-first triage on its own number, **always** escalates/falls back to 111. 111 never depends on AI.
+- **Multi-campus** ([20-Multi-Campus-Wireless.md](../guides/multi-campus-wireless.md)) — rooftop point-to-point wireless links Bidholi ↔ Kandoli while staying "LAN-only."
 
 ---
 

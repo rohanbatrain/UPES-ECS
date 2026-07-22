@@ -39,7 +39,7 @@ the hardware. It is provisioned by IT with a **fixed 4xxx extension**, not a SAP
 > change. An Android used as an answer point **must** be:
 > - **dedicated** to that role (not someone's personal phone),
 > - **kept on the charger**, always powered,
-> - **battery-optimization OFF / Unrestricted**, auto-start ON (see [doc 24](24-Mobile-App-Reliability-and-Battery.md)),
+> - **battery-optimization OFF / Unrestricted**, auto-start ON (see [doc 24](../reference/mobile-app-reliability.md)),
 > - ideally **screen-lock disabled** or set to stay awake while charging,
 >
 > otherwise it will deregister and miss incoming emergency calls.
@@ -65,7 +65,7 @@ Static IP    : recommended (set when on IP phones; for Android, DHCP reservation
 | 47xx | IP speakers / gate phones (fixed) | zone/location · `ctx_fixed_device` |
 
 **Positions vs fixed devices:** 4101–4699 are **responder positions** staffed by shift
-([SOP 30](30-ERT-Roles-and-Shifts.md)) — ERT positions answer the 111 queue, the rest
+([SOP 30](../operations/ert-roles-and-shifts.md)) — ERT positions answer the 111 queue, the rest
 (`ctx_responder`) are dispatch targets. 4700–4799 are true **fixed devices** (a speaker
 only *receives* paging; a gate phone only calls 111 + selected security/ERT).
 
@@ -91,12 +91,12 @@ Pausing only affects **queue** calls — you can still be dialed directly and ca
 ## Part 4 — Answering a 111 call
 
 1. Your device rings with caller ID: `EMERGENCY 111 - Name - SAP ID`.
-2. Answer and use the opening line from the [ERT SOP](02-ERT-SOP.md):
+2. Answer and use the opening line from the [ERT SOP](../operations/ert-sop.md):
    > "UPES Emergency Response, this is [name]. What is your emergency and where are you located?"
 3. Recording is already running (started the moment the caller dialed 111).
 4. Classify → decide dispatch mode → keep incident ownership → log.
 
-Full call handling is in **[02-ERT-SOP.md](02-ERT-SOP.md)** — keep it open at your desk.
+Full call handling is in **[02-ERT-SOP.md](../operations/ert-sop.md)** — keep it open at your desk.
 
 ---
 

@@ -18,7 +18,7 @@
 >   to humans. When the local AI host is **down** or AVA fails, it transparently falls back to
 >   **102**.
 > - **102, the offline panic-coach, is already BUILT and LIVE** (`ctx_ai_helpline`,
->   [`../config/extensions_aihelpline.conf`](../config/extensions_aihelpline.conf)) — a
+>   [`../config/extensions_aihelpline.conf`](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_aihelpline.conf)) — a
 >   deterministic first-aid decision tree that needs **zero internet**. It is the guaranteed
 >   floor beneath 101, and it satisfies this SOP's rule that the fallback works with every AI
 >   component offline. Bringing up 101 does **not** touch 102.
@@ -90,7 +90,7 @@ Caller Status: Can stay on line
 Recommended Path: ERT + Medical Room
 ```
 
-Logged with the `ai_*` fields in [12-Incident-Logging-Schema.md](12-Incident-Logging-Schema.md). ERT can override the summary/category.
+Logged with the `ai_*` fields in [12-Incident-Logging-Schema.md](../operations/incident-logging-schema.md). ERT can override the summary/category.
 
 ---
 

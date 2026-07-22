@@ -81,7 +81,7 @@ For non-technical readers (administration, ERT, wardens) as much as IT.
 | **LLM** | Large Language Model — the AI that understands and summarizes the caller. |
 | **Pre-brief** | The AI's structured summary handed to ERT when it escalates a 101 call to 111. |
 
-## Key numbers (see [Numbering Plan](01-Numbering-Plan.md))
+## Key numbers (see [Numbering Plan](numbering-plan.md))
 
 | Number | Meaning |
 |---|---|

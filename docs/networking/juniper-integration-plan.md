@@ -12,15 +12,15 @@ repo, and is graded by impact/effort so you can pick.
 > **Scope note.** This is a *planning + ideas* document — the catalogue, the architecture, the
 > decisions, and config *sketches*. It complements (does not replace) the three existing
 > hands-on Juniper guides:
-> - [Docs/Juniper.md](Juniper.md) — the flat, no-VLAN pilot (current QEMU-on-laptop deployment).
-> - [deploy/jetson/NETWORK-JUNIPER.md](../deploy/jetson/NETWORK-JUNIPER.md) — voice VLAN + CoS + PoE + firewall for the **VIP** HA cluster.
-> - [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md) — same, for the **name-failover** (no-VIP) cluster.
+> - [Docs/Juniper.md](juniper.md) — the flat, no-VLAN pilot (current QEMU-on-laptop deployment).
+> - [deploy/jetson/NETWORK-JUNIPER.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md) — voice VLAN + CoS + PoE + firewall for the **VIP** HA cluster.
+> - [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md) — same, for the **name-failover** (no-VIP) cluster.
 >
 > Where those already carry a full `set`-command block (CoS, the SRX zone policy), this plan
 > *references* them rather than repeating them, and spends its length on **new** ideas.
 >
 > **Want the complete menu, not just the curated picks?** See the companion
-> [Docs/Juniper-Feature-Catalogue.md](Juniper-Feature-Catalogue.md) — *every* addable Juniper
+> [Docs/Juniper-Feature-Catalogue.md](juniper-feature-catalogue.md) — *every* addable Juniper
 > feature on your exact hardware, each graded for the air-gap (🟢 offline / 🟡 persisted / 🔴 cloud).
 
 ---
@@ -103,7 +103,7 @@ LAN-only and the clock that keeps it honest.*
 ## 2. The one big constraint: air-gapped + a cloud-managed AP
 
 You chose **fully offline / air-gapped**, and the golden rule of this project is *"111 never
-depends on AI, internet, or cellular"* ([README](../README.md#golden-rules)). That is exactly
+depends on AI, internet, or cellular"* ([README](https://github.com/rohanbatrain/UPES-ECS/blob/main/README.md#golden-rules)). That is exactly
 right — **and it collides head-on with the AP32 being a cloud-managed access point.** Facing
 that squarely is what keeps this plan honest.
 
@@ -149,8 +149,8 @@ cloud at all** (Tiers 0–3, 6–7), plus one offline substitute for the headlin
 ## 3. Target architecture
 
 One voice fabric, two Wi-Fi cells, one guarded edge. Works for **both** current deployment
-shapes: the single **QEMU-PBX-on-a-laptop** (flat, [Docs/Juniper.md](Juniper.md)) *and* the
-**2-Jetson HA cluster** ([deploy/jetson](../deploy/jetson/README.md)).
+shapes: the single **QEMU-PBX-on-a-laptop** (flat, [Docs/Juniper.md](juniper.md)) *and* the
+**2-Jetson HA cluster** ([deploy/jetson](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/README.md)).
 
 ```text
               Internet  (absent by default; maintenance-window only — Option B)
@@ -186,8 +186,8 @@ shapes: the single **QEMU-PBX-on-a-laptop** (flat, [Docs/Juniper.md](Juniper.md)
 
 The RTP range (`10000–10019/udp`), SIP (`5060/udp`), CardDAV (`5232/tcp`), status API (`:8090`),
 Console (`:8080`) all come from this repo — keep the firewall/QoS ranges pinned to
-[deploy/asterisk/rtp.conf](../deploy/asterisk/rtp.conf) and
-[deploy/asterisk/pjsip.conf](../deploy/asterisk/pjsip.conf).
+[deploy/asterisk/rtp.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/rtp.conf) and
+[deploy/asterisk/pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf).
 
 ---
 
@@ -244,7 +244,7 @@ below the table).
 | **T0.7** | Voice SSID reachability | Mist WLAN **isolation = None** | The #1 Wi-Fi gotcha: client isolation ON = phones can't reach the PBX. Off on responder SSID; guest stays isolated. | 🟡 |
 
 For T0.3 / T0.6 config, use the ready blocks in
-[deploy/jetson/NETWORK-JUNIPER.md §5 & §9](../deploy/jetson/NETWORK-JUNIPER.md). New spotlights:
+[deploy/jetson/NETWORK-JUNIPER.md §5 & §9](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md). New spotlights:
 
 #### T0.1 — Virtual Chassis (two EX2300-C as one switch)
 Cable the two members with a **DAC on the SFP+ ports** and make those ports VCPs. Result: one
@@ -368,7 +368,7 @@ Junos on the LAN**.
 
 | ID | Idea | Mechanism | Why it matters here | Offline |
 |---|---|---|---|:---:|
-| **T3.1** ⭐ | Network Health on the Console/TV | **NETCONF/PyEZ** poll → new `/network` route in [Console/Serve.ps1](../Console/README.md) → panel on `tv-ops.html` | Ops board shows which APs/phones are up, PoE draw vs 124 W budget, LLDP neighbours, CoS queue drops — beside the call KPIs. One glass. | 🟢 |
+| **T3.1** ⭐ | Network Health on the Console/TV | **NETCONF/PyEZ** poll → new `/network` route in [Console/Serve.ps1](https://github.com/rohanbatrain/UPES-ECS/blob/main/Console/README.md) → panel on `tv-ops.html` | Ops board shows which APs/phones are up, PoE draw vs 124 W budget, LLDP neighbours, CoS queue drops — beside the call KPIs. One glass. | 🟢 |
 | **T3.2** ⭐⭐ | **Caller location by switch port** | Asterisk caller IP → EX ARP/MAC table (NETCONF) → port → room map | Replaces the cloud "locate the caller" with an **offline** room-level fix for wired 4xxx phones. Enormous for dispatch. | 🟢 |
 | **T3.3** ⭐ | **Evacuation network mode** | PBX roll-call/evac → NETCONF op script on EX | On evacuation the *network itself* reconfigures: free Wi-Fi airtime, raise emergency-phone PoE/CoS, quiet the guest SSID. | 🟢 |
 | **T3.4** | Network events beside call events | EX/SRX **syslog → rsyslog in the VM** | Correlate *"AP-B down 14:03"* with *"3 missed 111 from Block C 14:04"* in one timeline. | 🟢 |
@@ -398,7 +398,7 @@ with Device(host="10.20.99.10", user="upes-ro", ssh_private_key_file="…") as e
 **The headline offline idea.** When a phone dials 111, Asterisk knows its **contact IP**. The EX
 knows **IP → MAC** (ARP on `irb.30`) and **MAC → port** (`show ethernet-switching table`). A port
 maps to a **room** — and this repo *already carries a `location` column* in
-[provisioning/fixed-devices.csv](../provisioning/fixed-devices.csv) (`Main Gate`, `Hostel B
+[provisioning/fixed-devices.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv) (`Main Gate`, `Hostel B
 Corridor`, …). Chain them and the responder sees **"111 from ge-0/0/7 → Hostel B Corridor"** with
 **zero cloud**.
 
@@ -491,7 +491,7 @@ offline substitute ([T3.2](#t32--offline-caller-location-by-switch-port-)) is un
 ### Tier 6 — Van, mesh & multi-site
 
 The project ships a **disaster-response van with "corner repeaters"** and a future
-**Bidholi↔Kandoli** link ([SOP/23](../SOP/23-Mobile-Van-Deployment.md), SOP/20). Juniper fits the
+**Bidholi↔Kandoli** link ([SOP/23](../guides/mobile-van-deployment.md), SOP/20). Juniper fits the
 van cleanly; the long-range link honestly does not fit *this* hardware.
 
 | ID | Idea | Juniper feature | Why it matters here | Offline |
@@ -513,7 +513,7 @@ Make the Juniper layer as reproducible and backed-up as the rest of this repo al
 | **T7.2** | Fast switch replacement | **ZTP** (DHCP option 43/66 → local config server on the VM) | Swap a dead EX and it self-configures from a LAN file server — no console jockey, minutes not hours. | 🟢 |
 | **T7.3** | Junos config in the nightly backup | NETCONF `get-config` → the existing nightly backup set | The project already backs up nightly; add the switch/router configs so a rebuild is total. | 🟢 |
 | **T7.4** | Safe-by-default changes | `commit confirmed`, `rescue`, `system commit archive` | Every network change auto-rolls-back if it breaks 111. Already the documented discipline. | 🟢 |
-| **T7.5** | Fold into existing health/admin | Extend [scripts/](../scripts/) health check + Console **Admin** views (Serve.ps1) | One place to see PBX **and** network health; one place to trigger a rebind or a PoE bounce. | 🟢 |
+| **T7.5** | Fold into existing health/admin | Extend [scripts/](https://github.com/rohanbatrain/UPES-ECS/blob/main/scripts/) health check + Console **Admin** views (Serve.ps1) | One place to see PBX **and** network health; one place to trigger a rebind or a PoE bounce. | 🟢 |
 
 ---
 
@@ -587,7 +587,7 @@ Naming the ceiling is part of a *senseful* plan.
   (gRPC dial-out + native-UDP sensors, Junos 20.2R1+: PFE CPU/mem/filter stats, physical-interface
   traffic, RE LACP/chassis-env/LLDP/ARP) but **not gNMI**; **SRX300/320 have no streaming telemetry
   at all**. So lean on **SNMP/RMON + RPM + sFlow(EX)/J-Flow(SRX) + structured syslog** (T1.4, T3.x),
-  not model-driven telemetry. Full detail in the [Feature Catalogue](Juniper-Feature-Catalogue.md).
+  not model-driven telemetry. Full detail in the [Feature Catalogue](juniper-feature-catalogue.md).
 - **Virtual Chassis = one upgrade/control-plane domain.** The convenience (D1) costs you failure
   isolation; mitigate with `commit confirmed`, dual VCP, and staged upgrades — or run independent
   switches if you value isolation more than simplicity.
@@ -667,12 +667,12 @@ Console/API touch-points (small, additive):
   never depends on these.
 
 **Existing docs this plan builds on:**
-- [Docs/Juniper.md](Juniper.md) — flat no-VLAN pilot (current QEMU-on-laptop deployment).
-- [deploy/jetson/NETWORK-JUNIPER.md](../deploy/jetson/NETWORK-JUNIPER.md) — VIP-HA VLAN/CoS/PoE/firewall (reuse the CoS + SRX blocks).
-- [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](../deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md) — name-failover variant + the multicast/mDNS notes.
-- [deploy/qemu/Test-UpesNetwork.ps1](../deploy/qemu/Test-UpesNetwork.ps1) — the readiness check to extend with switch/AP checks.
-- [deploy/asterisk/rtp.conf](../deploy/asterisk/rtp.conf) · [pjsip.conf](../deploy/asterisk/pjsip.conf) — the RTP/SIP ranges that pin the QoS/firewall values.
-- [provisioning/fixed-devices.csv](../provisioning/fixed-devices.csv) — the `location` column [T3.2](#t32--offline-caller-location-by-switch-port-) joins against.
+- [Docs/Juniper.md](juniper.md) — flat no-VLAN pilot (current QEMU-on-laptop deployment).
+- [deploy/jetson/NETWORK-JUNIPER.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md) — VIP-HA VLAN/CoS/PoE/firewall (reuse the CoS + SRX blocks).
+- [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md) — name-failover variant + the multicast/mDNS notes.
+- [deploy/qemu/Test-UpesNetwork.ps1](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/Test-UpesNetwork.ps1) — the readiness check to extend with switch/AP checks.
+- [deploy/asterisk/rtp.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/rtp.conf) · [pjsip.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/pjsip.conf) — the RTP/SIP ranges that pin the QoS/firewall values.
+- [provisioning/fixed-devices.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv) — the `location` column [T3.2](#t32--offline-caller-location-by-switch-port-) joins against.
 
 **Blanket disclaimer (same as the jetson guides):** every `set`/RPC block here is a *sketch* in
 standard Junos/Mist patterns. **Syntax varies by platform and Junos version (EX2300-C ELS, SRX300/

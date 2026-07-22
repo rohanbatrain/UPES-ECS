@@ -25,7 +25,7 @@ from *emergency authority functions* (restricted to emergency roles).
 > The **number identifies the role; the context grants the permissions.**
 > A person and a student can both have SAP-ID extensions — the difference is the context.
 
-> **All responder roles are POSITIONS, not people** ([SOP 30](30-ERT-Roles-and-Shifts.md)).
+> **All responder roles are POSITIONS, not people** ([SOP 30](../operations/ert-roles-and-shifts.md)).
 > The `ctx_ert` / `ctx_ert_lead` / `ctx_responder` / `ctx_control_room` accounts are
 > generic positions (`4101`, `4110`, `4200`, `4300`, …) staffed by trained officers
 > **per shift** — never a person's personal SAP-ID account. Individuals keep

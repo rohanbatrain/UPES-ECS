@@ -2,7 +2,7 @@
 
 **For:** ERT Operators and ERT Lead / Incident Commander
 **Covers:** answering 111, classifying, dispatching, coordinating, logging, closing
-**Companion docs:** [Numbering Plan](01-Numbering-Plan.md) · [Drill SOP](03-Drill-Test-SOP.md) · [Role Matrix](04-SIP-Account-Role-Matrix.md)
+**Companion docs:** [Numbering Plan](../reference/numbering-plan.md) · [Drill SOP](drill-test-sop.md) · [Role Matrix](../reference/sip-account-role-matrix.md)
 
 > This SOP is deliberately short. In an emergency, long forms slow response.
 > Keep it to one screen you can act on.
@@ -12,7 +12,7 @@
 ## 0. Before your shift (30 seconds)
 
 You answer as a **generic ERT position** (e.g. `ERT-Desk-1` / 4110), not as yourself —
-see [ERT Roles & Shifts](30-ERT-Roles-and-Shifts.md). Take over the position live and
+see [ERT Roles & Shifts](ert-roles-and-shifts.md). Take over the position live and
 hand it over live; the seat stays in the queue, only the officer changes.
 
 Confirm on the Health Dashboard (or ask IT):
@@ -194,7 +194,7 @@ wrong number or pocket-dial.
 deliberately no separate "silent line" to decide between under pressure.
 
 > **Future:** the UPES VoIP app's **silent panic button** (broadcasts coordinates with
-> the call) will be the real solution — see [Risk Register R6](21-Risk-Register-and-Gaps.md).
+> the call) will be the real solution — see [Risk Register R6](risk-register.md).
 
 ---
 
@@ -210,7 +210,7 @@ fire, major hazard), the **ERT Lead declares an incident** and the team switches
 2. **Open Conference 9000** for multi-team coordination; pull in all available ERT
    operators (and off-duty responders).
 3. **Deploy the disaster-response van** to the incident zone if fixed infra is degraded
-   — see [Mobile Van Deployment](23-Mobile-Van-Deployment.md).
+   — see [Mobile Van Deployment](../guides/mobile-van-deployment.md).
 4. **Triage, don't queue-block.** Callers who can't be answered go to a **triage
    voicemail that captures location**; **dedupe** many reports of the same event
    (group by area + time).

@@ -83,6 +83,6 @@ On the PBX (ssh -p 2222):
   Recover asterisk .. automatic (systemd Restart=always); manual: systemctl restart asterisk
 ```
 
-Full call-flow: [../Blueprint/03-Call-Flows.md](../Blueprint/03-Call-Flows.md) ·
-Runbook: [../deploy/qemu/README.md](../deploy/qemu/README.md) ·
-AI layer: [../AI-101/README.md](../AI-101/README.md)
+Full call-flow: [../Blueprint/03-Call-Flows.md](../architecture/call-flows.md) ·
+Runbook: [../deploy/qemu/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md) ·
+AI layer: [../AI-101/README.md](../ai-101/index.md)

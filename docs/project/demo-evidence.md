@@ -2,7 +2,7 @@
 
 Live verification, on the running QEMU PBX, of the features that were designed and in
 the dialplan but not yet demonstrated. Run 2026-07-04. Complements the informal pilot;
-feeds [SOP 32 Test-Evidence](../SOP/32-Test-Evidence-Sheet.md).
+feeds [SOP 32 Test-Evidence](../operations/test-evidence-sheet.md).
 
 | Feature | Test | Result | Evidence |
 |---|---|---|---|
@@ -19,20 +19,20 @@ feeds [SOP 32 Test-Evidence](../SOP/32-Test-Evidence-Sheet.md).
 
 - **F18** — this was a real *restore* test, not just a backup: a file was extracted from
   the archive and diffed against the live config (matched). Backup process per
-  [SOP 11](../SOP/11-Backup-Restore-Procedure.md); the snapshot lives at
+  [SOP 11](../guides/backup-restore.md); the snapshot lives at
   `/var/backups/upes-ecs/` on the VM.
 - **F13** — fail2ban jail config persisted to
-  [../deploy/asterisk/fail2ban-asterisk.conf](../deploy/asterisk/fail2ban-asterisk.conf).
-  Full hardening plan (TLS/SRTP, firewall, module lockdown) is [SOP 26](../SOP/26-Security-Hardening.md);
+  [../deploy/asterisk/fail2ban-asterisk.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/fail2ban-asterisk.conf).
+  Full hardening plan (TLS/SRTP, firewall, module lockdown) is [SOP 26](../guides/security-hardening.md);
   TLS/SRTP remains a production step.
 - **F7** — ConfBridge profiles persisted to
-  [../deploy/asterisk/confbridge.conf](../deploy/asterisk/confbridge.conf) and threaded
+  [../deploy/asterisk/confbridge.conf](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/asterisk/confbridge.conf) and threaded
   into the VM build. The room is live and reachable; a multi-party audio demo is best
   done with real phones dialing `9000` (same as F11).
 - **F11** — the only item that is inherently interactive. To demo: Rohan calls Student Example Three,
   Student Example Three does an attended transfer / adds a third phone (three-way). Happy to run it live.
 
-## Still open (from [Project-Status.md](Project-Status.md))
+## Still open (from [Project-Status.md](status.md))
 Online AI-`101` build (local-first) · production move to the van's Linux box / bridged ·
 TLS/SRTP · formal pilot sign-off.
 

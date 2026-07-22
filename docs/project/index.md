@@ -14,13 +14,13 @@ once real hardware, real config, and a real roster met the design.
 
 | File | What it is |
 | --- | --- |
-| [Roadblocks-and-Solutions.md](./Roadblocks-and-Solutions.md) | The main log. Every roadblock we hit, grouped by area, each with symptom / cause / fix / lesson. |
-| [Doc-Fixes.md](./Doc-Fixes.md) | A short changelog of factual corrections made to the existing docs (wrong values, stale examples). |
-| [Project-Status.md](./Project-Status.md) | Status of record — an honest accounting of what is done & validated, deferred, and still remaining. |
-| [Feature-Roadmap.md](./Feature-Roadmap.md) | The next horizon — features beyond the current build, sequenced and mapped to real Asterisk capabilities. |
-| [Feature-Demo-Evidence.md](./Feature-Demo-Evidence.md) | Live verification on the running QEMU PBX of designed features (backup/restore, fail2ban, pause/resume, paging, conference). |
-| [Field-Test-Issues-and-Mitigations.md](./Field-Test-Issues-and-Mitigations.md) | Issues seen during the live Android field test and how each was mitigated. |
-| [Production-Readiness.md](./Production-Readiness.md) | Production-readiness assessment — hardening, autostart, backups, and what remains before go-live. |
+| [Roadblocks-and-Solutions.md](roadblocks-and-solutions.md) | The main log. Every roadblock we hit, grouped by area, each with symptom / cause / fix / lesson. |
+| [Doc-Fixes.md](doc-fixes.md) | A short changelog of factual corrections made to the existing docs (wrong values, stale examples). |
+| [Project-Status.md](status.md) | Status of record — an honest accounting of what is done & validated, deferred, and still remaining. |
+| [Feature-Roadmap.md](roadmap.md) | The next horizon — features beyond the current build, sequenced and mapped to real Asterisk capabilities. |
+| [Feature-Demo-Evidence.md](demo-evidence.md) | Live verification on the running QEMU PBX of designed features (backup/restore, fail2ban, pause/resume, paging, conference). |
+| [Field-Test-Issues-and-Mitigations.md](field-test-issues.md) | Issues seen during the live Android field test and how each was mitigated. |
+| [Production-Readiness.md](production-readiness.md) | Production-readiness assessment — hardening, autostart, backups, and what remains before go-live. |
 
 ## Who this is for
 
@@ -32,4 +32,4 @@ once real hardware, real config, and a real roster met the design.
 
 Everything here reflects events that actually happened during build and test. No
 invented incidents, no invented people. The only real roster lives in
-[../Notes/Confirmed Details.md](../Notes/Confirmed%20Details.md).
+../Notes/Confirmed Details.md.

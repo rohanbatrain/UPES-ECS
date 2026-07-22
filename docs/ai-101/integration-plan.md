@@ -1,8 +1,8 @@
 # AI-101 Integration Plan — AVA + a fully-local LLM on UPES-ECS Asterisk
 
 How the **AVA AI Voice Agent** is wired onto the existing UPES-ECS Asterisk stack to
-provide extension **101** (AI triage), and how it obeys [SOP 19](../SOP/19-AI-101-Design.md)
-and [SOP 12](../SOP/12-Incident-Logging-Schema.md).
+provide extension **101** (AI triage), and how it obeys [SOP 19](design.md)
+and [SOP 12](../operations/incident-logging-schema.md).
 
 > **Legend:** ✅ **Verified** from AVA's public README/docs · ⚠️ **Assumed / to-verify on
 > our stack** · 🔒 **Locked** by SOP 19 (must not change).
@@ -66,7 +66,7 @@ AVA supports two media transports, both bidirectional:
 | Mode | Notes | Recommendation for us |
 |---|---|---|
 | **AudioSocket** | AVA's **default** (`config/ai-agent.yaml`). TCP audio socket per call. | **Start here** — fewer moving parts, no RTP port juggling. |
-| **ExternalMedia RTP** | Asterisk `externalMedia` channel streams RTP to the engine. | Fallback if AudioSocket has codec/latency issues. Note our VM already pins RTP to `10000-10019` ([qemu README](../deploy/qemu/README.md)); ExternalMedia would need its own port plan. |
+| **ExternalMedia RTP** | Asterisk `externalMedia` channel streams RTP to the engine. | Fallback if AudioSocket has codec/latency issues. Note our VM already pins RTP to `10000-10019` ([qemu README](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/README.md)); ExternalMedia would need its own port plan. |
 
 Our VM runs **Asterisk 18.10** ✅ which satisfies AVA's **Asterisk 18+ / ARI** requirement.
 
@@ -188,7 +188,7 @@ with a system prompt that encodes SOP 19 verbatim behaviour:
 - The only secrets are **ARI credentials** (localhost/mgmt-scoped); there are **no LLM API
   keys** to manage — see [deployment.md §3](deployment.md#3-secrets--local-model-management).
 - Incident **recordings** remain the Asterisk-side WAVs governed by
-  [SOP 12 §7](../SOP/12-Incident-Logging-Schema.md) retention — unchanged.
+  [SOP 12 §7](../operations/incident-logging-schema.md) retention — unchanged.
 - ⚠️ **Prerequisite, not a privacy risk:** a **capable AI host (dedicated CPU/GPU box)** is
   required for real-time performance. The current TCG VM cannot run the local models at
   usable latency — see §3.1 and [deployment.md §1](deployment.md#1-topology).
@@ -197,7 +197,7 @@ with a system prompt that encodes SOP 19 verbatim behaviour:
 
 ## 4. UPES-ECS dialplan wiring
 
-Add to [`../config/extensions_custom.conf`](../config/extensions_custom.conf). Two new
+Add to [`../config/extensions_custom.conf`](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/extensions_custom.conf). Two new
 contexts (`ctx_ai_101`, `ctx_ai_196`) plus a shared **hard-fallback** target. **101 and
 196 do the AI; escalation and failure both land on the existing 111 path** — the human
 logic in `ctx_emergency_111` / `ctx_escalation` is unchanged.
@@ -270,15 +270,15 @@ exten => s,1,NoOp(AI fallback -> 111 for ${INCIDENT_ID} status=${STASISSTATUS})
   `ctx_student`). `include => ctx_ai_101` is added to student/staff contexts **only at
   Phase 2** rollout; during Phase 1.5 only ERT/test extensions include it.
 - Prompt files `upes-ecs/ai-unavailable` (and any AI prompts) recorded per
-  [SOP 28](../SOP/28-Voice-Prompt-Scripts.md), same sounds dir as the 111 prompts.
+  [SOP 28](../reference/voice-prompt-scripts.md), same sounds dir as the 111 prompts.
 
 ---
 
 ## 5. Incident logging (`ai_*` fields)
 
-Every 101 call is an incident, same as 111 ([SOP 12 §1](../SOP/12-Incident-Logging-Schema.md)),
+Every 101 call is an incident, same as 111 ([SOP 12 §1](../operations/incident-logging-schema.md)),
 with `source_number = 101` and the **additional AI fields** from
-[SOP 12 §5](../SOP/12-Incident-Logging-Schema.md#5-ai-assisted-101-additional-fields):
+[SOP 12 §5](../operations/incident-logging-schema.md#5-ai-assisted-101-additional-fields):
 
 ```text
 source_number = 101        ai_triage_enabled = true
@@ -293,7 +293,7 @@ human_override (t/f)
 1. The dialplan mints `INCIDENT_ID` and records the WAV **before** `Stasis()` (above), so
    an incident exists even if AVA dies mid-call.
 2. AVA's local-LLM agent produces the structured pre-brief (SOP 19 §4). We capture it one
-   of two ways — pick during build ([TODO.md](TODO.md)):
+   of two ways — pick during build ([TODO.md](todo.md)):
    - **AVA post-call webhook / `send_email_summary`-style HTTP tool** ✅ (AVA supports
      pre/in/post-call HTTP tools) → a small UPES endpoint writes `ai_summary`,
      `ai_detected_category`, `ai_detected_location`, `ai_urgency_hint`,
@@ -311,7 +311,7 @@ human_override (t/f)
 
 ## 6. Safety / fallback matrix
 
-Mirrors [SOP 19 §5–§6](../SOP/19-AI-101-Design.md). 🔒 = locked behaviour.
+Mirrors [SOP 19 §5–§6](design.md). 🔒 = locked behaviour.
 
 | Situation | 101 / AVA behaviour | Enforced by | Severity (SOP 19 §6) |
 |---|---|---|---|

@@ -3,8 +3,8 @@
 > **What this is.** A snapshot of what is *actually on the wire* right now, extracted
 > **read-only and without credentials** from the PBX laptop. No device configuration was
 > changed and nothing was logged into. Companion to the planning docs
-> ([Juniper-Integration-Plan.md](Juniper-Integration-Plan.md), [Juniper.md](Juniper.md),
-> [Juniper-Feature-Catalogue.md](Juniper-Feature-Catalogue.md)) — those say what we *could*
+> ([Juniper-Integration-Plan.md](juniper-integration-plan.md), [Juniper.md](juniper.md),
+> [Juniper-Feature-Catalogue.md](juniper-feature-catalogue.md)) — those say what we *could*
 > build; this says what is *present today*.
 
 **Captured:** 2026-07-18 · **From:** laptop `192.168.1.6` (Realtek GbE `Ethernet`, MAC `04:7C:16:A8:06:FA`) · **Method:** ICMP/ARP sweep, TCP port probing, SSH/TLS banner grab, SNMP/NTP/mDNS queries — all unauthenticated. **Scope:** the one subnet the laptop's wired link is on, `192.168.1.0/24`.
@@ -13,7 +13,7 @@
 
 ## 1. Executive summary
 
-- The Juniper kit is **online and healthy** on a **single flat `192.168.1.0/24`** — this is the **"flat pilot"** stage ([Juniper.md](Juniper.md)), **not** the VLAN/Virtual-Chassis architecture from the plan. So we are effectively at **Phase 0**.
+- The Juniper kit is **online and healthy** on a **single flat `192.168.1.0/24`** — this is the **"flat pilot"** stage ([Juniper.md](juniper.md)), **not** the VLAN/Virtual-Chassis architecture from the plan. So we are effectively at **Phase 0**.
 - **Confirmed devices:** 1× **Juniper SRX** (gateway/firewall/DHCP/NTP), 2× **Juniper EX2300-C** switches, 1× **HP ProDesk 600 G4** desktop (admin PC), and 1 **unidentified endpoint**. Plus this PBX laptop.
 - **The 2× Mist AP32s are NOT on this segment yet** (no ARP presence) — they appear undeployed/unpowered here.
 - **Management is wide open to us (read-only-capable):** **NETCONF (830) + SSH (22)** on all three Junos boxes, **J-Web (443)** on the SRX. This is exactly what the plan's app-integration ideas (caller-location, network-health panel, evac-mode) need — the transport is ready today.
@@ -72,7 +72,7 @@
 
 ### 4.1 SRX — `192.168.1.1` (the edge, and the most feature-rich box for us)
 - **Roles proven live:** default gateway; **DHCP server** (handed this laptop `.6`, 24 h lease, obtained 2026-07-18 12:52 → expires 2026-07-19 12:52); **NTP server** (answered a client query on 123/udp).
-  - ⚠️ NTP reply came back **stratum 0** = *not synced to an upstream clock*. Air-gapped means no internet time source; if the SRX is meant to be the campus clock ([plan D4](Juniper-Integration-Plan.md#4-key-design-decisions-decide-these-first)) it likely needs a local-clock (`server 127.127.1.0`) or GPS reference so it serves a *defined* stratum. Worth verifying.
+  - ⚠️ NTP reply came back **stratum 0** = *not synced to an upstream clock*. Air-gapped means no internet time source; if the SRX is meant to be the campus clock ([plan D4](juniper-integration-plan.md#4-key-design-decisions-decide-these-first)) it likely needs a local-clock (`server 127.127.1.0`) or GPS reference so it serves a *defined* stratum. Worth verifying.
 - **Management:** SSH (`OpenSSH_7.5` → older Junos, normal for SRX300/320), **J-Web** on 443 (TLS 1.2 / AES256), **NETCONF** on 830.
 - **Serial (from J-Web cert):** `CV3225AX0113`.
 
@@ -97,7 +97,7 @@
 | **NETCONF (830/SSH)** | SRX, EX#1, EX#2 | **Open on all three** | The transport for **T3.1 network-health panel, T3.2 caller-location, T3.3 evac-mode, T7.3 config backup** — ready today, just needs a read-only user + collector scripts. |
 | **SSH (22)** | all three Junos | Open | `show`/config-as-code, backups. |
 | **J-Web (443)** | SRX only | Open, TLS 1.2 | GUI inspection of the SRX. |
-| **DHCP** | SRX `.1` | Serving (24 h leases) | Where phone/laptop reservations live ([Juniper.md §2](Juniper.md)). |
+| **DHCP** | SRX `.1` | Serving (24 h leases) | Where phone/laptop reservations live ([Juniper.md §2](juniper.md)). |
 | **NTP (123)** | SRX `.1` | Serving, **stratum 0** | Intended campus clock (plan D4) — verify it's actually synced/defined. |
 | **DNS** | *WARP on the laptop* (`127.0.2.2`) | n/a | The laptop resolves via **Cloudflare WARP**, not the SRX — so the SRX's own DNS zone is invisible from here. Unrelated to the Juniper gear. |
 | **SNMP (161)** | — | `public` **refused** everywhere | Good (not wide open). If we want SNMP/RMON telemetry later it must be explicitly enabled with a community/user. |
@@ -107,9 +107,9 @@
 
 ## 6. What this means (readout against the plan)
 
-- **We are at Phase 0 (flat pilot).** No VLANs, no Virtual Chassis, no LLDP-MED/CoS/PoE policy *provable from here*. The whole [Tier 0 fabric](Juniper-Integration-Plan.md#tier-0--foundational-correctness-voice-just-works) (VC, voice VLAN, zero-touch phones, RTP priority, PoE budgeting) is still to build.
-- **The differentiators are unblocked at the transport layer.** NETCONF being live on all three boxes means [T3.1/T3.2/T3.3](Juniper-Integration-Plan.md#tier-3--app--juniper-integration-the-differentiators) are buildable now — the only missing pieces are a **read-only Junos user** and the **collector scripts** (`deploy/juniper/collectors/`).
-- **The APs are the gap.** With the 2× AP32 absent, the Wi-Fi 111 path isn't live on this segment. Commissioning them ([plan §7](Juniper-Integration-Plan.md#7-air-gapped-mist-commissioning-workflow)) is prerequisite to the wireless tiers.
+- **We are at Phase 0 (flat pilot).** No VLANs, no Virtual Chassis, no LLDP-MED/CoS/PoE policy *provable from here*. The whole [Tier 0 fabric](juniper-integration-plan.md#tier-0--foundational-correctness-voice-just-works) (VC, voice VLAN, zero-touch phones, RTP priority, PoE budgeting) is still to build.
+- **The differentiators are unblocked at the transport layer.** NETCONF being live on all three boxes means [T3.1/T3.2/T3.3](juniper-integration-plan.md#tier-3--app--juniper-integration-the-differentiators) are buildable now — the only missing pieces are a **read-only Junos user** and the **collector scripts** (`deploy/juniper/collectors/`).
+- **The APs are the gap.** With the 2× AP32 absent, the Wi-Fi 111 path isn't live on this segment. Commissioning them ([plan §7](juniper-integration-plan.md#7-air-gapped-mist-commissioning-workflow)) is prerequisite to the wireless tiers.
 
 ---
 
@@ -144,7 +144,7 @@ show dhcp server binding | show ntp status | show ntp associations
 show configuration system syslog             # where logs go
 ```
 
-**C. NETCONF collector (read-only, scriptable — the plan's `net_health.py` seed).** PyEZ/`ncclient` against 830 with a read-only user pulls `get_poe_interface_information`, `get_lldp_neighbors_information`, `get_interface_information`, `get_chassis_inventory`, `get_virtual_chassis_information` as structured data — the basis for the Console **/network** panel ([plan T3.1](Juniper-Integration-Plan.md#t31--network-health-on-the-console--tv-board-via-netconf-)).
+**C. NETCONF collector (read-only, scriptable — the plan's `net_health.py` seed).** PyEZ/`ncclient` against 830 with a read-only user pulls `get_poe_interface_information`, `get_lldp_neighbors_information`, `get_interface_information`, `get_chassis_inventory`, `get_virtual_chassis_information` as structured data — the basis for the Console **/network** panel ([plan T3.1](juniper-integration-plan.md#t31--network-health-on-the-console--tv-board-via-netconf-)).
 
 > None of A/B/C changes anything on the devices. If/when you want the deep pull, provide a
 > **read-only** login (or run B yourself and paste the output) and this doc gets a §4 addendum
@@ -168,7 +168,7 @@ show configuration system syslog             # where logs go
 - **Identify `192.168.1.5`** (AP32? phone? PC?) — needs switch MAC table / LLDP.
 - **Where are the 2× AP32s?** Not on this segment — undeployed, unpowered, or on another port/VLAN.
 - **Are `.3`/`.4` a Virtual Chassis or two independent switches?** — `show virtual-chassis`.
-- **Physical cabling / port map** — which device is on which `ge-0/0/x` (feeds [T3.2 caller-location](Juniper-Integration-Plan.md#t32--offline-caller-location-by-switch-port-)).
+- **Physical cabling / port map** — which device is on which `ge-0/0/x` (feeds [T3.2 caller-location](juniper-integration-plan.md#t32--offline-caller-location-by-switch-port-)).
 - **SRX config specifics** — SIP ALG state, zones, DHCP reservations, NTP source.
 
 ---

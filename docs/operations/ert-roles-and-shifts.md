@@ -42,8 +42,8 @@ RIGHT (this):   queue rings  ERT-LEAD, ERT-OP-1, ERT-OP-2  (generic positions)
 | ERT Operator 3 (Desk 3) *(scale)* | **4112** | `ERT-Desk-3` | `ctx_ert` | ✅ |
 | ERT Control Room *(optional)* | **4120** | `ERT-Control` | `ctx_control_room` | ✅ |
 
-All sit in the ERT desk range **4100–4199** ([Numbering Plan](01-Numbering-Plan.md)).
-Provision them from [../provisioning/responder-positions.csv](../provisioning/responder-positions.csv).
+All sit in the ERT desk range **4100–4199** ([Numbering Plan](../reference/numbering-plan.md)).
+Provision them from [../provisioning/responder-positions.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv).
 
 **Minimum to go live:** 2 operator positions available (recommended 3+), plus the Lead position.
 
@@ -88,12 +88,12 @@ actually staffs them.
 > **not** answer the 111 queue, page all-campus, or control the ERT queue — those stay ERT-only.
 
 Add more per department within its hundred-block (e.g. `4203`, `4204` for extra medical
-seats). Provision from [../provisioning/responder-positions.csv](../provisioning/responder-positions.csv).
+seats). Provision from [../provisioning/responder-positions.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/responder-positions.csv).
 
 > **Fixed devices vs positions:** a *position* is occupied by a rotating trained person
 > (Medical, Security desks). A *fixed device* is location-bound and not staffed (IP
 > speaker, unattended gate phone) — those stay in `ctx_fixed_device`
-> ([fixed-devices.csv](../provisioning/fixed-devices.csv)).
+> ([fixed-devices.csv](https://github.com/rohanbatrain/UPES-ECS/blob/main/provisioning/fixed-devices.csv)).
 
 ---
 
@@ -125,7 +125,7 @@ Kept as a simple sheet — **outside Asterisk** — owned by the ERT Lead. Examp
 | C (Night) | 22:00–06:00 | Officer __ | Officer __ | Officer __ |
 
 - Only **trained** officers may be rostered to a position.
-- Coverage rule: at least the minimum available positions per shift ([Health Monitoring](10-Health-Monitoring-Checklist.md)).
+- Coverage rule: at least the minimum available positions per shift ([Health Monitoring](health-monitoring.md)).
 - Off-shift trained officers are a **reserve** — they can occupy a spare position immediately in a surge, no new registration needed.
 
 ---
@@ -165,13 +165,13 @@ Shift log     → officer on that position at that time   (from the roster)
 ```
 
 Officers are also expected to state their name on answer ("UPES Emergency Response,
-this is [name]…") per the [ERT SOP](02-ERT-SOP.md), so the recording captures it too.
+this is [name]…") per the [ERT SOP](ert-sop.md), so the recording captures it too.
 
 ---
 
 ## 7. Surge staffing (ties to declared incidents)
 
-In a [declared incident](02-ERT-SOP.md), reserve trained officers **occupy spare
+In a [declared incident](ert-sop.md), reserve trained officers **occupy spare
 positions immediately** — because the accounts already exist and are trained-for, there
 is zero setup delay. If more seats are needed than positions exist, add positions from
 the 4100–4199 range ahead of time (pre-provisioned spares kept paused, unpaused on demand).
@@ -184,7 +184,7 @@ kept paused, so a surge is `*46` (unpause) + sit down, not "create an account."
 ## 8. Van / field positions
 
 The disaster-response van carries its **own position devices** (same extensions, synced
-config) — see [Mobile Van Deployment](23-Mobile-Van-Deployment.md). A trained officer
+config) — see [Mobile Van Deployment](../guides/mobile-van-deployment.md). A trained officer
 staffs the van position on deployment exactly like a room position.
 
 ---

@@ -43,7 +43,7 @@ Final gate before UPES-ECS is declared production-ready. Nothing here is optiona
 ## 4. People & process ready
 
 - [ ] Final ERT roster set; queue membership configured
-- [ ] ERT trained on the [ERT SOP](02-ERT-SOP.md); completed a drill
+- [ ] ERT trained on the [ERT SOP](../operations/ert-sop.md); completed a drill
 - [ ] Control-room/daily-readiness owner assigned
 - [ ] Support/helpdesk runbook in place
 - [ ] Student + ERT setup guides distributed

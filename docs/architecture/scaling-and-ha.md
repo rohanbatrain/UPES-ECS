@@ -6,8 +6,8 @@
 > Baseline restore point before any of this work: commit `1d6f51c`.
 >
 > Companion analysis: the load study in chat (why "single concurrency" bites).
-> Related existing kit: [`deploy/jetson/README.md`](../deploy/jetson/README.md)
-> (active/standby HA), [`Docs/Juniper-Integration-Plan.md`](Juniper-Integration-Plan.md).
+> Related existing kit: [`deploy/jetson/README.md`](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/README.md)
+> (active/standby HA), [`Docs/Juniper-Integration-Plan.md`](../networking/juniper-integration-plan.md).
 
 ---
 

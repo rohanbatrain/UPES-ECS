@@ -4,7 +4,7 @@ The deployment model that makes UPES-ECS survive a real disaster: a **self-power
 van carrying the PBX**, extended across the area by **corner repeaters** that boost
 the van's signal. This is what keeps 111 alive when fixed campus power/infra is down.
 
-> This directly resolves the two worst risks in the [Risk Register](21-Risk-Register-and-Gaps.md):
+> This directly resolves the two worst risks in the [Risk Register](../operations/risk-register.md):
 > **R1 (power)** — the van is autonomously powered; **R8 (single point of failure)** —
 > the van is deployable and doubles as failover for the campus PBX.
 
@@ -60,7 +60,7 @@ Corner-mounted repeaters extend the van's coverage across campus / the incident 
 |---|---|
 | **Placement** | On corners / high points for line-of-sight; overlap coverage so one failure isn't a dead zone. |
 | **Power** | Each repeater self-powered — battery + solar, or PoE where mains survives. Never assume grid. |
-| **Backhaul** | Mesh or point-to-point radio back to the van (same tech family as [Multi-Campus Wireless](20-Multi-Campus-Wireless.md)). |
+| **Backhaul** | Mesh or point-to-point radio back to the van (same tech family as [Multi-Campus Wireless](multi-campus-wireless.md)). |
 | **SSID** | Single SSID across all repeaters so phones roam seamlessly toward the van. |
 | **Redundancy** | Overlapping coverage; a spare repeater in the van; a dead repeater degrades coverage, doesn't kill the system. |
 | **Monitoring** | Treat each repeater + the backhaul link as **critical devices** on the Health Dashboard. |
@@ -107,7 +107,7 @@ Keep the van **always ready**, not assembled on the day:
 - [ ] PBX pre-configured with current UPES-ECS config (synced from campus).
 - [ ] Batteries charged; generator fueled and tested.
 - [ ] Repeaters charged / solar checked; spare repeater onboard.
-- [ ] Config backup on the van matches campus (see [Backup & Restore](11-Backup-Restore-Procedure.md)).
+- [ ] Config backup on the van matches campus (see [Backup & Restore](backup-restore.md)).
 - [ ] Antenna/mast/cabling checked.
 - [ ] ERT console + headset working.
 - [ ] Monthly van deployment drill logged.
@@ -135,9 +135,9 @@ Because the van already carries a synced config + backup, this is a swap, not a 
 
 ## 9. Ties to other docs & open items
 
-- Extends [Local Infrastructure Diagram](15-Local-Infrastructure-Diagram.md) (Mode A ↔ Mode B).
-- Shares wireless backhaul tech with [Multi-Campus Wireless](20-Multi-Campus-Wireless.md).
-- Surge/paging behaviour during a declared incident → [ERT SOP](02-ERT-SOP.md).
+- Extends [Local Infrastructure Diagram](../reference/local-infrastructure-diagram.md) (Mode A ↔ Mode B).
+- Shares wireless backhaul tech with [Multi-Campus Wireless](multi-campus-wireless.md).
+- Surge/paging behaviour during a declared incident → [ERT SOP](../operations/ert-sop.md).
 
 **TBD to confirm:** van power sizing (battery Ah + generator kW + fuel reserve),
 repeater model/backhaul, number + placement of repeaters for full campus coverage,

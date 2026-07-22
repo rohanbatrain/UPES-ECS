@@ -45,7 +45,7 @@
 
 ## Daily ECS Readiness Check
 
-Owner: IT/Admin duty person or ERT control-room assignee. (Same list as the [Drill SOP](03-Drill-Test-SOP.md).)
+Owner: IT/Admin duty person or ERT control-room assignee. (Same list as the [Drill SOP](drill-test-sop.md).)
 
 - [ ] Service running · [ ] Queue ≥ 2 available · [ ] ERT device registered
 - [ ] 199 test call OK · [ ] Recording OK · [ ] Voicemail OK
@@ -57,7 +57,7 @@ Log as **Daily ECS Readiness Check**.
 
 ## Weekly ECS Drill Health Report
 
-Run the weekly drill scenario ([Drill SOP §5](03-Drill-Test-SOP.md)) and record pass/fail + any offline devices, call-quality issues, and access-control results.
+Run the weekly drill scenario ([Drill SOP §5](drill-test-sop.md)) and record pass/fail + any offline devices, call-quality issues, and access-control results.
 
 ---
 

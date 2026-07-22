@@ -75,7 +75,7 @@ No recording notice on normal calls (they aren't recorded).
 ```text
 ERT-YYYYMMDD-NNNN_CALLER-SAPID_YYYYMMDD-HHMMSS.wav
 ```
-Every recording links to its **Incident ID** (see [12-Incident-Logging-Schema.md](12-Incident-Logging-Schema.md)), so audio, log, and voicemail share one identity.
+Every recording links to its **Incident ID** (see [12-Incident-Logging-Schema.md](incident-logging-schema.md)), so audio, log, and voicemail share one identity.
 
 ---
 

@@ -23,7 +23,7 @@ Copy the repo onto the PC, then:
 powershell -ExecutionPolicy Bypass -File .\Install-UpesEcs.ps1
 ```
 Installs prereqs + firewall, builds/boots the PBX VM, autostarts it, starts the Console on `:8080`.
-Full detail: [README.md](README.md#set-up-on-a-new-windows-pc-one-command). Region/language picker: double-click **`Deploy-UPES.cmd`**.
+Full detail: [README.md](../getting-started/quickstart.md). Region/language picker: double-click **`Deploy-UPES.cmd`**.
 
 ---
 
@@ -40,14 +40,14 @@ active/standby cluster. If one board dies, the other keeps 111 answering.
 > sudo ./setup-node.sh --role primary   --self <BOX-A-IP> --peer <BOX-B-IP> --iface eth0   # on box A
 > sudo ./setup-node.sh --role secondary --self <BOX-B-IP> --peer <BOX-A-IP> --iface eth0   # on box B
 > ```
-> Full runbook: [deploy/jetson/mdns/README-MDNS.md](deploy/jetson/mdns/README-MDNS.md) · trimmed switch guide:
-> [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md).
+> Full runbook: [deploy/jetson/mdns/README-MDNS.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/README-MDNS.md) · trimmed switch guide:
+> [deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/mdns/NETWORK-JUNIPER-MDNS.md).
 > Point phones at `upes-ecs.local` with a short (~60 s) SIP registration; failover recovers 111 in seconds.
 
 The **VIP variant** below (a floating Virtual IP phones register to) is the alternative if some devices
 can't resolve `.local` mDNS — it needs an L2-contiguous voice VLAN and a little more switch config.
 
-**Steps (full runbook: [deploy/jetson/README.md](deploy/jetson/README.md)):**
+**Steps (full runbook: [deploy/jetson/README.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/README.md)):**
 1. Flash both Jetsons with Ubuntu (JetPack). Put both on the **voice VLAN**, static IPs, plus a VIP in the same subnet.
 2. Exchange SSH keys (for config sync). Copy the repo to each board.
 3. Install (from `deploy/jetson/`):
@@ -69,7 +69,7 @@ zero-touch failover (shared DB) is documented as an upgrade.
 
 ## 2 · Network with your Juniper gear — the "100%" checklist
 
-Full Junos `set` config: [deploy/jetson/NETWORK-JUNIPER.md](deploy/jetson/NETWORK-JUNIPER.md). The essentials:
+Full Junos `set` config: [deploy/jetson/NETWORK-JUNIPER.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/jetson/NETWORK-JUNIPER.md). The essentials:
 
 - [ ] **One voice VLAN** spanning both switches (trunked uplinks) so it's L2-contiguous across both Jetsons — this is what lets the VIP move on failover.
 - [ ] **Both Jetsons + the VIP** in that one voice subnet (Jetsons static; VIP excluded from DHCP).
@@ -91,7 +91,7 @@ SAP ID = extension = username. One idempotent command (never changes an existing
 powershell -File deploy\qemu\Add-UpesUser.ps1 -SapId 500000005 -Name "Student Example Five"
 ```
 On the Jetson cluster, run it on the **primary**; the sync propagates to the backup.
-Rules + credentials: [deploy/qemu/ADD-USER-RUNBOOK.md](deploy/qemu/ADD-USER-RUNBOOK.md) · [secrets/TEAM-CREDENTIALS.md](secrets/TEAM-CREDENTIALS.md).
+Rules + credentials: [deploy/qemu/ADD-USER-RUNBOOK.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/deploy/qemu/ADD-USER-RUNBOOK.md) · secrets/TEAM-CREDENTIALS.md.
 
 ---
 
@@ -105,7 +105,7 @@ The system speaks **44 languages** (all Piper natural voices); Indian ones with 
 ### The translator pipeline (who + what to give)
 - **Who:** one **native speaker per language**, ideally with first-aid/emergency familiarity — these are CPR/evacuation instructions, so accuracy > fluency.
 - **Give them two files** (they *correct the AI draft*, they don't start from scratch):
-  1. Voice: `i18n/translations/<code>.csv` (41 rows, English + draft) + the rules in [i18n/TRANSLATION-GUIDE.md](i18n/TRANSLATION-GUIDE.md).
+  1. Voice: `i18n/translations/<code>.csv` (41 rows, English + draft) + the rules in [i18n/TRANSLATION-GUIDE.md](https://github.com/rohanbatrain/UPES-ECS/blob/main/i18n/TRANSLATION-GUIDE.md).
   2. UI: `Console/ui-lang/<code>.json` (~679 short strings).
 - **Rules they follow:** keep the DTMF digit on "press 1", keep `*22`/`111`/`UPES`/`SIP` verbatim, don't add/drop first-aid steps, stay within the length target.
 
@@ -115,7 +115,7 @@ The system speaks **44 languages** (all Piper natural voices); Indian ones with 
 powershell -File scripts\gen-lang-prompts.win.ps1 -Lang <code>     # regenerates the audio pack
 ```
 Then `Deploy-UPES` → pick the language (Windows), or the Jetson sync picks it up. The dashboard flips
-to that language automatically (from `region.json`). Details: [DEPLOY-REGIONAL.md](DEPLOY-REGIONAL.md).
+to that language automatically (from `region.json`). Details: [DEPLOY-REGIONAL.md](../getting-started/regional-deployment.md).
 
 ---
 

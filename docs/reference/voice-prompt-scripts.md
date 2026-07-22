@@ -144,15 +144,15 @@ House style follows the paging template: *"Attention. This is the UPES Emergency
 
 | Prompt file | Called in | Doc |
 |---|---|---|
-| `emergency-preanswer` | `ctx_emergency_111` | [09](09-Dialplan-Design.md) / [Feature 1](../Docs/Feature-1.md) |
-| `queue-hold` | queue announcement | [Feature 2](../Docs/Feature-2.md) |
-| `emergency-voicemail-prompt` | `ctx_emergency_vm` | [Feature 10](../Docs/Feature-10.md) |
-| `silent-caller-cue` | ERT SOP Part I | [02](02-ERT-SOP.md) |
-| `drill-prompt` | `ctx_drill_199` | [03](03-Drill-Test-SOP.md) |
-| `not-authorized` | `ctx_denied` | [26](26-Security-Hardening.md) |
-| `queue-paused` / `queue-resumed` | `*45` / `*46` | [09](09-Dialplan-Design.md) |
-| `ai-101-*` | 101 flow (later) | [19](19-AI-101-Design.md) |
-| `custom/upes-*` (EAS set) | `[ctx_callout]` via `mass_callout.sh` | [FEATURES](../config/FEATURES.md) · `gen-callout-prompts.sh` |
+| `emergency-preanswer` | `ctx_emergency_111` | [09](../guides/dialplan-design.md) / [Feature 1](../features/feature-01.md) |
+| `queue-hold` | queue announcement | [Feature 2](../features/feature-02.md) |
+| `emergency-voicemail-prompt` | `ctx_emergency_vm` | [Feature 10](../features/feature-10.md) |
+| `silent-caller-cue` | ERT SOP Part I | [02](../operations/ert-sop.md) |
+| `drill-prompt` | `ctx_drill_199` | [03](../operations/drill-test-sop.md) |
+| `not-authorized` | `ctx_denied` | [26](../guides/security-hardening.md) |
+| `queue-paused` / `queue-resumed` | `*45` / `*46` | [09](../guides/dialplan-design.md) |
+| `ai-101-*` | 101 flow (later) | [19](../ai-101/design.md) |
+| `custom/upes-*` (EAS set) | `[ctx_callout]` via `mass_callout.sh` | [FEATURES](https://github.com/rohanbatrain/UPES-ECS/blob/main/config/FEATURES.md) · `gen-callout-prompts.sh` |
 | `upes-ecs/rollcall-*` | `[ctx_callout]` roll-call | `gen-callout-prompts.sh` |
 
 ---

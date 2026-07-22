@@ -1,7 +1,7 @@
 # UPES-ECS FreePBX Build Guide (Phase 0 + Phase 1)
 
 Hands-on steps to stand up the emergency core in **FreePBX**. Follow in order.
-Assumes the [Numbering Plan](01-Numbering-Plan.md) and [Role Matrix](04-SIP-Account-Role-Matrix.md).
+Assumes the [Numbering Plan](../reference/numbering-plan.md) and [Role Matrix](../reference/sip-account-role-matrix.md).
 
 > Everything here is LAN-only. Do **not** open SIP/RTP to the public internet.
 
@@ -37,8 +37,8 @@ Assumes the [Numbering Plan](01-Numbering-Plan.md) and [Role Matrix](04-SIP-Acco
 
 ### 1.1 Contexts / classes
 FreePBX groups permissions via **Class of Service** (COS) or custom contexts. For UPES-ECS:
-- Simplest: use the **Class of Service** module to build classes matching the [Role Matrix](04-SIP-Account-Role-Matrix.md) (student, staff, ert, ert_lead, control_room, fixed_device, admin).
-- Advanced/custom logic (drill mode, SAP-ID rules) goes in **`extensions_custom.conf`** — see [09-Dialplan-Design.md](09-Dialplan-Design.md).
+- Simplest: use the **Class of Service** module to build classes matching the [Role Matrix](../reference/sip-account-role-matrix.md) (student, staff, ert, ert_lead, control_room, fixed_device, admin).
+- Advanced/custom logic (drill mode, SAP-ID rules) goes in **`extensions_custom.conf`** — see [09-Dialplan-Design.md](dialplan-design.md).
 
 ### 1.2 SAP-ID extensions (bulk)
 - **Admin → Bulk Handler → Extensions → Import**: CSV with columns
@@ -69,7 +69,7 @@ ert_emergency_queue  (20s, ringall)
              └─ no answer → Emergency Voicemail box
 ```
 - Backup group = **Applications → Ring Groups**, strategy `ringall`, 20s.
-- Voicemail: a dedicated **Emergency Voicemail** box, max message 60s, prompt per [Numbering Plan](01-Numbering-Plan.md).
+- Voicemail: a dedicated **Emergency Voicemail** box, max message 60s, prompt per [Numbering Plan](../reference/numbering-plan.md).
 
 ### 1.6 The 111 route
 - Use a **Custom Destination** or **Misc Application** mapping **111**:
@@ -102,5 +102,5 @@ ert_emergency_queue  (20s, ringall)
 - **Every change:** click the red **Apply Config** banner, then verify with a test call.
 - Use **Admin → Config Edit** for `extensions_custom.conf` (custom dialplan survives reloads).
 - **CDR Reports** and **Asterisk Info → Queues** give you live queue/agent status for the daily readiness check.
-- **Backup & Restore module** handles config backups (see [11-Backup-Restore-Procedure.md](11-Backup-Restore-Procedure.md)); still keep a git copy of custom configs.
+- **Backup & Restore module** handles config backups (see [11-Backup-Restore-Procedure.md](backup-restore.md)); still keep a git copy of custom configs.
 - Lock the **FreePBX Admin GUI** to the management subnet only — never student Wi-Fi.
