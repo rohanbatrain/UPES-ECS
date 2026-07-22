@@ -77,3 +77,6 @@ Thumbs.db
 /NUL
 .idea/
 *.swp
+
+# Local GitHub Pages build output (deployed via CI or ghp-import)
+_site/
