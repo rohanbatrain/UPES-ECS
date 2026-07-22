@@ -86,6 +86,7 @@ nav:
   - Getting started:
       - getting-started/index.md
       - Day-1 quickstart: getting-started/quickstart.md
+      - Try the demo: getting-started/demo.md
       - Downloads: getting-started/downloads.md
       - Go-live checklist: getting-started/go-live-checklist.md
       - Regional / multilingual deployment: getting-started/regional-deployment.md

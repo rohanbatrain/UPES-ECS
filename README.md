@@ -49,6 +49,24 @@ Windows user — not just the machine it was authored on.
 
 ---
 
+## Try the demo
+
+Want to experience everything immediately? Seed a set of ready-made demo accounts (known
+passwords) and softphone profiles with one command:
+
+```powershell
+.\Install-UpesEcs.ps1 -Demo      # or, after install:  powershell -File demo\Seed-Demo.ps1
+```
+
+Register two softphones, go on shift (`*22` on `4190`), dial **`111`**, and watch the queue,
+the offline coach (`102`), per-caller language, and the live console light up. Full
+walkthrough + account list: **[demo/README.md](demo/README.md)** (and the
+[Try the demo](https://rohanbatrain.github.io/UPES-ECS/docs/getting-started/demo/) guide).
+
+> Demo credentials are public and for local evaluation only — never production.
+
+---
+
 ## Downloads
 
 Prefer a prebuilt installer over building from source? Large artifacts (offline installer,

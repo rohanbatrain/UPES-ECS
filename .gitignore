@@ -80,3 +80,7 @@ Thumbs.db
 
 # Local GitHub Pages build output (deployed via CI or ghp-import)
 _site/
+
+# Generated demo softphone profiles (contain the demo secret)
+demo/linphone-profiles/
+*.filled.xml

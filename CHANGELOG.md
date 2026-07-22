@@ -27,6 +27,9 @@ project adheres to [Semantic Versioning](https://semver.org/). Dates are absolut
 ### Added
 - Self-contained landing page in 44 languages (`landing/`), highlighting the HPE Juniper
   networking infrastructure that powers the system (SRX300/320, EX2300-C-12P, Mist AP32).
+- **Demo mode** — `demo/Seed-Demo.ps1` (and `Install-UpesEcs.ps1 -Demo`) seeds a ready-to-try
+  roster with known credentials + importable Linphone profiles, so a fresh install can dial
+  `111` and exercise every feature in minutes. `Add-UpesUser.ps1` gained `ert`/`device` roles.
 
 ### Removed
 - Archived the Flutter mobile app (removed feature); recoverable from the

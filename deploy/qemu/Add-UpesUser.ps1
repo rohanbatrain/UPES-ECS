@@ -40,7 +40,7 @@
 param(
   [Parameter(Mandatory)][string]$SapId,
   [Parameter(Mandatory)][string]$Name,
-  [ValidateSet('student','staff')][string]$Role,
+  [ValidateSet('student','staff','ert','device')][string]$Role,
   [string]$Secret,
   [string]$Lang,
   [string]$Base = "$env:USERPROFILE\qemu",
@@ -63,7 +63,14 @@ $utf8  = New-Object System.Text.UTF8Encoding($false)   # no BOM, LF preserved
 # --- validate + infer context ---------------------------------------------
 if ($SapId -notmatch '^\d{3,}$') { throw "SapId must be digits only (got '$SapId')." }
 if (-not $Role) { $Role = if ($SapId.Length -eq 8) { 'staff' } else { 'student' } }
-$ctx = if ($Role -eq 'staff') { 'ctx_staff' } else { 'ctx_student' }
+# ert/device are for responder positions (ctx_ert can go on-shift via *22) and fixed
+# devices (gate phones / speakers). student/staff behaviour is unchanged.
+$ctx = switch ($Role) {
+  'staff'  { 'ctx_staff' }
+  'ert'    { 'ctx_ert' }
+  'device' { 'ctx_fixed_device' }
+  default  { 'ctx_student' }
+}
 $Name = $Name.Trim()
 
 # --- optional language preference ------------------------------------------
@@ -176,7 +183,7 @@ if (Test-Path $notes) {
     Ok "Confirmed Details.md  <- added $SapId"
   } else { Info "Confirmed Details.md  : already present" }
 }
-$mc = if ($Role -eq 'staff') { 3 } else { 2 }
+$mc = switch ($Role) { 'staff' { 3 } 'ert' { 1 } 'device' { 1 } default { 2 } }
 $rosters = @(
   @{ path = Join-Path $repo 'provisioning\pilot-users.csv';       row = "$SapId,$Name,__SET_ON_IMPORT__,pjsip,$ctx,`"$Name - $SapId`",no,$mc" }
   @{ path = Join-Path $repo 'provisioning\linphone\users.csv';    row = "$SapId,$Name,$ctx,__SET_ON_IMPORT__" }
@@ -218,8 +225,13 @@ if (Test-Path $dirJson) {
   Ok ("directory.json  <- $SapId = $Name" + $(if ($Lang) { " [$Lang]" } else { "" }))
 }
 
-# VM callout/roll-call group membership (role-based). students are in the roster groups; both are in all/700.
-$groups = if ($Role -eq 'staff') { 'all 700' } else { 'roster all 700 701 702 hostels academic' }
+# VM callout/roll-call group membership (role-based). students are in the roster groups; all are in all/700.
+$groups = switch ($Role) {
+  'staff'  { 'all 700' }
+  'ert'    { 'all 700 ert' }
+  'device' { 'all 700' }
+  default  { 'roster all 700 701 702 hostels academic' }
+}
 
 # --- 3) live VM: append-if-missing / HEAL-if-drifted, reload, verify -------
 if ($NoVm) { Warn "-NoVm: skipped live VM push. Run without -NoVm to apply to the running PBX."; return }

@@ -54,6 +54,7 @@ param(
   [switch]$NoConsole,
   [switch]$Rebuild,
   [switch]$DryRun,
+  [switch]$Demo,
   [switch]$Uninstall
 )
 $ErrorActionPreference = 'Stop'
@@ -524,6 +525,17 @@ try {
   [IO.File]::WriteAllText((Join-Path $cdir 'directory.json'), ($dir | ConvertTo-Json -Depth 4), (New-Object Text.UTF8Encoding($false)))
   Ok ("directory.json - {0} names" -f $dir.Count)
 } catch { Warn "could not generate directory.json: $($_.Exception.Message) (boards fall back to raw extensions)" }
+
+# ---------------------------------------------------------------------------
+# 4b. DEMO SEED (optional) - known-credential accounts + softphone profiles
+# ---------------------------------------------------------------------------
+if ($Demo) {
+  Step "Seed demo accounts + softphone profiles"
+  try {
+    & powershell -NoProfile -ExecutionPolicy Bypass -File "$PSScriptRoot\demo\Seed-Demo.ps1" -Base $Base
+    Ok "demo seeded (password: updemo123) - walkthrough in demo\README.md"
+  } catch { Warn "demo seed failed: $($_.Exception.Message)" }
+}
 
 # ---------------------------------------------------------------------------
 # 5. AUTOSTART (VM + supervised Console at every logon) + start the Console now
