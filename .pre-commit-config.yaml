@@ -8,8 +8,8 @@ repos:
         exclude: '\.md$'
       - id: end-of-file-fixer
       - id: check-merge-conflict
-      - id: mixed-line-ending
-        args: [--fix=lf]      # normalize to LF (matches .gitattributes)
+      # line endings are governed authoritatively by .gitattributes
+      # (LF default, CRLF for .ps1/.cmd/.bat); no mixed-line-ending hook here.
       - id: check-yaml
         args: [--unsafe]      # mkdocs.yml uses custom !!python/name: tags
       - id: check-json
