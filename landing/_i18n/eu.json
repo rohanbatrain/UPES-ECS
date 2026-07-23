@@ -96,5 +96,9 @@
   "scale_c1": "Unibertsitateak",
   "scale_c2": "Hondamendiei erantzutea",
   "scale_c3": "Gune kritikoak",
-  "nav_team": "Taldea"
+  "nav_team": "Taldea",
+  "team_eyebrow": "Atzean dauden pertsonak",
+  "team_title": "Sortu eta aurkeztua",
+  "team_sub": "UPES-ECS UPESeko bi ikaslek diseinatu, eraiki eta aurkeztu zuten.",
+  "team_role": "Sortzailea eta aurkezlea"
 }

@@ -96,5 +96,9 @@
   "scale_c1": "大学",
   "scale_c2": "灾害响应",
   "scale_c3": "关键区域",
-  "nav_team": "团队"
+  "nav_team": "团队",
+  "team_eyebrow": "幕后团队",
+  "team_title": "制作与展示",
+  "team_sub": "UPES-ECS 由 UPES 的两名学生设计、开发并展示。",
+  "team_role": "创作者与展示者"
 }

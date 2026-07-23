@@ -96,5 +96,9 @@
   "scale_c1": "Üniversiteler",
   "scale_c2": "Afet müdahalesi",
   "scale_c3": "Kritik bölgeler",
-  "nav_team": "Ekip"
+  "nav_team": "Ekip",
+  "team_eyebrow": "Arkasındaki insanlar",
+  "team_title": "Tasarlayan ve sunan",
+  "team_sub": "UPES-ECS, UPES'te iki öğrenci tarafından tasarlandı, geliştirildi ve sunuldu.",
+  "team_role": "Yaratıcı ve sunucu"
 }

@@ -96,5 +96,9 @@
   "scale_c1": "Universitats",
   "scale_c2": "Resposta a desastres",
   "scale_c3": "Zones crítiques",
-  "nav_team": "Equip"
+  "nav_team": "Equip",
+  "team_eyebrow": "Les persones que hi ha al darrere",
+  "team_title": "Creat i presentat per",
+  "team_sub": "UPES-ECS va ser dissenyat, construït i presentat per dos estudiants de la UPES.",
+  "team_role": "Creador i presentador"
 }

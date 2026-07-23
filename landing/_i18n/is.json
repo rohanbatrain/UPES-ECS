@@ -96,5 +96,9 @@
   "scale_c1": "Háskólar",
   "scale_c2": "Hamfaraviðbragð",
   "scale_c3": "Mikilvæg svæði",
-  "nav_team": "Teymi"
+  "nav_team": "Teymi",
+  "team_eyebrow": "Fólkið á bak við það",
+  "team_title": "Hannað og kynnt af",
+  "team_sub": "UPES-ECS var hannað, byggt og kynnt af tveimur nemendum við UPES.",
+  "team_role": "Höfundur og kynnir"
 }

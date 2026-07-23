@@ -96,5 +96,9 @@
   "scale_c1": "Uczelnie",
   "scale_c2": "Reagowanie na katastrofy",
   "scale_c3": "Strefy krytyczne",
-  "nav_team": "Zespół"
+  "nav_team": "Zespół",
+  "team_eyebrow": "Ludzie za tym stojący",
+  "team_title": "Stworzone i zaprezentowane przez",
+  "team_sub": "UPES-ECS został zaprojektowany, zbudowany i zaprezentowany przez dwóch studentów UPES.",
+  "team_role": "Twórca i prezenter"
 }

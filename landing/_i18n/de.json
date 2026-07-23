@@ -96,5 +96,9 @@
   "scale_c1": "Universitäten",
   "scale_c2": "Katastrophenschutz",
   "scale_c3": "Kritische Zonen",
-  "nav_team": "Team"
+  "nav_team": "Team",
+  "team_eyebrow": "Die Menschen dahinter",
+  "team_title": "Erstellt und präsentiert von",
+  "team_sub": "UPES-ECS wurde von zwei Studierenden der UPES entworfen, entwickelt und präsentiert.",
+  "team_role": "Entwickler und Präsentator"
 }

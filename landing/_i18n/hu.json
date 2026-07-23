@@ -96,5 +96,9 @@
   "scale_c1": "Egyetemek",
   "scale_c2": "Katasztrófaelhárítás",
   "scale_c3": "Kritikus zónák",
-  "nav_team": "Csapat"
+  "nav_team": "Csapat",
+  "team_eyebrow": "Az emberek mögötte",
+  "team_title": "Készítette és bemutatta",
+  "team_sub": "A UPES-ECS-t az UPES két hallgatója tervezte, építette és mutatta be.",
+  "team_role": "Alkotó és előadó"
 }

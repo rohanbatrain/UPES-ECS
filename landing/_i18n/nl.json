@@ -96,5 +96,9 @@
   "scale_c1": "Universiteiten",
   "scale_c2": "Rampenbestrijding",
   "scale_c3": "Kritieke zones",
-  "nav_team": "Team"
+  "nav_team": "Team",
+  "team_eyebrow": "De mensen erachter",
+  "team_title": "Gemaakt en gepresenteerd door",
+  "team_sub": "UPES-ECS is ontworpen, gebouwd en gepresenteerd door twee studenten aan de UPES.",
+  "team_role": "Maker en presentator"
 }

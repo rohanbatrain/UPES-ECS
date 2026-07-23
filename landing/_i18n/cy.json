@@ -96,5 +96,9 @@
   "scale_c1": "Prifysgolion",
   "scale_c2": "Ymateb i drychinebau",
   "scale_c3": "Parthau hanfodol",
-  "nav_team": "Tîm"
+  "nav_team": "Tîm",
+  "team_eyebrow": "Y bobl y tu ôl iddo",
+  "team_title": "Crëwyd a chyflwynwyd gan",
+  "team_sub": "Cafodd UPES-ECS ei ddylunio, ei adeiladu a'i gyflwyno gan ddau fyfyriwr yn UPES.",
+  "team_role": "Crëwr a chyflwynydd"
 }

@@ -96,5 +96,9 @@
   "scale_c1": "Yliopistot",
   "scale_c2": "Katastrofivaste",
   "scale_c3": "Kriittiset alueet",
-  "nav_team": "Tiimi"
+  "nav_team": "Tiimi",
+  "team_eyebrow": "Tekijät sen takana",
+  "team_title": "Suunniteltu ja esitelty",
+  "team_sub": "UPES-ECS:n suunnitteli, rakensi ja esitteli kaksi UPESin opiskelijaa.",
+  "team_role": "Luoja ja esittelijä"
 }

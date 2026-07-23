@@ -96,5 +96,9 @@
   "scale_c1": "Universitet",
   "scale_c2": "Katastrofinsats",
   "scale_c3": "Kritiska zoner",
-  "nav_team": "Team"
+  "nav_team": "Team",
+  "team_eyebrow": "Människorna bakom",
+  "team_title": "Skapad och presenterad av",
+  "team_sub": "UPES-ECS designades, byggdes och presenterades av två studenter vid UPES.",
+  "team_role": "Skapare och presentatör"
 }

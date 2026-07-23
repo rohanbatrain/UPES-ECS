@@ -96,5 +96,9 @@
   "scale_c1": "Universidades",
   "scale_c2": "Respuesta ante desastres",
   "scale_c3": "Zonas críticas",
-  "nav_team": "Equipo"
+  "nav_team": "Equipo",
+  "team_eyebrow": "Las personas detrás",
+  "team_title": "Creado y presentado por",
+  "team_sub": "UPES-ECS fue diseñado, construido y presentado por dos estudiantes de UPES.",
+  "team_role": "Creador y presentador"
 }

@@ -96,5 +96,9 @@
   "scale_c1": "Universiteter",
   "scale_c2": "Katastrofeberedskap",
   "scale_c3": "Kritiske soner",
-  "nav_team": "Team"
+  "nav_team": "Team",
+  "team_eyebrow": "Menneskene bak",
+  "team_title": "Laget og presentert av",
+  "team_sub": "UPES-ECS ble designet, bygget og presentert av to studenter ved UPES.",
+  "team_role": "Skaper og presentatør"
 }
