@@ -38,12 +38,14 @@
     :root{
       --bg:#0B1310;--bg-alt:#0E1815;--surface:#101A16;--text:#E8F0ED;
       --text-muted:#93A79F;--border:#1F2E29;--brand-ink:#35D6A6;
+      --brand-soft:rgba(1,169,130,.16);
       --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
     }
   }
   :root[data-theme="dark"]{
     --bg:#0B1310;--bg-alt:#0E1815;--surface:#101A16;--text:#E8F0ED;
     --text-muted:#93A79F;--border:#1F2E29;--brand-ink:#35D6A6;
+    --brand-soft:rgba(1,169,130,.16);
     --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
   }
   :root[data-theme="light"]{
@@ -175,6 +177,34 @@
   .arch .flow{stroke:var(--border);stroke-width:2;fill:none}
   .arch .flow.on{stroke:var(--brand);stroke-dasharray:6 5}
 
+  /* ---------- demo video ---------- */
+  .demo-wrap{max-width:980px;margin-inline:auto}
+  .demo-frame{
+    position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;
+    border:1px solid var(--border);background:var(--dark);box-shadow:var(--shadow);
+  }
+  .demo-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+  .demo-play{
+    position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;font:inherit;
+    display:grid;place-content:center;gap:16px;justify-items:center;
+    background:
+      radial-gradient(130% 120% at 50% -12%,rgba(1,169,130,.26),transparent 62%),
+      linear-gradient(180deg,#0e1c16,#0A0F0D);
+  }
+  .demo-play .disc{
+    position:relative;width:82px;height:82px;border-radius:50%;display:grid;place-items:center;
+    background:var(--brand);color:#012a20;box-shadow:0 12px 34px -8px rgba(1,169,130,.7);
+    transition:transform .16s ease;
+  }
+  .demo-play:hover .disc,.demo-play:focus-visible .disc{transform:scale(1.07)}
+  .demo-play .disc svg{margin-inline-start:5px}
+  .demo-play .cap{font-size:var(--step--1);font-weight:600;letter-spacing:.03em;color:var(--on-dark)}
+  .demo-play:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  .demo-credit{margin-top:18px;text-align:center;font-size:var(--step--1);color:var(--text-muted);line-height:1.5}
+  .demo-credit svg{vertical-align:-2px;margin-inline-end:6px;color:var(--brand)}
+  .demo-credit a{color:var(--brand-ink);font-weight:600}
+  .demo-credit a:hover{text-decoration:underline}
+
   /* ---------- language showcase ---------- */
   .langgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
   .lchip{border:1px solid var(--border);border-radius:12px;padding:16px 18px;background:var(--surface);transition:border-color .18s,transform .18s}
@@ -274,8 +304,10 @@
     <nav class="links" aria-label="Primary">
       <a href="#overview" data-i18n="nav_overview">Overview</a>
       <a href="#infrastructure" data-i18n="nav_infra">Infrastructure</a>
+      <a href="#collaboration" data-i18n="nav_collab">Collaboration</a>
       <a href="#features" data-i18n="nav_features">Capabilities</a>
       <a href="#architecture" data-i18n="nav_architecture">Architecture</a>
+      <a href="#demo" data-i18n="nav_demo">Demo</a>
       <a href="#languages" data-i18n="nav_languages">Languages</a>
       <a href="#docs" data-i18n="nav_docs">Docs</a>
     </nav>
@@ -301,6 +333,10 @@
         <p class="sub" data-i18n="hero_sub">A LAN-first campus emergency system built on Asterisk. The whole campus dials a single number to reach a trained response team — with no internet, no cloud, and no SIM.</p>
         <div class="cta">
           <a class="btn btn-primary" href="https://rohanbatrain.github.io/UPES-ECS/docs/"><span data-i18n="cta_docs">Read the documentation</span></a>
+          <a class="btn btn-ghost" href="#demo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7-11-7z"/></svg>
+            <span data-i18n="cta_watch">Watch the demo</span>
+          </a>
           <a class="btn btn-ghost" href="https://github.com/rohanbatrain/UPES-ECS/releases/latest">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
             <span data-i18n="cta_download">Download</span>
@@ -378,6 +414,29 @@
     </div>
   </section>
 
+  <!-- COLLABORATION (HPE × UPES) -->
+  <section id="collaboration" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" data-i18n="collab_eyebrow">HPE &times; UPES</span>
+        <h2 data-i18n="collab_title">Showcased with Team HPE</h2>
+        <p data-i18n="collab_sub">In July 2026, UPES-ECS was presented alongside HPE's enterprise networking team — first at HPE's campus in Bengaluru, then live at UPES.</p>
+      </div>
+      <div class="cards" style="grid-template-columns:repeat(2,1fr)">
+        <div class="card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M9 10h.01M15 10h.01"/></svg></div>
+          <h3 data-i18n="collab_1_title">HPE Networking University Day</h3>
+          <p data-i18n="collab_1_desc">15 July 2026 · HPE Mahadevapura Campus, Bengaluru — a first-hand look at enterprise networking and data-center infrastructure at scale.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3 data-i18n="collab_2_title">Team HPE visits UPES</h3>
+          <p data-i18n="collab_2_desc">20 July 2026 · UPES — UPES-ECS demonstrated live on its HPE- and Juniper-powered networking backbone, end to end.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURES -->
   <section id="features">
     <div class="wrap">
@@ -425,6 +484,31 @@
           <text class="sm" x="455" y="52" text-anchor="middle" fill="#01A982" data-i18n="arch_answered">answered</text>
           <text class="sm" x="452" y="182" text-anchor="middle" data-i18n="arch_noanswer">no answer</text>
         </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo">
+    <div class="wrap">
+      <div class="sec-head" style="text-align:center;margin-inline:auto">
+        <span class="eyebrow" style="justify-content:center" data-i18n="demo_eyebrow">See it in action</span>
+        <h2 data-i18n="demo_title">Watch UPES-ECS in action</h2>
+        <p data-i18n="demo_sub" style="margin-inline:auto">A short walkthrough — from a caller dialing 111 to the response team answering on the live operations console.</p>
+      </div>
+      <div class="demo-wrap">
+        <div class="demo-frame" id="demoFrame" data-video="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/preview">
+          <button class="demo-play" id="demoPlay" type="button">
+            <span class="disc"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7-11-7z"/></svg></span>
+            <span class="cap" data-i18n="demo_play">Play demo video</span>
+          </button>
+        </div>
+        <p class="demo-credit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.5 1.7 5 5 5c2 0 3.3 1.2 4 2.4C9.7 6.2 11 5 13 5c3.3 0 4.6 3.5 3 6.8C19.5 16.4 12 21 12 21z"/></svg>
+          <span data-i18n="demo_credit">Video shot &amp; edited by</span>
+          <a href="https://www.instagram.com/harshdeepsinghin/" target="_blank" rel="noopener noreferrer">@harshdeepsinghin</a>
+          <span data-i18n="demo_thanks">— with huge thanks.</span>
+        </p>
       </div>
     </div>
   </section>
@@ -606,9 +690,21 @@ function pickInitialLang(){
   const nav=(navigator.language||"en").slice(0,2).toLowerCase();
   return I18N[nav]?nav:"en";
 }
+function initDemo(){
+  const frame=$("#demoFrame"),btn=$("#demoPlay");
+  if(!frame||!btn)return;
+  btn.addEventListener("click",()=>{
+    const src=frame.getAttribute("data-video");if(!src)return;
+    const f=document.createElement("iframe");
+    f.src=src;f.title="UPES-ECS demo video";
+    f.allow="autoplay; encrypted-media; fullscreen; picture-in-picture";
+    f.setAttribute("allowfullscreen","");f.loading="eager";
+    frame.innerHTML="";frame.appendChild(f);f.focus();
+  });
+}
 function initReveal(){
   if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  const els=document.querySelectorAll(".sec-head,.cards,.infra-cards,.topo,.arch,.metrics,.langgrid,.scale-row,.cta-band,.stats .grid");
+  const els=document.querySelectorAll(".sec-head,.cards,.infra-cards,.topo,.arch,.demo-wrap,.metrics,.langgrid,.scale-row,.cta-band,.stats .grid");
   els.forEach(e=>e.classList.add("reveal"));
   const io=new IntersectionObserver(ents=>{ents.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}})},{threshold:.12});
   els.forEach(e=>io.observe(e));
@@ -616,7 +712,7 @@ function initReveal(){
 document.addEventListener("DOMContentLoaded",()=>{
   buildCards();initLangSelect();initTheme();
   applyI18n(pickInitialLang());
-  initReveal();
+  initDemo();initReveal();
 });
 </script>
 </body>
