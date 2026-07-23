@@ -17,7 +17,11 @@
 #
 # Usage:
 #   sudo ./install-linux.sh --iface eth0 [--lan-ip 192.168.1.20] \
-#        [--language en|hi|te|ml|ur|ne] [--no-start]
+#        [--language en|hi|te|ml|ur|ne] [--lang <ui-code>] [--no-start]
+#
+#   --language  voice-prompt + Console pack (audio the callers hear)
+#   --lang      language of THIS installer's own on-screen messages; auto-detected
+#               from $LC_ALL/$LC_MESSAGES/$LANG, falls back to English
 #
 set -euo pipefail
 
@@ -27,10 +31,11 @@ set -euo pipefail
 IFACE=""
 LAN_IP=""
 LANGUAGE="en"
+MSGLANG=""
 DO_START=1
 
 usage() {
-  sed -n '2,30p' "$0"
+  sed -n '2,33p' "$0"
   exit "${1:-0}"
 }
 
@@ -39,39 +44,186 @@ while [ $# -gt 0 ]; do
     --iface)    IFACE="${2:-}"; shift 2 ;;
     --lan-ip)   LAN_IP="${2:-}"; shift 2 ;;
     --language) LANGUAGE="${2:-}"; shift 2 ;;
+    --lang)     MSGLANG="${2:-}"; shift 2 ;;
     --no-start) DO_START=0; shift ;;
     -h|--help)  usage 0 ;;
     *) echo "Unknown argument: $1" >&2; usage 1 ;;
   esac
 done
 
-die() { echo "ERROR: $*" >&2; exit 1; }
-log() { echo "== $* =="; }
-
-[ "$(id -u)" -eq 0 ] || die "run as root (sudo)."
-
-# This script lives at <root>/deploy/linux/install-linux.sh, both in the repo
-# checkout and inside the extracted self-extracting payload (same layout).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ASTSRC="$REPO_ROOT/deploy/asterisk"
-[ -d "$ASTSRC" ]        || die "cannot find $ASTSRC -- run from inside the repo/payload"
-[ -d "$REPO_ROOT/api" ] || die "cannot find $REPO_ROOT/api -- layout unexpected"
+
+#--------------------------------------------------------------------------------
+# 0a. Localization -- route ALL operator-facing text through msg().
+#     English is embedded here as the guaranteed fallback; a per-language overlay
+#     in i18n/<code>.sh (if present) overrides individual keys. Missing keys stay
+#     English. Detect the operator locale unless --lang was passed.
+#--------------------------------------------------------------------------------
+declare -A MSG
+
+load_catalog_en() {
+  MSG[banner_title]=" UPES-ECS Linux (single-node, native Asterisk) install"
+  MSG[banner_params]="   iface=%s  lan-ip=%s  language=%s"
+  MSG[banner_root]="   root=%s"
+  MSG[preflight]="preflight checks"
+  MSG[err_need_root]="run as root (sudo)."
+  MSG[err_no_astsrc]="cannot find %s -- run from inside the repo/payload"
+  MSG[err_no_api]="cannot find %s -- layout unexpected"
+  MSG[err_iface_required]="--iface <nic> is required (or pass --lan-ip <ip>)"
+  MSG[err_iface_noip]="could not read an IPv4 address from --iface %s; pass --lan-ip <ip>"
+  MSG[err_disk]="insufficient disk space: %s MB free under %s, need at least %s MB. Free space and re-run."
+  MSG[err_missing_cmd]="required command '%s' not found. Install it (package: %s) and re-run."
+  MSG[err_no_python3]="python3 not found and could not be installed. Install python3 and re-run."
+  MSG[err_asterisk]="asterisk is not installed and could not be installed automatically"
+  MSG[err_venv]="python3 -m venv failed (install python3-venv)"
+  MSG[err_aborted]="installation aborted -- no changes past the failed step were applied."
+  MSG[warn_msglang_missing]="  (no installer message catalog for '%s' -- using English)"
+  MSG[init_systemd]="init system: systemd (units will be installed + started)"
+  MSG[init_nosystemd]="init system: NO systemd (will install run-foreground.sh launcher instead)"
+  MSG[sec_packages]="packages"
+  MSG[pkg_installing]="  installing: %s"
+  MSG[pkg_apt_update_fail]="  (apt update failed/offline -- continuing)"
+  MSG[pkg_apt_install_fail]="  (some apt installs failed/offline -- verify below)"
+  MSG[pkg_all_present]="  all required packages already present -- skipping apt"
+  MSG[sec_dirs]="dirs + helper scripts"
+  MSG[helper_none]="  (no scripts/*.sh found -- skipping helper copy)"
+  MSG[sec_astconf]="asterisk config -> /etc/asterisk (backing up existing)"
+  MSG[stub_warn]="  !! %s missing from payload -- writing a CLEAN STUB (add users post-install)"
+  MSG[optional_skip]="  (optional %s not present, skipped)"
+  MSG[include_skip]="  (dialplan include %s not present, skipped)"
+  MSG[pin_generated]="  generated paging PIN -> /var/lib/upes-ecs/generated-secrets.txt"
+  MSG[sec_extaddr]="external_media_address = LAN IP (%s)"
+  MSG[sec_prompts]="voice prompts (en base + language '%s')"
+  MSG[pack_installed]="  installed language pack: %s"
+  MSG[pack_missing]="  !! no sounds/lang/%s pack found -- falling back to English audio"
+  MSG[prompts_seed]="  (no en/upes-ecs prompts found -- seeding placeholders)"
+  MSG[sec_groups]="callout / roll-call groups"
+  MSG[groups_present]="  (groups already present -- leaving in place)"
+  MSG[sec_api]="status API venv (FastAPI :8090)"
+  MSG[pip_upgrade_skip]="  (pip self-upgrade skipped/offline)"
+  MSG[pip_install_skip]="  (fastapi/uvicorn install skipped/offline -- may already be in the venv)"
+  MSG[sec_console]="Console web server (:8080)"
+  MSG[sec_region]="region.json -> language '%s'"
+  MSG[region_skip]="  (region.json update skipped)"
+  MSG[sec_systemd]="systemd units"
+  MSG[sd_ast_fail]="  (systemd asterisk start failed -- trying direct)"
+  MSG[sec_foreground]="non-systemd: run-foreground.sh is the launcher"
+  MSG[fg_start_hint]="  start everything with:  sudo /opt/upes-ecs/run-foreground.sh"
+  MSG[ast_not_responding]="  (asterisk not responding yet)"
+  MSG[summary_installed]="  UPES-ECS is installed on this node."
+  MSG[summary_dial]="    Dial 111 ............ campus emergency hotline (test with 199 first)"
+  MSG[summary_console]="    Console ............. http://%s:8080"
+  MSG[summary_api]="    API (loopback) ..... http://127.0.0.1:8090/health"
+  MSG[summary_register]="    Phones register to .. %s:5060  (SIP/UDP)"
+  MSG[summary_language]="    Language ............ %s"
+  MSG[summary_adduser1]="  Add users post-install (NO accounts ship in the installer):"
+  MSG[summary_adduser2]="    edit /etc/asterisk/pjsip_accounts.conf, then: asterisk -rx 'pjsip reload'"
+  MSG[summary_adduser3]="    (see README-LINUX.md 'Add a user')"
+}
+
+# Detect the operator's UI language: LC_ALL > LC_MESSAGES > LANG, then strip the
+# encoding (.UTF-8), modifier (@euro) and territory (_IN) -> a bare code (hi).
+detect_msglang() {
+  local raw="${LC_ALL:-${LC_MESSAGES:-${LANG:-}}}"
+  raw="${raw%%.*}"; raw="${raw%%@*}"; raw="${raw%%_*}"
+  printf '%s' "$raw"
+}
+
+load_catalog_en
+[ -n "$MSGLANG" ] || MSGLANG="$(detect_msglang)"
+[ -n "$MSGLANG" ] || MSGLANG="en"
+if [ "$MSGLANG" != "en" ]; then
+  if [ -f "$SCRIPT_DIR/i18n/$MSGLANG.sh" ]; then
+    # shellcheck source=/dev/null
+    . "$SCRIPT_DIR/i18n/$MSGLANG.sh" || true
+  else
+    # Keep the English catalog; note the fallback once we know we can print.
+    MSGLANG_FELLBACK="$MSGLANG"
+    MSGLANG="en"
+  fi
+fi
+
+# msg KEY [printf-args...] -- emit a localized line (English fallback per key).
+msg() {
+  local k="${1:-}"; shift || true
+  local fmt="${MSG[$k]:-$k}"
+  # shellcheck disable=SC2059
+  printf "$fmt\n" "$@"
+}
+
+die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
+log() { printf '== %s ==\n' "$1"; }
+
+#--------------------------------------------------------------------------------
+# 0b. Robustness: fail loud, clean temp, name the failed line.
+#--------------------------------------------------------------------------------
+TMPFILES=()
+cleanup_tmp() {
+  local f
+  for f in "${TMPFILES[@]:-}"; do
+    [ -n "${f:-}" ] && rm -rf "$f" 2>/dev/null || true
+  done
+}
+on_err() {
+  local ec=$? line="${1:-?}"
+  cleanup_tmp
+  printf 'ERROR: %s failed at line %s (exit %s)\n' "${BASH_SOURCE[0]##*/}" "$line" "$ec" >&2
+  msg err_aborted >&2
+  exit "$ec"
+}
+trap 'on_err "$LINENO"' ERR
+trap cleanup_tmp EXIT
+
+#--------------------------------------------------------------------------------
+# 0c. Preflight -- fail early with actionable messages.
+#--------------------------------------------------------------------------------
+log "$(msg preflight)"
+[ "$(id -u)" -eq 0 ] || die "$(msg err_need_root)"
+
+# One-time note if the operator's locale had no catalog.
+[ -n "${MSGLANG_FELLBACK:-}" ] && msg warn_msglang_missing "$MSGLANG_FELLBACK"
+
+# This script lives at <root>/deploy/linux/install-linux.sh, both in the repo
+# checkout and inside the extracted self-extracting payload (same layout).
+[ -d "$ASTSRC" ]        || die "$(msg err_no_astsrc "$ASTSRC")"
+[ -d "$REPO_ROOT/api" ] || die "$(msg err_no_api "$REPO_ROOT/api")"
+
+# Core commands we rely on and cannot always auto-install. Map cmd -> apt package.
+check_cmd() {  # <cmd> <package>
+  command -v "$1" >/dev/null 2>&1 || die "$(msg err_missing_cmd "$1" "$2")"
+}
+check_cmd awk  coreutils
+check_cmd sed  sed
+check_cmd grep grep
+check_cmd df   coreutils
+
+# Disk space: venv + pip wheels + sounds need headroom. Check the fs backing /var.
+MIN_DISK_MB=256
+SPACE_TARGET="/var/lib"
+[ -d "$SPACE_TARGET" ] || SPACE_TARGET="/"
+avail_kb="$(df -Pk "$SPACE_TARGET" 2>/dev/null | awk 'NR==2{print $4}')"
+avail_kb="${avail_kb:-0}"
+case "$avail_kb" in (*[!0-9]*) avail_kb=0 ;; esac
+avail_mb=$(( avail_kb / 1024 ))
+[ "$avail_mb" -ge "$MIN_DISK_MB" ] || die "$(msg err_disk "$avail_mb" "$SPACE_TARGET" "$MIN_DISK_MB")"
 
 # Resolve the LAN IP from the iface if not supplied.
 if [ -z "$LAN_IP" ]; then
-  [ -n "$IFACE" ] || die "--iface <nic> is required (or pass --lan-ip <ip>)"
+  [ -n "$IFACE" ] || die "$(msg err_iface_required)"
+  command -v ip >/dev/null 2>&1 || die "$(msg err_missing_cmd ip iproute2)"
   LAN_IP="$(ip -4 -o addr show dev "$IFACE" 2>/dev/null \
             | awk '{print $4}' | cut -d/ -f1 | head -n1 || true)"
-  [ -n "$LAN_IP" ] || die "could not read an IPv4 address from --iface $IFACE; pass --lan-ip <ip>"
+  [ -n "$LAN_IP" ] || die "$(msg err_iface_noip "$IFACE")"
 fi
 # If iface not given but lan-ip was, keep a label for the summary.
 [ -n "$IFACE" ] || IFACE="(lan-ip override)"
 
 echo "==================================================================="
-echo " UPES-ECS Linux (single-node, native Asterisk) install"
-echo "   iface=$IFACE  lan-ip=$LAN_IP  language=$LANGUAGE"
-echo "   root=$REPO_ROOT"
+msg banner_title
+msg banner_params "$IFACE" "$LAN_IP" "$LANGUAGE"
+msg banner_root "$REPO_ROOT"
 echo "==================================================================="
 
 #--------------------------------------------------------------------------------
@@ -80,15 +232,15 @@ echo "==================================================================="
 HAVE_SYSTEMD=0
 if command -v systemctl >/dev/null 2>&1 && [ -d /run/systemd/system ]; then
   HAVE_SYSTEMD=1
-  log "init system: systemd (units will be installed + started)"
+  log "$(msg init_systemd)"
 else
-  log "init system: NO systemd (will install run-foreground.sh launcher instead)"
+  log "$(msg init_nosystemd)"
 fi
 
 #--------------------------------------------------------------------------------
 # 2. Packages (native x86_64 -- no emulation). Install only what's missing.
 #--------------------------------------------------------------------------------
-log "packages"
+log "$(msg sec_packages)"
 NEED_PKGS=()
 have() { command -v "$1" >/dev/null 2>&1; }
 have asterisk    || NEED_PKGS+=(asterisk)
@@ -102,20 +254,20 @@ python3 -c 'import ensurepip'>/dev/null 2>&1 || NEED_PKGS+=(python3-venv)
 have pip3 || python3 -m pip --version >/dev/null 2>&1 || NEED_PKGS+=(python3-pip)
 
 if [ "${#NEED_PKGS[@]}" -gt 0 ]; then
-  echo "  installing: ${NEED_PKGS[*]}"
+  msg pkg_installing "${NEED_PKGS[*]}"
   export DEBIAN_FRONTEND=noninteractive
-  apt-get update -y >/dev/null 2>&1 || echo "  (apt update failed/offline -- continuing)"
-  apt-get install -y "${NEED_PKGS[@]}" >/dev/null 2>&1 \
-    || echo "  (some apt installs failed/offline -- verify below)"
+  apt-get update -y >/dev/null 2>&1 || msg pkg_apt_update_fail
+  apt-get install -y "${NEED_PKGS[@]}" >/dev/null 2>&1 || msg pkg_apt_install_fail
 else
-  echo "  all required packages already present -- skipping apt"
+  msg pkg_all_present
 fi
-have asterisk || die "asterisk is not installed and could not be installed automatically"
+have python3  || die "$(msg err_no_python3)"
+have asterisk || die "$(msg err_asterisk)"
 
 #--------------------------------------------------------------------------------
 # 3. Dirs + helper scripts
 #--------------------------------------------------------------------------------
-log "dirs + helper scripts"
+log "$(msg sec_dirs)"
 mkdir -p /opt/upes-ecs \
          /opt/upes-ecs/api /opt/upes-ecs/groups /opt/upes-ecs/family /opt/upes-ecs/console \
          /var/lib/upes-ecs/incidents /var/lib/upes-ecs/alerts \
@@ -131,13 +283,13 @@ if compgen -G "$REPO_ROOT/scripts/*.sh" >/dev/null; then
   sed -i 's/\r$//' /opt/upes-ecs/*.sh
   chmod +x /opt/upes-ecs/*.sh
 else
-  echo "  (no scripts/*.sh found -- skipping helper copy)"
+  msg helper_none
 fi
 
 #--------------------------------------------------------------------------------
 # 4. Asterisk config from the checkout/payload (back up any existing /etc/asterisk)
 #--------------------------------------------------------------------------------
-log "asterisk config -> /etc/asterisk (backing up existing)"
+log "$(msg sec_astconf)"
 mkdir -p /etc/asterisk
 STAMP="$(date +%Y%m%d-%H%M%S)"
 # Back up only the files we are about to overwrite (keeps the vendor defaults).
@@ -160,13 +312,13 @@ for f in extensions.conf pjsip.conf pjsip_accounts.conf queues.conf voicemail.co
          rtp.conf confbridge.conf http.conf; do
   if install_conf "$ASTSRC/$f" "$f"; then :; else
     if [ "$f" = "pjsip_accounts.conf" ]; then
-      echo "  !! $f missing from payload -- writing a CLEAN STUB (add users post-install)"
+      msg stub_warn "$f"
       cat > /etc/asterisk/pjsip_accounts.conf <<'STUB'
 ; UPES-ECS - pjsip_accounts.conf (CLEAN STUB installed by install-linux.sh)
 ; No accounts ship in the installer. Add users AFTER install; see README-LINUX.md.
 STUB
     else
-      echo "  (optional $f not present, skipped)"
+      msg optional_skip "$f"
     fi
   fi
 done
@@ -174,7 +326,7 @@ done
 # Extra dialplan includes live under config/ in this repo.
 for f in extensions_custom.conf extensions_features.conf extensions_features_wiring.conf extensions_aihelpline.conf; do
   install_conf "$REPO_ROOT/config/$f" "$f" \
-    || echo "  (dialplan include $f not present, skipped)"
+    || msg include_skip "$f"
 done
 
 # live_dangerously: needed by the emergency dialplan's System()/privileged apps.
@@ -210,13 +362,13 @@ if [ -f /etc/asterisk/extensions_custom.conf ] && \
     /etc/asterisk/extensions_custom.conf
   echo "PAGING_PIN_700=${PIN}" > /var/lib/upes-ecs/generated-secrets.txt
   chmod 600 /var/lib/upes-ecs/generated-secrets.txt
-  echo "  generated paging PIN -> /var/lib/upes-ecs/generated-secrets.txt"
+  msg pin_generated
 fi
 
 #--------------------------------------------------------------------------------
 # 5. Native single-node: advertise the node's LAN IP for media/signaling
 #--------------------------------------------------------------------------------
-log "external_media_address = LAN IP ($LAN_IP)"
+log "$(msg sec_extaddr "$LAN_IP")"
 # The repo pjsip.conf ships these two lines commented under [transport-udp].
 if grep -qE '^;?external_media_address=' /etc/asterisk/pjsip.conf; then
   sed -i -E "s|^;?external_media_address=.*|external_media_address=${LAN_IP}|" /etc/asterisk/pjsip.conf
@@ -232,7 +384,7 @@ fi
 #--------------------------------------------------------------------------------
 # 6. Voice prompts: en base + chosen language pack
 #--------------------------------------------------------------------------------
-log "voice prompts (en base + language '$LANGUAGE')"
+log "$(msg sec_prompts "$LANGUAGE")"
 SND_DST="/usr/share/asterisk/sounds"
 mkdir -p "$SND_DST/en"
 if [ -d "$ASTSRC/sounds/en" ]; then
@@ -243,9 +395,9 @@ if [ "$LANGUAGE" != "en" ]; then
   if [ -d "$ASTSRC/sounds/lang/$LANGUAGE" ]; then
     mkdir -p "$SND_DST/$LANGUAGE"
     cp -a "$ASTSRC/sounds/lang/$LANGUAGE/." "$SND_DST/$LANGUAGE/"
-    echo "  installed language pack: $LANGUAGE"
+    msg pack_installed "$LANGUAGE"
   else
-    echo "  !! no sounds/lang/$LANGUAGE pack found -- falling back to English audio"
+    msg pack_missing "$LANGUAGE"
     LANGUAGE="en"
   fi
 fi
@@ -253,7 +405,7 @@ fi
 # Fallback: never leave a silent PBX. Seed placeholders if en/upes-ecs is empty.
 PD="$SND_DST/en/upes-ecs"; mkdir -p "$PD"
 if ! compgen -G "$PD/*.wav" >/dev/null && ! compgen -G "$PD/*.gsm" >/dev/null; then
-  echo "  (no en/upes-ecs prompts found -- seeding placeholders)"
+  msg prompts_seed
   SRCG=""
   for g in "$SND_DST"/en/*.gsm; do [ -e "$g" ] && { SRCG="$g"; break; }; done
   for p in emergency-preanswer emergency-voicemail-prompt drill-prompt queue-paused \
@@ -266,7 +418,7 @@ chown -R asterisk:asterisk /var/lib/upes-ecs /var/spool/asterisk/monitor/upes-ec
 #--------------------------------------------------------------------------------
 # 7. callout / roll-call groups (idempotent)
 #--------------------------------------------------------------------------------
-log "callout / roll-call groups"
+log "$(msg sec_groups)"
 GR=/opt/upes-ecs/groups
 if [ ! -f "$GR/all.csv" ]; then
   printf '500120597\n500000002\n500000003\n500000004\n' > "$GR/roster.csv"
@@ -282,22 +434,22 @@ if [ ! -f "$GR/all.csv" ]; then
   printf '4200\n4110\n4111\n' > "$GR/704.csv"
   printf '4500\n' > "$GR/705.csv"
 else
-  echo "  (groups already present -- leaving in place)"
+  msg groups_present
 fi
 chown -R asterisk:asterisk "$GR" 2>/dev/null || true
 
 #--------------------------------------------------------------------------------
 # 8. Status/control API in a Python venv (FastAPI on 127.0.0.1:8090)
 #--------------------------------------------------------------------------------
-log "status API venv (FastAPI :8090)"
+log "$(msg sec_api)"
 VENV=/opt/upes-ecs/venv
 if [ ! -x "$VENV/bin/python" ]; then
-  python3 -m venv "$VENV" || die "python3 -m venv failed (install python3-venv)"
+  python3 -m venv "$VENV" || die "$(msg err_venv)"
 fi
 "$VENV/bin/python" -m pip install --quiet --upgrade pip >/dev/null 2>&1 || \
-  echo "  (pip self-upgrade skipped/offline)"
+  msg pip_upgrade_skip
 "$VENV/bin/python" -m pip install --quiet fastapi "uvicorn[standard]" >/dev/null 2>&1 || \
-  echo "  (fastapi/uvicorn install skipped/offline -- may already be in the venv)"
+  msg pip_install_skip
 cp "$REPO_ROOT/api/upes_api.py" /opt/upes-ecs/api/upes_api.py
 sed -i 's/\r$//' /opt/upes-ecs/api/upes_api.py
 # directory.json feeds the API's family/safety directory.
@@ -307,7 +459,7 @@ sed -i 's/\r$//' /opt/upes-ecs/api/upes_api.py
 #--------------------------------------------------------------------------------
 # 9. Console (static server + /api proxy on :8080)
 #--------------------------------------------------------------------------------
-log "Console web server (:8080)"
+log "$(msg sec_console)"
 CONSOLE_DST=/opt/upes-ecs/console
 mkdir -p "$CONSOLE_DST"
 if [ -d "$REPO_ROOT/Console" ]; then
@@ -323,8 +475,8 @@ sed -i 's/\r$//' /opt/upes-ecs/serve-console.py
 chmod +x /opt/upes-ecs/serve-console.py
 
 # region.json: reflect the active language (code + native name from languages.json).
-log "region.json -> language '$LANGUAGE'"
-"$VENV/bin/python" - "$LANGUAGE" "$REPO_ROOT/i18n/languages.json" "$CONSOLE_DST/region.json" <<'PYEOF' || echo "  (region.json update skipped)"
+log "$(msg sec_region "$LANGUAGE")"
+"$VENV/bin/python" - "$LANGUAGE" "$REPO_ROOT/i18n/languages.json" "$CONSOLE_DST/region.json" <<'PYEOF' || msg region_skip
 import json, sys, datetime
 code, langs_path, out_path = sys.argv[1], sys.argv[2], sys.argv[3]
 name, native = code, code
@@ -353,7 +505,7 @@ chown -R asterisk:asterisk /opt/upes-ecs/console 2>/dev/null || true
 # 10. Service wiring: systemd units OR the foreground launcher
 #--------------------------------------------------------------------------------
 if [ "$HAVE_SYSTEMD" -eq 1 ]; then
-  log "systemd units"
+  log "$(msg sec_systemd)"
 
   # API unit -> venv python
   cat > /etc/systemd/system/upes-api.service <<EOF
@@ -404,16 +556,16 @@ EOF
   systemctl enable serve-console  >/dev/null 2>&1 || true
 
   if [ "$DO_START" -eq 1 ]; then
-    systemctl restart asterisk      >/dev/null 2>&1 || { echo "  (systemd asterisk start failed -- trying direct)"; asterisk -g 2>/dev/null || true; }
+    systemctl restart asterisk      >/dev/null 2>&1 || { msg sd_ast_fail; asterisk -g 2>/dev/null || true; }
     systemctl restart upes-api      >/dev/null 2>&1 || true
     systemctl restart serve-console >/dev/null 2>&1 || true
   fi
 else
-  log "non-systemd: run-foreground.sh is the launcher"
+  log "$(msg sec_foreground)"
   cp "$SCRIPT_DIR/run-foreground.sh" /opt/upes-ecs/run-foreground.sh
   sed -i 's/\r$//' /opt/upes-ecs/run-foreground.sh
   chmod +x /opt/upes-ecs/run-foreground.sh
-  echo "  start everything with:  sudo /opt/upes-ecs/run-foreground.sh"
+  msg fg_start_hint
 fi
 
 #--------------------------------------------------------------------------------
@@ -422,17 +574,17 @@ fi
 sleep 2
 echo "-------------------------------------------------------------------"
 if [ "$DO_START" -eq 1 ] && [ "$HAVE_SYSTEMD" -eq 1 ]; then
-  asterisk -rx "core show version" 2>/dev/null | head -1 || echo "  (asterisk not responding yet)"
+  asterisk -rx "core show version" 2>/dev/null | head -1 || msg ast_not_responding
 fi
 echo ""
-echo "  UPES-ECS is installed on this node."
-echo "    Dial 111 ............ campus emergency hotline (test with 199 first)"
-echo "    Console ............. http://$LAN_IP:8080"
-echo "    API (loopback) ..... http://127.0.0.1:8090/health"
-echo "    Phones register to .. $LAN_IP:5060  (SIP/UDP)"
-echo "    Language ............ $LANGUAGE"
+msg summary_installed
+msg summary_dial
+msg summary_console "$LAN_IP"
+msg summary_api
+msg summary_register "$LAN_IP"
+msg summary_language "$LANGUAGE"
 echo ""
-echo "  Add users post-install (NO accounts ship in the installer):"
-echo "    edit /etc/asterisk/pjsip_accounts.conf, then: asterisk -rx 'pjsip reload'"
-echo "    (see README-LINUX.md 'Add a user')"
+msg summary_adduser1
+msg summary_adduser2
+msg summary_adduser3
 echo "UPES-ECS-LINUX-SETUP-DONE"

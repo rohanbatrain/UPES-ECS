@@ -27,7 +27,12 @@ Options:
 | `--iface <nic>` | NIC whose IPv4 becomes the SIP/media address | *(required unless `--lan-ip`)* |
 | `--lan-ip <ip>` | Set the LAN IP explicitly (skips iface lookup) | derived from `--iface` |
 | `--language <code>` | Voice + Console language: `en hi te ml ur ne` | `en` |
+| `--lang <code>` | Language of the **installer's own** on-screen messages | auto-detected from `$LC_ALL`/`$LC_MESSAGES`/`$LANG`, else `en` |
 | `--no-start` | Install but don't start services (systemd only) | *(start)* |
+
+> `--language` is what **callers hear** (voice prompts) and what the Console shows.
+> `--lang` is only the language of the text **this installer prints** while it runs;
+> the two are independent.
 
 Example with Hindi prompts on `ens33`:
 
@@ -140,7 +145,38 @@ Available packs in this build: **en** (base), **hi, te, ml, ur, ne**.
 
 ---
 
-## 6. Firewall / LAN-only posture
+## 6. Installer messages (operator UI) + robustness
+
+The installer localises **its own output** (banners, section headers, preflight
+errors, the final summary) so a non-English operator can read what it's doing. It
+picks the language from `$LC_ALL` → `$LC_MESSAGES` → `$LANG` (stripping the
+encoding/territory, e.g. `hi_IN.UTF-8` → `hi`), or you can force it with
+`--lang <code>`. English is always the guaranteed fallback: any string a catalog
+doesn't translate is printed in English, and an unknown/absent locale simply runs
+in English (with a one-line note).
+
+Translated installer catalogs shipped in this build (AI first-pass drafts —
+native-review before go-live, same posture as the voice packs):
+**en** (built in) + **hi, te, ml, ur, ne, es, fr, de, pt, ar**. Catalogs live in
+`deploy/linux/i18n/<code>.sh` — one `MSG[key]="..."` per line — so adding a
+language is just dropping in another file; no change to `install-linux.sh`.
+
+```bash
+sudo ./upes-ecs-linux-installer.run --iface eth0 --language hi --lang hi   # audio + messages in Hindi
+sudo ./upes-ecs-linux-installer.run --iface eth0 --lang fr                 # English audio, French installer output
+```
+
+**Robustness.** The script runs under `set -euo pipefail` with an `ERR` trap that
+names the failing line and cleans up temp state, and an `EXIT` trap that always
+tidies up. Preflight fails **early with an actionable message** when: not run as
+root, `deploy/asterisk`/`api` not found (wrong cwd), a core tool
+(`awk`/`sed`/`grep`/`df`/`ip`) is missing, less than 256 MB is free under
+`/var/lib`, or `--iface` yields no IPv4. Re-runs stay idempotent (config backed
+up, groups/venv/PIN left in place).
+
+---
+
+## 7. Firewall / LAN-only posture
 
 Nothing here is meant to face the internet. On a campus LAN leave it open; if the
 node is multi-homed or you want a belt-and-braces filter, allow only the LAN:
@@ -158,7 +194,7 @@ never reachable from the LAN directly.
 
 ---
 
-## 7. Building the installer
+## 8. Building the installer
 
 From the Windows host (or inside WSL/Linux):
 
@@ -176,7 +212,7 @@ staged.
 
 ---
 
-## 8. Airtight WSL test — results
+## 9. Airtight WSL test — results
 
 Built and installed fresh in WSL (Ubuntu-22.04, x86_64, systemd on, Asterisk
 18.10). See the delivery report for the full transcript. Summary:
