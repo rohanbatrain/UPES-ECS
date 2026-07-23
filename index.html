@@ -331,6 +331,7 @@
   .sp-caption .sp-w{opacity:.34;transition:color .2s,opacity .2s}
   .sp-caption .sp-w.on{opacity:1;color:var(--brand-ink);font-weight:600}
   .sp-caption.plain{color:var(--text)}
+  .sp-cap-en{margin-top:10px;padding-top:9px;border-top:1px dashed var(--border);font-size:var(--step--1);line-height:1.55;color:var(--text-muted)}
   .sp-options{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .sp-options.disabled{opacity:.45;pointer-events:none}
   .sp-opt{display:flex;align-items:center;gap:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:11px;padding:9px 12px;cursor:pointer;font-family:inherit;font-size:.85rem;text-align:start;transition:border-color .14s,transform .1s}
@@ -731,6 +732,7 @@
         <div class="sp-transcript">
           <div class="sp-tr-head" id="spTrHead">Live transcript · English translation</div>
           <div class="sp-caption" id="spCaption" aria-live="polite"></div>
+          <div class="sp-cap-en" id="spCapEn" hidden></div>
           <div class="sp-options" id="spOptions" role="group" aria-label="Coach options" hidden></div>
           <div class="sp-rec" id="spRec" hidden><span class="rec-dot"></span><span>Recording…</span><button class="sp-stop" id="spStop" type="button">Stop</button></div>
           <div class="sp-status"><span class="rdot"></span><span id="spStatusTxt">UPES-ECS · registered · EN</span></div>
@@ -961,10 +963,17 @@ function initSoftphone(){
   const device=$("#spDevice"),spBanner=$("#spBanner"),spToast=$("#spToast"),spNum=$("#spNum"),spHint=$("#spHint"),
     dialView=$("#spDialView"),callView=$("#spCallView"),endView=$("#spEndView"),spEnd=$("#spEnd"),spTimer=$("#spTimer"),
     keys=$("#spKeys"),quick=$("#spQuick"),callBtn=$("#spCall"),hangBtn=$("#spHang"),
-    trHead=$("#spTrHead"),cap=$("#spCaption"),opts=$("#spOptions"),rec=$("#spRec"),stopBtn=$("#spStop"),statusTxt=$("#spStatusTxt");
+    trHead=$("#spTrHead"),cap=$("#spCaption"),opts=$("#spOptions"),rec=$("#spRec"),stopBtn=$("#spStop"),statusTxt=$("#spStatusTxt"),capEn=$("#spCapEn");
 
   /* state */
   let state="idle",num="",audio=null,gen=0,callLang="en",curLang="en",callStart=0,timerIv=null,rb=null,actx=null,silent=0;
+  /* per-language captions: native text keyed by prompt id; English CAP is the fallback */
+  let LCAP=CAP;const capCache={en:CAP};
+  function loadCaps(l){
+    if(capCache[l]){if(callLang===l||curLang===l)LCAP=capCache[l];return;}
+    try{fetch("assets/voice/"+l+"/captions.json").then(function(r){return r.ok?r.json():null;}).then(function(j){if(j){capCache[l]=j;if(callLang===l||curLang===l)LCAP=j;}}).catch(function(){});}catch(e){}
+  }
+  function langEnName(code){try{return new Intl.DisplayNames(["en"],{type:"language"}).of(code)||code.toUpperCase();}catch(e){return(code||"en").toUpperCase();}}
 
   /* ---- WebAudio ---- */
   function ac(){try{if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx&&actx.state==="suspended")actx.resume().catch(function(){});}catch(e){}return actx;}
@@ -983,7 +992,7 @@ function initSoftphone(){
   function recUI(on){rec.hidden=!on;}
   function pageLang(){var l=null;try{l=localStorage.getItem("upes_lang");}catch(e){}l=l||document.documentElement.lang||"en";l=(""+l).slice(0,2).toLowerCase();return l||"en";}
   function updateStatus(){statusTxt.textContent="UPES-ECS · registered · "+(curLang||pageLang()).toUpperCase();}
-  function setCallLang(l){callLang=l;curLang=l;updateStatus();}
+  function setCallLang(l){callLang=l;curLang=l;updateStatus();loadCaps(l);}
   function views(mode){/* mode: dial | call | end */
     dialView.hidden=(mode!=="dial");callView.hidden=(mode!=="call");endView.hidden=(mode!=="end");
     callBtn.hidden=(mode==="call");hangBtn.hidden=(mode!=="call");
@@ -1005,12 +1014,18 @@ function initSoftphone(){
 
   /* ---- captions + audio ---- */
   function setCaption(id,label){
-    head(label);cap.classList.remove("plain");cap.innerHTML="";
-    var words=(CAP[id]||"").split(/\s+/).filter(Boolean),spans=[];
+    var native=(callLang!=="en")&&LCAP[id];       /* the caller-language text, if we have it */
+    var text=native||CAP[id]||"";
+    var langLbl=native?langEnName(callLang):"English";
+    head((label||"").replace(/English translation/i,langLbl));
+    cap.classList.remove("plain");cap.innerHTML="";
+    var words=text.split(/\s+/).filter(Boolean),spans=[];
     words.forEach(function(w){var s=document.createElement("span");s.className="sp-w";s.textContent=w;if(reduce)s.classList.add("on");cap.appendChild(s);cap.appendChild(document.createTextNode(" "));spans.push(s);});
-    cap.scrollTop=0;return spans;
+    cap.scrollTop=0;
+    if(native){capEn.hidden=false;capEn.textContent="English: "+(CAP[id]||"");}else{capEn.hidden=true;capEn.textContent="";}
+    return spans;
   }
-  function plainCap(text,label){if(label)head(label);cap.classList.add("plain");cap.textContent=text;cap.scrollTop=0;}
+  function plainCap(text,label){if(label)head(label);cap.classList.add("plain");cap.textContent=text;cap.scrollTop=0;if(capEn){capEn.hidden=true;capEn.textContent="";}}
   function keepVisible(el){var top=el.offsetTop;if(top<cap.scrollTop+8||top>cap.scrollTop+cap.clientHeight-26)cap.scrollTop=Math.max(0,top-cap.clientHeight*0.5);}
   function stopAudio(){if(audio){audio._dead=true;try{audio.pause();}catch(e){}try{audio.removeAttribute("src");audio.load();}catch(e){}audio=null;}device.classList.remove("talking");}
   function playPrompt(id,label,onEnd){
@@ -1028,14 +1043,14 @@ function initSoftphone(){
 
   /* ---- state machine ---- */
   function go(name){
-    gen++;state=name;toast("");
+    gen++;state=name;toast("");recUI(false);
     switch(name){
       case "idle":
-        stopAudio();ringOff();clearTimer();views("dial");recUI(false);showOptions(null);
+        stopAudio();ringOff();clearTimer();views("dial");showOptions(null);
         num="";renderNum();banner("Ready","");hint("Dial 111, 102, or 199");
-        head("Live transcript · English translation");
-        plainCap("Dial 111 to hear the campus emergency line answer, then follow the offline coach. Captions appear here in English, in sync with the voice.");
-        curLang=pageLang();updateStatus();break;
+        head("Live transcript");
+        plainCap("Dial 111 to hear the campus emergency line answer, then follow the offline coach. Captions appear in your selected language, word-synced to the voice — with an English translation below.");
+        curLang=pageLang();updateStatus();loadCaps(pageLang());break;
       case "emergency":
         views("call");banner("Campus Emergency · recording","danger");showOptions(null);
         playPrompt("emergency-preanswer","Caller hears · English translation",function(){go("connecting");});break;
@@ -1127,7 +1142,7 @@ function initSoftphone(){
     handleDigit(d);
   }
   function startCall(n){
-    ac();callLang=pageLang();curLang=callLang;updateStatus();
+    ac();callLang=pageLang();curLang=callLang;updateStatus();loadCaps(callLang);
     callStart=Date.now();startTimer();silent=0;
     if(n==="111")go("emergency");
     else if(n==="102")go("test");
