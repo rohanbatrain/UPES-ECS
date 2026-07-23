@@ -13,7 +13,12 @@
   ASCII-only source (Windows PowerShell 5.1 requirement).
 #>
 [CmdletBinding()]
-param()
+param(
+  # Operator UI language override (two-letter code, e.g. en, hi, fr).
+  # If omitted, the UI follows the Windows display language (CurrentUICulture),
+  # falling back to English for any unknown culture or missing string.
+  [string]$Language
+)
 $ErrorActionPreference = 'Stop'
 # Resolve our own folder whether we run as a .ps1 (PSScriptRoot) or as a compiled
 # .exe (ps2exe leaves PSScriptRoot/MyInvocation empty -> use the running module path).
@@ -23,6 +28,7 @@ $here =
   else { Split-Path -Parent ([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName) }
 $install = Join-Path $here 'Install-UpesEcs.ps1'
 $langs   = Join-Path $here 'i18n\languages.json'
+$guiDir  = Join-Path $here 'i18n\gui'
 
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
@@ -48,23 +54,113 @@ function Get-Languages {
 }
 $lang = Get-Languages
 
+# --- operator UI language (strings + RTL) -----------------------------------
+# The installer VOICE language is chosen in the combo box below; this block is
+# the separate OPERATOR UI language (labels/buttons/messages of THIS window).
+# Priority: -Language override -> Windows CurrentUICulture -> English fallback.
+
+# English catalog is embedded inline (ASCII-only, PS 5.1 safe) so the UI always
+# works even if the i18n\gui folder is missing. Non-ASCII translations live in
+# UTF-8 JSON files under i18n\gui\<code>.json and are overlaid on top.
+$T = @{
+  title_window           = 'UPES-ECS Deployment'
+  title_heading          = 'UPES-ECS - campus emergency PBX'
+  subtitle               = 'Pick a language, then click Deploy. That is all.'
+  lbl_region             = 'Region / language:'
+  chk_fetch              = 'Fetch latest before deploying (advanced)'
+  lbl_source             = 'Source (URL, .zip, or folder):'
+  btn_deploy             = 'Deploy'
+  status_ready           = 'Ready.'
+  status_done            = 'Done.'
+  status_deploying       = 'Deploying... (this can take several minutes on first run)'
+  status_failed          = 'Failed (exit {0}).'
+  status_could_not_start = 'Could not start.'
+  sum_deployed           = '  UPES-ECS is deployed.'
+  sum_phones             = '  Phones register to : {0}:5060   (UDP)'
+  sum_emergency          = '  Emergency number   : dial 111'
+  sum_console            = '  Operations Console : http://localhost:8080'
+  msg_ok_body            = "UPES-ECS is up.`n`nPhones register to  {0}:5060`nEmergency number    dial 111`nConsole             http://localhost:8080"
+  msg_ok_title           = 'Deployment complete'
+  msg_fail_body          = "Deployment did not finish (exit code {0}).`n`nRead the log for the last error line, fix it, and click Deploy again."
+  msg_fail_title         = 'Deployment failed'
+  msg_noinstall_body     = "Install-UpesEcs.ps1 was not found next to this tool.`nExpected: {0}`n`nRun Deploy-UPES from inside the UPES-ECS folder."
+  msg_noinstall_title    = 'Cannot deploy'
+  msg_nosource_body      = 'Tick is on but no Source is set. Enter a URL, a .zip, or a folder - or untick to deploy the built-in copy.'
+  msg_nosource_title     = 'Source needed'
+  log_deploying          = "=> deploying language '{0}'"
+  log_from_source        = " from source '{0}'"
+  log_command            = '=> command: powershell {0}'
+  log_error              = 'ERROR: {0}'
+  lan_ip_placeholder     = '<this PC LAN IP>'
+}
+
+function Resolve-UiCulture {
+  param([string]$Override)
+  $code = ''
+  if ($Override) { $code = "$Override".Trim().ToLower() }
+  if (-not $code) {
+    try { $code = ([System.Globalization.CultureInfo]::CurrentUICulture.TwoLetterISOLanguageName).ToLower() } catch { $code = 'en' }
+  }
+  # normalise things like 'en-US' / 'pt_BR' down to the leading language subtag
+  if ($code -match '^([a-z]{2,3})') { $code = $Matches[1] } else { $code = 'en' }
+  if (-not $code) { $code = 'en' }
+  return $code
+}
+
+# Overlay a per-culture JSON file (UTF-8) on top of the English defaults.
+function Merge-GuiStrings {
+  param([hashtable]$Base, [string]$Code)
+  if (-not $Code -or $Code -eq 'en') { return }
+  $path = Join-Path $guiDir ($Code + '.json')
+  if (-not (Test-Path $path)) { return }
+  try {
+    $j = [IO.File]::ReadAllText($path) | ConvertFrom-Json   # UTF-8 (Get-Content would mojibake)
+    foreach ($p in $j.PSObject.Properties) {
+      if ($p.Name -like '_*') { continue }                  # skip _comment etc.
+      $val = "$($p.Value)"
+      if ($val.Trim()) { $Base[$p.Name] = $val }            # ignore blank -> keep English
+    }
+  } catch { }                                               # any parse error -> stay English
+}
+
+# Also let i18n\gui\en.json override the inline English defaults (optional).
+$uiCode = Resolve-UiCulture -Override $Language
+# load English file overrides first (if present), then the selected culture
+$enFile = Join-Path $guiDir 'en.json'
+if (Test-Path $enFile) {
+  try {
+    $je = [IO.File]::ReadAllText($enFile) | ConvertFrom-Json
+    foreach ($p in $je.PSObject.Properties) {
+      if ($p.Name -like '_*') { continue }
+      $val = "$($p.Value)"
+      if ($val.Trim()) { $T[$p.Name] = $val }
+    }
+  } catch { }
+}
+Merge-GuiStrings -Base $T -Code $uiCode
+
+# right-to-left cultures -> mirror the whole form (LTR unaffected)
+$rtlCodes = @('ar','he','fa','ku','ur')
+$uiRtl = ($rtlCodes -contains $uiCode)
+
 # --- form -------------------------------------------------------------------
 $form            = New-Object System.Windows.Forms.Form
-$form.Text       = 'UPES-ECS Deployment'
+$form.Text       = $T['title_window']
 $form.Size       = New-Object System.Drawing.Size(720, 560)
 $form.MinimumSize= New-Object System.Drawing.Size(640, 480)
 $form.StartPosition = 'CenterScreen'
 $form.Font       = New-Object System.Drawing.Font('Segoe UI', 9)
+if ($uiRtl) { $form.RightToLeft = 'Yes'; $form.RightToLeftLayout = $true }
 
 $title           = New-Object System.Windows.Forms.Label
-$title.Text      = 'UPES-ECS - campus emergency PBX'
+$title.Text      = $T['title_heading']
 $title.Font      = New-Object System.Drawing.Font('Segoe UI', 14, [System.Drawing.FontStyle]::Bold)
 $title.Location  = New-Object System.Drawing.Point(16, 12)
 $title.AutoSize  = $true
 $form.Controls.Add($title)
 
 $subtitle        = New-Object System.Windows.Forms.Label
-$subtitle.Text   = 'Pick a language, then click Deploy. That is all.'
+$subtitle.Text   = $T['subtitle']
 $subtitle.Location= New-Object System.Drawing.Point(18, 44)
 $subtitle.AutoSize= $true
 $subtitle.ForeColor = [System.Drawing.Color]::DimGray
@@ -72,7 +168,7 @@ $form.Controls.Add($subtitle)
 
 # region / language
 $lblLang         = New-Object System.Windows.Forms.Label
-$lblLang.Text    = 'Region / language:'
+$lblLang.Text    = $T['lbl_region']
 $lblLang.Location= New-Object System.Drawing.Point(18, 82)
 $lblLang.AutoSize= $true
 $form.Controls.Add($lblLang)
@@ -91,13 +187,13 @@ $form.Controls.Add($cboLang)
 
 # optional: fetch latest
 $chkFetch        = New-Object System.Windows.Forms.CheckBox
-$chkFetch.Text   = 'Fetch latest before deploying (advanced)'
+$chkFetch.Text   = $T['chk_fetch']
 $chkFetch.Location = New-Object System.Drawing.Point(20, 116)
 $chkFetch.AutoSize = $true
 $form.Controls.Add($chkFetch)
 
 $lblSrc          = New-Object System.Windows.Forms.Label
-$lblSrc.Text     = 'Source (URL, .zip, or folder):'
+$lblSrc.Text     = $T['lbl_source']
 $lblSrc.Location  = New-Object System.Drawing.Point(18, 146)
 $lblSrc.AutoSize  = $true
 $lblSrc.Enabled   = $false
@@ -114,7 +210,7 @@ $chkFetch.Add_CheckedChanged({ $lblSrc.Enabled = $chkFetch.Checked; $txtSrc.Enab
 
 # deploy button
 $btn             = New-Object System.Windows.Forms.Button
-$btn.Text        = 'Deploy'
+$btn.Text        = $T['btn_deploy']
 $btn.Location    = New-Object System.Drawing.Point(20, 180)
 $btn.Size        = New-Object System.Drawing.Size(160, 42)
 $btn.Font        = New-Object System.Drawing.Font('Segoe UI', 11, [System.Drawing.FontStyle]::Bold)
@@ -124,7 +220,7 @@ $btn.FlatStyle   = 'Flat'
 $form.Controls.Add($btn)
 
 $status          = New-Object System.Windows.Forms.Label
-$status.Text     = 'Ready.'
+$status.Text     = $T['status_ready']
 $status.Location = New-Object System.Drawing.Point(196, 192)
 $status.AutoSize = $true
 $form.Controls.Add($status)
@@ -162,21 +258,21 @@ $timer.Add_Tick({
     $code = $script:proc.ExitCode
     if ($code -eq 0) {
       $ip = Get-LanIp
-      $status.Text = 'Done.'
+      $status.Text = $T['status_done']
       $log.AppendText("`r`n============================================================`r`n")
-      $log.AppendText("  UPES-ECS is deployed.`r`n")
-      $log.AppendText(("  Phones register to : {0}:5060   (UDP)`r`n" -f $ip))
-      $log.AppendText("  Emergency number   : dial 111`r`n")
-      $log.AppendText("  Operations Console : http://localhost:8080`r`n")
+      $log.AppendText($T['sum_deployed'] + "`r`n")
+      $log.AppendText(($T['sum_phones'] -f $ip) + "`r`n")
+      $log.AppendText($T['sum_emergency'] + "`r`n")
+      $log.AppendText($T['sum_console'] + "`r`n")
       $log.AppendText("============================================================`r`n")
       [System.Windows.Forms.MessageBox]::Show(
-        ("UPES-ECS is up.`n`nPhones register to  {0}:5060`nEmergency number    dial 111`nConsole             http://localhost:8080" -f $ip),
-        'Deployment complete', 'OK', 'Information') | Out-Null
+        ($T['msg_ok_body'] -f $ip),
+        $T['msg_ok_title'], 'OK', 'Information') | Out-Null
     } else {
-      $status.Text = ('Failed (exit {0}).' -f $code)
+      $status.Text = ($T['status_failed'] -f $code)
       [System.Windows.Forms.MessageBox]::Show(
-        ("Deployment did not finish (exit code {0}).`n`nRead the log for the last error line, fix it, and click Deploy again." -f $code),
-        'Deployment failed', 'OK', 'Error') | Out-Null
+        ($T['msg_fail_body'] -f $code),
+        $T['msg_fail_title'], 'OK', 'Error') | Out-Null
     }
     $btn.Enabled = $true; $cboLang.Enabled = $true; $chkFetch.Enabled = $true
     $txtSrc.Enabled = $chkFetch.Checked; $script:proc = $null
@@ -190,21 +286,21 @@ function Get-LanIp {
            Where-Object { $_.IPAddress -notmatch '^(127\.|169\.254\.)' } | Select-Object -First 1).IPAddress
     if ($ip) { return $ip }
   } catch { }
-  return '<this PC LAN IP>'
+  return $T['lan_ip_placeholder']
 }
 
 $btn.Add_Click({
   if (-not (Test-Path $install)) {
     [System.Windows.Forms.MessageBox]::Show(
-      ("Install-UpesEcs.ps1 was not found next to this tool.`nExpected: {0}`n`nRun Deploy-UPES from inside the UPES-ECS folder." -f $install),
-      'Cannot deploy', 'OK', 'Error') | Out-Null
+      ($T['msg_noinstall_body'] -f $install),
+      $T['msg_noinstall_title'], 'OK', 'Error') | Out-Null
     return
   }
   if ($cboLang.SelectedIndex -lt 0) { return }
   $code = $lang.List[$cboLang.SelectedIndex].Code
   $src  = $txtSrc.Text.Trim()
   if ($chkFetch.Checked -and -not $src) {
-    [System.Windows.Forms.MessageBox]::Show('Tick is on but no Source is set. Enter a URL, a .zip, or a folder - or untick to deploy the built-in copy.', 'Source needed', 'OK', 'Warning') | Out-Null
+    [System.Windows.Forms.MessageBox]::Show($T['msg_nosource_body'], $T['msg_nosource_title'], 'OK', 'Warning') | Out-Null
     return
   }
 
@@ -213,10 +309,12 @@ $btn.Add_Click({
   if ($chkFetch.Checked -and $src) { $instArgs += @('-Source', $src) }
 
   $log.Clear()
-  Add-Log ("=> deploying language '{0}'{1}" -f $code, ($(if ($chkFetch.Checked -and $src) { " from source '$src'" } else { '' })))
-  Add-Log ("=> command: powershell " + ($instArgs -join ' '))
+  $fromSrc = ''
+  if ($chkFetch.Checked -and $src) { $fromSrc = ($T['log_from_source'] -f $src) }
+  Add-Log (($T['log_deploying'] -f $code) + $fromSrc)
+  Add-Log ($T['log_command'] -f ($instArgs -join ' '))
   Add-Log ''
-  $status.Text = 'Deploying... (this can take several minutes on first run)'
+  $status.Text = $T['status_deploying']
   $btn.Enabled = $false; $cboLang.Enabled = $false; $chkFetch.Enabled = $false; $txtSrc.Enabled = $false
 
   $psi = New-Object System.Diagnostics.ProcessStartInfo
@@ -245,8 +343,8 @@ $btn.Add_Click({
     $script:proc.BeginErrorReadLine()
     $timer.Start()
   } catch {
-    $status.Text = 'Could not start.'
-    Add-Log ('ERROR: ' + $_.Exception.Message)
+    $status.Text = $T['status_could_not_start']
+    Add-Log ($T['log_error'] -f $_.Exception.Message)
     $btn.Enabled = $true; $cboLang.Enabled = $true; $chkFetch.Enabled = $true; $txtSrc.Enabled = $chkFetch.Checked
     $script:proc = $null
   }
