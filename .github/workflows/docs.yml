@@ -34,3 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _site
           publish_branch: gh-pages
+          cname: upes-ecs.rohanbatra.in   # keep the custom domain across deploys
