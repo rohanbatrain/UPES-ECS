@@ -14,7 +14,9 @@
 #>
 param(
   [Parameter(Mandatory=$true)][string]$Payload,
-  [string]$Iss = ''   # defaulted in body (param-default $PSScriptRoot can be empty under -File)
+  [string]$Iss = '',            # defaulted in body (param-default $PSScriptRoot can be empty under -File)
+  [switch]$Sign,                # Authenticode-sign Setup + uninstaller (needs a configured Sign Tool)
+  [string]$SignToolCmd = ''     # e.g. 'signtool.exe sign /sha1 <THUMB> /fd sha256 /tr http://timestamp.digicert.com /td sha256 /d $qUPES-ECS$q $f'
 )
 $ErrorActionPreference='Stop'
 if([string]::IsNullOrWhiteSpace($Iss)){ $Iss = Join-Path $PSScriptRoot 'UPES-ECS.iss' }
@@ -35,14 +37,23 @@ if($assets | Where-Object { -not (Test-Path $_) }){
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Brand 'Make-BrandAssets.ps1') | Out-Null
 }
 
+$isccArgs = @("/DPayload=$Payload", "/DBrand=$Brand")
+if($Sign){
+  $isccArgs += '/DSign'
+  # A Sign Tool named "upessign" must exist (Inno IDE Tools->Configure Sign Tools, or pass one here).
+  if($SignToolCmd){ $isccArgs += "/Supessign=$SignToolCmd" }
+  Write-Host "  signing : enabled (SignedUninstaller + Setup)" -ForegroundColor Yellow
+}
 Write-Host "== Compiling branded installer with Inno Setup ==" -ForegroundColor Cyan
 Write-Host "  payload : $Payload"
-& $Iscc "/DPayload=$Payload" "/DBrand=$Brand" $Iss
+& $Iscc @isccArgs $Iss
 if($LASTEXITCODE -ne 0){ throw "ISCC failed (exit $LASTEXITCODE)" }
 
 $RepoRoot = Split-Path $PSScriptRoot -Parent
-$exe = Join-Path $RepoRoot 'dist\UPES-ECS-Setup.exe'
-if(-not (Test-Path $exe)){ throw "installer exe not produced: $exe" }
+# OutputBaseFilename is versioned (UPES-ECS-Setup-<ver>-x64.exe); find the produced exe.
+$exe = Get-ChildItem (Join-Path $RepoRoot 'dist') -Filter 'UPES-ECS-Setup-*-x64.exe' -EA SilentlyContinue |
+       Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { $_.FullName }
+if(-not $exe -or -not (Test-Path $exe)){ throw "installer exe not produced in $RepoRoot\dist" }
 $exeLen = (Get-Item $exe).Length
 if($exeLen -ge 4GB){ throw "setup exe is >=4 GB ($exeLen) - it will not run. Reduce DiskSliceSize." }
 $slices = Get-ChildItem (Join-Path $RepoRoot 'dist') -Filter 'UPES-ECS-Setup-*.bin' -EA SilentlyContinue
