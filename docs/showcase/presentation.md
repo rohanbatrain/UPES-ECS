@@ -10,10 +10,12 @@ University Networking Day. Total run time ~5 minutes.
 ## Watch the demo
 
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:1.25rem 0;box-shadow:0 12px 32px -12px rgba(10,40,30,.35);">
-  <iframe src="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/preview"
-    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-    allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen
-    title="UPES-ECS demo video" loading="lazy"></iframe>
+  <video controls preload="metadata" playsinline
+    poster="https://rohanbatrain.github.io/UPES-ECS/docs/assets/demo-poster.jpg"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;background:#000"
+    title="UPES-ECS demo video (1:10–2:18 highlight)">
+    <source src="https://github.com/rohanbatrain/UPES-ECS/releases/download/v1.0.0/upes-ecs-demo.mp4" type="video/mp4">
+  </video>
 </div>
 
 *A short walkthrough — from a caller dialing 111 to the response team answering on the live
