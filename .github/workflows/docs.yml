@@ -23,10 +23,11 @@ jobs:
         with:
           python-version: "3.x"
       - run: pip install -r docs/requirements.txt
-      - name: Build docs into /docs and place landing at root
+      - name: Build docs into /docs and place landing + its assets at root
         run: |
           mkdocs build --site-dir _site/docs
           cp landing/index.html _site/index.html
+          cp -r landing/assets _site/assets
           touch _site/.nojekyll
       - uses: peaceiris/actions-gh-pages@v4
         with:
