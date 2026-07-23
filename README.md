@@ -1,6 +1,8 @@
 <div align="center">
 
-<img src="docs/assets/social-preview.png" alt="UPES-ECS — When networks fail, we don't." width="840">
+<a href="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/view" title="Watch the UPES-ECS demo"><img src="docs/assets/social-preview.png" alt="UPES-ECS — When networks fail, we don't. (click to watch the demo)" width="840"></a>
+
+**▶ [Watch the 2-minute demo](https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/view)**
 
 # UPES-ECS — Campus Emergency Communication System
 

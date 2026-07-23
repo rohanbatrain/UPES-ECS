@@ -4,6 +4,15 @@ A **turnkey demo**: one command seeds ready-made accounts with known passwords a
 softphone profiles, so right after installing you can dial `111`, watch the response-team
 queue, hear the offline coach, switch languages, and see the live console and wallboards.
 
+## See it first
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:1.25rem 0;box-shadow:0 12px 32px -12px rgba(10,40,30,.35);">
+  <iframe src="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/preview"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+    allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen
+    title="UPES-ECS demo video" loading="lazy"></iframe>
+</div>
+
 !!! warning "Demo credentials are public"
     The demo password is intentionally simple and the accounts use fresh extensions that
     don't touch your real roster. Use this **only on a local, isolated network** for

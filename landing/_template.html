@@ -205,6 +205,34 @@
   .demo-credit a{color:var(--brand-ink);font-weight:600}
   .demo-credit a:hover{text-decoration:underline}
 
+  /* ---------- showcase gallery ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+  .gallery button{
+    padding:0;border:1px solid var(--border);background:var(--surface);cursor:pointer;
+    border-radius:12px;overflow:hidden;aspect-ratio:3/2;display:block;
+    transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+  }
+  .gallery button:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var(--shadow)}
+  .gallery button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  .gallery img{width:100%;height:100%;object-fit:cover;display:block}
+  @media(max-width:820px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.gallery{grid-template-columns:1fr}}
+  .lbox{position:fixed;inset:0;z-index:100;display:none;place-items:center;
+    padding:clamp(12px,3vw,44px);background:rgba(6,10,8,.88);backdrop-filter:blur(6px)}
+  .lbox.open{display:grid}
+  .lbox figure{margin:0;display:grid;justify-items:center;gap:14px;max-width:1120px;width:100%}
+  .lbox img{max-width:100%;max-height:80vh;border-radius:12px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:block}
+  .lbox figcaption{color:var(--on-dark-muted);font-size:var(--step--1);text-align:center}
+  .lbox figcaption .lb-count{margin-inline-start:8px;opacity:.7;font-variant-numeric:tabular-nums}
+  .lb-btn,.lb-close{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;
+    cursor:pointer;display:grid;place-items:center;border-radius:50%;transition:background .15s ease}
+  .lb-btn:hover,.lb-close:hover{background:rgba(255,255,255,.2)}
+  .lb-btn{position:absolute;top:50%;translate:0 -50%;width:48px;height:48px}
+  .lb-prev{inset-inline-start:clamp(8px,2vw,24px)}
+  .lb-next{inset-inline-end:clamp(8px,2vw,24px)}
+  .lb-close{position:absolute;top:clamp(10px,2vw,22px);inset-inline-end:clamp(10px,2vw,22px);width:44px;height:44px}
+  @media(prefers-reduced-motion:reduce){.gallery button{transition:none}}
+
   /* ---------- language showcase ---------- */
   .langgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
   .lchip{border:1px solid var(--border);border-radius:12px;padding:16px 18px;background:var(--surface);transition:border-color .18s,transform .18s}
@@ -434,6 +462,14 @@
           <p data-i18n="collab_2_desc">20 July 2026 · UPES — UPES-ECS demonstrated live on its HPE- and Juniper-powered networking backbone, end to end.</p>
         </div>
       </div>
+      <div class="gallery" id="gallery" role="group" aria-label="Photos from the UPES-ECS showcase with Team HPE">
+        <button type="button" data-full="assets/showcase/showcase-1.jpg"><img src="assets/showcase/showcase-1.jpg" width="2000" height="1333" loading="lazy" alt="Team HPE and UPES gathered for the UPES-ECS demonstration at UPES."></button>
+        <button type="button" data-full="assets/showcase/showcase-2.jpg"><img src="assets/showcase/showcase-2.jpg" width="2000" height="1333" loading="lazy" alt="The UPES-ECS operations console shown live on screen, with responder desks 4101 and 4110."></button>
+        <button type="button" data-full="assets/showcase/showcase-3.jpg"><img src="assets/showcase/showcase-3.jpg" width="2000" height="1333" loading="lazy" alt="A UPES-ECS presenter walking Team HPE through the system."></button>
+        <button type="button" data-full="assets/showcase/showcase-4.jpg"><img src="assets/showcase/showcase-4.jpg" width="2000" height="1333" loading="lazy" alt="Team HPE watching a live walkthrough of UPES-ECS at UPES."></button>
+        <button type="button" data-full="assets/showcase/showcase-5.jpg"><img src="assets/showcase/showcase-5.jpg" width="2000" height="1333" loading="lazy" alt="The UPES-ECS response-desk hardware demonstrated to Team HPE."></button>
+        <button type="button" data-full="assets/showcase/showcase-6.jpg"><img src="assets/showcase/showcase-6.jpg" width="2000" height="1333" loading="lazy" alt="Ribbon-cutting to mark the UPES-ECS showcase with Team HPE at UPES."></button>
+      </div>
     </div>
   </section>
 
@@ -597,6 +633,22 @@
   </div>
 </footer>
 
+<div class="lbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-close" type="button" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next" type="button" aria-label="Next photo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <figure>
+    <img alt="">
+    <figcaption><span data-i18n="gallery_caption">Team HPE visits UPES · 20 July 2026</span><span class="lb-count"></span></figcaption>
+  </figure>
+</div>
+
 <script>
 /* Language metadata: [code, native name, rtl] */
 const LANGS=[
@@ -702,9 +754,44 @@ function initDemo(){
     frame.innerHTML="";frame.appendChild(f);f.focus();
   });
 }
+function initGallery(){
+  const grid=$("#gallery"),lb=$("#lightbox");
+  if(!grid||!lb)return;
+  const btns=[...grid.querySelectorAll("button")];
+  const srcs=btns.map(b=>b.getAttribute("data-full"));
+  const alts=btns.map(b=>{const im=b.querySelector("img");return im?im.alt:"";});
+  const lbImg=lb.querySelector("img"),count=lb.querySelector(".lb-count");
+  let idx=0,lastFocus=null;
+  function show(i){
+    idx=(i+srcs.length)%srcs.length;
+    lbImg.src=srcs[idx];lbImg.alt=alts[idx];
+    count.textContent=(idx+1)+" / "+srcs.length;
+  }
+  function open(i){
+    lastFocus=document.activeElement;show(i);
+    lb.classList.add("open");lb.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";lb.querySelector(".lb-close").focus();
+  }
+  function close(){
+    lb.classList.remove("open");lb.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";lbImg.removeAttribute("src");
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+  btns.forEach((b,i)=>b.addEventListener("click",()=>open(i)));
+  lb.querySelector(".lb-prev").addEventListener("click",()=>show(idx-1));
+  lb.querySelector(".lb-next").addEventListener("click",()=>show(idx+1));
+  lb.querySelector(".lb-close").addEventListener("click",close);
+  lb.addEventListener("click",e=>{if(e.target===lb)close();});
+  document.addEventListener("keydown",e=>{
+    if(!lb.classList.contains("open"))return;
+    if(e.key==="Escape")close();
+    else if(e.key==="ArrowLeft")show(idx-1);
+    else if(e.key==="ArrowRight")show(idx+1);
+  });
+}
 function initReveal(){
   if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  const els=document.querySelectorAll(".sec-head,.cards,.infra-cards,.topo,.arch,.demo-wrap,.metrics,.langgrid,.scale-row,.cta-band,.stats .grid");
+  const els=document.querySelectorAll(".sec-head,.cards,.infra-cards,.topo,.arch,.demo-wrap,.gallery,.metrics,.langgrid,.scale-row,.cta-band,.stats .grid");
   els.forEach(e=>e.classList.add("reveal"));
   const io=new IntersectionObserver(ents=>{ents.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}})},{threshold:.12});
   els.forEach(e=>io.observe(e));
@@ -712,7 +799,7 @@ function initReveal(){
 document.addEventListener("DOMContentLoaded",()=>{
   buildCards();initLangSelect();initTheme();
   applyI18n(pickInitialLang());
-  initDemo();initReveal();
+  initDemo();initGallery();initReveal();
 });
 </script>
 </body>

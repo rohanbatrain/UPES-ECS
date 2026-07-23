@@ -7,6 +7,18 @@ title: Presentation & demo day
 A ready-to-run script for showing UPES-ECS live — the same story told at HPE's Bangalore
 University Networking Day. Total run time ~5 minutes.
 
+## Watch the demo
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:1.25rem 0;box-shadow:0 12px 32px -12px rgba(10,40,30,.35);">
+  <iframe src="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/preview"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+    allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen
+    title="UPES-ECS demo video" loading="lazy"></iframe>
+</div>
+
+*A short walkthrough — from a caller dialing 111 to the response team answering on the live
+operations console. Video shot & edited by [@harshdeepsinghin](https://www.instagram.com/harshdeepsinghin/).*
+
 !!! tip "Before you start"
     Seed the demo (`Install-UpesEcs.ps1 -Demo`), register two softphones, and put the ERT
     desk on shift (`*22` on `4190`) so the board is green. See [Try the demo](../getting-started/demo.md).
