@@ -735,7 +735,7 @@
           <div class="sp-caption" id="spCaption" aria-live="polite"></div>
           <div class="sp-cap-en" id="spCapEn" hidden></div>
           <div class="sp-options" id="spOptions" role="group" aria-label="Coach options" hidden></div>
-          <div class="sp-rec" id="spRec" hidden><span class="rec-dot"></span><span>Recording…</span><button class="sp-stop" id="spStop" type="button">Stop</button></div>
+          <div class="sp-rec" id="spRec" hidden><span class="rec-dot"></span><span data-i18n="sp_recordingword">Recording…</span><button class="sp-stop" id="spStop" type="button" data-i18n="sp_stop">Stop</button></div>
           <div class="sp-status"><span class="rdot"></span><span id="spStatusTxt">UPES-ECS · registered · EN</span></div>
         </div>
       </div>
@@ -925,6 +925,7 @@ function pickInitialLang(){
 function initSoftphone(){
   const root=$("#softphone");if(!root)return;
   const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function T(k){var d=(typeof I18N!=="undefined"&&I18N&&I18N[pageLang()])||null;var e=(typeof I18N!=="undefined"&&I18N&&I18N.en)||null;return (d&&d[k])||(e&&e[k])||k;}
 
   /* English caption texts — what the caller hears, keyed by prompt id */
   const CAP={
@@ -951,11 +952,11 @@ function initSoftphone(){
     "drill-prompt":"This is a UPES emergency system drill. This is only a test. No real emergency is in progress, and no response will be dispatched. Thank you."
   };
 
-  const OPTIONS=[["1","Not breathing / CPR"],["2","Severe bleeding"],["3","Choking"],["4","Fire / smoke"],["5","Threat / lockdown"],["6","Unconscious, breathing"],["7","Trapped"],["9","Try a responder"],["8","Leave a message"],["0","Repeat"],["*","Change language"]];
+  const OPTIONS=[["1","sp_opt_cpr"],["2","sp_opt_bleeding"],["3","sp_opt_choking"],["4","sp_opt_fire"],["5","sp_opt_lockdown"],["6","sp_opt_recovery"],["7","sp_opt_trapped"],["9","sp_opt_responder"],["8","sp_opt_leave"],["0","sp_opt_repeat"],["*","sp_opt_lang"]];
   const KEYS=[["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
-  const QUICK=[["111","Emergency line"],["102","Test the coach"],["199","System drill"]];
+  const QUICK=[["111","sp_quick_111"],["102","sp_quick_102"],["199","sp_quick_199"]];
   const TOPICS={"1":"cpr","2":"bleeding","3":"choking","4":"fire","5":"lockdown","6":"recovery","7":"trapped"};
-  const TOPIC_BANNER={cpr:"CPR — not breathing",bleeding:"Severe bleeding",choking:"Choking",fire:"Fire / smoke",lockdown:"Threat / lockdown",recovery:"Unconscious, breathing",trapped:"Trapped"};
+  const TOPIC_BANNER={cpr:"sp_opt_cpr",bleeding:"sp_opt_bleeding",choking:"sp_opt_choking",fire:"sp_opt_fire",lockdown:"sp_opt_lockdown",recovery:"sp_opt_recovery",trapped:"sp_opt_trapped"};
   const FAST=["emergency","connecting","queuehold"];
   const MENU=["intro","fastpath","test","menu"];
   const TOPIC=["cpr","bleeding","choking","fire","lockdown","recovery","trapped"];
@@ -995,7 +996,7 @@ function initSoftphone(){
   function renderNum(){spNum.textContent=num;}
   function recUI(on){rec.hidden=!on;}
   function pageLang(){var l=null;try{l=localStorage.getItem("upes_lang");}catch(e){}l=l||document.documentElement.lang||"en";l=(""+l).slice(0,2).toLowerCase();return l||"en";}
-  function updateStatus(){statusTxt.textContent="UPES-ECS · registered · "+(curLang||pageLang()).toUpperCase();}
+  function updateStatus(){statusTxt.textContent="UPES-ECS · "+T("sp_registered")+" · "+(curLang||pageLang()).toUpperCase();}
   function setCallLang(l){callLang=l;curLang=l;updateStatus();loadCaps(l);}
   function views(mode){/* mode: dial | call | end */
     dialView.hidden=(mode!=="dial");callView.hidden=(mode!=="call");endView.hidden=(mode!=="end");
@@ -1005,8 +1006,9 @@ function initSoftphone(){
   function showOptions(mode,disabled){
     if(!mode){opts.hidden=true;opts.innerHTML="";return;}
     opts.hidden=false;opts.classList.toggle("disabled",!!disabled);
-    var list=(mode==="lang")?[["1","English"],["2","Hindi"]]:OPTIONS;
-    opts.innerHTML=list.map(function(o){return '<button class="sp-opt" type="button" data-d="'+o[0]+'" aria-label="'+o[1]+'"><span class="k">'+o[0]+'</span><span>'+o[1]+'</span></button>';}).join("");
+    var isLang=(mode==="lang");
+    var list=isLang?[["1","English"],["2","Hindi"]]:OPTIONS;
+    opts.innerHTML=list.map(function(o){var lbl=isLang?o[1]:T(o[1]);return '<button class="sp-opt" type="button" data-d="'+o[0]+'" aria-label="'+lbl+'"><span class="k">'+o[0]+'</span><span>'+lbl+'</span></button>';}).join("");
     Array.prototype.forEach.call(opts.querySelectorAll(".sp-opt"),function(b){b.addEventListener("click",function(){press(b.getAttribute("data-d"));});});
   }
 
@@ -1026,7 +1028,7 @@ function initSoftphone(){
     var words=text.split(/\s+/).filter(Boolean),spans=[];
     words.forEach(function(w){var s=document.createElement("span");s.className="sp-w";s.textContent=w;if(reduce)s.classList.add("on");cap.appendChild(s);cap.appendChild(document.createTextNode(" "));spans.push(s);});
     cap.scrollTop=0;
-    if(native){capEn.hidden=false;capEn.textContent="English: "+(CAP[id]||"");}else{capEn.hidden=true;capEn.textContent="";}
+    if(native){capEn.hidden=false;capEn.textContent=T("sp_english")+": "+(CAP[id]||"");}else{capEn.hidden=true;capEn.textContent="";}
     return spans;
   }
   function plainCap(text,label){if(label)head(label);cap.classList.add("plain");cap.textContent=text;cap.scrollTop=0;if(capEn){capEn.hidden=true;capEn.textContent="";}}
@@ -1051,75 +1053,75 @@ function initSoftphone(){
     switch(name){
       case "idle":
         stopAudio();ringOff();clearTimer();views("dial");showOptions(null);
-        num="";renderNum();banner("Ready","");hint("Dial 111, 102, or 199");
-        head("Live transcript");
-        plainCap("Dial 111 to hear the campus emergency line answer, then follow the offline coach. Captions appear in your selected language, word-synced to the voice — with an English translation below.");
+        num="";renderNum();banner(T("sp_b_ready"),"");hint(T("sp_hint"));
+        head(T("sp_h_transcript"));
+        plainCap(T("sp_p_idle"));
         curLang=pageLang();updateStatus();loadCaps(pageLang());break;
       case "emergency":
-        views("call");banner("Campus Emergency · recording","danger");showOptions(null);
-        playPrompt("emergency-preanswer","Caller hears · English translation",function(){go("connecting");});break;
+        views("call");banner(T("sp_b_emergency"),"danger");showOptions(null);
+        playPrompt("emergency-preanswer",T("sp_h_callerhears")+" · English translation",function(){go("connecting");});break;
       case "connecting":
-        views("call");banner("Connecting to the response team…","warn");showOptions(null);ringOn();
-        plainCap("Connecting to the response team. Please stay on the line — press 1 for first-aid guidance now.","Status");
+        views("call");banner(T("sp_b_connecting"),"warn");showOptions(null);ringOn();
+        plainCap(T("sp_p_connecting"),T("sp_h_status"));
         after(4500,function(){go("queuehold");});break;
       case "queuehold":
-        views("call");banner("Still connecting…","warn");showOptions(null);ringOff();
-        playPrompt("hold-firstaid","Caller hears · English translation",function(){go("noanswer");});break;
+        views("call");banner(T("sp_b_stillconnecting"),"warn");showOptions(null);ringOff();
+        playPrompt("hold-firstaid",T("sp_h_callerhears")+" · English translation",function(){go("noanswer");});break;
       case "noanswer":
-        views("call");ringOff();banner("No responder free","warn");showOptions(null);
-        toast("No responder free — connecting you to the offline coach");
-        plainCap("No responder is free. Connecting you to the offline coach…","Status");
+        views("call");ringOff();banner(T("sp_b_noresponder"),"warn");showOptions(null);
+        toast(T("sp_t_noresponder"));
+        plainCap(T("sp_p_noanswer"),T("sp_h_status"));
         after(1300,function(){go("intro");});break;
       case "intro":
-        views("call");banner("Offline Coach","");showOptions("menu");
-        playPrompt("coach/intro","Coach · English translation",function(){go("menu");});break;
+        views("call");banner(T("sp_b_coach"),"");showOptions("menu");
+        playPrompt("coach/intro",T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "fastpath":
-        views("call");banner("Offline Coach · first aid","");showOptions("menu");
-        playPrompt("coach/fastpath-intro","Coach · English translation",function(){go("menu");});break;
+        views("call");banner(T("sp_b_coachfa"),"");showOptions("menu");
+        playPrompt("coach/fastpath-intro",T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "test":
-        views("call");banner("Coach · test mode","");showOptions("menu");
-        playPrompt("coach/intro-test","Coach · English translation",function(){go("menu");});break;
+        views("call");banner(T("sp_b_coachtest"),"");showOptions("menu");
+        playPrompt("coach/intro-test",T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "menu":
-        views("call");banner("Choose the situation","");showOptions("menu");
-        playPrompt("coach/menu","Coach · English translation",function(){after(12000,function(){go("nochoice");});});break;
+        views("call");banner(T("sp_b_menu"),"");showOptions("menu");
+        playPrompt("coach/menu",T("sp_h_coach")+" · English translation",function(){after(12000,function(){go("nochoice");});});break;
       case "cpr":case "bleeding":case "choking":case "fire":case "lockdown":case "recovery":case "trapped":
-        views("call");banner(TOPIC_BANNER[name],"");showOptions("menu",true);
-        playPrompt("coach/"+name,"Coach · English translation",function(){go("menu");});break;
+        views("call");banner(T(TOPIC_BANNER[name]),"");showOptions("menu",true);
+        playPrompt("coach/"+name,T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "retry":
-        views("call");banner("Trying a responder…","warn");showOptions(null);
-        playPrompt("coach/tryagain","Coach · English translation",function(){
-          ringOn();banner("Ringing the response desk…","warn");plainCap("Ringing the response desk…","Status");
-          after(4000,function(){ringOff();playPrompt("coach/noresponder","Coach · English translation",function(){go("menu");});});
+        views("call");banner(T("sp_b_trying"),"warn");showOptions(null);
+        playPrompt("coach/tryagain",T("sp_h_coach")+" · English translation",function(){
+          ringOn();banner(T("sp_b_ringing"),"warn");plainCap(T("sp_p_ringing"),T("sp_h_status"));
+          after(4000,function(){ringOff();playPrompt("coach/noresponder",T("sp_h_coach")+" · English translation",function(){go("menu");});});
         });break;
       case "leave":
-        views("call");banner("Leave a message","");showOptions(null);
-        playPrompt("coach/leavemsg","Coach · English translation",function(){
-          playPrompt("emergency-voicemail-prompt","Caller hears · English translation",function(){go("recording");});
+        views("call");banner(T("sp_b_leave"),"");showOptions(null);
+        playPrompt("coach/leavemsg",T("sp_h_coach")+" · English translation",function(){
+          playPrompt("emergency-voicemail-prompt",T("sp_h_callerhears")+" · English translation",function(){go("recording");});
         });break;
       case "recording":
-        views("call");banner("Recording ●","danger");showOptions(null);recUI(true);
-        plainCap("Recording your message for the response team. Speak now — say where you are and what is happening. Press Stop when you are done.","Recording");
+        views("call");banner(T("sp_b_recording"),"danger");showOptions(null);recUI(true);
+        plainCap(T("sp_p_recording"),T("sp_h_recording"));
         after(4500,function(){go("ended");});break;
       case "lang":
-        views("call");banner("Choose a language","");showOptions("lang");
-        playPrompt("coach/pick-language","Coach · English translation",function(){after(12000,function(){go("menu");});});break;
+        views("call");banner(T("sp_b_lang"),"");showOptions("lang");
+        playPrompt("coach/pick-language",T("sp_h_coach")+" · English translation",function(){after(12000,function(){go("menu");});});break;
       case "invalid":
-        views("call");banner("Sorry, I didn't catch that","warn");showOptions("menu",true);
-        playPrompt("coach/invalid","Coach · English translation",function(){go("menu");});break;
+        views("call");banner(T("sp_b_invalid"),"warn");showOptions("menu",true);
+        playPrompt("coach/invalid",T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "nochoice":
-        views("call");silent++;banner("No input heard","warn");showOptions("menu",true);
-        if(silent%3===0)toast("Re-alerting a responder…");
-        playPrompt("coach/nochoice","Coach · English translation",function(){go("menu");});break;
+        views("call");silent++;banner(T("sp_b_nochoice"),"warn");showOptions("menu",true);
+        if(silent%3===0)toast(T("sp_t_realert"));
+        playPrompt("coach/nochoice",T("sp_h_coach")+" · English translation",function(){go("menu");});break;
       case "drill":
-        views("call");banner("System drill · test only","");showOptions(null);
-        playPrompt("drill-prompt","Caller hears · English translation",function(){go("ended");});break;
+        views("call");banner(T("sp_b_drill"),"");showOptions(null);
+        playPrompt("drill-prompt",T("sp_h_callerhears")+" · English translation",function(){go("ended");});break;
       case "ended":
         stopAudio();ringOff();clearTimer();recUI(false);showOptions(null);views("end");
-        device.classList.remove("talking");banner("Call ended","");
+        device.classList.remove("talking");banner(T("sp_b_ended"),"");
         var dur=fmtDur(callStart?(Date.now()-callStart):0),id="DEMO-"+String(Math.floor(1000+Math.random()*9000));
-        spEnd.innerHTML='<h4>Call ended</h4><div class="sp-endrow">Duration '+dur+'</div><div class="sp-endrow">Call recorded · incident #'+id+'</div><button class="sp-newbtn" id="spNew" type="button">New call</button>';
+        spEnd.innerHTML='<h4>'+T("sp_b_ended")+'</h4><div class="sp-endrow">'+T("sp_duration")+' '+dur+'</div><div class="sp-endrow">'+T("sp_recorded")+' #'+id+'</div><button class="sp-newbtn" id="spNew" type="button">'+T("sp_newcall")+'</button>';
         var nb=$("#spNew");if(nb)nb.addEventListener("click",function(){go("idle");});
-        head("Call summary");plainCap("Call ended. In the real system this incident is logged and, if unanswered, queued for a callback. Dial again to replay the flow.");break;
+        head(T("sp_h_summary"));plainCap(T("sp_p_ended"));break;
     }
   }
 
@@ -1157,22 +1159,24 @@ function initSoftphone(){
   }
   function reject(n){
     gen++;state="idle";clearTimer();views("dial");recUI(false);showOptions(null);
-    reorder();banner("Not an emergency number","warn");hint("Dial 111, 102, or 199");
-    toast("111 emergency · 102 test · 199 drill");num="";renderNum();
-    plainCap("That is not an emergency number. Dial 111 for an emergency, 102 to test the coach, or 199 for a system drill.","Live transcript · English translation");
+    reorder();banner(T("sp_b_reject"),"warn");hint(T("sp_hint"));
+    toast(T("sp_t_numbers"));num="";renderNum();
+    plainCap(T("sp_p_reject"),T("sp_h_transcript")+" · English translation");
     curLang=pageLang();updateStatus();
-    after(1800,function(){banner("Ready","");toast("");});
+    after(1800,function(){banner(T("sp_b_ready"),"");toast("");});
   }
 
   /* ---- build keypad, chips, wiring ---- */
   KEYS.forEach(function(k){var b=document.createElement("button");b.type="button";b.className="sp-key";b.setAttribute("aria-label","Key "+k[0]);b.innerHTML='<span class="d">'+k[0]+'</span><span class="l">'+k[1]+'</span>';b.addEventListener("click",function(){press(k[0]);});keys.appendChild(b);});
-  QUICK.forEach(function(q){var b=document.createElement("button");b.type="button";b.className="sp-chip";b.setAttribute("aria-label","Dial "+q[0]+" — "+q[1]);b.innerHTML='<b>'+q[0]+'</b><span>'+q[1]+'</span>';b.addEventListener("click",function(){if(state==="idle"||state==="ended"){num=q[0];renderNum();startCall(q[0]);}});quick.appendChild(b);});
+  function buildQuick(){quick.innerHTML="";QUICK.forEach(function(q){var lbl=T(q[1]);var b=document.createElement("button");b.type="button";b.className="sp-chip";b.setAttribute("aria-label","Dial "+q[0]+" — "+lbl);b.innerHTML='<b>'+q[0]+'</b><span>'+lbl+'</span>';b.addEventListener("click",function(){if(state==="idle"||state==="ended"){num=q[0];renderNum();startCall(q[0]);}});quick.appendChild(b);});}
+  buildQuick();
   callBtn.addEventListener("click",function(){if(state==="idle"){ac();startCall(num||"");}});
   hangBtn.addEventListener("click",function(){if(state!=="idle"&&state!=="ended")go("ended");});
   stopBtn.addEventListener("click",function(){if(state==="recording")go("ended");});
   root.addEventListener("keydown",function(e){var k=e.key;if(/^[0-9*#]$/.test(k)){e.preventDefault();press(k);}});
 
   go("idle");
+  try{new MutationObserver(function(){ if(state==="idle"){ buildQuick(); go("idle"); } else { updateStatus(); } }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});}catch(e){}
 }
 function initDemo(){
   const frame=$("#demoFrame"),btn=$("#demoPlay");
