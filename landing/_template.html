@@ -907,7 +907,7 @@ function setTheme(mode){
 }
 function initTheme(){
   let saved=null;try{saved=localStorage.getItem("upes_theme");}catch(e){}
-  const mode=saved||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  const mode=saved||"light";   /* default to light; users can still toggle to dark (persisted) */
   setTheme(mode);
   $("#themebtn").addEventListener("click",()=>{
     const cur=document.documentElement.getAttribute("data-theme");
@@ -969,9 +969,12 @@ function initSoftphone(){
   let state="idle",num="",audio=null,gen=0,callLang="en",curLang="en",callStart=0,timerIv=null,rb=null,actx=null,silent=0;
   /* per-language captions: native text keyed by prompt id; English CAP is the fallback */
   let LCAP=CAP;const capCache={en:CAP};
-  function loadCaps(l){
-    if(capCache[l]){if(callLang===l||curLang===l)LCAP=capCache[l];return;}
-    try{fetch("assets/voice/"+l+"/captions.json").then(function(r){return r.ok?r.json():null;}).then(function(j){if(j){capCache[l]=j;if(callLang===l||curLang===l)LCAP=j;}}).catch(function(){});}catch(e){}
+  function loadCaps(l,cb){
+    if(l==="en"){LCAP=CAP;if(cb)cb();return;}
+    if(capCache[l]){if(callLang===l||curLang===l)LCAP=capCache[l];if(cb)cb();return;}
+    var fired=false,done=function(){if(fired)return;fired=true;if(cb)cb();};
+    try{fetch("assets/voice/"+l+"/captions.json").then(function(r){return r.ok?r.json():null;}).then(function(j){if(j){capCache[l]=j;if(callLang===l||curLang===l)LCAP=j;}done();}).catch(done);}catch(e){done();}
+    setTimeout(done,1500); /* never block the call on a slow/failed fetch */
   }
   function langEnName(code){try{return new Intl.DisplayNames(["en"],{type:"language"}).of(code)||code.toUpperCase();}catch(e){return(code||"en").toUpperCase();}}
 
@@ -1142,12 +1145,14 @@ function initSoftphone(){
     handleDigit(d);
   }
   function startCall(n){
-    ac();callLang=pageLang();curLang=callLang;updateStatus();loadCaps(callLang);
+    ac();callLang=pageLang();curLang=callLang;updateStatus();
     callStart=Date.now();startTimer();silent=0;
-    if(n==="111")go("emergency");
-    else if(n==="102")go("test");
-    else if(n==="199")go("drill");
-    else reject(n);
+    loadCaps(callLang,function(){   /* wait for the caller-language captions so the FIRST prompt is localized */
+      if(n==="111")go("emergency");
+      else if(n==="102")go("test");
+      else if(n==="199")go("drill");
+      else reject(n);
+    });
   }
   function reject(n){
     gen++;state="idle";clearTimer();views("dial");recUI(false);showOptions(null);

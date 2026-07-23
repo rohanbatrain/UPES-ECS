@@ -95,5 +95,6 @@
   "scale_sub": "Ugyanez a HPE-alapú kialakítás egyetlen kampuszon túlra is skálázódik — egyetemekre, katasztrófaelhárítási helyszínekre és minden kritikus kommunikációs zónába, ahol a megbízhatóság elengedhetetlen.",
   "scale_c1": "Egyetemek",
   "scale_c2": "Katasztrófaelhárítás",
-  "scale_c3": "Kritikus zónák"
+  "scale_c3": "Kritikus zónák",
+  "nav_team": "Csapat"
 }
