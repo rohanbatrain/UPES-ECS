@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/view" title="Watch the UPES-ECS demo"><img src="docs/assets/social-preview.png" alt="UPES-ECS — When networks fail, we don't. (click to watch the demo)" width="840"></a>
+<a href="https://rohanbatrain.github.io/UPES-ECS/" title="Watch the UPES-ECS demo"><img src="docs/assets/social-preview.png" alt="UPES-ECS — When networks fail, we don't. (click to watch the demo)" width="840"></a>
 
-**▶ [Watch the 2-minute demo](https://drive.google.com/file/d/1wChZgK9p-VcRLDymdN1WhYhCtbZqNE88/view)**
+**▶ [Watch the demo](https://rohanbatrain.github.io/UPES-ECS/)** (the 1:10–2:18 highlight, on the landing page)
 
 # UPES-ECS — Campus Emergency Communication System
 
@@ -80,16 +80,22 @@ walkthrough + account list: **[demo/README.md](demo/README.md)** (and the
 
 ## Downloads
 
-Prefer a prebuilt installer over building from source? Large artifacts (offline installer,
-prompt packs, VM image) are distributed via **[GitHub Releases](https://github.com/rohanbatrain/UPES-ECS/releases/latest)**
-(and a cloud mirror for files over 2 GB) — the repo itself has no Git LFS and clones light.
-See **[DOWNLOADS.md](DOWNLOADS.md)** for the full manifest.
+Prefer a prebuilt appliance over building from source? The full artifact set is on
+**[GitHub Releases](https://github.com/rohanbatrain/UPES-ECS/releases/latest)** — every file
+is **under 2 GB**, so there's **no cloud mirror and no Git LFS** (the repo clones light).
+Verify with `SHA256SUMS.txt`. Full manifest + reassembly steps: **[DOWNLOADS.md](DOWNLOADS.md)**.
 
 | Asset | What it is |
 |---|---|
-| `UPES-ECS-Setup.exe` | Self-contained offline installer (QEMU + golden VM + app) |
-| `voice-prompts.zip` | Pre-generated Piper TTS prompts, 44 languages (optional) |
-| `golden-vm.qcow2.zip` | Prebuilt Asterisk PBX VM image |
+| `UPES-ECS-Setup-1.0.0-x64.exe` **+ `…-1.bin`…`-5.bin`** | Self-contained offline installer (QEMU + demo VM + app). Put the `.exe` **and all 5 slices** in one folder, run the `.exe`. |
+| `golden-vm.qcow2.zip.001` / `.002` / `.003` | Prebuilt Asterisk PBX VM image, split into volumes (`7z x golden-vm.qcow2.zip.001` reassembles it). |
+| `UPES-ECS-GUI.exe` | Native GUI installer (guided setup, 11 languages). |
+| `voice-prompts.zip` | Pre-generated Piper TTS prompts, 44 languages (optional). |
+
+The prebuilt appliance boots **ready to use** with public **demo** credentials — accounts
+password `updemo123`, VM login `ubuntu` / `upesecs`, and a generic appliance SSH key. **These
+are public defaults for evaluation only — change them before real use;** no real users or
+secrets are included. See [DOWNLOADS.md → Default credentials](DOWNLOADS.md#default-credentials-demo-appliance).
 
 ---
 
