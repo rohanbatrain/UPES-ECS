@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # ur.sh -- Urdu installer message catalog for install-macos.sh (AI first-pass draft).
 # Urdu is RTL; terminals render it right-to-left. Keys absent here fall back to
 # English. Technical tokens left untranslated. MUST be native-reviewed before go-live.

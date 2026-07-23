@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # hi.sh -- Hindi installer message catalog for install-macos.sh (AI first-pass draft).
 # Sourced by install-macos.sh; defines _msg_hi <key> -> prints a printf template.
 # Keys absent here fall back to English (_msg_en). Technical tokens (paths, flags,

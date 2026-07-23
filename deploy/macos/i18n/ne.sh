@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # ne.sh -- Nepali installer message catalog for install-macos.sh (AI first-pass draft).
 # Keys absent here fall back to English. Technical tokens left untranslated.
 # MUST be native-reviewed before go-live.

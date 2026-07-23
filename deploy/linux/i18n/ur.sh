@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # install-linux.sh message catalog -- Urdu (ur, RTL)
 # AI first-pass draft; MUST be native-reviewed before go-live. Sourced by
 # install-linux.sh; overrides English keys, missing keys fall back to English.
