@@ -34,8 +34,14 @@ You received a single self-extracting file: **`upes-ecs-macos-installer.command`
 chmod +x upes-ecs-macos-installer.command
 ./upes-ecs-macos-installer.command                 # English
 ./upes-ecs-macos-installer.command --language hi   # Hindi voice + Console
+./upes-ecs-macos-installer.command --lang hi       # Hindi installer MESSAGES (see below)
 ./upes-ecs-macos-installer.command --lan-ip 10.20.30.5   # pin the LAN IP
 ```
+
+> Two independent language knobs:
+> `--language <code>` sets the deployed **PBX voice + Console** pack (all 44 codes);
+> `--lang <code>` sets the language of the **installer's own progress/error output**
+> (auto-detected from your macOS locale — see "Installer language" below).
 
 ### Option B — Finder double-click
 Double-click `upes-ecs-macos-installer.command`. Because it is unsigned, macOS
@@ -160,14 +166,82 @@ Packed languages: `en hi te ml ur ne ar bg ca cs cy da de el es eu fa fi fr hu`.
 
 ---
 
+## Installer language (operator messages)
+
+Separate from the PBX voice/Console language, the **installer localizes its own
+progress and error output**. It auto-detects the operator locale in this order:
+
+1. `--lang <code>` if you pass it (explicit override),
+2. macOS `defaults read -g AppleLocale` (e.g. `en_IN` → `en`, `hi_IN` → `hi`),
+3. `$LC_ALL` / `$LANG`,
+4. English as the guaranteed fallback.
+
+The locale is normalized to a short code (`hi_IN.UTF-8` → `hi`). If no catalog
+ships for the detected code, the installer silently prints English — nothing
+breaks. Every user-facing line is routed through a small `msg <key>` function; a
+key missing in a given language falls back to its English text (so partial
+catalogs are safe).
+
+**Message catalogs live in `deploy/macos/i18n/<code>.sh`** — a clean, extensible
+mechanism. To add a language, copy an existing catalog, translate the templates
+(keep the `%s` placeholders and technical tokens like `brew`, `sudo`, `SIP`,
+`111`, `ERT`, paths and URLs untranslated), and name the file `<code>.sh`.
+
+**Translated installer languages (curated core set, 11):**
+
+| Code | Language | Code | Language |
+|------|----------|------|----------|
+| `en` | English (built-in fallback) | `ne` | Nepali |
+| `hi` | Hindi | `es` | Spanish |
+| `te` | Telugu | `fr` | French |
+| `ml` | Malayalam | `de` | German |
+| `ur` | Urdu (RTL) | `pt` | Portuguese |
+|      |          | `ar` | Arabic (RTL) |
+
+All non-English catalogs are **AI first-pass drafts** and must be native-reviewed
+before go-live (consistent with the voice/UI packs in `i18n/languages.json`).
+Only these curated codes have translated **installer messages**; any other
+`--lang` value (or an OS locale outside this set) falls back to English output.
+This is deliberate: ~10 solid catalogs beat 44 sloppy ones. The English text is
+embedded in `install-macos.sh` itself, so English never depends on a catalog file.
+
+---
+
+## Robustness (production hardening)
+
+`install-macos.sh` is hardened for unattended production runs:
+
+- **`set -euo pipefail`** plus an **`ERR` trap** that prints the failing line and
+  exit code (localized) and makes clear nothing was force-started — then you can
+  safely re-run, because every step is **idempotent**.
+- **`EXIT` trap** cleans up the scratch temp dir.
+- **Preflight checks** before any mutation: macOS version (warns below the tested
+  minimum, macOS 11), CPU arch / Homebrew-prefix awareness (Apple Silicon vs
+  Intel), required core commands (fatal with an `xcode-select --install` hint if
+  missing), free disk space (warns below ~1.5 GB), and a heads-up that `sudo` may
+  prompt once.
+- **Homebrew** is required, never auto-`curl|bash`-ed: if `brew` is absent the
+  installer prints the official one-liner and the Apple-Silicon PATH line, then
+  stops.
+- **Gatekeeper/quarantine** guidance is printed in the summary and documented
+  above, for the unsigned self-extractor case.
+
 ## Validation status — BUILT ON WINDOWS, NOT YET RUN ON A MAC
 
 **Honest disclosure:** this deployment was authored and packaged on a Windows
 host. There is no macOS/Darwin available here, so it could **not** be executed
 end-to-end. What *was* done:
 
-- `bash -n` syntax check — **pass** (all three shell scripts).
-- `shellcheck` — **clean** (default level, no warnings).
+- `bash -n` syntax check — **pass** (installer, foreground fallback, and all
+  `i18n/*.sh` message catalogs).
+- The localization router (locale detection/normalization, catalog loading,
+  per-key English fallback, `printf` template formatting incl. RTL) was
+  **exercised in isolation** and verified.
+- `shellcheck` — **was not available in the environment that produced this
+  hardened revision**, so it could not be re-run here; the change was manually
+  reviewed and is written to stay shellcheck-clean (`SC2059` is suppressed with
+  an inline directive where a controlled template is used as a format string).
+  Re-run `shellcheck -x deploy/macos/install-macos.sh` on a box that has it.
 - Self-extractor **built and its archive extraction dry-run verified** via WSL
   (Ubuntu, x86_64). WSL exercises only the *platform-independent* extract/copy
   logic; the Homebrew/launchd/`ipconfig` steps are macOS-only and were **not**
