@@ -882,6 +882,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#default-credentials-demo-appliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default credentials (demo appliance)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#integrity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3842,6 +3853,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#default-credentials-demo-appliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default credentials (demo appliance)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#integrity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3879,14 +3901,10 @@
 
 <h1 id="downloads">Downloads<a class="headerlink" href="#downloads" title="Permanent link">&para;</a></h1>
 <p>The git repository is intentionally lightweight — no Git LFS, no committed binaries, so it
-clones fast. The large, ready-to-run artifacts are distributed <strong>out of band</strong>:</p>
-<ul>
-<li><strong><a href="https://github.com/rohanbatrain/UPES-ECS/releases/latest">GitHub Releases</a></strong> — files up
-  to 2 GB (installers, prompt packs).</li>
-<li><strong>Cloud mirror</strong> — anything larger (golden VM image, full offline bundle). <em>(Link added on
-  the <a href="https://github.com/rohanbatrain/UPES-ECS/releases/latest">release page</a> and in
-  <a href="https://github.com/rohanbatrain/UPES-ECS/blob/main/DOWNLOADS.md">DOWNLOADS.md</a>.)</em></li>
-</ul>
+clones fast. The ready-to-run artifacts live on
+<strong><a href="https://github.com/rohanbatrain/UPES-ECS/releases/latest">GitHub Releases</a></strong> — every file
+is <strong>under 2 GB</strong>, so there's <strong>no cloud mirror and no Git LFS</strong>. Large deliverables are split
+into GitHub-sized parts (reassembly below).</p>
 <h2 id="artifacts">Artifacts<a class="headerlink" href="#artifacts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3898,13 +3916,13 @@ clones fast. The large, ready-to-run artifacts are distributed <strong>out of ba
 </thead>
 <tbody>
 <tr>
-<td><code>UPES-ECS-Setup.exe</code></td>
-<td>Self-contained <strong>offline installer</strong> (QEMU + golden VM + app) — for a target PC with no internet.</td>
+<td><code>UPES-ECS-Setup-1.0.0-x64.exe</code> <strong>+ <code>…-1.bin</code>…<code>-5.bin</code></strong></td>
+<td>Self-contained <strong>offline installer</strong> (QEMU + demo VM + app) — for a target PC with no internet. Download the <code>.exe</code> <strong>and all 5 slices</strong> into one folder, run the <code>.exe</code>.</td>
 <td><code>packaging/Build-FatInstaller.ps1</code></td>
 </tr>
 <tr>
 <td><code>UPES-ECS-GUI.exe</code></td>
-<td>Native <strong>GUI installer</strong>.</td>
+<td>Native <strong>GUI installer</strong> (guided setup, 11 languages).</td>
 <td><code>packaging/Build-Installer.ps1</code></td>
 </tr>
 <tr>
@@ -3913,8 +3931,8 @@ clones fast. The large, ready-to-run artifacts are distributed <strong>out of ba
 <td><code>scripts/gen-*-prompts.*</code></td>
 </tr>
 <tr>
-<td><code>golden-vm.qcow2.zip</code></td>
-<td>Prebuilt <strong>Asterisk PBX VM</strong> image.</td>
+<td><code>golden-vm.qcow2.zip.001</code> / <code>.002</code> / <code>.003</code></td>
+<td>Prebuilt <strong>Asterisk PBX VM</strong> image, split into volumes. Extract with <code>7z x golden-vm.qcow2.zip.001</code> (pulls the rest in).</td>
 <td><code>deploy/qemu/build-vm.ps1</code></td>
 </tr>
 </tbody>
@@ -3926,13 +3944,28 @@ clones fast. The large, ready-to-run artifacts are distributed <strong>out of ba
 source (see the <a href="../quickstart/">Day-1 quickstart</a>).</p>
 </div>
 <ul>
-<li><strong>Deploying to an offline machine</strong> → <code>UPES-ECS-Setup.exe</code>.</li>
+<li><strong>Deploying to an offline machine</strong> → <code>UPES-ECS-Setup-1.0.0-x64.exe</code> + all its <code>.bin</code> slices.</li>
+<li><strong>Want the raw VM image</strong> → the three <code>golden-vm.qcow2.zip.00N</code> volumes, reassembled as above.</li>
 <li><strong>Want prebuilt audio instead of regenerating</strong> → <code>voice-prompts.zip</code>, unzipped into
   <code>deploy/asterisk/sounds/</code>.</li>
 </ul>
+<h2 id="default-credentials-demo-appliance">Default credentials (demo appliance)<a class="headerlink" href="#default-credentials-demo-appliance" title="Permanent link">&para;</a></h2>
+<p>The prebuilt appliance ships <strong>ready to use</strong> with public <strong>demo</strong> credentials — <strong>no real
+users, secrets, or PII</strong>:</p>
+<ul>
+<li><strong>SIP demo accounts:</strong> <code>500000001</code>–<code>500000003</code>, <code>40000001</code>, <code>4190</code>/<code>4191</code>, <code>4390</code>,
+  <code>590000001</code> — password <strong><code>updemo123</code></strong>, server <code>upes-ecs.local</code>.</li>
+<li><strong>VM login:</strong> <code>ubuntu</code> / <code>upesecs</code>. <strong>Appliance SSH key:</strong> a generic <code>upes-ecs-default</code> keypair.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Change these before any real use</p>
+<p>They are public defaults for evaluation only. Add real users with <code>deploy\qemu\Add-UpesUser.ps1</code>,
+rotate the SSH key, and set a real <code>ubuntu</code> password. The image regenerates its SSH <strong>host</strong>
+keys on first boot, so no two appliances share a host identity.</p>
+</div>
 <h2 id="integrity">Integrity<a class="headerlink" href="#integrity" title="Permanent link">&para;</a></h2>
-<p>Verify the SHA-256 checksum (listed on each release) before running:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">UPES-ECS-Setup</span><span class="p">.</span><span class="n">exe</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span>
+<p>Verify the SHA-256 checksums (<code>SHA256SUMS.txt</code>, listed on each release) before running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">UPES-ECS-Setup</span><span class="p">-</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0-x64</span><span class="p">.</span><span class="n">exe</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span>
 </code></pre></div>
 
 
@@ -3956,7 +3989,7 @@ source (see the <a href="../quickstart/">Day-1 quickstart</a>).</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2026 17:40:36 UTC">July 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 23, 2026 15:12:03 UTC">July 23, 2026</span>
   </span>
 
     
