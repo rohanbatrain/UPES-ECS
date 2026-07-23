@@ -87,8 +87,8 @@ systemctl reload ssh 2>/dev/null || systemctl restart ssh 2>/dev/null || true
 
 echo "== callout / roll-call groups (extensions per group, one per line) =="
 mkdir -p /opt/upes-ecs/groups
-printf '500120597\n500120596\n500119503\n500119499\n' > /opt/upes-ecs/groups/roster.csv
-printf '500120597\n500120596\n500119503\n500119499\n40001097\n40003657\n40004432\n4101\n4110\n4111\n4112\n4113\n4120\n4200\n4300\n4400\n4500\n4600\n' > /opt/upes-ecs/groups/all.csv
+printf '500120597\n500000002\n500000003\n500000004\n' > /opt/upes-ecs/groups/roster.csv
+printf '500120597\n500000002\n500000003\n500000004\n40000001\n40000002\n40000003\n4101\n4110\n4111\n4112\n4113\n4120\n4200\n4300\n4400\n4500\n4600\n' > /opt/upes-ecs/groups/all.csv
 printf '4101\n4110\n4111\n4112\n4113\n4120\n' > /opt/upes-ecs/groups/ert.csv
 printf '4200\n4300\n4400\n4500\n4600\n' > /opt/upes-ecs/groups/responders.csv
 cp /opt/upes-ecs/groups/roster.csv /opt/upes-ecs/groups/hostels.csv

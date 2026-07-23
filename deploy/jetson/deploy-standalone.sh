@@ -70,8 +70,8 @@ if [ -d "$AST/sounds/lang" ]; then for d in "$AST"/sounds/lang/*/; do [ -d "$d" 
 echo "== 6. groups =="
 GR=/opt/upes-ecs/groups
 if [ ! -f "$GR/all.csv" ]; then
-  printf '500120597\n500120596\n500119503\n500119499\n' > "$GR/roster.csv"
-  printf '500120597\n500120596\n500119503\n500119499\n40001097\n40003657\n40004432\n4101\n4110\n4111\n4112\n4113\n4120\n4200\n4300\n4400\n4500\n4600\n' > "$GR/all.csv"
+  printf '500120597\n500000002\n500000003\n500000004\n' > "$GR/roster.csv"
+  printf '500120597\n500000002\n500000003\n500000004\n40000001\n40000002\n40000003\n4101\n4110\n4111\n4112\n4113\n4120\n4200\n4300\n4400\n4500\n4600\n' > "$GR/all.csv"
   printf '4101\n4110\n4111\n4112\n4113\n4120\n' > "$GR/ert.csv"
   printf '4200\n4300\n4400\n4500\n4600\n' > "$GR/responders.csv"
   cp "$GR/roster.csv" "$GR/hostels.csv"; cp "$GR/roster.csv" "$GR/academic.csv"; cp "$GR/all.csv" "$GR/700.csv"
