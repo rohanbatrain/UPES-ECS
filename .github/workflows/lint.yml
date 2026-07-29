@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0        # gitleaks scans full history
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.x"
       - uses: pre-commit/action@v3.0.1
@@ -42,7 +42,7 @@ jobs:
         with:
           fetch-depth: 0        # git-revision-date-localized needs full history
           lfs: true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.x"
       - run: pip install -r docs/requirements.txt
